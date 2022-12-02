@@ -24,6 +24,11 @@ public class Player {
     public void setNom(String nom) {
         this.nom = nom;
     }
+
+    public void play(){
+        //Creation d'une tile
+        //this.addTile(tile);
+    }
     public String addTile(Tile tile){
         return this.board.addTile(tile);
     }
