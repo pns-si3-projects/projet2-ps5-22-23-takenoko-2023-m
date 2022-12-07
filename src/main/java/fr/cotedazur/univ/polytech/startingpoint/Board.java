@@ -8,4 +8,12 @@ public class Board {
         boardTiles.add(tile);
         return "Une carte à été posée en:"+tile.getCoordinnateX()+" "+tile.getCoordinnateY();
     }
+
+    public ArrayList<Tile> getBoardTiles() {
+        return boardTiles;
+    }
+
+    public void setBoardTiles(ArrayList<Tile> boardTiles) {
+        this.boardTiles = boardTiles;
+    }
 }

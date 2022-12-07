@@ -15,4 +15,24 @@ public class Tile {
     public int getCoordinnateY(){
         return coordinnateY;
     }
+
+
+    public boolean isNeighbor(Tile tile){
+        if(tile.getCoordinnateX() == this.getCoordinnateX() && tile.getCoordinnateY() == this.getCoordinnateY()+1){
+            return true;
+        }
+        if(tile.getCoordinnateX() == this.getCoordinnateX() && tile.getCoordinnateY() == this.getCoordinnateY()-1){
+            return true;
+        }
+        if(tile.getCoordinnateX() == this.getCoordinnateX()+1 && tile.getCoordinnateY() == this.getCoordinnateY()){
+            return true;
+        }
+        if(tile.getCoordinnateX() == this.getCoordinnateX()-1 && tile.getCoordinnateY() == this.getCoordinnateY()){
+            return true;
+        }
+        return false;
+    }
+
+
 }
+

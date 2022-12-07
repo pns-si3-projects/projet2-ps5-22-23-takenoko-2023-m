@@ -4,9 +4,12 @@ public class Player {
     private int point = 0;
     private String nom;
     private final Board board;
-    public Player(Board board, String nom){
+
+    private ObjectivePlot objective ;
+    public Player(Board board, String nom, ObjectivePlot objective){
         this.nom = nom;
         this.board = board;
+        this.objective = objective;
     }
 
     public int getPoint() {
@@ -27,4 +30,18 @@ public class Player {
     public String addTile(Tile tile){
         return this.board.addTile(tile);
     }
+
+    public ObjectivePlot getObjective() {
+        return objective;
+    }
+
+    public void setObjective(ObjectivePlot objective) {
+        this.objective = objective;
+    }
+
+    public boolean isObjectiveValid(){
+        return this.objective.isValid(this.board);
+    }
+
+
 }
