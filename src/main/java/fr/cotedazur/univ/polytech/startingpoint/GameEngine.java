@@ -12,10 +12,12 @@ public class GameEngine {
     }
 
     public void launchGame(){
-        int nbTour = 1;
         int indexPlayer = 0;
         while(true){
+            //On mime ici les actions réalisées par les différents bots. La méthode play() produira une action réalisée par le bot et son tour sera fini
             //this.playerList.get(indexPlayer).play()
+
+            //Si suite à une action d'un bot, son nombre d'objectifs réalisés est de 9, alors la game est finie et le bot est le vainqueur de la partie
             //if(this.playerList.get(indexPlayer).getNbObjectifsRealises == 9){
                 //Print winner
                 //break
@@ -27,5 +29,7 @@ public class GameEngine {
             }
         }
     }
-    public void printWinner(Player p){}
+    public void printWinner(Player p){
+        System.out.println("Le joueur est gagnant est : "+p.getNom()+" avec un score de "+p.getPoint()+" points marqués");
+    }
 }
