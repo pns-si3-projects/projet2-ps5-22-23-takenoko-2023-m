@@ -82,4 +82,30 @@ public class Tile {
         String str = "Tile at x = " + coordinate.getX() + ", y = " + coordinate.getY();
         return str;
     }
+
+//fonction temporaire destinée à être remplacée
+    public boolean isNeighbor(Tile tile){
+        if(tile.getCoordinnateX() == this.getCoordinnateX() && tile.getCoordinnateY() == this.getCoordinnateY()+1){
+            return true;
+        }
+        if(tile.getCoordinnateX() == this.getCoordinnateX() && tile.getCoordinnateY() == this.getCoordinnateY()-1){
+            return true;
+        }
+        if(tile.getCoordinnateX() == this.getCoordinnateX()+1 && tile.getCoordinnateY() == this.getCoordinnateY()){
+            return true;
+        }
+        if(tile.getCoordinnateX() == this.getCoordinnateX()-1 && tile.getCoordinnateY() == this.getCoordinnateY()){
+            return true;
+        }
+        if(tile.getCoordinnateX() == this.getCoordinnateX()+1 && tile.getCoordinnateY() == this.getCoordinnateY()-1){
+            return true;
+        }
+        if(tile.getCoordinnateX() == this.getCoordinnateX()-1 && tile.getCoordinnateY() == this.getCoordinnateY()+1){
+            return true;
+        }
+        return false;
+    }
+
+
 }
+
