@@ -1,10 +1,10 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 
 public class Tile {
     private final Coordinate coordinate;
+    private int bamboo = 0;
     public Tile(int x, int y){
         coordinate = new Coordinate(x, y);
     }
@@ -107,5 +107,18 @@ public class Tile {
     }
 
 
+    public int grow(int i) {
+        bamboo+=i;
+        if(bamboo>4) bamboo =4;
+        return bamboo;
+    }
+
+    public int getBamboo() {
+        return bamboo;
+    }
+
+    public void setBamboo(int bamboo) {
+        this.bamboo = bamboo;
+    }
 }
 
