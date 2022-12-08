@@ -8,10 +8,10 @@ public class Main {
         Player bot1 = new Player(board,"Robot 1",objectivePlot);
         int x= 0;
         int y = 0;
-        while(bot1.getPoint()<10){
-            System.out.println(bot1.addTile(new Tile(x,y)));
-            x+=1;
-            y+=1;
+        bot1.addTile(new Tile(x,y));
+        while(bot1.isObjectiveValid() == false){
+            System.out.println(bot1.playToAchieveObjective());
+
             bot1.setPoint(bot1.getPoint()+1);
         }
         System.out.println("La partie est terminée");

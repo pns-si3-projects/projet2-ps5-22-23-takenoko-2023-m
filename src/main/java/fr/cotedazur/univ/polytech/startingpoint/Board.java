@@ -13,6 +13,15 @@ public class Board {
         return boardTiles;
     }
 
+    public boolean isInBoard(int x, int y){
+        for(Tile tile : boardTiles){
+            if(tile.getCoordinnateX() == x && tile.getCoordinnateY() == y){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void setBoardTiles(ArrayList<Tile> boardTiles) {
         this.boardTiles = boardTiles;
     }

@@ -16,7 +16,7 @@ public class Tile {
         return coordinnateY;
     }
 
-
+//fonction temporaire destinée à être remplacée
     public boolean isNeighbor(Tile tile){
         if(tile.getCoordinnateX() == this.getCoordinnateX() && tile.getCoordinnateY() == this.getCoordinnateY()+1){
             return true;
@@ -28,6 +28,12 @@ public class Tile {
             return true;
         }
         if(tile.getCoordinnateX() == this.getCoordinnateX()-1 && tile.getCoordinnateY() == this.getCoordinnateY()){
+            return true;
+        }
+        if(tile.getCoordinnateX() == this.getCoordinnateX()+1 && tile.getCoordinnateY() == this.getCoordinnateY()-1){
+            return true;
+        }
+        if(tile.getCoordinnateX() == this.getCoordinnateX()-1 && tile.getCoordinnateY() == this.getCoordinnateY()+1){
             return true;
         }
         return false;
