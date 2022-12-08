@@ -6,10 +6,13 @@ import java.util.ArrayList;
 public class Tile {
     private final Coordinate coordinate;
     private int bamboo = 0;
-    //private String typeOfTile;
-    public Tile(int x, int y){
+    private String typeOfTile;
+    public Tile(int x, int y, String type){
         coordinate = new Coordinate(x, y);
+        this.typeOfTile = type;
     }
+
+    public Tile(int x, int y){ coordinate = new Coordinate(x,y); }
 
     public int getCoordinnateX() {
         return coordinate.getX();
@@ -114,6 +117,10 @@ public class Tile {
 
     public void eatBamboo(){
         this.bamboo--;
+    }
+
+    public String getTypeOfTile(){
+        return this.typeOfTile;
     }
 
 
