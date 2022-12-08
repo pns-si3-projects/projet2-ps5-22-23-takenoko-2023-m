@@ -15,17 +15,19 @@ public class GameEngine {
         int indexPlayer = 0;
         while(true){
             //On mime ici les actions réalisées par les différents bots. La méthode play() produira une action réalisée par le bot et son tour sera fini
-            //this.playerList.get(indexPlayer).play()
+            this.playerList.get(indexPlayer).play();
 
             //Si suite à une action d'un bot, son nombre d'objectifs réalisés est de 9, alors la game est finie et le bot est le vainqueur de la partie
             //if(this.playerList.get(indexPlayer).getNbObjectifsRealises == 9){
+            System.out.println("Le bot "+this.playerList.get(indexPlayer).getNom()+" a gagné la partie");
+            break;
                 //Print winner
                 //break
             //}
-            indexPlayer++;
-            if(indexPlayer == this.playerList.size()){
+            //indexPlayer++;
+            /*if(indexPlayer == this.playerList.size()){
                 indexPlayer=0;
-            }
+            }*/
         }
     }
     public void printWinner(Player p){

@@ -29,6 +29,10 @@ public class Player {
     }
 
     public void play(){
+        System.out.println(this.addTile(new Tile(0,0)));
+        while(!this.objective.isValid(this.board)){
+            System.out.println(this.playToAchieveObjective());
+        }
         //Creation d'une tile
         //this.addTile(tile);
     }
