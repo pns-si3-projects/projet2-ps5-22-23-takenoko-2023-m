@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 public class Tile {
     private final Coordinate coordinate;
+    private int bamboo = 0;
+    //private String typeOfTile;
     public Tile(int x, int y){
         coordinate = new Coordinate(x, y);
     }
@@ -104,6 +106,14 @@ public class Tile {
             return true;
         }
         return false;
+    }
+
+    public int getBamboo(){
+        return this.bamboo;
+    }
+
+    public void eatBamboo(){
+        this.bamboo--;
     }
 
 

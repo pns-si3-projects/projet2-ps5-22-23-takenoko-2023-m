@@ -56,4 +56,13 @@ public class Board {
     public void setBoardTiles(ArrayList<Tile> boardTiles) {
         this.boardTiles = boardTiles;
     }
+
+    public Tile getTile(Coordinate coordinate) {
+        for(Tile i : boardTiles){
+            if(i.getCoordinate().equals(coordinate)){
+                return i;
+            }
+        }
+        return null;
+    }
 }
