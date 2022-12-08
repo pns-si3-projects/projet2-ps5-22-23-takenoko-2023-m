@@ -24,7 +24,6 @@ public class GameEngine {
             //}
             indexPlayer++;
             if(indexPlayer == this.playerList.size()){
-                nbTour++;
                 indexPlayer=0;
             }
         }

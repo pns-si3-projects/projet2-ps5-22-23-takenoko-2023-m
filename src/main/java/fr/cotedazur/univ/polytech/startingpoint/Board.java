@@ -10,7 +10,6 @@ public class Board {
         return "Une carte à été posée en:"+tile.getCoordinnateX()+" "+tile.getCoordinnateY();
     }
 
-<<<<<<< feature/board_checks_available_tile_position
     //this method returns an ArrayList of all the possible positions that are in contact with the edge of the board
     //TODO : make it return only the available positions for new tiles = coordinates where there are at least two neighbours
     public ArrayList<Coordinate> scanAvailableTilePosition() {
@@ -41,7 +40,6 @@ public class Board {
         return availableCoordinates;
     }
 
-=======
     public ArrayList<Tile> getBoardTiles() {
         return boardTiles;
     }
@@ -58,5 +56,4 @@ public class Board {
     public void setBoardTiles(ArrayList<Tile> boardTiles) {
         this.boardTiles = boardTiles;
     }
->>>>>>> develop
 }
