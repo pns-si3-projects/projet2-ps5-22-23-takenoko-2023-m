@@ -17,7 +17,9 @@ public class Coordinate {
         return this.y;
     }
 
-    public boolean equals(Coordinate toTest) {
+    @Override
+    public boolean equals(Object newCoordinate) {
+        Coordinate toTest = (Coordinate) newCoordinate;
         if ((this.x == toTest.getX()) & (this.y == toTest.getY())) {
             return true;
         }
