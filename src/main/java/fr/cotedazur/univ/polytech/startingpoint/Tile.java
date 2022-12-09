@@ -1,6 +1,5 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 
 public class Tile {
@@ -111,9 +110,6 @@ public class Tile {
         return false;
     }
 
-    public int getBamboo(){
-        return this.bamboo;
-    }
 
     public void eatBamboo(){
         this.bamboo--;
@@ -124,5 +120,18 @@ public class Tile {
     }
 
 
+    public int grow(int i) {
+        bamboo+=i;
+        if(bamboo>4) bamboo =4;
+        return bamboo;
+    }
+
+    public int getBamboo() {
+        return bamboo;
+    }
+
+    public void setBamboo(int bamboo) {
+        this.bamboo = bamboo;
+    }
 }
 
