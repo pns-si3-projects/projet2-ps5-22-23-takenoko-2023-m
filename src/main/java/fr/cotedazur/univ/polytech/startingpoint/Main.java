@@ -1,14 +1,17 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
+import java.util.ArrayList;
+
 public class Main {
 
-
-    public static String hello() {
-        return "Hello World!";
-    }
-
     public static void main(String... args) {
-        System.out.println(hello());
-    }
+        Board board = new Board();
+        ObjectivePlot objectivePlot = new ObjectivePlot("line2");
+        Player bot1 = new Player(board, "Robot 1", objectivePlot);
+        ArrayList<Player> listPlayer = new ArrayList<>();
+        listPlayer.add(bot1);
+        GameEngine game = new GameEngine(board, listPlayer);
+        game.launchGame();
 
+    }
 }
