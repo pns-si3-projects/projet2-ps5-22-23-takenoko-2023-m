@@ -1,20 +1,29 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-public class ObjectivePlot implements ObjectiveInterface {
 
-    private String type = "line2";
+public class ObjectiveGardener implements ObjectiveInterface {
 
+    private String type = "gardener";
 
-    public ObjectivePlot(String type){
+    public int getNb() {
+        return nb;
+    }
+
+    public void setNb(int nb) {
+        this.nb = nb;
+    }
+
+    private int nb=2;
+
+    public ObjectiveGardener(String type, int nb){
         this.type = type;
+        this.nb = nb;
     }
 
     public boolean isValid(Board b){
         for(Tile tile : b.getBoardTiles()){
-            for(Tile tile2 : b.getBoardTiles()){
-                if(tile.isNeighbor(tile2)){
-                    return true;
-                }
+            if(tile.getBamboo() == 4){
+                return true;
             }
         }
         return false;
@@ -29,10 +38,5 @@ public class ObjectivePlot implements ObjectiveInterface {
     public String toString(){
         return "Objectif de type "+this.type;
     }
-   
-
-
-
-
 
 }

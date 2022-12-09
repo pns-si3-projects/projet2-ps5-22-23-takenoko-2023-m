@@ -4,7 +4,18 @@ import java.util.ArrayList;
 
 public class Board {
     private ArrayList<Tile> boardTiles = new ArrayList<>();
+
+    public Gardener getGardener() {
+        return gardener;
+    }
+
     private final Gardener gardener = new Gardener(this);
+
+    public Panda getPanda() {
+        return panda;
+    }
+
+    private final Panda panda = new Panda(this);
 
     //constructor setting up the first tile of the board
     public Board(){

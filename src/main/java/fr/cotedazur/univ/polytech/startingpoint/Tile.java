@@ -113,6 +113,7 @@ public class Tile {
 
     public void eatBamboo(){
         this.bamboo--;
+
     }
 
     public String getTypeOfTile(){
@@ -123,6 +124,7 @@ public class Tile {
     public int grow(int i) {
         bamboo+=i;
         if(bamboo>4) bamboo =4;
+
         return bamboo;
     }
 
