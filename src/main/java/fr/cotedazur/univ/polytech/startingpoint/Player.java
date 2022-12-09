@@ -48,7 +48,7 @@ public class Player {
         //this.addTile(tile);
     }
 
-    public void playToAchieveObjectiveGardener(ObjectiveGardener objective){
+    public int playToAchieveObjectiveGardener(ObjectiveGardener objective){
         System.out.println("Le joueur joue pour un objectif de type jardin");
         int i = 0;
         boolean found = false;
@@ -57,23 +57,26 @@ public class Player {
                 if(tile.getBamboo()-objective.getNb()== i*(-1) ){
                     this.board.getGardener().moveOn(tile.getCoordinate());
                     System.out.println("le jardinier est maintenant en "+tile.getCoordinate());
-                    found = true;
-                    tile.grow(1);
                     System.out.println("le un bambou a été planté en " + tile.getCoordinnateX() + " " + tile.getCoordinnateY());
-                    break;
+                    found=true;
+                    return 0;
                 }
-                if(tile.getBamboo()-objective.getNb()== i ){
-                    this.board.getPanda().moveOn(tile.getCoordinate(),this);
-                    System.out.println("le panda est maintenant en "+tile.getCoordinate());
-                    found = true;
+                else if (tile.getBamboo()-objective.getNb()== i ) {
+                    this.board.getPanda().moveOn(tile.getCoordinate(), this);
+                    System.out.println("le panda est maintenant en " + tile.getCoordinate());
+
                     tile.eatBamboo();
                     System.out.println("Le panda a mangé un bambou en " + tile.getCoordinnateX() + " " + tile.getCoordinnateY());
-
-                    break;
+                    found=true;
+                    return 0;
                 }
-                i++;
+
+                else{
+                    i++;
+                }
             }
         }
+        return 1;
     }
     public String addTile(Tile tile){
         return this.board.addTile(tile);

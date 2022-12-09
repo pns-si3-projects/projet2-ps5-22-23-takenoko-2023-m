@@ -22,7 +22,7 @@ public class ObjectiveGardener implements ObjectiveInterface {
 
     public boolean isValid(Board b){
         for(Tile tile : b.getBoardTiles()){
-            if(tile.getBamboo() == 4){
+            if(tile.getBamboo() == this.getNb()){
                 return true;
             }
         }
