@@ -53,6 +53,47 @@ public class Board {
         return false;
     }
 
+// ----- This method still does not work -----
+    public ArrayList<Coordinate> newScanAvailableTilePosition() {
+
+        ArrayList<Coordinate> occupiedCoordinates = new ArrayList<>();
+        ArrayList<Coordinate> availableCoordinates = new ArrayList<>();
+
+        // n complexity, gets the coordinates of all the tiles of the board
+        for (int i = 0; i < boardTiles.size(); i++) {
+            occupiedCoordinates.add(boardTiles.get(i).getCoordinate());
+        }
+
+        for (int i = 0; i < boardTiles.size(); i++) {       //cycling through all the tiles of the board
+            //we get all the neighbours of tile[i]
+            ArrayList<Coordinate> closeNeighbours = boardTiles.get(i).getNeighbourCoordinates();
+            for (int j = 0; j < closeNeighbours.size(); j++) {
+                boolean isDouble = false;
+                boolean isPlaced = false;
+                boolean isIllegal = false;
+
+                //we check if the close neighbour is already in the ArrayList
+                if (availableCoordinates.contains(closeNeighbours.get(j))) {
+                    isDouble = true;
+                }
+
+                //we check if the close neighbour is already placed on the board
+                if (occupiedCoordinates.contains(closeNeighbours.get(j))) {
+                    isPlaced = true;
+                }
+
+                //checks if the close neighbour is legal == has two neighbours on the board
+                //TODO not quite implemented yet
+                //if(CONDITION)
+
+                if (!isDouble && !isPlaced && !isIllegal) {
+                    availableCoordinates.add(closeNeighbours.get(i));
+                }
+            }
+        }
+        return availableCoordinates;
+    }
+
     public void setBoardTiles(ArrayList<Tile> boardTiles) {
         this.boardTiles = boardTiles;
     }

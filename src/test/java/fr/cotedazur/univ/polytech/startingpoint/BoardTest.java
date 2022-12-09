@@ -37,4 +37,10 @@ class BoardTest {
             //System.out.println(tilesToTest.get(i));   //only to visualise the ArrayList
         }
     }
+
+    @Test
+    void testNewScanAvailableTilePosition() {
+        ArrayList<Coordinate> knownTrueTiles = twoTiles.scanAvailableTilePosition();
+        assertEquals(knownTrueTiles, twoTiles.newScanAvailableTilePosition());
+    }
 }

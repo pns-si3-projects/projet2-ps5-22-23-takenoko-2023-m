@@ -20,6 +20,7 @@ class CoordinateTest {
         assertEquals(c0_0, c0_0);
         assertEquals(c0_0, new Coordinate(0,0));
         assertNotEquals(c0_0, cn1_n1);
+        assertFalse(c0_0.equals(new Tile(0,0)));
     }
 
 }

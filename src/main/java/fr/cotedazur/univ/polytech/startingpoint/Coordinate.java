@@ -19,9 +19,11 @@ public class Coordinate {
 
     @Override
     public boolean equals(Object newCoordinate) {
-        Coordinate toTest = (Coordinate) newCoordinate;
-        if ((this.x == toTest.getX()) & (this.y == toTest.getY())) {
-            return true;
+        if (newCoordinate instanceof Coordinate) {
+            Coordinate toTest = (Coordinate) newCoordinate;
+            if ((this.x == toTest.getX()) && (this.y == toTest.getY())) {
+                return true;
+            }
         }
         return false;
     }
