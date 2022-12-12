@@ -133,5 +133,9 @@ public class Tile {
     public void setBamboo(int bamboo) {
         this.bamboo = bamboo;
     }
+
+    public void setTypeOfTile(TypeOfTile typeOfTile) {
+        this.typeOfTile = typeOfTile;
+    }
 }
 
