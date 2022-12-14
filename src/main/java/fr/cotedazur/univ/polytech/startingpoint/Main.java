@@ -8,10 +8,12 @@ public class Main {
         Board board = new Board();
         ObjectivePlot objectivePlot = new ObjectivePlot("line2");
         ObjectiveGardener objectiveGardener = new ObjectiveGardener("gardener", 2);
+        ObjectivePanda objectivePanda = new ObjectivePanda("panda", 3);
         ArrayList<ObjectiveInterface> objectives = new ArrayList<ObjectiveInterface>();
 
         objectives.add(objectivePlot);
         objectives.add(objectiveGardener);
+        objectives.add(objectivePanda);
 
         Player bot1 = new Player(board, "Robot 1", objectives);
         ArrayList<Player> listPlayer = new ArrayList<>();

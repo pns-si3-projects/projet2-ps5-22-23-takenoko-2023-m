@@ -42,6 +42,9 @@ public class Player {
                 else if (objective.getType()=="line2"){
                     System.out.println(this.playToAchieveObjectivePlot());
                 }
+                else if (objective.getType()=="panda"){
+                    this.playToAchieveObjectivePanda((ObjectivePanda)objective);
+                }
 
             }
         }
@@ -143,6 +146,44 @@ public class Player {
         //si tout les emplacement autour de toutes les  tuiles du board sont prises, il y a un problème
         return "erreur de placement";
 
+    }
+
+    public void playToAchieveObjectivePanda(ObjectivePanda objP){
+        System.out.println("Le joueur joue pour un objectif de type panda");
+        boolean found = false;
+        //on recherche si il y a des tiles posées avec au moins un bambou dessus et on en mange un si c'est le cas
+        for(Tile tile : this.board.getBoardTiles()){
+            if (tile.getBamboo()>0){
+                found = true;
+                this.board.getPanda().moveOn(tile.getCoordinate(), this);
+                System.out.println("Le panda a mangé un bambou en " + tile.getCoordinnateX() + " " + tile.getCoordinnateY());
+                break;
+
+            }
+        }
+        //si il n'y a pas de tuiles avec des bambous dessus, on déplace le jardinier sur la première case discponibl ou il n'est pas dessus
+
+        if(found ==false){
+            for(Tile tile : this.board.getBoardTiles()){
+                if(this.board.getGardener().getCoordinate()!=tile.getCoordinate()){
+                    this.board.getGardener().moveOn(tile.getCoordinate());
+                    System.out.println("Le jardinier est maintenant en " + tile.getCoordinate());
+                    System.out.println("Le jardinier a planté un bambou en " + tile.getCoordinnateX() + " " + tile.getCoordinnateY());
+                    break;
+                }
+            }
+
+        }
+        //on vérifie si l'objectif est validé
+        if(this.getNbBamboo()>=objP.getNbToEat()){
+            this.nbBamboo -= objP.getNbToEat();
+            objP.setValid();
+            System.out.println("l'objectif "+objP.getType()+" est validé par le joueur "+this.getNom());
+        }
+    }
+
+    private int getNbBamboo() {
+        return this.nbBamboo;
     }
 
     public void upNbBamboo(){
