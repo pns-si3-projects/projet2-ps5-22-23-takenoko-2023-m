@@ -1,13 +1,17 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 
 public class Tile {
     private final Coordinate coordinate;
-    public Tile(int x, int y){
+    private int bamboo = 0;
+    private TypeOfTile typeOfTile;
+    public Tile(int x, int y, TypeOfTile type){
         coordinate = new Coordinate(x, y);
+        this.typeOfTile = type;
     }
+
+    public Tile(int x, int y){ coordinate = new Coordinate(x,y); }
 
     public int getCoordinnateX() {
         return coordinate.getX();
@@ -65,6 +69,29 @@ public class Tile {
     public String toString() {
         String str = "Tile at x = " + coordinate.getX() + ", y = " + coordinate.getY();
         return str;
+    }
+
+    public void eatBamboo(){
+        this.bamboo--;
+    }
+
+    public TypeOfTile getTypeOfTile(){
+        return this.typeOfTile;
+    }
+
+
+    public int grow(int i) {
+        bamboo+=i;
+        if(bamboo>4) bamboo =4;
+        return bamboo;
+    }
+
+    public int getBamboo() {
+        return bamboo;
+    }
+
+    public void setBamboo(int bamboo) {
+        this.bamboo = bamboo;
     }
 }
 

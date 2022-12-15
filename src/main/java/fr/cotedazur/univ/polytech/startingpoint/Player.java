@@ -4,6 +4,7 @@ public class Player {
     private int point = 0;
     private String nom;
     private final Board board;
+    private int nbBamboo = 0;
 
     private ObjectivePlot objective ;
     public Player(Board board, String nom, ObjectivePlot objective){
@@ -87,8 +88,14 @@ public class Player {
         //si tout les emplacement autour de toutes les  tuiles du board sont prises, il y a un problème
         return "erreur de placement";
 
+    }
 
+    public void upNbBamboo(){
+        this.nbBamboo++;
+    }
 
+    public int getNbBamboo(){
+        return this.nbBamboo;
     }
 
 
