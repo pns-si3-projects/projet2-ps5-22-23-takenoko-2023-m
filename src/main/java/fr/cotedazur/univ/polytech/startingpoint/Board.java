@@ -8,13 +8,13 @@ public class Board {
 
     //constructor setting up the first tile of the board
     public Board(){
-        this.addTile(new Tile(0,0));
+        this.addTile(new Tile(0,0,TypeOfTile.GREEN));
     }
 
     //this method allow a player to move the gardener on a decided position
     public String moveGardenerOn(Coordinate coordinate){
-        int bNumber = gardener.moveOn(coordinate);
-        return "Le jardinier a été déplacé en "+coordinate.getX()+", "+coordinate.getY() + " cette tuile est maintenant à: "+ bNumber +" bamboo(s)";
+        String spread = gardener.moveOn(coordinate);
+        return "Le jardinier a été déplacé en "+coordinate.getX()+", "+coordinate.getY() + " cette tuile est maintenant à: "+ this.getTile(coordinate).getBamboo() +" bamboo(s)\n"+spread;
     }
 
     public String addTile(Tile tile){

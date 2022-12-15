@@ -116,6 +116,7 @@ public class Tile {
     }
 
     public TypeOfTile getTypeOfTile(){
+        System.out.println(coordinate+" "+this.typeOfTile);
         return this.typeOfTile;
     }
 
