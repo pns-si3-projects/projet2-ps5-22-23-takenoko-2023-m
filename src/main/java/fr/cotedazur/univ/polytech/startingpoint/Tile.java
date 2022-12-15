@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class Tile {
     private final Coordinate coordinate;
     private int bamboo = 0;
-    private String typeOfTile;
-    public Tile(int x, int y, String type){
+    private TypeOfTile typeOfTile;
+    public Tile(int x, int y, TypeOfTile type){
         coordinate = new Coordinate(x, y);
         this.typeOfTile = type;
     }
@@ -116,7 +116,7 @@ public class Tile {
 
     }
 
-    public String getTypeOfTile(){
+    public TypeOfTile getTypeOfTile(){
         return this.typeOfTile;
     }
 

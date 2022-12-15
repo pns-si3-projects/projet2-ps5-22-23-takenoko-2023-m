@@ -11,11 +11,13 @@ public class Board {
 
     private final Gardener gardener = new Gardener(this);
 
+
     public Panda getPanda() {
         return panda;
     }
 
     private final Panda panda = new Panda(this);
+
 
     //constructor setting up the first tile of the board
     public Board(){
@@ -26,6 +28,11 @@ public class Board {
     public String moveGardenerOn(Coordinate coordinate){
         int bNumber = gardener.moveOn(coordinate);
         return "Le jardinier a été déplacé en "+coordinate.getX()+", "+coordinate.getY() + " cette tuile est maintenant à: "+ bNumber +" bamboo(s)";
+    }
+
+    public String movePandaOn(Coordinate coordinate, Player player){
+        this.panda.moveOn(coordinate,player);
+        return "Le panda a ete deplace en "+coordinate.getX()+", "+coordinate.getY() + "il possède maintenant : "+player.getNbBamboo() +" bambous";
     }
 
     public String addTile(Tile tile){

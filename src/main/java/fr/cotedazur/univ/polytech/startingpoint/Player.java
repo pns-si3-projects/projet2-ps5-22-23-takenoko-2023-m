@@ -190,5 +190,9 @@ public class Player {
         this.nbBamboo++;
     }
 
+    public int getNbBamboo(){
+        return this.nbBamboo;
+    }
+
 
 }
