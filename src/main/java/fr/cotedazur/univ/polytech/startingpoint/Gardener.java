@@ -13,4 +13,8 @@ public class Gardener {
         Tile tileToGrow = board.getTile(coordinate);
         return tileToGrow.grow(1);
     }
+
+    public Coordinate getCoordinate() {
+        return coordinate;
+    }
 }
