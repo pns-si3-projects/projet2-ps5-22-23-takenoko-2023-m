@@ -4,6 +4,23 @@ import java.util.ArrayList;
 
 public class Board {
     private ArrayList<Tile> boardTiles = new ArrayList<>();
+    private final Gardener gardener = new Gardener(this);
+    private final Panda panda = new Panda(this);
+    //constructor setting up the first tile of the board
+    public Board(){
+        this.addTile(new Tile(0,0));
+    }
+
+    //this method allow a player to move the gardener on a decided position
+    public String moveGardenerOn(Coordinate coordinate){
+        int bNumber = gardener.moveOn(coordinate);
+        return "Le jardinier a été déplacé en "+coordinate.getX()+", "+coordinate.getY() + " cette tuile est maintenant à: "+ bNumber +" bamboo(s)";
+    }
+
+    public String movePandaOn(Coordinate coordinate, Player player){
+        this.panda.moveOn(coordinate,player);
+        return "Le panda a ete deplace en "+coordinate.getX()+", "+coordinate.getY() + "il possède maintenant : "+player.getNbBamboo() +" bambous";
+    }
 
     public String addTile(Tile tile){
         boardTiles.add(tile);
@@ -24,8 +41,8 @@ public class Board {
         return false;
     }
 
-    //this method returns an ArrayList of all the possible positions that are in contact with the edge of the board
-    //TODO : make it return only the available positions for new tiles = coordinates where there are at least two neighbours
+    //this method returns an ArrayList of all the possible positions that are in contact with the edge of the board and at a legal position = near 0,0 or with two neighbours
+
     public ArrayList<Coordinate> scanAvailableTilePosition() {
 
         ArrayList<Coordinate> occupiedCoordinates = new ArrayList<>();
@@ -77,5 +94,15 @@ public class Board {
 
     public void setBoardTiles(ArrayList<Tile> boardTiles) {
         this.boardTiles = boardTiles;
+    }
+
+    //return the tile at the designed coordinate
+    public Tile getTile(Coordinate coordinate) {
+        for(Tile i : boardTiles){
+            if(i.getCoordinate().equals(coordinate)){
+                return i;
+            }
+        }
+        return null;
     }
 }
