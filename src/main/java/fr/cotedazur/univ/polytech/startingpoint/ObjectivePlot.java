@@ -12,7 +12,7 @@ public class ObjectivePlot {
     public boolean isValid(Board b){
         for(Tile tile : b.getBoardTiles()){
             for(Tile tile2 : b.getBoardTiles()){
-                if(tile.isNeighbor(tile2)){
+                if(tile.isNeighbour(tile2)){
                     return true;
                 }
             }

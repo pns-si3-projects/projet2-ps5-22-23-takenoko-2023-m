@@ -39,20 +39,6 @@ public class Tile {
     //returns an array of all the neighbour tiles, whether there is one tile at this place or not
     //the name may not be well-chosen, please feel free to propose a new one
     public ArrayList<Coordinate> getNeighbourCoordinates () {
-        /*
-        ArrayList<Tile> neighbourCoordinates = new ArrayList<>();   //this ArrayList gets all the neighbour position of this tile
-        //attribution of neighbourCoordinates
-        for (int i = -1; i < 2; i++) {
-            for (int j = -1; j < 2; j++) {
-                if (i != j) {   //gets rid of (-1, -1), (+0, +0), (+1, +1)
-                    int xToTest = coordinate.getX() + i;
-                    int yToTest = coordinate.getY() + j;
-                    Tile potentialNeighbour = new Tile(xToTest, yToTest);
-                    neighbourCoordinates.add(potentialNeighbour);
-                }
-            }
-
-         */
         ArrayList<Coordinate> neighbourCoordinates = new ArrayList<>();
 
         for (int i = -1; i < 2; i++) {
@@ -65,14 +51,12 @@ public class Tile {
                 }
             }
         }
-
         /*
         //check the result :
         System.out.println("size : " + neighbourCoordinates.size());
         for (int i = 0; i < 6; i++) {
             System.out.println(neighbourCoordinates.get(i));
         }*/
-
         return neighbourCoordinates;
     }
 
@@ -82,30 +66,5 @@ public class Tile {
         String str = "Tile at x = " + coordinate.getX() + ", y = " + coordinate.getY();
         return str;
     }
-
-//fonction temporaire destinée à être remplacée
-    public boolean isNeighbor(Tile tile){
-        if(tile.getCoordinnateX() == this.getCoordinnateX() && tile.getCoordinnateY() == this.getCoordinnateY()+1){
-            return true;
-        }
-        if(tile.getCoordinnateX() == this.getCoordinnateX() && tile.getCoordinnateY() == this.getCoordinnateY()-1){
-            return true;
-        }
-        if(tile.getCoordinnateX() == this.getCoordinnateX()+1 && tile.getCoordinnateY() == this.getCoordinnateY()){
-            return true;
-        }
-        if(tile.getCoordinnateX() == this.getCoordinnateX()-1 && tile.getCoordinnateY() == this.getCoordinnateY()){
-            return true;
-        }
-        if(tile.getCoordinnateX() == this.getCoordinnateX()+1 && tile.getCoordinnateY() == this.getCoordinnateY()-1){
-            return true;
-        }
-        if(tile.getCoordinnateX() == this.getCoordinnateX()-1 && tile.getCoordinnateY() == this.getCoordinnateY()+1){
-            return true;
-        }
-        return false;
-    }
-
-
 }
 
