@@ -57,14 +57,14 @@ public class Player {
         boolean found = false;
         while(!found){
             for (Tile tile : this.board.getBoardTiles()){
-                if(tile.getBamboo()-objective.getNb()== i*(-1) ){
+                if(tile.getBamboo()-objective.getNbPointsWin()== i*(-1) ){
                     this.board.getGardener().moveOn(tile.getCoordinate());
                     System.out.println("le jardinier est maintenant en "+tile.getCoordinate());
                     System.out.println("le un bambou a été planté en " + tile.getCoordinnateX() + " " + tile.getCoordinnateY());
                     found=true;
                     return 0;
                 }
-                else if (tile.getBamboo()-objective.getNb()== i ) {
+                else if (tile.getBamboo()-objective.getNbPointsWin()== i ) {
                     this.board.getPanda().moveOn(tile.getCoordinate(), this);
                     System.out.println("le panda est maintenant en " + tile.getCoordinate());
 

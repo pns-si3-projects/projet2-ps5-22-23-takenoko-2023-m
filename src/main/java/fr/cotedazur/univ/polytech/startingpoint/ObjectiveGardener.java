@@ -2,27 +2,25 @@ package fr.cotedazur.univ.polytech.startingpoint;
 
 
 public class ObjectiveGardener implements ObjectiveInterface {
-
+    private int nbPointsWin=2;
     private String type = "gardener";
 
-    public int getNb() {
-        return nb;
+    public int getNbPointsWin() {
+        return nbPointsWin;
     }
 
     public void setNb(int nb) {
-        this.nb = nb;
+        this.nbPointsWin = nb;
     }
-
-    private int nb=2;
 
     public ObjectiveGardener(String type, int nb){
         this.type = type;
-        this.nb = nb;
+        this.nbPointsWin = nb;
     }
 
     public boolean isValid(Board b){
         for(Tile tile : b.getBoardTiles()){
-            if(tile.getBamboo() == this.getNb()){
+            if(tile.getBamboo() == this.getNbPointsWin()){
                 return true;
             }
         }
