@@ -11,14 +11,14 @@ class ObjectiveGardenerTest {
     @Test
     void getNb() {
         ObjectiveGardener objectiveGardener = new ObjectiveGardener("gardener",2);
-        assertEquals(2, objectiveGardener.getNb());
+        assertEquals(2, objectiveGardener.getNbPointsWin());
     }
 
     @Test
     void setNb() {
         ObjectiveGardener objectiveGardener = new ObjectiveGardener("gardener",2);
         objectiveGardener.setNb(3);
-        assertEquals(3, objectiveGardener.getNb());
+        assertEquals(3, objectiveGardener.getNbPointsWin());
     }
 
     @Test

@@ -40,6 +40,23 @@ public class Tile {
         return false;
     }
 
+
+    public ArrayList<Coordinate> scanAvailableCoordinatesToMove (ArrayList<Tile> boardTiles) {
+        ArrayList<Coordinate> availableCoordinates = new ArrayList<>();
+
+        for (int i = 0; i < boardTiles.size(); i++) {
+            boolean isOnSimpleX = this.getCoordinnateX() == boardTiles.get(i).getCoordinnateX();
+            boolean isOnSimpleY = this.getCoordinnateY() == boardTiles.get(i).getCoordinnateY();
+            boolean isOnComplexXY = (boardTiles.get(i).getCoordinnateX() - this.getCoordinnateX()) == -(boardTiles.get(i).getCoordinnateY() - this.getCoordinnateY());
+
+            if ((isOnSimpleX || isOnSimpleY || isOnComplexXY) && !(boardTiles.get(i).coordinate.equals(this.getCoordinate()))) {
+                availableCoordinates.add(boardTiles.get(i).getCoordinate());
+            }
+        }
+
+        return availableCoordinates;
+    }
+
     //returns an array of all the neighbour tiles, whether there is one tile at this place or not
     //the name may not be well-chosen, please feel free to propose a new one
     public ArrayList<Coordinate> getNeighbourCoordinates () {
