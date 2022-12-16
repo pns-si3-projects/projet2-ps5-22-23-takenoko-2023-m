@@ -182,16 +182,12 @@ public class Player {
         }
     }
 
-    private int getNbBamboo() {
+    public int getNbBamboo() {
         return this.nbBamboo;
     }
 
     public void upNbBamboo(){
         this.nbBamboo++;
-    }
-
-    public int getNbBamboo(){
-        return this.nbBamboo;
     }
 
 
