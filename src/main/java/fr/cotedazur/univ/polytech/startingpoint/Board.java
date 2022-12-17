@@ -56,9 +56,9 @@ public class Board {
         return boardTiles;
     }
 
-    public boolean isInBoard(int x, int y){
+    public boolean isInBoard(Coordinate c){
         for(Tile tile : boardTiles){
-            if(tile.getCoordinnateX() == x && tile.getCoordinnateY() == y){
+            if(c.equals(tile.getCoordinate())){
                 return true;
             }
         }

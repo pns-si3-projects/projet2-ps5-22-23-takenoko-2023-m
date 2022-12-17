@@ -34,6 +34,7 @@ public class Player {
         while(!this.objective.isValid(this.board)){
             System.out.println(this.playToAchieveObjective());
         }
+
         //Creation d'une tile
         //this.addTile(tile);
     }
@@ -52,6 +53,9 @@ public class Player {
     public boolean isObjectiveValid(){
         return this.objective.isValid(this.board);
     }
+    private void detectPatternInBoardAround(Tile tile){
+
+    }
 
    //play try to make objective valid by adding one tile
 
@@ -59,27 +63,27 @@ public class Player {
     //emplacements autour est libre et si oui on ajoute une tuile à cet emplacement
     public String playToAchieveObjective(){
         for(Tile tile : this.board.getBoardTiles()){
-            if(!this.board.isInBoard(tile.getCoordinnateX()+1,tile.getCoordinnateY())){
+            if(!this.board.isInBoard(new Coordinate(tile.getCoordinnateX()+1,tile.getCoordinnateY()))){
                 return this.addTile(new Tile(tile.getCoordinnateX()+1,tile.getCoordinnateY()));
 
             }
-            else if(!this.board.isInBoard(tile.getCoordinnateX()-1,tile.getCoordinnateY())){
+            else if(!this.board.isInBoard(new Coordinate(tile.getCoordinnateX()-1,tile.getCoordinnateY()))){
                 return this.addTile(new Tile(tile.getCoordinnateX()-1,tile.getCoordinnateY()));
 
             }
-            else if(!this.board.isInBoard(tile.getCoordinnateX(),tile.getCoordinnateY()+1)){
+            else if(!this.board.isInBoard(new Coordinate(tile.getCoordinnateX(),tile.getCoordinnateY()+1))){
                 return this.addTile(new Tile(tile.getCoordinnateX(),tile.getCoordinnateY()+1));
 
             }
-            else if(!this.board.isInBoard(tile.getCoordinnateX(),tile.getCoordinnateY()-1)){
+            else if(!this.board.isInBoard(new Coordinate(tile.getCoordinnateX(),tile.getCoordinnateY()-1))){
                 return this.addTile(new Tile(tile.getCoordinnateX(),tile.getCoordinnateY()-1));
 
             }
-            else if(!this.board.isInBoard(tile.getCoordinnateX()-1,tile.getCoordinnateY()+1)){
+            else if(!this.board.isInBoard(new Coordinate(tile.getCoordinnateX()-1,tile.getCoordinnateY()+1))){
                 return this.addTile(new Tile(tile.getCoordinnateX()-1,tile.getCoordinnateY()+1));
 
             }
-            else if(!this.board.isInBoard(tile.getCoordinnateX()+1,tile.getCoordinnateY()-1)){
+            else if(!this.board.isInBoard(new Coordinate(tile.getCoordinnateX()+1,tile.getCoordinnateY()-1))){
                 return this.addTile(new Tile(tile.getCoordinnateX()+1,tile.getCoordinnateY()-1));
 
             }
