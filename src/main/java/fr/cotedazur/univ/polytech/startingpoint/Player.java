@@ -1,5 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
+import java.util.ArrayList;
+
 public class Player {
     private int point = 0;
     private String nom;
@@ -39,7 +41,15 @@ public class Player {
         //this.addTile(tile);
     }
     public String addTile(Tile tile){
+        verifyIfPartOfPattern(tile);
         return this.board.addTile(tile);
+    }
+
+    private void verifyIfPartOfPattern(Tile tile) {
+        ArrayList<Tile> tilesRelatedOfSameType = checkNeightborOfSameType(tile);
+        if(tilesRelatedOfSameType.size()>0){
+
+        }
     }
 
     public ObjectivePlot getObjective() {
