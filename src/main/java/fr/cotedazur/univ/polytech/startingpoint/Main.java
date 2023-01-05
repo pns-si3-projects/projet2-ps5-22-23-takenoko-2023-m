@@ -1,5 +1,4 @@
 package fr.cotedazur.univ.polytech.startingpoint;
-
 import java.util.ArrayList;
 
 public class Main {
@@ -20,6 +19,5 @@ public class Main {
         listPlayer.add(bot1);
         GameEngine game = new GameEngine(board, listPlayer);
         game.launchGame();
-
     }
 }

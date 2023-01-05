@@ -37,10 +37,16 @@ public class Player {
                 if(objective .getType()=="gardener"){
                     ObjectiveGardener objectiveGardener = (ObjectiveGardener) objective;
                     this.playToAchieveObjectiveGardener( objectiveGardener);
+                    if(objectiveGardener.isValid(board)){
+                        System.out.println("objectif jardinier validé");
+                    }
 
                 }
                 else if (objective.getType()=="line2"){
                     System.out.println(this.playToAchieveObjectivePlot());
+                    if(objective.isValid(board)){
+                        System.out.println("objectif parcelle validé");
+                    }
                 }
                 else if (objective.getType()=="panda"){
                     this.playToAchieveObjectivePanda((ObjectivePanda)objective);
