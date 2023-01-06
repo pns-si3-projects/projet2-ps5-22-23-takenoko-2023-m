@@ -34,6 +34,7 @@ public class Player {
 
     public int getNbActions() { return this.nbActions;}
 
+
     public void playAction() {
         this.nbActions -= 1;
         System.out.println("Le joueur " +this.getNom() +" vient de jouer");
