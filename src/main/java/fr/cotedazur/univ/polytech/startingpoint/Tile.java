@@ -11,6 +11,11 @@ public class Tile {
         this.typeOfTile = type;
     }
 
+    public Tile(TypeOfTile type){
+        coordinate = null;
+        this.typeOfTile = type;
+    }
+
     public Tile(int x, int y){ coordinate = new Coordinate(x,y); }
 
     public int getCoordinnateX() {

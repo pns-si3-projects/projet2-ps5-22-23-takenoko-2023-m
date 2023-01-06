@@ -46,6 +46,16 @@ public class ObjectiveStackPanda extends Stack<ObjectivePanda> {
         return super.getStack();
     }
 
+    @Override
+    public void generate() {
+        for(int i=0; i<12;i++){
+            this.putBelow(new ObjectivePanda("panda", 2));
+        }
+        for(int i=0; i<3;i++){
+            this.putBelow(new ObjectivePanda("panda", 3));
+        }
+    }
+
 
 }
 

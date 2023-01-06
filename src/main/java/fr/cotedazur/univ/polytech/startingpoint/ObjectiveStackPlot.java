@@ -41,8 +41,14 @@ public class ObjectiveStackPlot extends Stack<ObjectivePlot> {
         return s;
     }
 
+    
     @Override
     public List<ObjectivePlot> getStack() {
         return super.getStack();
+    }
+
+    @Override
+    public void generate() {
+        //TODO
     }
 }

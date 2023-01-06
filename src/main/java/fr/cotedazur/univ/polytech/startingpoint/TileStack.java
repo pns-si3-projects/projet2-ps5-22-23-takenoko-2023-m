@@ -49,4 +49,17 @@ public class TileStack extends Stack<Tile>{
     public List<Tile> getStack() {
         return super.getStack();
     }
+
+    @Override
+    public void generate() {
+        for(int i = 0; i < 9; i++){
+            this.putBelow(new Tile(TypeOfTile.YELLOW));
+        }
+        for(int i = 0; i < 11; i++){
+            this.putBelow(new Tile(TypeOfTile.GREEN));
+        }
+        for(int i = 0; i < 7; i++){
+            this.putBelow(new Tile(TypeOfTile.RED));
+        }
+    }
 }

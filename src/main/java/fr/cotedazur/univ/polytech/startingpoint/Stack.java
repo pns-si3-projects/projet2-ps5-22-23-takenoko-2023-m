@@ -62,4 +62,7 @@ public abstract class Stack<T> {
         return list;
     }
 
+    public void generate(){
+
+    }
 }

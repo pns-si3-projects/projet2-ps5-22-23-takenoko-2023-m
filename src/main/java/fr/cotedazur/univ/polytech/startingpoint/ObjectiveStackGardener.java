@@ -5,6 +5,17 @@ import java.util.List;
 public class ObjectiveStackGardener extends Stack<ObjectiveGardener> {
 
 
+    @Override
+    public void generate() {
+        for(int i=0; i<13;i++){
+            this.putBelow(new ObjectiveGardener("gardener", 4));
+        }
+        for(int i=0; i<3;i++){
+            this.putBelow(new ObjectiveGardener("gardener", 3));
+        }
+    }
+
+
     public ObjectiveStackGardener(List<ObjectiveGardener> list){
         super(list);
 
