@@ -5,8 +5,10 @@ public class Player {
     private String nom;
     private final Board board;
     private int nbBamboo = 0;
+    private int nbActions = 2;
 
-    //private ObjectivePlot objective ;
+    private ObjectiveInterface focusCard = null;
+
     private ArrayList<ObjectiveInterface> objectives = new ArrayList<ObjectiveInterface>();
     public Player(Board board, String nom, ArrayList<ObjectiveInterface> objectives){
         this.nom = nom;
@@ -30,57 +32,107 @@ public class Player {
         this.nom = nom;
     }
 
+    public int getNbActions() { return this.nbActions;}
+
+    public void playAction() {
+        this.nbActions -= 1;
+        System.out.println("Le joueur " +this.getNom() +" vient de jouer");
+    }
+
+    public void resetNbActions() { this.nbActions = 2;}
+
+
     public void play(){
-        System.out.println(this.addTile(new Tile(0,0)));
-        for(ObjectiveInterface objective : objectives){
-            while(!objective.isValid(this.board)){
-                if(objective .getType()=="gardener"){
-                    ObjectiveGardener objectiveGardener = (ObjectiveGardener) objective;
-                    this.playToAchieveObjectiveGardener( objectiveGardener);
-
-                }
-                else if (objective.getType()=="line2"){
-                    System.out.println(this.playToAchieveObjectivePlot());
-                }
-                else if (objective.getType()=="panda"){
-                    this.playToAchieveObjectivePanda((ObjectivePanda)objective);
-                }
-
-            }
+        this.resetNbActions();
+        if (this.focusCard == null){
+            checkBetterCard();
         }
-        //this.addTile(tile);
+        if(this.focusCard instanceof ObjectiveGardener){
+            this.playForGardenerCard();
+        }else if(this.focusCard instanceof ObjectivePanda){
+            this.playForPandaCard();
+        }else{
+            this.playForPatternCard();
+        }
+        System.out.println();
     }
 
-    public int playToAchieveObjectiveGardener(ObjectiveGardener objective){
-        System.out.println("Le joueur joue pour un objectif de type jardin");
-        int i = 0;
-        boolean found = false;
-        while(!found){
-            for (Tile tile : this.board.getBoardTiles()){
-                if(tile.getBamboo()-objective.getNbPointsWin()== i*(-1) ){
-                    this.board.getGardener().moveOn(tile.getCoordinate());
-                    System.out.println("le jardinier est maintenant en "+tile.getCoordinate());
-                    System.out.println("le un bambou a été planté en " + tile.getCoordinnateX() + " " + tile.getCoordinnateY());
-                    found=true;
-                    return 0;
-                }
-                else if (tile.getBamboo()-objective.getNbPointsWin()== i ) {
-                    this.board.getPanda().moveOn(tile.getCoordinate(), this);
-                    System.out.println("le panda est maintenant en " + tile.getCoordinate());
+    public void playForGardenerCard(){
+        if (this.board.getBoardTiles().size() == 1){
+            ArrayList<Coordinate> availableCoordinates = this.board.scanAvailableTilePosition();
+            System.out.println(this.board.addTile(new Tile(availableCoordinates.get(0).getX(), availableCoordinates.get(0).getY())));
+            this.playAction();
+        }
+        int numberTile = this.board.getBoardTiles().size();
+        Tile tileToMove = this.board.getBoardTiles().get(numberTile-1);
+        System.out.println(this.board.moveGardenerOn(tileToMove.getCoordinate()));
+        this.playAction();
 
-                    tile.eatBamboo();
-                    System.out.println("Le panda a mangé un bambou en " + tile.getCoordinnateX() + " " + tile.getCoordinnateY());
-                    found=true;
-                    return 0;
-                }
+        if(this.getNbActions()==1){
+            System.out.println(this.board.moveGardenerOn(tileToMove.getCoordinate()));
+            this.playAction();
+        }
 
-                else{
-                    i++;
-                }
+        if(this.focusCard.isValid(this, this.board)){
+            this.setPoint(this.getPoint()+this.focusCard.getNbPointsWin());
+            ArrayList<ObjectiveInterface> objectifs = this.getObjective();
+            objectifs.remove(focusCard);
+            this.focusCard = null;
+            System.out.println("Objecti accompli !");
+        }
+    }
+
+    public void playForPandaCard(){
+        boolean verification = false;
+        for(Tile tile : this.board.getBoardTiles()){
+            if(tile.getBamboo()>0){
+                System.out.println(this.board.movePandaOn(tile.getCoordinate(),this));
+                this.playAction();
+                System.out.println(this.board.movePandaOn(tile.getCoordinate(),this));
+                this.playAction();
+                //System.out.println("Le joueur "+this.getNom()+" a fait avance le panda sur les coordones "+tile.getCoordinnateX() + tile.getCoordinnateY());
+                verification = true; break;
             }
         }
-        return 1;
+
+        if (!verification){
+            ArrayList<Coordinate> availableCoordinates = this.board.scanAvailableTilePosition();
+            System.out.println(this.addTile(new Tile(availableCoordinates.get(0).getX(), availableCoordinates.get(0).getY())));
+            this.playAction();
+            if(this.getNbActions()==1){
+                System.out.println(this.addTile(new Tile(availableCoordinates.get(0).getX(), availableCoordinates.get(0).getY())));
+                this.playAction();
+            }
+        }
+
+        if (this.focusCard.isValid(this, this.board)){
+            this.resetNbBamboo();
+            this.setPoint(this.focusCard.getNbPointsWin()+this.getPoint());
+            this.focusCard = null;
+            System.out.println("Objectif realise");
+        }
     }
+
+    public void playForPatternCard(){
+        // do nothing actually
+    }
+
+    public void checkBetterCard(){
+        ObjectiveInterface card = null;
+        int max = -1;
+        for(ObjectiveInterface cardObj : objectives){
+            if(cardObj.getNbPointsWin() > max){
+                max = cardObj.getNbPointsWin();
+                card = cardObj;
+            }
+        }
+        this.focusCard = card;
+    }
+
+    public void resetNbBamboo(){
+        this.nbBamboo = 0;
+    }
+
     public String addTile(Tile tile){
         return this.board.addTile(tile);
     }
@@ -100,88 +152,6 @@ public class Player {
         this.objectives = objectives;
     }
 
-    public int nbObjectivesValid(){
-        int nb = 0;
-        for(ObjectiveInterface objective : this.objectives){
-            if(objective.isValid(this.board)){
-                nb++;
-            }
-        }
-        return nb;
-    }
-
-   //play try to make objective valid by adding one tile
-
-    //algorithme à optimiser mais pour l'instant j'ai pas trouvé mieux : pour chaque tuiles du board on vérifie si un des
-    //emplacements autour est libre et si oui on ajoute une tuile à cet emplacement
-    public String playToAchieveObjectivePlot(){
-        System.out.println("Le joueur joue pour un objectif de type parcelle");
-        for(Tile tile : this.board.getBoardTiles()){
-            if(!this.board.isInBoard(tile.getCoordinnateX()+1,tile.getCoordinnateY())){
-                return this.addTile(new Tile(tile.getCoordinnateX()+1,tile.getCoordinnateY()));
-
-            }
-            else if(!this.board.isInBoard(tile.getCoordinnateX()-1,tile.getCoordinnateY())){
-                return this.addTile(new Tile(tile.getCoordinnateX()-1,tile.getCoordinnateY()));
-
-            }
-            else if(!this.board.isInBoard(tile.getCoordinnateX(),tile.getCoordinnateY()+1)){
-                return this.addTile(new Tile(tile.getCoordinnateX(),tile.getCoordinnateY()+1));
-
-            }
-            else if(!this.board.isInBoard(tile.getCoordinnateX(),tile.getCoordinnateY()-1)){
-                return this.addTile(new Tile(tile.getCoordinnateX(),tile.getCoordinnateY()-1));
-
-            }
-            else if(!this.board.isInBoard(tile.getCoordinnateX()-1,tile.getCoordinnateY()+1)){
-                return this.addTile(new Tile(tile.getCoordinnateX()-1,tile.getCoordinnateY()+1));
-
-            }
-            else if(!this.board.isInBoard(tile.getCoordinnateX()+1,tile.getCoordinnateY()-1)){
-                return this.addTile(new Tile(tile.getCoordinnateX()+1,tile.getCoordinnateY()-1));
-
-            }
-
-        }
-        //si tout les emplacement autour de toutes les  tuiles du board sont prises, il y a un problème
-        return "erreur de placement";
-
-    }
-
-    public void playToAchieveObjectivePanda(ObjectivePanda objP){
-        System.out.println("Le joueur joue pour un objectif de type panda");
-        boolean found = false;
-        //on recherche si il y a des tiles posées avec au moins un bambou dessus et on en mange un si c'est le cas
-        for(Tile tile : this.board.getBoardTiles()){
-            if (tile.getBamboo()>0){
-                found = true;
-                this.board.getPanda().moveOn(tile.getCoordinate(), this);
-                System.out.println("Le panda a mangé un bambou en " + tile.getCoordinnateX() + " " + tile.getCoordinnateY());
-                break;
-
-            }
-        }
-        //si il n'y a pas de tuiles avec des bambous dessus, on déplace le jardinier sur la première case discponibl ou il n'est pas dessus
-
-        if(found ==false){
-            for(Tile tile : this.board.getBoardTiles()){
-                if(this.board.getGardener().getCoordinate()!=tile.getCoordinate()){
-                    this.board.getGardener().moveOn(tile.getCoordinate());
-                    System.out.println("Le jardinier est maintenant en " + tile.getCoordinate());
-                    System.out.println("Le jardinier a planté un bambou en " + tile.getCoordinnateX() + " " + tile.getCoordinnateY());
-                    break;
-                }
-            }
-
-        }
-        //on vérifie si l'objectif est validé
-        if(this.getNbBamboo()>=objP.getNbToEat()){
-            this.nbBamboo -= objP.getNbToEat();
-            objP.setValid();
-            System.out.println("l'objectif "+objP.getType()+" est validé par le joueur "+this.getNom());
-        }
-    }
-
     public int getNbBamboo() {
         return this.nbBamboo;
     }
@@ -189,6 +159,5 @@ public class Player {
     public void upNbBamboo(){
         this.nbBamboo++;
     }
-
 
 }

@@ -98,6 +98,7 @@ public class Tile {
     }
 
     public TypeOfTile getTypeOfTile(){
+        System.out.println(coordinate+" "+this.typeOfTile);
         return this.typeOfTile;
     }
 
@@ -115,6 +116,10 @@ public class Tile {
 
     public void setBamboo(int bamboo) {
         this.bamboo = bamboo;
+    }
+
+    public void setTypeOfTile(TypeOfTile typeOfTile) {
+        this.typeOfTile = typeOfTile;
     }
 }
 
