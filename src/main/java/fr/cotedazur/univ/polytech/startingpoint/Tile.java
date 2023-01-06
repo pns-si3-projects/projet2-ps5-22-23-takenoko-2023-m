@@ -12,6 +12,9 @@ public class Tile {
     }
 
     public Tile(int x, int y){ coordinate = new Coordinate(x,y); }
+    public Tile(Coordinate coordinate) {
+        this.coordinate = coordinate;
+    }
 
     public int getCoordinnateX() {
         return coordinate.getX();
@@ -40,7 +43,7 @@ public class Tile {
         return false;
     }
 
-
+    //scans the available Tiles to move panda and gardener considering boardTiles
     public ArrayList<Coordinate> scanAvailableCoordinatesToMove (ArrayList<Tile> boardTiles) {
         ArrayList<Coordinate> availableCoordinates = new ArrayList<>();
 
@@ -81,7 +84,7 @@ public class Tile {
         return neighbourCoordinates;
     }
 
-
+    // scans the available tiles to move panda and gardener from this Tile considering the available Tiles in boardTiles
     @Override
     public String toString() {
         String str = "Tile at x = " + coordinate.getX() + ", y = " + coordinate.getY();
