@@ -51,19 +51,7 @@ class ObjectiveStackTest {
 
     }
 
-    @Test
-    void isValid() {
-        ObjectiveGardener objectiveGardener = new ObjectiveGardener("gardener",2);
-        ObjectiveGardener objectiveGardener2 = new ObjectiveGardener("gardener",3);
-        List<ObjectiveGardener> list = new ArrayList<ObjectiveGardener>();
-        ObjectiveStackGardener objectiveStack = new ObjectiveStackGardener(list);
-        ObjectiveGardener objectiveGardener3 = new ObjectiveGardener("gardener",4);
-        objectiveStack.putBelow(objectiveGardener3);
-        assertTrue(objectiveStack.isValid());
-        objectiveStack.putBelow(objectiveGardener2);
-        assertFalse(objectiveStack.isValid());
 
-    }
 
     @Test
     void testToString() {

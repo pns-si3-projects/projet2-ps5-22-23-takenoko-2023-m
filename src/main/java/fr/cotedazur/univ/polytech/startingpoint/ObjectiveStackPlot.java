@@ -26,10 +26,6 @@ public class ObjectiveStackPlot extends Stack<ObjectivePlot> {
         return super.randomPick();
     }
 
-    @Override
-    public boolean isValid() {
-        return super.isValid();
-    }
 
 
     @Override
@@ -41,7 +37,7 @@ public class ObjectiveStackPlot extends Stack<ObjectivePlot> {
         return s;
     }
 
-    
+
     @Override
     public List<ObjectivePlot> getStack() {
         return super.getStack();

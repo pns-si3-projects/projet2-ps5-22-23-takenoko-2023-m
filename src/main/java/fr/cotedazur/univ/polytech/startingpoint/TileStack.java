@@ -35,10 +35,7 @@ public class TileStack extends Stack<Tile>{
         return tiles;
     }
 
-    @Override
-    public boolean isValid() {
-        return true;
-    }
+
 
     @Override
     public String toString() {

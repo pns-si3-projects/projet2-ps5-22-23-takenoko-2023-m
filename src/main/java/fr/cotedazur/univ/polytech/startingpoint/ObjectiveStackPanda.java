@@ -26,10 +26,6 @@ public class ObjectiveStackPanda extends Stack<ObjectivePanda> {
         return super.randomPick();
     }
 
-    @Override
-    public boolean isValid() {
-        return super.isValid();
-    }
 
 
     public String toString(){

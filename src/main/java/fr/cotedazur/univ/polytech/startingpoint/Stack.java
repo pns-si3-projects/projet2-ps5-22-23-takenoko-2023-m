@@ -36,17 +36,7 @@ public abstract class Stack<T> {
         list.remove(o);
         return o;
     }
-    public boolean isValid(){
-        int count = 0;
-        for (T objective: list){
-            for (T objective2: list){
-                if (objective.equals(objective2)){
-                    count++;
-                }
-            }
-        }
-        return count<2;
-    }
+
 
 
     public String toString(){

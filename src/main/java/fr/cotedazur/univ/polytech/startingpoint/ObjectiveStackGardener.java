@@ -31,10 +31,6 @@ public class ObjectiveStackGardener extends Stack<ObjectiveGardener> {
     }
 
 
-    @Override
-    public boolean isValid() {
-        return super.isValid();
-    }
 
 
 
