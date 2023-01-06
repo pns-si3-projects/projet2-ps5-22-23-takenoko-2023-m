@@ -26,13 +26,15 @@ public class Board {
 
     //this method allow a player to move the gardener on a decided position
     public String moveGardenerOn(Coordinate coordinate){
-        String spread = gardener.moveOn(coordinate);
-        return "Le jardinier a été déplacé en "+coordinate.getX()+", "+coordinate.getY() + " cette tuile est maintenant à: "+ this.getTile(coordinate).getBamboo() +" bamboo(s)\n"+spread;
+
+        int bNumber = gardener.moveOn(coordinate);
+        return "Le jardinier à été déplacé en "+coordinate.getX()+", "+coordinate.getY() + " cette tuile est maintenant à: "+ bNumber +" bamboo(s)";
+
     }
 
     public String movePandaOn(Coordinate coordinate, Player player){
         this.panda.moveOn(coordinate,player);
-        return "Le panda a ete deplace en "+coordinate.getX()+", "+coordinate.getY() + "il possède maintenant : "+player.getNbBamboo() +" bambous";
+        return "Le panda à été deplace en "+coordinate.getX()+", "+coordinate.getY() + " il possède maintenant : "+player.getNbBamboo() +" bambous";
     }
 
     public String addTile(Tile tile){
