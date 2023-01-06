@@ -32,7 +32,7 @@ public class Board {
 
     public String movePandaOn(Coordinate coordinate, Player player){
         this.panda.moveOn(coordinate,player);
-        return "Le panda a ete deplace en "+coordinate.getX()+", "+coordinate.getY() + "il possède maintenant : "+player.getNbBamboo() +" bambous";
+        return "Le panda a ete deplace en "+coordinate.getX()+", "+coordinate.getY() + " il possède maintenant : "+player.getNbBamboo() +" bambous";
     }
 
     public String addTile(Tile tile){
