@@ -48,15 +48,16 @@ public class Tile {
         ArrayList<Coordinate> availableCoordinates = new ArrayList<>();
 
         for (int i = 0; i < boardTiles.size(); i++) {
-            boolean isOnSimpleX = this.getCoordinnateX() == boardTiles.get(i).getCoordinnateX();
-            boolean isOnSimpleY = this.getCoordinnateY() == boardTiles.get(i).getCoordinnateY();
+            boolean isOnSimpleX = this.getCoordinnateX() == boardTiles.get(i).getCoordinnateX();    //simpleX means only the line that only changes on x
+            boolean isOnSimpleY = this.getCoordinnateY() == boardTiles.get(i).getCoordinnateY();    //simpleY means only the line that only changes on y
+            //complexXY means that the line changes on +X-Y or -X+Y
             boolean isOnComplexXY = (boardTiles.get(i).getCoordinnateX() - this.getCoordinnateX()) == -(boardTiles.get(i).getCoordinnateY() - this.getCoordinnateY());
 
+            //if it is on one of the three lines AND if it is not this coordinate
             if ((isOnSimpleX || isOnSimpleY || isOnComplexXY) && !(boardTiles.get(i).coordinate.equals(this.getCoordinate()))) {
-                availableCoordinates.add(boardTiles.get(i).getCoordinate());
+                availableCoordinates.add(boardTiles.get(i).getCoordinate());    //add it to the available coordinates
             }
         }
-
         return availableCoordinates;
     }
 

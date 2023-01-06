@@ -57,7 +57,7 @@ class TileTest {
     void testScanAvailableCoordinatesToMove() {
         ArrayList<Tile> boardTiles = new ArrayList<>();
         //warning : this arrayList must be similar to what a boardTile in board would be (no doubles nor illegal tile placements)
-        boardTiles.add(t0_0);
+        boardTiles.add(new Tile(0,0));
         boardTiles.add(new Tile(1,0));
         boardTiles.add(new Tile(2,0));
         boardTiles.add(new Tile(3,0));
@@ -72,7 +72,7 @@ class TileTest {
         boardTiles.add(new Tile(-1,3));
 
         ArrayList<Coordinate> availableMovingPositionFrom_1_1 = new Tile(1,1).scanAvailableCoordinatesToMove(boardTiles);
-
+        //does contain the available coordinates
         assertTrue(availableMovingPositionFrom_1_1.contains(new Coordinate(-1,3)));
         assertTrue(availableMovingPositionFrom_1_1.contains(new Coordinate(2,0)));
         assertTrue(availableMovingPositionFrom_1_1.contains(new Coordinate(0,1)));
@@ -81,5 +81,9 @@ class TileTest {
         assertTrue(availableMovingPositionFrom_1_1.contains(new Coordinate(1,2)));
         //does not contain the source coordinate
         assertFalse(availableMovingPositionFrom_1_1.contains(new Coordinate(1,1)));
+        //does not contain not available coordinates
+        assertFalse(availableMovingPositionFrom_1_1.contains(new Coordinate(-1,2)));
+        assertFalse(availableMovingPositionFrom_1_1.contains(new Coordinate(0,0)));
+        assertFalse(availableMovingPositionFrom_1_1.contains(new Coordinate(3,0)));
     }
 }
