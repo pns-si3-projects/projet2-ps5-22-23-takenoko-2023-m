@@ -12,6 +12,9 @@ public class Tile {
     }
 
     public Tile(int x, int y){ coordinate = new Coordinate(x,y); }
+    public Tile(Coordinate coordinate) {
+        this.coordinate = coordinate;
+    }
 
     public int getCoordinnateX() {
         return coordinate.getX();
@@ -40,6 +43,24 @@ public class Tile {
         return false;
     }
 
+    //scans the available Tiles to move panda and gardener considering boardTiles
+    public ArrayList<Coordinate> scanAvailableCoordinatesToMove (ArrayList<Tile> boardTiles) {
+        ArrayList<Coordinate> availableCoordinates = new ArrayList<>();
+
+        for (int i = 0; i < boardTiles.size(); i++) {
+            boolean isOnSimpleX = this.getCoordinnateX() == boardTiles.get(i).getCoordinnateX();    //simpleX means only the line that only changes on x
+            boolean isOnSimpleY = this.getCoordinnateY() == boardTiles.get(i).getCoordinnateY();    //simpleY means only the line that only changes on y
+            //complexXY means that the line changes on +X-Y or -X+Y
+            boolean isOnComplexXY = (boardTiles.get(i).getCoordinnateX() - this.getCoordinnateX()) == -(boardTiles.get(i).getCoordinnateY() - this.getCoordinnateY());
+
+            //if it is on one of the three lines AND if it is not this coordinate
+            if ((isOnSimpleX || isOnSimpleY || isOnComplexXY) && !(boardTiles.get(i).coordinate.equals(this.getCoordinate()))) {
+                availableCoordinates.add(boardTiles.get(i).getCoordinate());    //add it to the available coordinates
+            }
+        }
+        return availableCoordinates;
+    }
+
     //returns an array of all the neighbour tiles, whether there is one tile at this place or not
     //the name may not be well-chosen, please feel free to propose a new one
     public ArrayList<Coordinate> getNeighbourCoordinates () {
@@ -64,7 +85,7 @@ public class Tile {
         return neighbourCoordinates;
     }
 
-
+    // scans the available tiles to move panda and gardener from this Tile considering the available Tiles in boardTiles
     @Override
     public String toString() {
         String str = "Tile at x = " + coordinate.getX() + ", y = " + coordinate.getY();

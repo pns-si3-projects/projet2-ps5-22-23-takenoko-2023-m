@@ -16,6 +16,8 @@ class ObjectiveGardenerTest {
 
     @Test
     void setNb() {
+
+
         ObjectiveGardener objectiveGardener = new ObjectiveGardener("gardener",2, 11);
         objectiveGardener.setNbPointsWin(3);
         assertEquals(3, objectiveGardener.getNbPointsWin());
