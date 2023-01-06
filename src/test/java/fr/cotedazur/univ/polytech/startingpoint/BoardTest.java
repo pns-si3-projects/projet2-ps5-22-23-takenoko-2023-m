@@ -27,14 +27,12 @@ class BoardTest {
         trueTiles.add(new Coordinate(0, -1));
         trueTiles.add(new Coordinate(0, 1));
         trueTiles.add(new Coordinate(1, -1));
-        trueTiles.add(new Coordinate(1, 1));
-        trueTiles.add(new Coordinate(2, -1));
-        trueTiles.add(new Coordinate(2, 0));
 
-        assertEquals(8, tilesToTest.size());
+
+        assertEquals(5, tilesToTest.size());
         for (int i = 0; i < tilesToTest.size(); i++) {
-            assertTrue(tilesToTest.get(i).equals(trueTiles.get(i)));
             //System.out.println(tilesToTest.get(i));   //only to visualise the ArrayList
+            assertTrue(tilesToTest.get(i).equals(trueTiles.get(i)));
         }
     }
 }

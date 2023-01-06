@@ -1,13 +1,17 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 
 public class Tile {
     private final Coordinate coordinate;
-    public Tile(int x, int y){
+    private int bamboo = 0;
+    private TypeOfTile typeOfTile;
+    public Tile(int x, int y, TypeOfTile type){
         coordinate = new Coordinate(x, y);
+        this.typeOfTile = type;
     }
+
+    public Tile(int x, int y){ coordinate = new Coordinate(x,y); }
 
     public int getCoordinnateX() {
         return coordinate.getX();
@@ -39,20 +43,6 @@ public class Tile {
     //returns an array of all the neighbour tiles, whether there is one tile at this place or not
     //the name may not be well-chosen, please feel free to propose a new one
     public ArrayList<Coordinate> getNeighbourCoordinates () {
-        /*
-        ArrayList<Tile> neighbourCoordinates = new ArrayList<>();   //this ArrayList gets all the neighbour position of this tile
-        //attribution of neighbourCoordinates
-        for (int i = -1; i < 2; i++) {
-            for (int j = -1; j < 2; j++) {
-                if (i != j) {   //gets rid of (-1, -1), (+0, +0), (+1, +1)
-                    int xToTest = coordinate.getX() + i;
-                    int yToTest = coordinate.getY() + j;
-                    Tile potentialNeighbour = new Tile(xToTest, yToTest);
-                    neighbourCoordinates.add(potentialNeighbour);
-                }
-            }
-
-         */
         ArrayList<Coordinate> neighbourCoordinates = new ArrayList<>();
 
         for (int i = -1; i < 2; i++) {
@@ -65,14 +55,12 @@ public class Tile {
                 }
             }
         }
-
         /*
         //check the result :
         System.out.println("size : " + neighbourCoordinates.size());
         for (int i = 0; i < 6; i++) {
             System.out.println(neighbourCoordinates.get(i));
         }*/
-
         return neighbourCoordinates;
     }
 
@@ -83,29 +71,29 @@ public class Tile {
         return str;
     }
 
-//fonction temporaire destinée à être remplacée
-    public boolean isNeighbor(Tile tile){
-        if(tile.getCoordinnateX() == this.getCoordinnateX() && tile.getCoordinnateY() == this.getCoordinnateY()+1){
-            return true;
-        }
-        if(tile.getCoordinnateX() == this.getCoordinnateX() && tile.getCoordinnateY() == this.getCoordinnateY()-1){
-            return true;
-        }
-        if(tile.getCoordinnateX() == this.getCoordinnateX()+1 && tile.getCoordinnateY() == this.getCoordinnateY()){
-            return true;
-        }
-        if(tile.getCoordinnateX() == this.getCoordinnateX()-1 && tile.getCoordinnateY() == this.getCoordinnateY()){
-            return true;
-        }
-        if(tile.getCoordinnateX() == this.getCoordinnateX()+1 && tile.getCoordinnateY() == this.getCoordinnateY()-1){
-            return true;
-        }
-        if(tile.getCoordinnateX() == this.getCoordinnateX()-1 && tile.getCoordinnateY() == this.getCoordinnateY()+1){
-            return true;
-        }
-        return false;
+    public void eatBamboo(){
+        this.bamboo--;
+
+    }
+
+    public TypeOfTile getTypeOfTile(){
+        return this.typeOfTile;
     }
 
 
+    public int grow(int i) {
+        bamboo+=i;
+        if(bamboo>4) bamboo =4;
+
+        return bamboo;
+    }
+
+    public int getBamboo() {
+        return bamboo;
+    }
+
+    public void setBamboo(int bamboo) {
+        this.bamboo = bamboo;
+    }
 }
 

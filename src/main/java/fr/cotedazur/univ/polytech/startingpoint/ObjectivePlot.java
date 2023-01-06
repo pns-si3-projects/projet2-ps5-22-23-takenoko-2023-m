@@ -1,6 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-public class ObjectivePlot {
+public class ObjectivePlot implements ObjectiveInterface {
 
     private String type = "line2";
 
@@ -12,7 +12,7 @@ public class ObjectivePlot {
     public boolean isValid(Board b){
         for(Tile tile : b.getBoardTiles()){
             for(Tile tile2 : b.getBoardTiles()){
-                if(tile.isNeighbor(tile2)){
+                if(tile.isNeighbour(tile2)){
                     return true;
                 }
             }
@@ -29,6 +29,7 @@ public class ObjectivePlot {
     public String toString(){
         return "Objectif de type "+this.type;
     }
+   
 
 
 
