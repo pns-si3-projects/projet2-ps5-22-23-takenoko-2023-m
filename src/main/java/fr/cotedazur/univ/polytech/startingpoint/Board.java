@@ -27,8 +27,9 @@ public class Board {
     //this method allow a player to move the gardener on a decided position
     public String moveGardenerOn(Coordinate coordinate){
 
-        int bNumber = gardener.moveOn(coordinate);
-        return "Le jardinier à été déplacé en "+coordinate.getX()+", "+coordinate.getY() + " cette tuile est maintenant à: "+ bNumber +" bamboo(s)";
+        String bNumber = gardener.moveOn(coordinate);
+        int nbBamboo = this.getTile(coordinate).getBamboo();
+        return "Le jardinier à été déplacé en "+coordinate.getX()+", "+coordinate.getY() + " cette tuile est maintenant à: "+ nbBamboo +" bamboo(s)";
 
     }
 

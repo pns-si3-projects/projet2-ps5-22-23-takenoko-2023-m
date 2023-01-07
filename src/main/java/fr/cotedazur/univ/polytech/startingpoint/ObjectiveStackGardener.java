@@ -8,10 +8,10 @@ public class ObjectiveStackGardener extends Stack<ObjectiveGardener> {
     @Override
     public void generate() {
         for(int i=0; i<13;i++){
-            this.putBelow(new ObjectiveGardener("gardener", 4));
+            this.putBelow(new ObjectiveGardener("gardener", 4,5));
         }
         for(int i=0; i<3;i++){
-            this.putBelow(new ObjectiveGardener("gardener", 3));
+            this.putBelow(new ObjectiveGardener("gardener", 3,5));
         }
     }
 
