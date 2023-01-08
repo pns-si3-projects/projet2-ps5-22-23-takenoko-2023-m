@@ -112,7 +112,7 @@ public class Player {
             this.resetNbBamboo();
             this.setPoint(this.focusCard.getNbPointsWin()+this.getPoint());
             this.focusCard = null;
-            System.out.println("Objectif realise");
+            System.out.println("Objectif accompli !");
         }
     }
 

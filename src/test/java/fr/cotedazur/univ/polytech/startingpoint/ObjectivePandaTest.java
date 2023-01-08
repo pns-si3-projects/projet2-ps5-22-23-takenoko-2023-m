@@ -31,6 +31,6 @@ class ObjectivePandaTest {
     @Test
     void testToString() {
         ObjectivePanda objectivePanda = new ObjectivePanda("panda",2, 10);
-        assertEquals("Objectif de type panda et de nombre de bambou à manger 2", objectivePanda.toString());
+        assertEquals("Objectif de type panda et de nombre de bambou a manger 2", objectivePanda.toString());
     }
 }

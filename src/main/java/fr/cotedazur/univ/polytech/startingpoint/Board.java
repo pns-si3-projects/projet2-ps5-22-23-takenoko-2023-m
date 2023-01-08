@@ -50,18 +50,18 @@ public class Board {
 
         String bNumber = gardener.moveOn(coordinate);
         int nbBamboo = this.getTile(coordinate).getBamboo();
-        return "Le jardinier à été déplacé en "+coordinate.getX()+", "+coordinate.getY() + " cette tuile est maintenant à: "+ nbBamboo +" bamboo(s)";
+        return "Le jardinier a ete deplace en "+coordinate.getX()+", "+coordinate.getY() + " cette tuile est maintenant a: "+ nbBamboo +" bamboo(s)";
 
     }
 
     public String movePandaOn(Coordinate coordinate, Player player){
         this.panda.moveOn(coordinate,player);
-        return "Le panda à été deplace en "+coordinate.getX()+", "+coordinate.getY() + " il possède maintenant : "+player.getNbBamboo() +" bambous";
+        return "Le panda a ete deplace en "+coordinate.getX()+", "+coordinate.getY() + " il possede maintenant : "+player.getNbBamboo() +" bambous";
     }
 
     public String addTile(Tile tile){
         boardTiles.add(tile);
-        return "Une carte à été posée en:"+tile.getCoordinnateX()+" "+tile.getCoordinnateY();
+        return "Une carte a ete posee en:"+tile.getCoordinnateX()+" "+tile.getCoordinnateY();
     }
 
 
