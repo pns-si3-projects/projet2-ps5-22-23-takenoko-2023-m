@@ -14,7 +14,7 @@ class ObjectivePlotTest {
         ObjectivePlot objectivePlot = new ObjectivePlot("line2", 3);
         ArrayList<ObjectiveInterface> objectives = new ArrayList<ObjectiveInterface>();
         objectives.add(objectivePlot);
-        Player bot1 = new Player(board, "Robot 1", objectives);
+        Player bot1 = new Player(board, "Robot 1");
         board.addTile(new Tile(0,0));
         board.addTile(new Tile(1,0));
         assertTrue(objectivePlot.isValid(bot1, board));

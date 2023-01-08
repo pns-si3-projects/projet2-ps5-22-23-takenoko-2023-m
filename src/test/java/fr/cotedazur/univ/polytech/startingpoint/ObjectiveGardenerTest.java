@@ -11,7 +11,7 @@ class ObjectiveGardenerTest {
     @Test
     void getNb() {
         ObjectiveGardener objectiveGardener = new ObjectiveGardener("gardener",2, 1);
-        assertEquals(2, objectiveGardener.getNbPointsWin());
+        assertEquals(1, objectiveGardener.getNbPointsWin());
     }
 
     @Test
@@ -29,7 +29,7 @@ class ObjectiveGardenerTest {
         ObjectiveGardener objectiveGardener = new ObjectiveGardener("gardener",2, 11);
         ArrayList<ObjectiveInterface> objectives = new ArrayList<ObjectiveInterface>();
         objectives.add(objectiveGardener);
-        Player bot1 = new Player(board, "Robot 1", objectives);
+        Player bot1 = new Player(board, "Robot 1");
         board.addTile(new Tile(0,0));
         board.addTile(new Tile(1,0));
         board.addTile(new Tile(0,1));

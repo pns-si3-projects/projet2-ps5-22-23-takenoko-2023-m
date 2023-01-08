@@ -44,6 +44,7 @@ class PlayerTest {
     void getNbActions() {
         Board board = new Board();
         Player bot1 = new Player(board,"bot1");
+        bot1.resetNbActions();
         assertEquals(2,bot1.getNbActions());
     }
 
@@ -51,6 +52,7 @@ class PlayerTest {
     void playAction() {
         Board board = new Board();
         Player bot1 = new Player(board,"bot1");
+        bot1.resetNbActions();
         bot1.playAction();
         assertEquals(1,bot1.getNbActions());
     }
