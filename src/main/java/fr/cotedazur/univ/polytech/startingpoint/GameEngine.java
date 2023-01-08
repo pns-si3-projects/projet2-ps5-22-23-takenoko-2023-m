@@ -12,25 +12,25 @@ public class GameEngine {
     }
 
     public void launchGame(){
+    //On boucle sur le jeu
         int indexPlayer = 0;
+        int nbTour = 1;
         while(true){
-            //On mime ici les actions réalisées par les différents bots. La méthode play() produira une action réalisée par le bot et son tour sera fini
+            System.out.println("<       > Tour numero : "+nbTour+" <       >");
             this.playerList.get(indexPlayer).play();
-
-            //Si suite à une action d'un bot, son nombre d'objectifs réalisés est de 9, alors la game est finie et le bot est le vainqueur de la partie
-            //if(this.playerList.get(indexPlayer).getNbObjectifsRealises == 9){
-            System.out.println("Le bot "+this.playerList.get(indexPlayer).getNom()+" a gagné la partie");
-            break;
-                //Print winner
-                //break
-            //}
-            //indexPlayer++;
-            /*if(indexPlayer == this.playerList.size()){
+            //On vérifie si un joueur atteint le nombre max de points
+            if (this.playerList.get(indexPlayer).getPoint() >= 9){
+                printWinner(this.playerList.get(indexPlayer));
+                break;
+            }
+            indexPlayer +=1;
+            if(indexPlayer == this.playerList.size()){
                 indexPlayer=0;
-            }*/
+                nbTour++;
+            }
         }
     }
     public void printWinner(Player p){
-        System.out.println("Le joueur est gagnant est : "+p.getNom()+" avec un score de "+p.getPoint()+" points marqués");
+        System.out.println("Le joueur est gagnant est : "+p.getNom()+" avec un score de "+p.getPoint()+" points marques");
     }
 }

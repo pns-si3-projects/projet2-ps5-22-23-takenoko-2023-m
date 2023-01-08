@@ -5,21 +5,20 @@ public class ObjectivePanda implements ObjectiveInterface{
         private String type = "panda";
 
         private int nbToEat;
+        private int nbPointsWin;
 
-        private boolean validity = false;
-
-        public ObjectivePanda(String type, int nbToEat){
+        public ObjectivePanda(String type, int nbToEat, int nbPointsWin){
             this.type = type;
             this.nbToEat = nbToEat;
-        }
-
-        public void setValid(){
-            this.validity = true;
+            this.nbPointsWin = nbPointsWin;
         }
 
 
-        public boolean isValid(Board b){
-            return this.validity;
+        public int getNbPointsWin() { return this.nbPointsWin; }
+
+
+        public boolean isValid(Player p, Board b){
+            return p.getNbBamboo()==this.nbToEat;
         }
 
 
@@ -35,7 +34,7 @@ public class ObjectivePanda implements ObjectiveInterface{
             return this.nbToEat;
         }
         public String toString(){
-            return "Objectif de type "+this.type + " et de nombre de bambou à manger " + this.nbToEat;
+            return "Objectif de type "+this.type + " et de nombre de bambou a manger " + this.nbToEat;
         }
 
 }
