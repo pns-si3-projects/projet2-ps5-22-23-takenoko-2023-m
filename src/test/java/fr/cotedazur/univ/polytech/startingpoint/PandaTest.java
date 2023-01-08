@@ -12,7 +12,7 @@ class PandaTest {
     @BeforeAll
     static void beforeAll(){
         board = new Board();
-        player = new Player(board,"Joueur1",null);
+        player = new Player(board,"Joueur1");
         Tile start = new Tile(0,0);
         board.addTile(start);
         Tile tile1 = new Tile(1,0);
