@@ -10,10 +10,12 @@ public class Player {
     private ObjectiveInterface focusCard = null;
 
     private ArrayList<ObjectiveInterface> objectives = new ArrayList<ObjectiveInterface>();
-    public Player(Board board, String nom, ArrayList<ObjectiveInterface> objectives){
+    public Player(Board board, String nom){
         this.nom = nom;
         this.board = board;
-        this.objectives = objectives;
+        this.pickGardenerCard();
+        //this.objectives.add(this.board.getPlotCard()); Can't do this now
+        this.pickPandaCard();
     }
 
     public int getPoint() {
@@ -159,6 +161,24 @@ public class Player {
 
     public void upNbBamboo(){
         this.nbBamboo++;
+    }
+
+    public void pickPandaCard(){
+        this.objectives.add(this.board.getPandaCard());
+        System.out.println("Le joueur "+this.getNom()+" à pioché une carte Panda!");
+        this.playAction();
+    }
+
+    public void pickPlotCard(){
+        this.objectives.add(this.board.getPlotCard());
+        System.out.println("Le joueur "+this.getNom()+" à pioché une carte Pattern!");
+        this.playAction();
+    }
+
+    public void pickGardenerCard(){
+        this.objectives.add(this.board.getGardenerCard());
+        System.out.println("Le joueur "+this.getNom()+" à pioché une carte Jardinier!");
+        this.playAction();
     }
 
 }
