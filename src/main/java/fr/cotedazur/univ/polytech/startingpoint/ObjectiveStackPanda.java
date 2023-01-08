@@ -44,11 +44,17 @@ public class ObjectiveStackPanda extends Stack<ObjectivePanda> {
 
     @Override
     public void generate() {
-        for(int i=0; i<12;i++){
+        for(int i=0; i<5;i++){
+            this.putBelow(new ObjectivePanda("panda", 2,3));
+        }
+        for(int i=0; i<4;i++){
+            this.putBelow(new ObjectivePanda("panda", 2,4));
+        }
+        for(int i=0; i<3;i++){
             this.putBelow(new ObjectivePanda("panda", 2,5));
         }
         for(int i=0; i<3;i++){
-            this.putBelow(new ObjectivePanda("panda", 3,5));
+            this.putBelow(new ObjectivePanda("panda", 3,6));
         }
     }
 
