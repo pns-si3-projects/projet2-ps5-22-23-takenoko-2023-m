@@ -17,6 +17,9 @@ class ObjectivePlotTest {
         Player bot1 = new Player(board, "Robot 1", objectives);
         board.addTile(new Tile(new Coordinate(0,0)));
         board.addTile(new Tile(new Coordinate(1,0)));
+        Player bot1 = new Player(board, "Robot 1");
+        board.addTile(new Tile(0,0));
+        board.addTile(new Tile(1,0));
         assertTrue(objectivePlot.isValid(bot1, board));
     }
 
