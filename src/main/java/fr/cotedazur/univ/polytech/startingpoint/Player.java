@@ -165,19 +165,19 @@ public class Player {
 
     public void pickPandaCard(){
         this.objectives.add(this.board.getPandaCard());
-        System.out.println("Le joueur "+this.getNom()+" à pioché une carte Panda!");
+        System.out.println("Le joueur "+this.getNom()+" a pioche une carte Panda!");
         this.playAction();
     }
 
     public void pickPlotCard(){
         this.objectives.add(this.board.getPlotCard());
-        System.out.println("Le joueur "+this.getNom()+" à pioché une carte Pattern!");
+        System.out.println("Le joueur "+this.getNom()+" a pioche une carte Pattern!");
         this.playAction();
     }
 
     public void pickGardenerCard(){
         this.objectives.add(this.board.getGardenerCard());
-        System.out.println("Le joueur "+this.getNom()+" à pioché une carte Jardinier!");
+        System.out.println("Le joueur "+this.getNom()+" a pioche une carte Jardinier!");
         this.playAction();
     }
 

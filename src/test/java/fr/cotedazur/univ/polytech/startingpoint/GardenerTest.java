@@ -23,7 +23,6 @@ class GardenerTest {
     void moveOnUngrown() {
         System.out.println(board.moveGardenerOn(new Coordinate(1,0)));
         assertTrue(board.getTile(new Coordinate(1,0)).getBamboo()==1);
-        assertTrue(board.getTile(new Coordinate(0,0)).getBamboo()==1);
         assertTrue(board.getTile(new Coordinate(1,1)).getBamboo()==1);
         assertFalse(board.getTile(new Coordinate(0,1)).getBamboo()==1);
         assertFalse(board.getTile(new Coordinate(1,2)).getBamboo()==1);

@@ -34,7 +34,7 @@ public class ObjectivePanda implements ObjectiveInterface{
             return this.nbToEat;
         }
         public String toString(){
-            return "Objectif de type "+this.type + " et de nombre de bambou à manger " + this.nbToEat;
+            return "Objectif de type "+this.type + " et de nombre de bambou a manger " + this.nbToEat;
         }
 
 }

@@ -31,6 +31,6 @@ public class GameEngine {
         }
     }
     public void printWinner(Player p){
-        System.out.println("Le joueur est gagnant est : "+p.getNom()+" avec un score de "+p.getPoint()+" points marqués");
+        System.out.println("Le joueur est gagnant est : "+p.getNom()+" avec un score de "+p.getPoint()+" points marques");
     }
 }

@@ -30,7 +30,7 @@ public class Board {
         this.stackGardener.generate();
         this.stackPanda.generate();
         this.stackPlot.generate();
-        this.addTile(new Tile(0,0,TypeOfTile.GREEN));
+        this.addTile(new Tile(0,0,TypeOfTile.POND));
     }
 
     public ObjectivePanda getPandaCard(){
