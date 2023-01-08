@@ -10,7 +10,7 @@ class ObjectiveGardenerTest {
 
     @Test
     void getNb() {
-        ObjectiveGardener objectiveGardener = new ObjectiveGardener("gardener",2, 1);
+        ObjectiveGardener objectiveGardener = new ObjectiveGardener("gardener",2, 2);
         assertEquals(2, objectiveGardener.getNbPointsWin());
     }
 
@@ -26,15 +26,15 @@ class ObjectiveGardenerTest {
     @Test
     void isValid() {
         Board board = new Board();
-        ObjectiveGardener objectiveGardener = new ObjectiveGardener("gardener",2, 11);
+        ObjectiveGardener objectiveGardener = new ObjectiveGardener("gardener",3, 11);
         ArrayList<ObjectiveInterface> objectives = new ArrayList<ObjectiveInterface>();
         objectives.add(objectiveGardener);
         Player bot1 = new Player(board, "Robot 1", objectives);
-        board.addTile(new Tile(0,0));
-        board.addTile(new Tile(1,0));
-        board.addTile(new Tile(0,1));
-        board.addTile(new Tile(1,1));
-        board.addTile(new Tile(1,2));
+        board.addTile(new Tile(new Coordinate(0,0)));
+        board.addTile(new Tile(new Coordinate(1,0)));
+        board.addTile(new Tile(new Coordinate(0,1)));
+        board.addTile(new Tile(new Coordinate(1,1)));
+        board.addTile(new Tile(new Coordinate(1,2)));
         board.moveGardenerOn(new Coordinate(1,0));
         board.moveGardenerOn(new Coordinate(1,1));
         board.moveGardenerOn(new Coordinate(1,0));

@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TileTest {
-    Tile t0_0 = new Tile(0,0);
-    Tile t0_1 = new Tile(0,1);
-    Tile t1_1 = new Tile(1,1);
-    Tile t0_n2 = new Tile(0,-2);
-    Tile tn1_n1 = new Tile(-1,-1);
-    Tile t1_n2 = new Tile(1,-2);
+    Tile t0_0 = new Tile(new Coordinate(0,0));
+    Tile t0_1 = new Tile(new Coordinate(0,1));
+    Tile t1_1 = new Tile(new Coordinate(1,1));
+    Tile t0_n2 = new Tile(new Coordinate(0,-2));
+    Tile tn1_n1 = new Tile(new Coordinate(-1,-1));
+    Tile t1_n2 = new Tile(new Coordinate(1,-2));
 
     @Test
     void testIsNeighbour() {
@@ -57,21 +57,21 @@ class TileTest {
     void testScanAvailableCoordinatesToMove() {
         ArrayList<Tile> boardTiles = new ArrayList<>();
         //warning : this arrayList must be similar to what a boardTile in board would be (no doubles nor illegal tile placements)
-        boardTiles.add(new Tile(0,0));
-        boardTiles.add(new Tile(1,0));
-        boardTiles.add(new Tile(2,0));
-        boardTiles.add(new Tile(3,0));
-        boardTiles.add(new Tile(0,1));
-        boardTiles.add(new Tile(1,1));
-        boardTiles.add(new Tile(2,1));
-        boardTiles.add(new Tile(3,1));
-        boardTiles.add(new Tile(-1,2));
-        boardTiles.add(new Tile(0,2));
-        boardTiles.add(new Tile(1,2));
-        boardTiles.add(new Tile(2,2));
-        boardTiles.add(new Tile(-1,3));
+        boardTiles.add(new Tile(new Coordinate(0,0)));
+        boardTiles.add(new Tile(new Coordinate(1,0)));
+        boardTiles.add(new Tile(new Coordinate(2,0)));
+        boardTiles.add(new Tile(new Coordinate(3,0)));
+        boardTiles.add(new Tile(new Coordinate(0,1)));
+        boardTiles.add(new Tile(new Coordinate(1,1)));
+        boardTiles.add(new Tile(new Coordinate(2,1)));
+        boardTiles.add(new Tile(new Coordinate(3,1)));
+        boardTiles.add(new Tile(new Coordinate(-1,2)));
+        boardTiles.add(new Tile(new Coordinate(0,2)));
+        boardTiles.add(new Tile(new Coordinate(1,2)));
+        boardTiles.add(new Tile(new Coordinate(2,2)));
+        boardTiles.add(new Tile(new Coordinate(-1,3) ));
 
-        ArrayList<Coordinate> availableMovingPositionFrom_1_1 = new Tile(1,1).scanAvailableCoordinatesToMove(boardTiles);
+        ArrayList<Coordinate> availableMovingPositionFrom_1_1 = new Tile(new Coordinate(1,1)).scanAvailableCoordinatesToMove(boardTiles);
         //does contain the available coordinates
         assertTrue(availableMovingPositionFrom_1_1.contains(new Coordinate(-1,3)));
         assertTrue(availableMovingPositionFrom_1_1.contains(new Coordinate(2,0)));

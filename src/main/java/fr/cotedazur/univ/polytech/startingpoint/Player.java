@@ -61,7 +61,7 @@ public class Player {
     public void playForGardenerCard(){
         if (this.board.getBoardTiles().size() == 1){
             ArrayList<Coordinate> availableCoordinates = this.board.scanAvailableTilePosition();
-            System.out.println(this.board.addTile(new Tile(availableCoordinates.get(0).getX(), availableCoordinates.get(0).getY())));
+            System.out.println(this.board.addTile(new Tile(new Coordinate(availableCoordinates.get(0).getX(), availableCoordinates.get(0).getY()))));
             this.playAction();
         }
         int numberTile = this.board.getBoardTiles().size();
@@ -98,10 +98,10 @@ public class Player {
 
         if (!verification){
             ArrayList<Coordinate> availableCoordinates = this.board.scanAvailableTilePosition();
-            System.out.println(this.addTile(new Tile(availableCoordinates.get(0).getX(), availableCoordinates.get(0).getY())));
+            System.out.println(this.addTile(new Tile(new Coordinate(availableCoordinates.get(0).getX(), availableCoordinates.get(0).getY()))));
             this.playAction();
             if(this.getNbActions()==1){
-                System.out.println(this.addTile(new Tile(availableCoordinates.get(0).getX(), availableCoordinates.get(0).getY())));
+                System.out.println(this.addTile(new Tile(new Coordinate(availableCoordinates.get(0).getX(), availableCoordinates.get(0).getY()))));
                 this.playAction();
             }
         }

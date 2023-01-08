@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 class BoardTest {
     Board twoTiles = new Board();
-    Tile t0_0 = new Tile(0,0);
-    Tile t1_0 = new Tile(1,0);
+    Tile t0_0 = new Tile(new Coordinate(0,0));
+    Tile t1_0 = new Tile(new Coordinate(1,0));
 
     @BeforeEach
     void setup() {

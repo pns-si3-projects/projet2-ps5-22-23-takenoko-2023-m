@@ -32,7 +32,7 @@ class GardenerTest {
     @Test
     @DisplayName("Gardener is moving to a tile grown to the max")
     void moveOnFullgrown() {
-        Tile tileTest4 = new Tile(2,2);
+        Tile tileTest4 = new Tile(new Coordinate(2,2));
         tileTest4.setBamboo(4);
         board.addTile(tileTest4);
         System.out.println(board.moveGardenerOn(new Coordinate(2,2)));
