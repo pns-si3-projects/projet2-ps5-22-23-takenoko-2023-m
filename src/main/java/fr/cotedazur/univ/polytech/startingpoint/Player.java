@@ -1,4 +1,5 @@
 package fr.cotedazur.univ.polytech.startingpoint;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 public class Player {
     private int point = 0;
@@ -64,6 +65,20 @@ public class Player {
             System.out.println(this.board.addTile(new Tile(availableCoordinates.get(0).getX(), availableCoordinates.get(0).getY())));
             this.playAction();
         }
+
+        while(this.getNbActions()>0) {
+            Tile gardenerPosition = this.board.getGardener().getTile();
+            ArrayList<Coordinate> availablePositionsGardener = gardenerPosition.scanAvailableCoordinatesToMove(this.board.getBoardTiles());
+            if(availablePositionsGardener.size()==0){
+                ArrayList<Coordinate> availableCoordinates = this.board.scanAvailableTilePosition();
+                System.out.println(this.board.addTile(new Tile(availableCoordinates.get(0).getX(), availableCoordinates.get(0).getY())));
+                this.playAction();
+            }else{
+                this.board.moveGardenerOn(availablePositionsGardener.get(0));
+                this.playAction();
+            }
+        }
+        /* PREVIOUS VERSION -- KEEP IT HERE
         int numberTile = this.board.getBoardTiles().size();
         Tile tileToMove = this.board.getBoardTiles().get(numberTile-1);
         System.out.println(this.board.moveGardenerOn(tileToMove.getCoordinate()));
@@ -72,7 +87,7 @@ public class Player {
         if(this.getNbActions()==1){
             System.out.println(this.board.moveGardenerOn(tileToMove.getCoordinate()));
             this.playAction();
-        }
+        }*/
 
         if(this.focusCard.isValid(this, this.board)){
             this.setPoint(this.getPoint()+this.focusCard.getNbPointsWin());
@@ -84,25 +99,28 @@ public class Player {
     }
 
     public void playForPandaCard(){
-        boolean verification = false;
-        for(Tile tile : this.board.getBoardTiles()){
-            if(tile.getBamboo()>0){
-                System.out.println(this.board.movePandaOn(tile.getCoordinate(),this));
+        while(this.getNbActions() > 0){
+            Tile positionPanda = this.board.getPanda().getTile();
+            ArrayList<Coordinate> availablePositionPanda = positionPanda.scanAvailableCoordinatesToMove(this.board.getBoardTiles());
+            if(availablePositionPanda.size()==0){
+                ArrayList<Coordinate> availablePositions = this.board.scanAvailableTilePosition();
+                System.out.println(this.board.addTile(new Tile(availablePositions.get(0).getX(),availablePositions.get(0).getY())));
                 this.playAction();
-                System.out.println(this.board.movePandaOn(tile.getCoordinate(),this));
-                this.playAction();
-                //System.out.println("Le joueur "+this.getNom()+" a fait avance le panda sur les coordones "+tile.getCoordinnateX() + tile.getCoordinnateY());
-                verification = true; break;
-            }
-        }
-
-        if (!verification){
-            ArrayList<Coordinate> availableCoordinates = this.board.scanAvailableTilePosition();
-            System.out.println(this.addTile(new Tile(availableCoordinates.get(0).getX(), availableCoordinates.get(0).getY())));
-            this.playAction();
-            if(this.getNbActions()==1){
-                System.out.println(this.addTile(new Tile(availableCoordinates.get(0).getX(), availableCoordinates.get(0).getY())));
-                this.playAction();
+            }else{
+                boolean pandaMove = false;
+                for(Coordinate co : availablePositionPanda){
+                    if(this.board.getTile(co).getBamboo()>0){
+                        System.out.println(this.board.movePandaOn(co,this));
+                        this.playAction();
+                        pandaMove = true;
+                        break;
+                    }
+                }
+                if(!pandaMove){
+                    ArrayList<Coordinate> availablePositions = this.board.scanAvailableTilePosition();
+                    System.out.println(this.board.addTile(new Tile(availablePositions.get(0).getX(),availablePositions.get(0).getY())));
+                    this.playAction();
+                }
             }
         }
 

@@ -29,7 +29,7 @@ class ObjectiveGardenerTest {
         ObjectiveGardener objectiveGardener = new ObjectiveGardener("gardener",2, 11);
         ArrayList<ObjectiveInterface> objectives = new ArrayList<ObjectiveInterface>();
         objectives.add(objectiveGardener);
-        Player bot1 = new Player(board, "Robot 1", objectives);
+        Player bot1 = new Player(board, "Robot 1");
         board.addTile(new Tile(0,0));
         board.addTile(new Tile(1,0));
         board.addTile(new Tile(0,1));
