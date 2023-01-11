@@ -16,6 +16,16 @@ public class Pattern {
         createdPattern.add(this);
     }
 
+    public Pattern(TypeOfPattern type, TypeOfTile firstColor, TypeOfTile secondColor){
+        this.type = type;
+        this.firstColor = firstColor;
+        this.secondColor = secondColor;
+    }
+    public Pattern(TypeOfPattern type, TypeOfTile firstColor){
+        this.type = type;
+        this.firstColor = firstColor;
+    }
+
     private int generatePatternPoint() {
         int sumOfPoint;
         if(this.type.equals(TypeOfPattern.SQUARE)){

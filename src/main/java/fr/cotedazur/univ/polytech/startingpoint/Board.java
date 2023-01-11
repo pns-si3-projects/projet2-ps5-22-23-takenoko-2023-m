@@ -24,6 +24,7 @@ public class Board {
 
     private final ObjectiveStackPlot stackPlot = new ObjectiveStackPlot();
 
+    final PatternDetector patternDetector = new PatternDetector(this);
 
     //constructor setting up the first tile of the board
     public Board(){
@@ -61,6 +62,7 @@ public class Board {
 
     public String addTile(Tile tile){
         boardTiles.add(tile);
+        patternDetector.detectPatternNear(tile.getCoordinate());
         return "Une carte a ete posee en:"+tile.getCoordinnateX()+" "+tile.getCoordinnateY();
     }
 
