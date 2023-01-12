@@ -6,19 +6,36 @@ public class Tile {
     private final Coordinate coordinate;
     private int bamboo = 0;
     private TypeOfTile typeOfTile;
+    private TypeOfArrangement typeOfArrangement=TypeOfArrangement.NONE;
     public Tile(int x, int y, TypeOfTile type){
         coordinate = new Coordinate(x, y);
         this.typeOfTile = type;
+        this.typeOfArrangement = TypeOfArrangement.NONE;
+    }
+
+    public Tile(int x, int y, TypeOfTile type, TypeOfArrangement typeOfArrangement){
+        coordinate = new Coordinate(x, y);
+        this.typeOfTile = type;
+        this.typeOfArrangement = typeOfArrangement;
     }
 
     public Tile(TypeOfTile type){
         coordinate = null;
         this.typeOfTile = type;
+        this.typeOfArrangement = TypeOfArrangement.NONE;
     }
+
+    public Tile(TypeOfTile type, TypeOfArrangement typeOfArrangement){
+        coordinate = null;
+        this.typeOfTile = type;
+        this.typeOfArrangement = typeOfArrangement;
+    }
+
 
     public Tile(Coordinate coordinate) {
         this.typeOfTile = TypeOfTile.GREEN;
         this.coordinate = coordinate;
+        this.typeOfArrangement = TypeOfArrangement.NONE;
     }
 
     public int getCoordinnateX() {
@@ -124,6 +141,14 @@ public class Tile {
 
     public void setTypeOfTile(TypeOfTile typeOfTile) {
         this.typeOfTile = typeOfTile;
+    }
+
+    public TypeOfArrangement getTypeOfArrangement() {
+        return typeOfArrangement;
+    }
+
+    public void setTypeOfArrangement(TypeOfArrangement typeOfArrangement) {
+        this.typeOfArrangement = typeOfArrangement;
     }
 }
 
