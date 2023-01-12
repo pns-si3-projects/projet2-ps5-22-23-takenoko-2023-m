@@ -50,10 +50,13 @@ public class Player {
             checkBetterCard();
         }
         if(this.focusCard instanceof ObjectiveGardener){
+            System.out.println("playing for gardener");
             this.playForGardenerCard();
         }else if(this.focusCard instanceof ObjectivePanda){
+            System.out.println("playing for panda");
             this.playForPandaCard();
         }else{
+            System.out.println("playing for pattern");
             this.playForPatternCard();
         }
         System.out.println();
@@ -117,15 +120,25 @@ public class Player {
                     }
                 }
                 if(!pandaMove){
+                    //TODO améliorer
+                    //old code that only allows to place tiles : may be of use after this
                     ArrayList<Coordinate> availablePositions = this.board.scanAvailableTilePosition();
                     System.out.println(this.board.addTile(new Tile(availablePositions.get(0).getX(),availablePositions.get(0).getY())));
                     this.playAction();
+                    /* //new code to implement if needed. it will allow the player to move the gardener to grow at least one tile available to the panda
+                    //if there is no bamboo available to the panda, the player will try to move the gardener onto a Tile accessible to the panda
+                    boolean gardenerMove = false;
+                    Tile positionGardener = this.board.getGardener().getTile();
+                    ArrayList<Coordinate> availablePositionGardener = positionGardener.scanAvailableCoordinatesToMove(this.board.getBoardTiles());
+                    */
+
                 }
             }
         }
 
         if (this.focusCard.isValid(this, this.board)){
-            this.resetNbBamboo();
+            ObjectivePanda card = (ObjectivePanda) this.focusCard;
+            this.resetNbBamboo(card.getNbToEat());
             this.setPoint(this.focusCard.getNbPointsWin()+this.getPoint());
             this.focusCard = null;
             System.out.println("Objectif realise");
@@ -133,7 +146,7 @@ public class Player {
     }
 
     public void playForPatternCard(){
-        // do nothing actually
+        // do nothing actually (TODO)
     }
 
     public void checkBetterCard(){
@@ -150,6 +163,10 @@ public class Player {
 
     public void resetNbBamboo(){
         this.nbBamboo = 0;
+    }
+
+    private void resetNbBamboo(int value) {
+        this.nbBamboo -= value;
     }
 
     public String addTile(Tile tile){
