@@ -57,7 +57,25 @@ public class Player {
         }else{
             this.playForPatternCard();
         }
+        this.checkPatternOnBoard();
         System.out.println();
+    }
+
+    private void checkPatternOnBoard() {
+    //take objective of type ObjectivePlot from the list objectives
+        ArrayList<ObjectivePlot> objectivePlotList = new ArrayList<>();
+        for(ObjectiveInterface objective : this.objectives){
+            if(objective instanceof ObjectivePlot){
+                objectivePlotList.add((ObjectivePlot) objective);
+            }
+        }
+        for(ObjectivePlot objectivePlot : objectivePlotList){
+            if(board.patternDetector.getPatternBoardList().contains(objectivePlot.getPattern())){
+                this.point += objectivePlot.getNbPointsWin();
+                System.out.println("Le joueur "+this.getNom()+" a gagne "+objectivePlot.getNbPointsWin()+" points pour avoir realise le pattern "+objectivePlot);
+                this.objectives.remove(objectivePlot);
+            }
+        }
     }
 
     public void playForGardenerCard(){

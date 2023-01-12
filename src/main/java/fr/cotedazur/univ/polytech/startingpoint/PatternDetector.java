@@ -3,8 +3,8 @@ package fr.cotedazur.univ.polytech.startingpoint;
 import java.util.ArrayList;
 
 public class PatternDetector {
-    final Board board;
-    final ArrayList<PatternBoard> patternBoardList = new ArrayList<>();
+    private final Board board;
+    final ArrayList<Pattern> patternBoardList = new ArrayList<>();
 
     public PatternDetector(Board board) {
         this.board = board;
@@ -18,10 +18,14 @@ public class PatternDetector {
             int possibleTileY = tileCoord.getY()+tileCoord.getY()-coordinate.getY();
             //check if a tile exist on this position and if it's the same type
             if(board.isInBoard(possibleTileX,possibleTileY)&&board.getTile(new Coordinate(possibleTileX,possibleTileY)).getTypeOfTile().equals(tile.getTypeOfTile())){
-                patternBoardList.add(new PatternBoard(TypeOfPattern.LINE,tile.getTypeOfTile(),new Coordinate(possibleTileX,possibleTileY)));
+                patternBoardList.add(new Pattern(TypeOfPattern.LINE,tile.getTypeOfTile()));
             }
 
         }
+    }
+
+    public ArrayList<Pattern> getPatternBoardList() {
+        return patternBoardList;
     }
 
     private ArrayList<Tile> detectTileOfSameTypeNear(Coordinate coordinate) {

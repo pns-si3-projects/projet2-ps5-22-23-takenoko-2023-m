@@ -2,13 +2,13 @@ package fr.cotedazur.univ.polytech.startingpoint;
 
 public class ObjectivePlot implements ObjectiveInterface {
 
-    private String type = "line2";
-    private int nbPointsWin;
+    final Pattern pattern;
+    final int nbPointsWin;
 
 
-    public ObjectivePlot(String type, int nbPointsWin){
-        this.type = type;
-        this.nbPointsWin = nbPointsWin;
+    public ObjectivePlot(Pattern pattern){
+        this.pattern = pattern;
+        this.nbPointsWin = generatePatternPoint();
     }
 
     public int getNbPointsWin(){
@@ -25,15 +25,33 @@ public class ObjectivePlot implements ObjectiveInterface {
         }
         return false;
     }
+    private int generatePatternPoint() {
+        int sumOfPoint;
+        if(this.pattern.type.equals(TypeOfPattern.SQUARE)){
+            sumOfPoint = 3;
+        }
+        else sumOfPoint = 2;
+        if(this.pattern.firstColor.equals(TypeOfTile.YELLOW)) return sumOfPoint+1;
+        else if(this.pattern.firstColor.equals(TypeOfTile.RED)) return sumOfPoint+2;
+        else return sumOfPoint;
+    }
     public String getType() {
-        return type;
+        return this.pattern.type.toString();
     }
 
     public void setType(String type) {
-        this.type = type;
+        this.pattern.type = TypeOfPattern.valueOf(type);
     }
+
+    public Pattern getPattern() {
+        return pattern;
+    }
+
     public String toString(){
-        return "Objectif de type "+this.type;
+        if(this.pattern.type.equals(TypeOfPattern.SQUARE)){
+            return "Objectif de type "+this.pattern.type + " et de couleur " + this.pattern.firstColor + " et " + this.pattern.secondColor+ " et de nombre de points " + this.nbPointsWin;
+        }
+        return "Objectif plot de type "+this.pattern.type+" et de couleur "+this.pattern.firstColor + " et de nombre de points " + this.nbPointsWin;
     }
    
 
