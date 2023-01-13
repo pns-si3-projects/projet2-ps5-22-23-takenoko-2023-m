@@ -1,31 +1,14 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class ObjectiveStackPlot extends Stack<ObjectivePlot> {
-    public ObjectiveStackPlot(List<ObjectivePlot> list) {
-        super(list);
-    }
 
     public ObjectiveStackPlot() {
         super();
+        this.generate();
     }
-
-    @Override
-    public void putBelow(ObjectivePlot o) {
-        super.putBelow(o);
-    }
-
-    @Override
-    public ObjectivePlot pick(ObjectivePlot o) {
-        return super.pick(o);
-    }
-
-    @Override
-    public ObjectivePlot randomPick() {
-        return super.randomPick();
-    }
-
 
 
     @Override
@@ -38,13 +21,24 @@ public class ObjectiveStackPlot extends Stack<ObjectivePlot> {
     }
 
 
-    @Override
-    public List<ObjectivePlot> getStack() {
-        return super.getStack();
-    }
 
     @Override
     public void generate() {
-        //TODO
+        //List<TypeOfPattern> types = Arrays.asList(TypeOfPattern.LINE,TypeOfPattern.TRIANGLE,TypeOfPattern.BOOMRANG,TypeOfPattern.SQUARE);
+        List<TypeOfPattern> types = Arrays.asList(TypeOfPattern.LINE);
+        List<TypeOfTile> colors = Arrays.asList(TypeOfTile.YELLOW,TypeOfTile.RED,TypeOfTile.GREEN);
+        for(TypeOfPattern type : types){
+            for(TypeOfTile color : colors){
+                if(type.equals(TypeOfPattern.SQUARE)){
+                    this.putBelow(new ObjectivePlot(new Pattern(type,color,color)));
+                }else{
+                    this.putBelow(new ObjectivePlot(new Pattern(type,color)));
+                }
+            }
+        }
+        //this.putBelow(new ObjectivePlot(new Pattern(TypeOfPattern.SQUARE,TypeOfTile.YELLOW,TypeOfTile.RED)));
+        //this.putBelow(new ObjectivePlot(new Pattern(TypeOfPattern.SQUARE,TypeOfTile.RED,TypeOfTile.GREEN)));
+        //this.putBelow(new ObjectivePlot(new Pattern(TypeOfPattern.SQUARE,TypeOfTile.GREEN,TypeOfTile.YELLOW)));
+
     }
 }

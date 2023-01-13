@@ -6,8 +6,8 @@ public class Tile {
     private final Coordinate coordinate;
     private int bamboo = 0;
     private TypeOfTile typeOfTile;
-    public Tile(int x, int y, TypeOfTile type){
-        coordinate = new Coordinate(x, y);
+    public Tile(Coordinate coordinate, TypeOfTile type){
+        this.coordinate = coordinate;
         this.typeOfTile = type;
     }
 
@@ -19,6 +19,7 @@ public class Tile {
     public Tile(Coordinate coordinate) {
         this.typeOfTile = TypeOfTile.GREEN;
         this.coordinate = coordinate;
+        this.typeOfTile = TypeOfTile.GREEN;
     }
 
     public int getCoordinnateX() {

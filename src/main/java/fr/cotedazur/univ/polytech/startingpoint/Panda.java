@@ -17,4 +17,8 @@ public class Panda {
             p.upNbBamboo();
         }
     }
+
+    public Tile getTile(){
+        return this.board.getTile(coordinate);
+    }
 }
