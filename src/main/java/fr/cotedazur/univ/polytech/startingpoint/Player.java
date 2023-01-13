@@ -77,7 +77,7 @@ public class Player {
                 System.out.println(this.board.addTile(new Tile(availableCoordinates.get(0).getX(), availableCoordinates.get(0).getY())));
                 this.playAction();
             }else{
-                this.board.moveGardenerOn(availablePositionsGardener.get(0));
+                System.out.println(this.board.moveGardenerOn(availablePositionsGardener.get(0)));
                 this.playAction();
             }
         }
@@ -168,8 +168,8 @@ public class Player {
             ObjectivePanda card = (ObjectivePanda) this.focusCard;
             this.resetNbBamboo(card.getNbToEat());
             this.setPoint(this.focusCard.getNbPointsWin()+this.getPoint());
+            this.objectives.remove(focusCard);
             this.focusCard = null;
-            this.objectives.remove(card);
             System.out.println("Objectif panda realise");
         }
     }
