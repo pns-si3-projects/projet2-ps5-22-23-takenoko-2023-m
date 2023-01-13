@@ -1,5 +1,8 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Pattern {
     TypeOfPattern type;
     TypeOfTile firstColor;
@@ -26,5 +29,14 @@ public class Pattern {
             return this.type.equals(pattern.type)&&this.firstColor.equals(pattern.firstColor);
         }
         return false;
+    }
+
+    public List<TypeOfTile> getColors() {
+        List<TypeOfTile> colors = new ArrayList<>();
+        colors.add(this.firstColor);
+        if(this.secondColor!=null){
+            colors.add(this.secondColor);
+        }
+        return colors;
     }
 }

@@ -1,5 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
+import java.util.List;
+
 public class ObjectivePlot implements ObjectiveInterface {
 
     final Pattern pattern;
@@ -53,7 +55,9 @@ public class ObjectivePlot implements ObjectiveInterface {
         }
         return "Objectif plot de type "+this.pattern.type+" et de couleur "+this.pattern.firstColor + " et de nombre de points " + this.nbPointsWin;
     }
-   
+    public List<TypeOfTile> getColors(){
+        return this.pattern.getColors();
+    }
 
 
 

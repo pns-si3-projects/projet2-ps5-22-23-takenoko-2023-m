@@ -12,6 +12,6 @@ class ObjectiveStackPlotTest {
         for(ObjectivePlot objectivePlot : objectiveStackPlot.getStack()){
             System.out.println(objectivePlot);
         }
-        assertEquals(15, objectiveStackPlot.getStack().size());
+        assertEquals(3, objectiveStackPlot.getStack().size());
     }
 }

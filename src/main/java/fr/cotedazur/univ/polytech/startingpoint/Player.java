@@ -1,5 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 import java.util.ArrayList;
+import java.util.List;
+
 public class Player {
     private int point = 0;
     private String nom;
@@ -13,9 +15,9 @@ public class Player {
     public Player(Board board, String nom){
         this.nom = nom;
         this.board = board;
-        this.pickGardenerCard();
-        //this.objectives.add(this.board.getPlotCard()); Can't do this now
-        this.pickPandaCard();
+        //this.pickGardenerCard();
+        this.pickPlotCard();
+        //this.pickPandaCard();
     }
 
     public int getPoint() {
@@ -59,6 +61,40 @@ public class Player {
         }
         this.checkPatternOnBoard();
         System.out.println();
+    }
+
+    public void playForPatternCard(){
+        ObjectivePlot objectivePlot = (ObjectivePlot) this.focusCard;
+        List<TypeOfTile> colors = objectivePlot.getColors();
+        List<Tile> tilesPicked = board.pickThreeTiles();
+        System.out.println("Le joueur " +this.getNom() +" a pioche les tuiles suivantes :");
+        for(Tile tile : tilesPicked){
+            System.out.println(tile.getTypeOfTile());
+        }
+        if(objectivePlot.getPattern().type.equals(TypeOfPattern.LINE)){
+            boolean isPlaced = false;
+            List<Tile> tilesToPutBackInStack = new ArrayList<>();
+            for(Tile tile : tilesPicked){
+                if(tile.getTypeOfTile().equals(colors.get(0))&&!isPlaced){
+                    isPlaced = true;
+                    System.out.println(board.addTile(new Tile(board.bestCoordinateForLine(objectivePlot),tile.getTypeOfTile()))+ " de type:"+tile.getTypeOfTile());
+                }
+                else{
+                    tilesToPutBackInStack.add(tile);
+                }
+            }
+            if(!isPlaced){
+                System.out.println(board.addTile(new Tile(board.scanAvailableTilePosition().get(0),tilesPicked.get(0).getTypeOfTile()))+ " de type:"+tilesPicked.get(0).getTypeOfTile());
+                board.putBackInTileStack(tilesPicked.get(1));
+                board.putBackInTileStack(tilesPicked.get(2));
+            }
+            else{
+                board.putBackInTileStack(tilesToPutBackInStack.get(0));
+                board.putBackInTileStack(tilesToPutBackInStack.get(1));
+            }
+            this.playAction();
+        }
+
     }
 
     private void checkPatternOnBoard() {
@@ -134,10 +170,6 @@ public class Player {
         }
     }
 
-    public void playForPatternCard(){
-        // do nothing actually
-    }
-
     public void checkBetterCard(){
         ObjectiveInterface card = null;
         int max = -1;
@@ -188,8 +220,10 @@ public class Player {
     }
 
     public void pickPlotCard(){
-        this.objectives.add(this.board.getPlotCard());
-        System.out.println("Le joueur "+this.getNom()+" a pioche une carte Pattern!");
+        //TODO : make possible to pick other objective than LINE
+        ObjectivePlot objectivePlot = this.board.getPlotCard();
+        this.objectives.add(objectivePlot);
+        System.out.println("Le joueur "+this.getNom()+" a pioche une carte Pattern de type "+objectivePlot.getType()+" et de couleur "+objectivePlot.getColors().get(0)+"!");
         this.playAction();
     }
 

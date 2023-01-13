@@ -10,22 +10,6 @@ public class ObjectiveStackPlot extends Stack<ObjectivePlot> {
         this.generate();
     }
 
-    @Override
-    public void putBelow(ObjectivePlot o) {
-        super.putBelow(o);
-    }
-
-    @Override
-    public ObjectivePlot pick(ObjectivePlot o) {
-        return super.pick(o);
-    }
-
-    @Override
-    public ObjectivePlot randomPick() {
-        return super.randomPick();
-    }
-
-
 
     @Override
     public String toString() {
@@ -37,14 +21,11 @@ public class ObjectiveStackPlot extends Stack<ObjectivePlot> {
     }
 
 
-    @Override
-    public List<ObjectivePlot> getStack() {
-        return super.getStack();
-    }
 
     @Override
     public void generate() {
-        List<TypeOfPattern> types = Arrays.asList(TypeOfPattern.LINE,TypeOfPattern.TRIANGLE,TypeOfPattern.BOOMRANG,TypeOfPattern.SQUARE);
+        //List<TypeOfPattern> types = Arrays.asList(TypeOfPattern.LINE,TypeOfPattern.TRIANGLE,TypeOfPattern.BOOMRANG,TypeOfPattern.SQUARE);
+        List<TypeOfPattern> types = Arrays.asList(TypeOfPattern.LINE);
         List<TypeOfTile> colors = Arrays.asList(TypeOfTile.YELLOW,TypeOfTile.RED,TypeOfTile.GREEN);
         for(TypeOfPattern type : types){
             for(TypeOfTile color : colors){
@@ -55,9 +36,9 @@ public class ObjectiveStackPlot extends Stack<ObjectivePlot> {
                 }
             }
         }
-        this.putBelow(new ObjectivePlot(new Pattern(TypeOfPattern.SQUARE,TypeOfTile.YELLOW,TypeOfTile.RED)));
-        this.putBelow(new ObjectivePlot(new Pattern(TypeOfPattern.SQUARE,TypeOfTile.RED,TypeOfTile.GREEN)));
-        this.putBelow(new ObjectivePlot(new Pattern(TypeOfPattern.SQUARE,TypeOfTile.GREEN,TypeOfTile.YELLOW)));
+        //this.putBelow(new ObjectivePlot(new Pattern(TypeOfPattern.SQUARE,TypeOfTile.YELLOW,TypeOfTile.RED)));
+        //this.putBelow(new ObjectivePlot(new Pattern(TypeOfPattern.SQUARE,TypeOfTile.RED,TypeOfTile.GREEN)));
+        //this.putBelow(new ObjectivePlot(new Pattern(TypeOfPattern.SQUARE,TypeOfTile.GREEN,TypeOfTile.YELLOW)));
 
     }
 }
