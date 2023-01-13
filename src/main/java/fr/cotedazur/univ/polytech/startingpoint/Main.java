@@ -9,6 +9,7 @@ public class Main {
         Player bot1 = new Player(board, "Simon");
         Player bot2 = new Player(board, "Damien");
 
+
         ArrayList<Player> listPlayer = new ArrayList<>();
         listPlayer.add(bot1);
         listPlayer.add(bot2);

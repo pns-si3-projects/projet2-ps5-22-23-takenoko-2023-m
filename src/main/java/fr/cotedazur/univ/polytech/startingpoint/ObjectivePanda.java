@@ -18,7 +18,7 @@ public class ObjectivePanda implements ObjectiveInterface{
 
 
         public boolean isValid(Player p, Board b){
-            return p.getNbBamboo()==this.nbToEat;
+            return p.getNbBamboo()>=this.nbToEat;   //fixed bug in case the player already has bamboo and the amount is higher
         }
 
 

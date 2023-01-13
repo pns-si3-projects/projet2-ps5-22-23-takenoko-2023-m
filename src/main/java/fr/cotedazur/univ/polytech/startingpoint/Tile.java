@@ -19,6 +19,7 @@ public class Tile {
     public Tile(Coordinate coordinate) {
         this.typeOfTile = TypeOfTile.GREEN;
         this.coordinate = coordinate;
+        this.typeOfTile = TypeOfTile.GREEN;
     }
 
     public int getCoordinnateX() {
