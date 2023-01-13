@@ -15,9 +15,9 @@ public class Player {
     public Player(Board board, String nom){
         this.nom = nom;
         this.board = board;
-        //this.pickGardenerCard();
+        this.pickGardenerCard();
         this.pickPlotCard();
-        //this.pickPandaCard();
+        this.pickPandaCard();
     }
 
     public int getPoint() {

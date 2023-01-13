@@ -32,7 +32,8 @@ public class ObjectivePlot implements ObjectiveInterface {
         if(this.pattern.type.equals(TypeOfPattern.SQUARE)){
             sumOfPoint = 3;
         }
-        else sumOfPoint = 2;
+        //normally 2
+        else sumOfPoint = 10;
         if(this.pattern.firstColor.equals(TypeOfTile.YELLOW)) return sumOfPoint+1;
         else if(this.pattern.firstColor.equals(TypeOfTile.RED)) return sumOfPoint+2;
         else return sumOfPoint;
