@@ -115,7 +115,12 @@ public class Tile {
     }
 
     public void eatBamboo(){
-        this.bamboo--;
+        if(this.getTypeOfArrangement()!= TypeOfArrangement.ENCLOSURE){
+            this.bamboo--;
+        }
+        if (this.bamboo < 0) {
+            this.bamboo = 0;
+        }
 
     }
 
@@ -124,8 +129,14 @@ public class Tile {
     }
 
 
-    public int grow(int i) {
-        bamboo+=i;
+    public int grow() {
+        if (this.getTypeOfArrangement()==TypeOfArrangement.FERTILIZER){
+            this.bamboo+=2;
+        }
+        else {
+            this.bamboo++;
+        }
+
         if(bamboo>4) bamboo =4;
 
         return bamboo;

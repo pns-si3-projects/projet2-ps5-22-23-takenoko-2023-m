@@ -21,6 +21,21 @@ class ArrangementTest {
         assertEquals(TypeOfArrangement.FERTILIZER, tile2.getTypeOfArrangement());
     }
 
+    @Test
+    void testArrangmentEffect() {
+        Tile tile = new Tile(0,1,TypeOfTile.GREEN, TypeOfArrangement.ENCLOSURE);
+        assertEquals(0, tile.getBamboo());
+        tile.grow();
+        assertEquals(1, tile.getBamboo());
+        tile.eatBamboo();
+        assertEquals(1, tile.getBamboo());
+
+        Tile tile2 = new Tile(1,0,TypeOfTile.RED, TypeOfArrangement.FERTILIZER);
+        assertEquals(0, tile2.getBamboo());
+        tile2.grow();
+        assertEquals(2, tile2.getBamboo());
+    }
+
 
 
 }
