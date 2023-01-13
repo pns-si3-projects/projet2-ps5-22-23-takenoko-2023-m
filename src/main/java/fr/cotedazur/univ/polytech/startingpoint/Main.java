@@ -18,7 +18,7 @@ public class Main {
 
         ObjectivePlot objectivePlot1 = new ObjectivePlot("line2",6);
         ObjectiveGardener objectiveGardener1 = new ObjectiveGardener("gardener",2,7);
-        ObjectivePanda objectivePanda1 = new ObjectivePanda("panda",3,5);
+        ObjectivePanda objectivePanda1 = new ObjectivePanda("panda",3,8);
         ArrayList<ObjectiveInterface> objectives1 = new ArrayList<>();
         objectives1.add(objectivePlot1);
         objectives1.add(objectiveGardener1);

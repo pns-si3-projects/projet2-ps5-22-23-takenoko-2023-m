@@ -29,7 +29,7 @@ public class Board {
 
         String bNumber = gardener.moveOn(coordinate);
         int nbBamboo = this.getTile(coordinate).getBamboo();
-        return "Le jardinier à été déplacé en "+coordinate.getX()+", "+coordinate.getY() + " cette tuile est maintenant à: "+ nbBamboo +" bamboo(s)";
+        return "Le jardinier à été déplacé en "+coordinate.getX()+", "+coordinate.getY() + " voici les tuiles affectées : \n" + bNumber;
 
     }
 
