@@ -169,6 +169,7 @@ public class Player {
             this.resetNbBamboo(card.getNbToEat());
             this.setPoint(this.focusCard.getNbPointsWin()+this.getPoint());
             this.focusCard = null;
+            this.objectives.remove(card);
             System.out.println("Objectif panda realise");
         }
     }
