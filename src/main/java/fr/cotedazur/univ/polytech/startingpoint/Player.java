@@ -17,6 +17,7 @@ public class Player {
         this.pickGardenerCard();
         //this.objectives.add(this.board.getPlotCard()); Can't do this now
         this.pickPandaCard();
+        //System.out.println(objectives);
     }
 
     public int getPoint() {
@@ -52,13 +53,10 @@ public class Player {
             checkBetterCard();
         }
         if(this.focusCard instanceof ObjectiveGardener){
-            System.out.println("playing for gardener");
             this.playForGardenerCard();
         }else if(this.focusCard instanceof ObjectivePanda){
-            System.out.println("playing for panda");
             this.playForPandaCard();
         }else{
-            System.out.println("playing for pattern");
             this.playForPatternCard();
         }
         System.out.println();
@@ -76,7 +74,7 @@ public class Player {
             ArrayList<Coordinate> availablePositionsGardener = gardenerPosition.scanAvailableCoordinatesToMove(this.board.getBoardTiles());
             if(availablePositionsGardener.size()==0){
                 ArrayList<Coordinate> availableCoordinates = this.board.scanAvailableTilePosition();
-                System.out.println(this.board.addTile(new Tile(availableCoordinates.get(0).getX(), availableCoordinates.get(0).getY())));
+                System.out.println(this.board.addTile(new Tile(availableCoordinates.get(0))));
                 this.playAction();
             }else{
                 System.out.println(this.board.moveGardenerOn(availablePositionsGardener.get(0)));
@@ -110,7 +108,7 @@ public class Player {
             ArrayList<Coordinate> availablePositionPanda = positionPanda.scanAvailableCoordinatesToMove(this.board.getBoardTiles());
             if (availablePositionPanda.size() == 0) {
                 ArrayList<Coordinate> availablePositions = this.board.scanAvailableTilePosition();
-                System.out.println(this.board.addTile(new Tile(availablePositions.get(0).getX(), availablePositions.get(0).getY())));
+                System.out.println(this.board.addTile(new Tile(availablePositions.get(0))));
             } else {
                 boolean pandaMove = false;
                 for (Coordinate co : availablePositionPanda) {
@@ -158,7 +156,7 @@ public class Player {
                     }
                     if (!gardenerMove) {
                         ArrayList<Coordinate> availableCoordinates = this.board.scanAvailableTilePosition();
-                        System.out.println(this.board.addTile(new Tile(availableCoordinates.get(0).getX(), availableCoordinates.get(0).getY())));
+                        System.out.println(this.board.addTile(new Tile(availableCoordinates.get(0))));
                         this.playAction();
                     }
                     //end of new code (if it does not fit in the issue just comment out and add to a new issue)
