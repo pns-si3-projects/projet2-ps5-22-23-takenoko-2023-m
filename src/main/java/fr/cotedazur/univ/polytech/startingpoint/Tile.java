@@ -16,11 +16,8 @@ public class Tile {
         this.typeOfTile = type;
     }
 
-    public Tile(int x, int y){
-        coordinate = new Coordinate(x,y);
-        this.typeOfTile = TypeOfTile.GREEN;
-    }
     public Tile(Coordinate coordinate) {
+        this.typeOfTile = TypeOfTile.GREEN;
         this.coordinate = coordinate;
         this.typeOfTile = TypeOfTile.GREEN;
     }
@@ -107,7 +104,6 @@ public class Tile {
     }
 
     public TypeOfTile getTypeOfTile(){
-        System.out.println(coordinate+" "+this.typeOfTile);
         return this.typeOfTile;
     }
 

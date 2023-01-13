@@ -31,7 +31,7 @@ public class Gardener {
                     tilesGrown.add(board.getTile(c));
                     board.getTile(c).grow(1);
                     sizeGrown++;
-                    res += "La case "+board.getTile(c).getCoordinate()+" a poussé et est maintenant à "+ board.getTile(c).getBamboo() +" bambou(s)\n";
+                    res += "La case "+board.getTile(c).getCoordinate()+" a pousse et est maintenant a "+ board.getTile(c).getBamboo() +" bambou(s)\n";
                 }
             }
         }

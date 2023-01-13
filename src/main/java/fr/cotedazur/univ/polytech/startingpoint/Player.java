@@ -11,10 +11,12 @@ public class Player {
     private ObjectiveInterface focusCard = null;
 
     private ArrayList<ObjectiveInterface> objectives = new ArrayList<ObjectiveInterface>();
-    public Player(Board board, String nom, ArrayList<ObjectiveInterface> objectives){
+    public Player(Board board, String nom){
         this.nom = nom;
         this.board = board;
-        this.objectives = objectives;
+        this.pickGardenerCard();
+        //this.objectives.add(this.board.getPlotCard()); Can't do this now
+        this.pickPandaCard();
     }
 
     public int getPoint() {
@@ -65,7 +67,7 @@ public class Player {
     public void playForGardenerCard(){
         if (this.board.getBoardTiles().size() == 1){
             ArrayList<Coordinate> availableCoordinates = this.board.scanAvailableTilePosition();
-            System.out.println(this.board.addTile(new Tile(availableCoordinates.get(0).getX(), availableCoordinates.get(0).getY())));
+            System.out.println(this.board.addTile(new Tile(new Coordinate(availableCoordinates.get(0).getX(), availableCoordinates.get(0).getY()))));
             this.playAction();
         }
 
@@ -102,24 +104,24 @@ public class Player {
     }
 
     public void playForPandaCard(){
-        while(this.getNbActions() > 0){
+
+        while(this.getNbActions() > 0) {
             Tile positionPanda = this.board.getPanda().getTile();
             ArrayList<Coordinate> availablePositionPanda = positionPanda.scanAvailableCoordinatesToMove(this.board.getBoardTiles());
-            if(availablePositionPanda.size()==0){
+            if (availablePositionPanda.size() == 0) {
                 ArrayList<Coordinate> availablePositions = this.board.scanAvailableTilePosition();
-                System.out.println(this.board.addTile(new Tile(availablePositions.get(0).getX(),availablePositions.get(0).getY())));
-                this.playAction();
-            }else{
+                System.out.println(this.board.addTile(new Tile(availablePositions.get(0).getX(), availablePositions.get(0).getY())));
+            } else {
                 boolean pandaMove = false;
-                for(Coordinate co : availablePositionPanda){
-                    if(this.board.getTile(co).getBamboo()>0){
-                        System.out.println(this.board.movePandaOn(co,this));
+                for (Coordinate co : availablePositionPanda) {
+                    if (this.board.getTile(co).getBamboo() > 0) {
+                        System.out.println(this.board.movePandaOn(co, this));
                         this.playAction();
                         pandaMove = true;
                         break;
                     }
                 }
-                if(!pandaMove){
+                if (!pandaMove) {
                     /*
                     //old code that only allows to place tiles : may be of use after this
                     ArrayList<Coordinate> availablePositions = this.board.scanAvailableTilePosition();
@@ -163,7 +165,6 @@ public class Player {
                 }
             }
         }
-
         if (this.focusCard.isValid(this, this.board)){
             ObjectivePanda card = (ObjectivePanda) this.focusCard;
             this.resetNbBamboo(card.getNbToEat());
@@ -225,4 +226,21 @@ public class Player {
         this.nbBamboo++;
     }
 
+    public void pickPandaCard(){
+        this.objectives.add(this.board.getPandaCard());
+        System.out.println("Le joueur "+this.getNom()+" a pioche une carte Panda!");
+        this.playAction();
+    }
+
+    public void pickPlotCard(){
+        this.objectives.add(this.board.getPlotCard());
+        System.out.println("Le joueur "+this.getNom()+" a pioche une carte Pattern!");
+        this.playAction();
+    }
+
+    public void pickGardenerCard(){
+        this.objectives.add(this.board.getGardenerCard());
+        System.out.println("Le joueur "+this.getNom()+" a pioche une carte Jardinier!");
+        this.playAction();
+    }
 }

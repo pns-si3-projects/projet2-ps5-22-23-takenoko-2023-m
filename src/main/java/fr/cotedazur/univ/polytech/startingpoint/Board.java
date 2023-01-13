@@ -18,10 +18,31 @@ public class Board {
 
     private final Panda panda = new Panda(this);
 
+    private final ObjectiveStackGardener stackGardener = new ObjectiveStackGardener();
+
+    private final ObjectiveStackPanda stackPanda = new ObjectiveStackPanda();
+
+    private final ObjectiveStackPlot stackPlot = new ObjectiveStackPlot();
+
 
     //constructor setting up the first tile of the board
     public Board(){
-        this.addTile(new Tile(0,0,TypeOfTile.GREEN));
+        this.stackGardener.generate();
+        this.stackPanda.generate();
+        this.stackPlot.generate();
+        this.addTile(new Tile(0,0,TypeOfTile.POND));
+    }
+
+    public ObjectivePanda getPandaCard(){
+        return this.stackPanda.randomPick();
+    }
+
+    public ObjectiveGardener getGardenerCard(){
+        return this.stackGardener.randomPick();
+    }
+
+    public ObjectivePlot getPlotCard(){
+        return this.stackPlot.randomPick();
     }
 
     //this method allow a player to move the gardener on a decided position
@@ -31,16 +52,17 @@ public class Board {
         int nbBamboo = this.getTile(coordinate).getBamboo();
         return "Le jardinier à été déplacé en "+coordinate.getX()+", "+coordinate.getY() + " voici les tuiles affectées : \n" + bNumber + "La case " + coordinate + " a poussé et est maintenant à " + this.getTile(coordinate).getBamboo() + " bambou(s)\n";
 
+
     }
 
     public String movePandaOn(Coordinate coordinate, Player player){
         this.panda.moveOn(coordinate,player);
-        return "Le panda à été deplace en "+coordinate.getX()+", "+coordinate.getY() + " il possède maintenant : "+player.getNbBamboo() +" bambous";
+        return "Le panda a ete deplace en "+coordinate.getX()+", "+coordinate.getY() + " il possede maintenant : "+player.getNbBamboo() +" bambous";
     }
 
     public String addTile(Tile tile){
         boardTiles.add(tile);
-        return "Une carte à été posée en:"+tile.getCoordinnateX()+" "+tile.getCoordinnateY();
+        return "Une carte a ete posee en:"+tile.getCoordinnateX()+" "+tile.getCoordinnateY();
     }
 
 
