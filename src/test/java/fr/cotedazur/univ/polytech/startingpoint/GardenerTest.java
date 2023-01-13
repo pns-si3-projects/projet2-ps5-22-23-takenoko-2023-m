@@ -12,10 +12,10 @@ class GardenerTest {
     @BeforeAll
     static void beforeAll() {
         board = new Board();
-        board.addTile(new Tile(1,0, TypeOfTile.GREEN));
-        board.addTile(new Tile(0,1,TypeOfTile.RED));
-        board.addTile(new Tile(1,1,TypeOfTile.GREEN));
-        board.addTile(new Tile(1,2,TypeOfTile.YELLOW));
+        board.addTile(new Tile(new Coordinate(1,0), TypeOfTile.GREEN));
+        board.addTile(new Tile(new Coordinate(0,1),TypeOfTile.RED));
+        board.addTile(new Tile(new Coordinate(1,1),TypeOfTile.GREEN));
+        board.addTile(new Tile(new Coordinate(1,2),TypeOfTile.YELLOW));
 
     }
     @Test

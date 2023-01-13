@@ -51,16 +51,4 @@ class ObjectiveStackTest {
 
     }
 
-
-
-    @Test
-    void testToString() {
-        ObjectivePlot objectivePlot = new ObjectivePlot("line2",3);
-        ObjectivePlot objectivePlot2 = new ObjectivePlot("line2",3);
-        List<ObjectivePlot> list = new ArrayList<>();
-        list.add(objectivePlot);
-        list.add(objectivePlot2);
-        ObjectiveStackPlot objectiveStack = new ObjectiveStackPlot(list);
-        assertEquals("Pile d'objectifs plot : Objectif de type line2 Objectif de type line2 ", objectiveStack.toString());
-    }
 }

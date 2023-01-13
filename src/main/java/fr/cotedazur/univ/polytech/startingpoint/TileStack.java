@@ -9,7 +9,9 @@ public class TileStack extends Stack<Tile>{
     }
 
     public TileStack() {
+
         super();
+        this.generate();
     }
 
     @Override
@@ -28,7 +30,7 @@ public class TileStack extends Stack<Tile>{
     }
 
     public List<Tile> pickThreeTiles(){
-        List<Tile> tiles = new ArrayList<Tile>();
+        List<Tile> tiles = new ArrayList<>();
         for (int i = 0; i < 3; i++){
             tiles.add(randomPick());
         }

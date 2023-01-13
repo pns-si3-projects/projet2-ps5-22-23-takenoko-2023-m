@@ -41,4 +41,8 @@ public class Gardener {
     public Coordinate getCoordinate() {
         return coordinate;
     }
+
+    public Tile getTile(){
+        return this.board.getTile(this.getCoordinate());
+    }
 }
