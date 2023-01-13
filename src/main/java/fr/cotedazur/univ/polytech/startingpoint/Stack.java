@@ -31,6 +31,9 @@ public abstract class Stack<T> {
     }
 
     public T randomPick(){
+        if(list.size()== 0){
+            throw new IllegalArgumentException("La pile est vide");
+        }
         int i = (int) (Math.random() * list.size());
         T o = list.get(i);
         list.remove(o);

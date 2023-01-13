@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Board {
     private ArrayList<Tile> boardTiles = new ArrayList<>();
@@ -24,13 +25,16 @@ public class Board {
 
     private final ObjectiveStackPlot stackPlot = new ObjectiveStackPlot();
 
+    private final TileStack tileStack = new TileStack();
+
+    final PatternDetector patternDetector = new PatternDetector(this);
 
     //constructor setting up the first tile of the board
     public Board(){
         this.stackGardener.generate();
         this.stackPanda.generate();
         this.stackPlot.generate();
-        this.addTile(new Tile(0,0,TypeOfTile.POND));
+        this.addTile(new Tile(new Coordinate(0,0),TypeOfTile.POND));
     }
 
     public ObjectivePanda getPandaCard(){
@@ -61,6 +65,7 @@ public class Board {
 
     public String addTile(Tile tile){
         boardTiles.add(tile);
+        patternDetector.detectPatternNear(tile.getCoordinate());
         return "Une carte a ete posee en:"+tile.getCoordinnateX()+" "+tile.getCoordinnateY();
     }
 
@@ -141,6 +146,42 @@ public class Board {
             }
         }
         return null;
+    }
+
+    /**
+     * Pick three tile in the tileStack
+     * @return the array of the three tiles
+     */
+    public List<Tile> pickThreeTiles() {
+        return tileStack.pickThreeTiles();
+    }
+
+    /**
+     * Find the best available position to place a tile and complete the objective
+     * @param objectivePlot the objective to complete
+     * @return the coordinate of the best position
+     */
+    public Coordinate bestCoordinateForLine(ObjectivePlot objectivePlot) {
+        return patternDetector.bestCoordinateForLine(objectivePlot);
+    }
+
+    /**
+     * Find all availbable coordinates near a specific coordinate
+     * @param firstTileCoordinate coordinate of the position to check
+     * @return the list of available coordinates
+     */
+    public List<Coordinate> getAvailableCoordinateNear(Coordinate firstTileCoordinate) {
+        List<Coordinate> availableCoordinates = new ArrayList<>();
+        this.getTile(firstTileCoordinate).getNeighbourCoordinates().forEach(coordinate -> {
+            if(!this.isInBoard(coordinate.getX(),coordinate.getY())){
+                availableCoordinates.add(coordinate);
+            }
+        });
+        return availableCoordinates;
+    }
+
+    public void putBackInTileStack(Tile tile) {
+        tileStack.putBelow(tile);
     }
 }
 
