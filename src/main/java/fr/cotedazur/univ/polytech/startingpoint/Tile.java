@@ -8,7 +8,7 @@ public class Tile {
     private TypeOfTile typeOfTile;
 
     private TypeOfArrangement typeOfArrangement=TypeOfArrangement.NONE;
-    public Tile(int x, int y, TypeOfTile type){
+    public Tile(Coordinate coordinate, TypeOfTile type){
         this.coordinate = coordinate;
 
         this.typeOfTile = type;
