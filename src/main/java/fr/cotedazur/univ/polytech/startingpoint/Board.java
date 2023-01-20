@@ -184,5 +184,9 @@ public class Board {
     public void putBackInTileStack(Tile tile) {
         tileStack.putBelow(tile);
     }
+
+    public TileStack getTileStack() {
+        return tileStack;
+    }
 }
 
