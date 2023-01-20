@@ -16,11 +16,14 @@ public class ArrangementInGameTest {
         bot1.addTile(tile1);
         bot1.addTile(tile2);
 
-        bot1.setArrangment(tile1,TypeOfArrangement.ENCLOSURE);
+        bot1.pickArrangement(TypeOfArrangement.ENCLOSURE);
+
+        bot1.setArrangement(tile1,TypeOfArrangement.ENCLOSURE);
         assertTrue(tile1.getTypeOfArrangement()==TypeOfArrangement.BASIN);
 
-        bot1.setArrangment(tile2,TypeOfArrangement.FERTILIZER);
-        System.out.println(tile2.getTypeOfArrangement());
+        bot1.pickArrangement(TypeOfArrangement.FERTILIZER);
+
+        bot1.setArrangement(tile2,TypeOfArrangement.FERTILIZER);
         assertTrue(tile2.getTypeOfArrangement()==TypeOfArrangement.FERTILIZER);
 
 

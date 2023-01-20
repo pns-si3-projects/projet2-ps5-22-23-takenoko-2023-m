@@ -1,5 +1,4 @@
 package fr.cotedazur.univ.polytech.startingpoint;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +10,12 @@ public class Player {
     private int nbBambooYellow = 0;
     private int nbBambooRed = 0;
     private int nbActions = 2;
+
+    public List<TypeOfArrangement> getListArrangement() {
+        return listArrangement;
+    }
+
+    private List<TypeOfArrangement> listArrangement = new ArrayList<TypeOfArrangement>();
 
     private ObjectiveInterface focusCard = null;
 
@@ -262,30 +267,34 @@ public class Player {
     public void setObjectives(ArrayList<ObjectiveInterface> objectives) {
         this.objectives = objectives;
     }
-    public void setArrangment(Tile tile,TypeOfArrangement t){
-        if (tile.getTypeOfArrangement()== TypeOfArrangement.NONE){
+
+    public void pickArrangement(TypeOfArrangement t){
+
             switch (t){
                 case NONE:
-                    break;
+                    throw new IllegalArgumentException("il faut choisir un type valide");
                 case FERTILIZER:
                     if(this.board.getFertilizerStack().getStack().size()>0){
-                        this.board.getFertilizerStack().pick(t);
-                        tile.setTypeOfArrangement(t);
+                        this.getListArrangement().add(this.board.getFertilizerStack().pick(t));
                     }
                     break;
                 case BASIN:
                     if(this.board.getBasinStack().getStack().size()>0){
-                        this.board.getBasinStack().pick(t);
-                        tile.setTypeOfArrangement(t);
+                        this.getListArrangement().add(this.board.getBasinStack().pick(t));
+
                     }
                     break;
                 case ENCLOSURE:
                     if(this.board.getEnclosureStack().getStack().size()>0){
-                        this.board.getEnclosureStack().pick(t);
-                        tile.setTypeOfArrangement(t);
+                        this.getListArrangement().add(this.board.getEnclosureStack().pick(t));
                     }
                     break;
             }
+
+    }
+    public void setArrangement(Tile tile, TypeOfArrangement t){
+        if (tile.getTypeOfArrangement()== TypeOfArrangement.NONE&&this.getListArrangement().contains(t)){
+            tile.setTypeOfArrangement(t);
         }
     }
 
