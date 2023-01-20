@@ -18,16 +18,57 @@ public class PatternDetector {
     public void detectPatternNear(Coordinate coordinate){
         ArrayList<Tile> tileOfSameType = this.detectTileOfSameTypeNear(coordinate);
         for(Tile tile : tileOfSameType){
+            boolean isDetectedAsLineOrTriangle = false;
             //detection of a pattern of type LINE
             //TODO : detect if the LINE pattern even if the tile is place at the center of the line
             Coordinate tileCoord = tile.getCoordinate();
+            //possible position of a tile to create a pattern line
             int possibleTileX = tileCoord.getX()+tileCoord.getX()-coordinate.getX();
             int possibleTileY = tileCoord.getY()+tileCoord.getY()-coordinate.getY();
+            int possibleTileX2 = coordinate.getX()+coordinate.getX()-tileCoord.getX();
+            int possibleTileY2 = coordinate.getY()+coordinate.getY()-tileCoord.getY();
             //check if a tile exist on this position and if it's the same type
             if(board.isInBoard(possibleTileX,possibleTileY)&&board.getTile(new Coordinate(possibleTileX,possibleTileY)).getTypeOfTile().equals(tile.getTypeOfTile())){
-                patternBoardList.add(new Pattern(TypeOfPattern.LINE,tile.getTypeOfTile()));
+                addToPatternList(new Pattern(TypeOfPattern.LINE,tile.getTypeOfTile()));
+                isDetectedAsLineOrTriangle = true;
+            }
+            if(board.isInBoard(possibleTileX2,possibleTileY2)&&board.getTile(new Coordinate(possibleTileX2,possibleTileY2)).getTypeOfTile().equals(tile.getTypeOfTile())){
+                addToPatternList(new Pattern(TypeOfPattern.LINE,tile.getTypeOfTile()));
+                isDetectedAsLineOrTriangle = true;
             }
 
+
+            if(tileOfSameType.size()>1){
+                //detection of a pattern of type TRIANGLE
+                for(Tile tile2 : tileOfSameType){
+                    if(!tile.equals(tile2)){
+                        if(tile.isNeighbour(board.getTile(coordinate))&&tile2.isNeighbour(board.getTile(coordinate))&&tile.isNeighbour(tile2)){
+                            addToPatternList(new Pattern(TypeOfPattern.TRIANGLE,tile.getTypeOfTile()));
+                            isDetectedAsLineOrTriangle = true;
+                        }
+                    }
+                }
+                //detection of a pattern of tye BOOMRANG when the coordinate is at the center of the pattern
+                if(!isDetectedAsLineOrTriangle){
+                    addToPatternList(new Pattern(TypeOfPattern.BOOMRANG,tile.getTypeOfTile()));
+                }
+            }
+            if(!isDetectedAsLineOrTriangle){
+                ArrayList<Tile> tileOfSameType2 = this.detectTileOfSameTypeNear(tile.getCoordinate());
+                tileOfSameType2.remove(board.getTile(coordinate));
+                if(!tileOfSameType2.isEmpty() ){
+                    addToPatternList(new Pattern(TypeOfPattern.BOOMRANG,tile.getTypeOfTile()));
+                }
+            }
+
+
+
+        }
+    }
+
+    private void addToPatternList(Pattern pattern) {
+        if(!patternBoardList.contains(pattern)){
+            patternBoardList.add(pattern);
         }
     }
 
@@ -57,6 +98,7 @@ public class PatternDetector {
      * @return the best coordinate to place a tile
      */
     public Coordinate bestCoordinateForLine(ObjectivePlot objectivePlot) {
+        //TODO : detect if the LINE pattern even if the tile is place at the center of the line
         Coordinate bestCoordinate = null;
         for(Tile tile : this.getBoardTileOfType(objectivePlot.getColors())){
             Coordinate firstTileCoordinate = tile.getCoordinate();
@@ -83,6 +125,43 @@ public class PatternDetector {
             }
         }
         if(bestCoordinate == null)
+            bestCoordinate = board.scanAvailableTilePosition().get(0);
+        return bestCoordinate;
+    }
+
+    /**
+     * find the best coordinate to place a tile to complete a pattern of type TRIANGLE
+     * @param objectivePlot the objective we need to complete
+     * @return the best coordinate to place a tile
+     */
+    public Coordinate bestCoordinateForTriangle(ObjectivePlot objectivePlot) {
+        Coordinate bestCoordinate = null;
+        for (Tile tile : this.getBoardTileOfType(objectivePlot.getColors())) {
+            Coordinate firstTileCoordinate = tile.getCoordinate();
+            List<Tile> tilesOfSameTypeNear = detectTileOfSameTypeNear(firstTileCoordinate);
+            if (!tilesOfSameTypeNear.isEmpty()) {
+                for (Tile tileOfSameTypeNear : tilesOfSameTypeNear) {
+                    Coordinate secondTileCoordinate = tileOfSameTypeNear.getCoordinate();
+                    List<Coordinate> availableCoordinate = board.getAvailableCoordinateNear(secondTileCoordinate);
+                    for (Coordinate coordinate : availableCoordinate) {
+                        if (board.getTile(coordinate).isNeighbour(board.getTile(firstTileCoordinate))) {
+                            return coordinate;
+                        }
+                    }
+                }
+            }
+            if (bestCoordinate == null) {
+                List<Coordinate> availableCoordinate = board.getAvailableCoordinateNear(firstTileCoordinate);
+                for (Coordinate coordinate : availableCoordinate) {
+                    int possibleTileX = coordinate.getX() + coordinate.getX() - firstTileCoordinate.getX();
+                    int possibleTileY = coordinate.getY() + coordinate.getY() - firstTileCoordinate.getY();
+                    if (!board.isInBoard(possibleTileX, possibleTileY)) {
+                        bestCoordinate = coordinate;
+                    }
+                }
+            }
+        }
+        if (bestCoordinate == null)
             bestCoordinate = board.scanAvailableTilePosition().get(0);
         return bestCoordinate;
     }

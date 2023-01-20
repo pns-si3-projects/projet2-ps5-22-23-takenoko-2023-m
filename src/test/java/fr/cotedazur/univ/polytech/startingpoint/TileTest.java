@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -71,7 +72,7 @@ class TileTest {
         boardTiles.add(new Tile(new Coordinate(2,2)));
         boardTiles.add(new Tile(new Coordinate(-1,3) ));
 
-        ArrayList<Coordinate> availableMovingPositionFrom_1_1 = new Tile(new Coordinate(1,1)).scanAvailableCoordinatesToMove(boardTiles);
+        List<Coordinate> availableMovingPositionFrom_1_1 = new Tile(new Coordinate(1,1)).scanAvailableCoordinatesToMove(boardTiles);
         //does contain the available coordinates
         assertTrue(availableMovingPositionFrom_1_1.contains(new Coordinate(-1,3)));
         assertTrue(availableMovingPositionFrom_1_1.contains(new Coordinate(2,0)));

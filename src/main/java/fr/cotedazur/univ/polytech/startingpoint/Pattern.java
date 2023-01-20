@@ -39,4 +39,11 @@ public class Pattern {
         }
         return colors;
     }
+    @Override
+    public String toString(){
+        if(this.type.equals(TypeOfPattern.SQUARE)){
+            return "Pattern de type "+this.type + " et de couleur " + this.firstColor + " et " + this.secondColor;
+        }
+        return "Pattern de type "+this.type+" et de couleur "+this.firstColor;
+    }
 }
