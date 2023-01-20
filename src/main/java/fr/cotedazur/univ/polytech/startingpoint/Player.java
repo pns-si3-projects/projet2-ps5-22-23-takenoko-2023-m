@@ -266,6 +266,32 @@ public class Player {
     public void setObjectives(ArrayList<ObjectiveInterface> objectives) {
         this.objectives = objectives;
     }
+    public void setArrangment(Tile tile,TypeOfArrangement t){
+        if (tile.getTypeOfArrangement()== TypeOfArrangement.NONE){
+            switch (t){
+                case NONE:
+                    break;
+                case FERTILIZER:
+                    if(this.board.getFertilizerStack().getStack().size()>0){
+                        this.board.getFertilizerStack().pick(t);
+                        tile.setTypeOfArrangement(t);
+                    }
+                    break;
+                case BASIN:
+                    if(this.board.getBasinStack().getStack().size()>0){
+                        this.board.getBasinStack().pick(t);
+                        tile.setTypeOfArrangement(t);
+                    }
+                    break;
+                case ENCLOSURE:
+                    if(this.board.getEnclosureStack().getStack().size()>0){
+                        this.board.getEnclosureStack().pick(t);
+                        tile.setTypeOfArrangement(t);
+                    }
+                    break;
+            }
+        }
+    }
 
     public int getNbBamboo() {
         return this.nbBamboo;

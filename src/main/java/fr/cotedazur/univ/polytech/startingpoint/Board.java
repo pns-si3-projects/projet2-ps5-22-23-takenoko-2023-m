@@ -27,6 +27,11 @@ public class Board {
 
     private final TileStack tileStack = new TileStack();
 
+    private final ArrangementStack enclosureStack = new ArrangementStack(TypeOfArrangement.ENCLOSURE);
+    private final ArrangementStack basinStack = new ArrangementStack(TypeOfArrangement.BASIN);
+    private final ArrangementStack fertilizerStack = new ArrangementStack(TypeOfArrangement.FERTILIZER);
+
+
     final PatternDetector patternDetector = new PatternDetector(this);
 
     //constructor setting up the first tile of the board
@@ -34,6 +39,9 @@ public class Board {
         this.stackGardener.generate();
         this.stackPanda.generate();
         this.stackPlot.generate();
+        this.basinStack.generate();
+        this.enclosureStack.generate();
+        this.fertilizerStack.generate();
         this.addTile(new Tile(new Coordinate(0,0),TypeOfTile.POND));
     }
 
@@ -183,6 +191,22 @@ public class Board {
 
     public void putBackInTileStack(Tile tile) {
         tileStack.putBelow(tile);
+    }
+
+    public ObjectiveStackGardener getStackGardener() {
+        return stackGardener;
+    }
+
+    public ArrangementStack getEnclosureStack() {
+        return enclosureStack;
+    }
+
+    public ArrangementStack getBasinStack() {
+        return basinStack;
+    }
+
+    public ArrangementStack getFertilizerStack() {
+        return fertilizerStack;
     }
 }
 
