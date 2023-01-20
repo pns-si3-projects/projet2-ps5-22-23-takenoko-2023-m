@@ -3,13 +3,14 @@ package fr.cotedazur.univ.polytech.startingpoint;
 import java.util.ArrayList;
 
 public class Irrigation {
-    private Tile referencedTile1;
-    private Tile referencedTile2;
+    private Tile referencedTile1;   //must be a reference to a tile placed in the board
+    private Tile referencedTile2;   //must be a reference to a tile placed in the board
 
     private TypeOfIrrigation irrigationType;
 
     public Irrigation(Tile referencedTile1, Tile referencedTile2) {
         //STILL NEEDS TO CHANGE IRRIGATION STATE OF BOTH THE TILES (TODO)
+        //TODO check that tiles are neighbours
         this.referencedTile1 = referencedTile1;
         this.referencedTile2 = referencedTile2;
 
@@ -27,31 +28,50 @@ public class Irrigation {
         return irrigationType;
     }
 
-    public ArrayList<Irrigation> getNeighbourIrrigation() {
+    public ArrayList<Irrigation> getLegalIrrigationPlacement (ArrayList<Tile> boardTiles) {     //needs to get the boardTiles to know which position is legal (if one of the two tiles defining an irrigation does not exist in boardTiles then it is not a legal position for an irrigation
+        ArrayList<Tile> tilesForIrrigationNeighbours = new ArrayList<>();
         switch (irrigationType) {
             case vertical -> {
-                return getVerticalNeighbourIrrigation();
+                Tile tmpTopTile = new Tile(new Coordinate(referencedTile2.getCoordinnateX(),referencedTile2.getCoordinnateY()-1));      //the Tile being the "top" neighbour of both the tiles of the irrigation (in my representation of the board)
+                Tile tmpBotTile = new Tile(new Coordinate(referencedTile1.getCoordinnateX(), referencedTile1.getCoordinnateY()+1));     //the Tile being the "bottom" neighbour of both the tiles of the irrigation (in my representation of the board)
+                if (boardTiles.contains(tmpTopTile)) {
+                    tilesForIrrigationNeighbours.add(tmpTopTile);
+                }
+                if (boardTiles.contains(tmpBotTile)) {
+                    tilesForIrrigationNeighbours.add(tmpBotTile);
+                }
+                break;
             }
             case fSlash -> {
-                return getFSlashNeighbourIrrigation();
+                Tile tmpLeftTile = new Tile(new Coordinate(referencedTile2.getCoordinnateX()-1, referencedTile2.getCoordinnateY()));        //the Tile being the "bottom left" neighbour of both the tiles of the irrigation (in my representation of the board)
+                Tile tmpRightTile = new Tile(new Coordinate(referencedTile1.getCoordinnateX() + 1, referencedTile1.getCoordinnateY()));     //the Tile being the "top right" neighbour of both the tiles of the irrigation (in my representation of the board)
+                if (boardTiles.contains(tmpLeftTile)) {
+                    tilesForIrrigationNeighbours.add(tmpLeftTile);
+                }
+                if (boardTiles.contains(tmpRightTile)) {
+                    tilesForIrrigationNeighbours.add(tmpRightTile);
+                }
+                break;
             }
             case bSlash -> {
-                return getBSlashNeighbourIrrigation();
+                Tile tmpLeftTile = new Tile(new Coordinate(referencedTile1.getCoordinnateX(), referencedTile2.getCoordinnateY()));      //the Tile being the "top left" neighbour of both the tiles of the irrigation (in my representation of the board)
+                Tile tmpRightTile = new Tile(new Coordinate(referencedTile2.getCoordinnateX(), referencedTile1.getCoordinnateY()));     //the Tile being the "bottom right" neighbour of both the tiles of the irrigation (in my representation of the board)
+                if (boardTiles.contains(tmpLeftTile)) {
+                    tilesForIrrigationNeighbours.add(tmpLeftTile);
+                }
+                if (boardTiles.contains(tmpRightTile)) {
+                    tilesForIrrigationNeighbours.add(tmpRightTile);
+                }
             }
         }
-        return null;
-    }
 
-    private ArrayList<Irrigation> getVerticalNeighbourIrrigation() {
-        return new ArrayList<>();
-    }
+        ArrayList<Irrigation> legalNeighbours = new ArrayList<>();
+        for (int i = 0 ; i < tilesForIrrigationNeighbours.size(); i++) {
+            legalNeighbours.add(new Irrigation(boardTiles.get(boardTiles.indexOf(tilesForIrrigationNeighbours.get(i))), referencedTile1));  //adds an irrigation that gets the reference of the neighbour Tile from boardTiles and one of the tiles of this Irrigation
+            legalNeighbours.add(new Irrigation(boardTiles.get(boardTiles.indexOf(tilesForIrrigationNeighbours.get(i))), referencedTile2));  //adds an irrigation that gets the reference of the neighbour Tile from boardTiles and one of the tiles of this Irrigation
+        }
 
-    private ArrayList<Irrigation> getFSlashNeighbourIrrigation() {
-        return new ArrayList<>();
-    }
-
-    private ArrayList<Irrigation> getBSlashNeighbourIrrigation() {
-        return new ArrayList<>();
+        return legalNeighbours;
     }
 
 }
