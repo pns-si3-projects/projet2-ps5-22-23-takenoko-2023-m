@@ -17,9 +17,9 @@ class TileStackTest {
         tileStack.putBelow(new Tile(new Coordinate(1,1)));
         tileStack.putBelow(new Tile(new Coordinate(1,2)));
 
-        assertEquals(5, tileStack.getStack().size());
+        assertEquals(32, tileStack.getStack().size());
         List<Tile> threeList = tileStack.pickThreeTiles();
         assertEquals(3,threeList.size());
-        assertEquals(2, tileStack.getStack().size());
+        assertEquals(29, tileStack.getStack().size());
     }
 }
