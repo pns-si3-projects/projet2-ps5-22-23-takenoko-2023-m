@@ -14,7 +14,7 @@ public class Panda {
         Tile tileToGrow = board.getTile(coordinate);
         if(tileToGrow.getBamboo() > 0){
             tileToGrow.eatBamboo();
-            p.upNbBamboo();
+            p.upNbBamboo(tileToGrow.getTypeOfTile());
         }
     }
 

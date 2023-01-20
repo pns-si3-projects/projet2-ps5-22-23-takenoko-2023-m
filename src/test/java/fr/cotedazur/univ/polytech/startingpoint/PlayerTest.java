@@ -70,23 +70,23 @@ class PlayerTest {
     void resetNbBamboo() {
         Board board = new Board();
         Player bot1 = new Player(board,"bot1");
-        bot1.upNbBamboo(); bot1.upNbBamboo();
-        bot1.resetNbBamboo();
-        assertEquals(0,bot1.getNbBamboo());
+        bot1.upNbBamboo(TypeOfTile.GREEN); bot1.upNbBamboo(TypeOfTile.GREEN);
+        bot1.resetNbBamboo(TypeOfTile.GREEN);
+        assertEquals(0,bot1.getNbBamboo(TypeOfTile.GREEN));
     }
 
     @Test
     void getNbBamboo() {
         Board board = new Board();
         Player bot1 = new Player(board,"bot1");
-        assertEquals(0,bot1.getNbBamboo());
+        assertEquals(0,bot1.getNbBamboo(TypeOfTile.GREEN));
     }
 
     @Test
     void upNbBamboo() {
         Board board = new Board();
         Player bot1 = new Player(board,"bot1");
-        bot1.upNbBamboo();
-        assertEquals(1,bot1.getNbBamboo());
+        bot1.upNbBamboo(TypeOfTile.GREEN);
+        assertEquals(1,bot1.getNbBamboo(TypeOfTile.GREEN));
     }
 }
