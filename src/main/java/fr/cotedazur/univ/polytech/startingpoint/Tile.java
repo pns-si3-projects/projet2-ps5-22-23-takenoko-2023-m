@@ -126,5 +126,18 @@ public class Tile {
     public void setTypeOfTile(TypeOfTile typeOfTile) {
         this.typeOfTile = typeOfTile;
     }
+
+    @Override
+    public boolean equals (Object o) {
+        if (o != null) {
+            if (o instanceof Tile) {
+                Tile t = (Tile) o;
+                if (this.coordinate.equals(t.getCoordinate())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
 

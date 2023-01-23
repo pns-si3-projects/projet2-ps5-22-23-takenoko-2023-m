@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Irrigation {
     private Tile referencedTile1;   //must be a reference to a tile placed in the board
@@ -22,6 +23,10 @@ public class Irrigation {
         } else {
             irrigationType = TypeOfIrrigation.bSlash.bSlash;
         }
+    }
+
+    public ArrayList<Tile> getTiles() {
+        return new ArrayList<>(Arrays.asList(referencedTile1,referencedTile2));
     }
 
     public TypeOfIrrigation getIrrigationType() {
@@ -74,4 +79,8 @@ public class Irrigation {
         return legalNeighbours;
     }
 
+    @Override
+    public String toString() {
+        return "Irrigation between : " + referencedTile1.toString() + "\t\t" + referencedTile2.toString();
+    }
 }
