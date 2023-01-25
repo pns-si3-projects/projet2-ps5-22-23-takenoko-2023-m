@@ -30,6 +30,12 @@ public class ObjectiveGardener implements ObjectiveInterface {
         }
         return false;
     }
+
+    @Override
+    public void play(Player player) {
+        player.playForGardenerCard();
+    }
+
     public String getType() {
         return type;
     }

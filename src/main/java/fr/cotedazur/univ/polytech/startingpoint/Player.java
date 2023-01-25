@@ -12,7 +12,7 @@ public class Player {
 
     private ObjectiveInterface focusCard = null;
 
-    private ArrayList<ObjectiveInterface> objectives = new ArrayList<ObjectiveInterface>();
+    private List<ObjectiveInterface> objectives = new ArrayList<>();
     public Player(Board board, String nom){
         this.nom = nom;
         this.board = board;
@@ -54,6 +54,7 @@ public class Player {
         if (this.focusCard == null){
             checkBetterCard();
         }
+        this.focusCard.play(this);
         if(this.focusCard instanceof ObjectiveGardener){
             this.playForGardenerCard();
         }else if(this.focusCard instanceof ObjectivePanda){
@@ -148,7 +149,7 @@ public class Player {
 
         if(this.focusCard.isValid(this, this.board)){
             this.setPoint(this.getPoint()+this.focusCard.getNbPointsWin());
-            ArrayList<ObjectiveInterface> objectifs = this.getObjective();
+            List<ObjectiveInterface> objectifs = this.getObjective();
             objectifs.remove(focusCard);
             this.focusCard = null;
             System.out.println("Objecti jardinier realise");
@@ -252,7 +253,7 @@ public class Player {
         return this.board.addTile(tile);
     }
 
-    public ArrayList<ObjectiveInterface> getObjective() {
+    public List<ObjectiveInterface> getObjective() {
         return objectives;
     }
 
