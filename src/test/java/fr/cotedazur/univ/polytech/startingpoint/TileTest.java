@@ -87,4 +87,9 @@ class TileTest {
         assertFalse(availableMovingPositionFrom_1_1.contains(new Coordinate(0,0)));
         assertFalse(availableMovingPositionFrom_1_1.contains(new Coordinate(3,0)));
     }
+
+    @Test
+    void getNeighbourCoordinateTogetherWith() {
+
+    }
 }

@@ -166,5 +166,11 @@ public class Tile {
     public void setTypeOfArrangement(TypeOfArrangement typeOfArrangement) {
         this.typeOfArrangement = typeOfArrangement;
     }
+
+    public List<Coordinate> getNeighbourCoordinateTogetherWith(Tile tile) {
+        List<Coordinate> neighbourCoordinates = this.getNeighbourCoordinates();
+        neighbourCoordinates.retainAll(tile.getNeighbourCoordinates());
+        return neighbourCoordinates;
+    }
 }
 

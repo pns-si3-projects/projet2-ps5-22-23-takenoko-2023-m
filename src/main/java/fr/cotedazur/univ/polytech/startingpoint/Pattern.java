@@ -30,6 +30,10 @@ public class Pattern {
         }
         return false;
     }
+    @Override
+    public int hashCode() {
+        return this.type.hashCode()+this.firstColor.hashCode()+this.secondColor.hashCode();
+    }
 
     public List<TypeOfTile> getColors() {
         List<TypeOfTile> colors = new ArrayList<>();

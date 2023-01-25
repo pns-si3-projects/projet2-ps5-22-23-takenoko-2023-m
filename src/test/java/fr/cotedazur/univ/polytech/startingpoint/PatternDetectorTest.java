@@ -27,6 +27,7 @@ class PatternDetectorTest {
         board.addTile(new Tile(new Coordinate(3,0),TypeOfTile.RED));
         assertEquals(0,board.patternDetector.getPatternBoardList().size());
         board.addTile(new Tile(new Coordinate(2,0),TypeOfTile.RED));
+        System.out.println(board.patternDetector.getPatternBoardList());
         assertEquals(1,board.patternDetector.getPatternBoardList().size());
         assertEquals(TypeOfPattern.LINE,board.patternDetector.getPatternBoardList().get(0).type);
     }
@@ -58,5 +59,16 @@ class PatternDetectorTest {
         assertEquals(TypeOfPattern.BOOMRANG,board.patternDetector.getPatternBoardList().get(0).type);
         board.addTile(new Tile(new Coordinate(-1,1),TypeOfTile.GREEN));
         assertEquals(1,board.patternDetector.getPatternBoardList().size());
+    }
+    @Test
+    void detectBOOMRANGPatternNearCenter() {
+        board.addTile(new Tile(new Coordinate(0,2),TypeOfTile.RED));
+        assertEquals(0,board.patternDetector.getPatternBoardList().size());
+        board.addTile(new Tile(new Coordinate(0,1),TypeOfTile.RED));
+        assertEquals(TypeOfPattern.BOOMRANG,board.patternDetector.getPatternBoardList().get(0).type);
+    }
+    @Test
+    void bestCoordinateForTriangleWithEmptyBoard() {
+        assertEquals(new Coordinate(0,0),board.patternDetector.bestCoordinateForTriangle());
     }
 }
