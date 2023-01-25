@@ -68,7 +68,26 @@ class PatternDetectorTest {
         assertEquals(TypeOfPattern.BOOMRANG,board.patternDetector.getPatternBoardList().get(0).type);
     }
     @Test
-    void bestCoordinateForTriangleWithEmptyBoard() {
-
+    void bestCoordinateForTriangle() {
+        board.addTile(new Tile(new Coordinate(1,-1),TypeOfTile.GREEN));
+        board.addTile(new Tile(new Coordinate(2,-1),TypeOfTile.GREEN));
+        board.addTile(new Tile(new Coordinate(0,1),TypeOfTile.GREEN));
+        Coordinate coordinate = board.patternDetector.bestCoordinateForTriangle(new ObjectivePlot(new Pattern(TypeOfPattern.TRIANGLE,TypeOfTile.RED)));
+        assertTrue(new Coordinate(2,0).equals(coordinate)||new Coordinate(1,1).equals(coordinate));
+        board.addTile(new Tile(new Coordinate(-1,0),TypeOfTile.RED));
+        board.addTile(new Tile(new Coordinate(-2,0),TypeOfTile.RED));
+        assertEquals(new Coordinate(-2,1),board.patternDetector.bestCoordinateForTriangle(new ObjectivePlot(new Pattern(TypeOfPattern.TRIANGLE,TypeOfTile.RED))));
+    }
+    @Test
+    void bestCoordinateForLine() {
+        board.addTile(new Tile(new Coordinate(1,-1),TypeOfTile.GREEN));
+        board.addTile(new Tile(new Coordinate(2,-1),TypeOfTile.GREEN));
+        board.addTile(new Tile(new Coordinate(0,1),TypeOfTile.GREEN));
+        board.addTile(new Tile(new Coordinate(1,1),TypeOfTile.GREEN));
+        Coordinate coordinate = board.patternDetector.bestCoordinateForLine(new ObjectivePlot(new Pattern(TypeOfPattern.LINE,TypeOfTile.RED)));
+        assertEquals(new Coordinate(2,0),coordinate);
+        board.addTile(new Tile(new Coordinate(-1,0),TypeOfTile.RED));
+        board.addTile(new Tile(new Coordinate(-2,0),TypeOfTile.RED));
+        assertEquals(new Coordinate(-3,0),board.patternDetector.bestCoordinateForLine(new ObjectivePlot(new Pattern(TypeOfPattern.TRIANGLE,TypeOfTile.RED))));
     }
 }

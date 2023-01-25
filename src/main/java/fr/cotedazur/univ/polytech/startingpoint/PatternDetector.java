@@ -130,7 +130,10 @@ public class PatternDetector {
                 int possibleTileX = secondTileCoordinate.getX()+secondTileCoordinate.getX()-firstTileCoordinate.getX();
                 int possibleTileY = secondTileCoordinate.getY()+secondTileCoordinate.getY()-firstTileCoordinate.getY();
                 if(!board.isInBoard(possibleTileX,possibleTileY)){
-                    return new Coordinate(possibleTileX,possibleTileY);
+                    if(board.isInBoard(secondTileCoordinate.getX(), secondTileCoordinate.getY())){
+                        return new Coordinate(possibleTileX,possibleTileY);
+                    }
+                    return secondTileCoordinate;
                 }
             }
         }
@@ -146,29 +149,31 @@ public class PatternDetector {
         Coordinate bestCoordinate = null;
         for(Tile tile : this.getBoardTileOfType(objectivePlot.getColors())){
             Coordinate firstTileCoordinate = tile.getCoordinate();
-            List<Tile> tilesOfSameTypeNear = detectTileOfSameTypeNear(firstTileCoordinate);
-            if(!tilesOfSameTypeNear.isEmpty()){
-                for(Tile tileOfSameTypeNear : tilesOfSameTypeNear){
-                    for(Coordinate coordinateTogether : tileOfSameTypeNear.getNeighbourCoordinateTogetherWith(tile)){
-                        if(!board.isInBoard(coordinateTogether.getX(),coordinateTogether.getY())){
-                            return coordinateTogether;
-                        }
-                    }
-                }
+            List<Coordinate> tilesOfSameTypeNearCoordinate = new ArrayList<>();
+            detectTileOfSameTypeNear(firstTileCoordinate).forEach(t->tilesOfSameTypeNearCoordinate.add(t.getCoordinate()));
+            Coordinate possibleCoordinate = bestCoordinateForTriangleNear(tile,tilesOfSameTypeNearCoordinate);
+            if(possibleCoordinate!=null){
+                return possibleCoordinate;
             }
             if(bestCoordinate == null){
                 List<Coordinate> availableCoordinate = board.getAvailableCoordinateNear(firstTileCoordinate);
-                for(Coordinate coordinate : availableCoordinate){
-                    for(Coordinate coordinateTogether : tile.getNeighbourCoordinateTogetherWith(new Tile(coordinate))){
-                        if(!board.isInBoard(coordinateTogether.getX(),coordinateTogether.getY())){
-                            bestCoordinate = coordinateTogether;
-                        }
-                    }
-                }
+                bestCoordinate = bestCoordinateForTriangleNear(tile,availableCoordinate);
             }
 
         }
         return bestCoordinate==null?board.scanAvailableTilePosition().get(0):bestCoordinate;
+    }
+    private Coordinate bestCoordinateForTriangleNear(Tile tile, List<Coordinate> availableCoordinate) {
+        if(!availableCoordinate.isEmpty()){
+            for(Coordinate coordinate : availableCoordinate){
+                for(Coordinate coordinateTogether : tile.getNeighbourCoordinateTogetherWith(new Tile(coordinate))){
+                    if(!board.isInBoard(coordinateTogether.getX(),coordinateTogether.getY())){
+                        return coordinateTogether;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     /**
