@@ -51,14 +51,23 @@ public class TileStack extends Stack<Tile>{
 
     @Override
     public void generate() {
-        for(int i = 0; i < 9; i++){
+        for(int i = 0; i < 6; i++){
             this.putBelow(new Tile(TypeOfTile.YELLOW));
         }
-        for(int i = 0; i < 11; i++){
+        this.putBelow(new Tile(TypeOfTile.YELLOW,TypeOfArrangement.FERTILIZER));
+        this.putBelow(new Tile(TypeOfTile.YELLOW,TypeOfArrangement.BASIN));
+        this.putBelow(new Tile(TypeOfTile.YELLOW,TypeOfArrangement.ENCLOSURE));
+        for(int i = 0; i < 8; i++){
             this.putBelow(new Tile(TypeOfTile.GREEN));
         }
-        for(int i = 0; i < 7; i++){
+        this.putBelow(new Tile(TypeOfTile.GREEN,TypeOfArrangement.FERTILIZER));
+        this.putBelow(new Tile(TypeOfTile.GREEN,TypeOfArrangement.BASIN));
+        this.putBelow(new Tile(TypeOfTile.GREEN,TypeOfArrangement.ENCLOSURE));
+        for(int i = 0; i < 4; i++){
             this.putBelow(new Tile(TypeOfTile.RED));
         }
+        this.putBelow(new Tile(TypeOfTile.RED,TypeOfArrangement.FERTILIZER));
+        this.putBelow(new Tile(TypeOfTile.RED,TypeOfArrangement.BASIN));
+        this.putBelow(new Tile(TypeOfTile.RED,TypeOfArrangement.ENCLOSURE));
     }
 }

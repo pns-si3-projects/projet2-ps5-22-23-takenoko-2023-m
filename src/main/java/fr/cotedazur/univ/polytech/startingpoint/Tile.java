@@ -7,20 +7,40 @@ public class Tile {
     private int bamboo = 0;
     private TypeOfTile typeOfTile;
     private boolean isIrrigated = false;
+    private TypeOfArrangement typeOfArrangement=TypeOfArrangement.NONE;
+
     public Tile(Coordinate coordinate, TypeOfTile type){
         this.coordinate = coordinate;
+
         this.typeOfTile = type;
+        this.typeOfArrangement = TypeOfArrangement.NONE;
+    }
+
+    public Tile(int x, int y, TypeOfTile type, TypeOfArrangement typeOfArrangement){
+        coordinate = new Coordinate(x, y);
+        this.typeOfTile = type;
+        this.typeOfArrangement = typeOfArrangement;
     }
 
     public Tile(TypeOfTile type){
         coordinate = null;
         this.typeOfTile = type;
+        this.typeOfArrangement = TypeOfArrangement.NONE;
     }
+
+    public Tile(TypeOfTile type, TypeOfArrangement typeOfArrangement){
+        coordinate = null;
+        this.typeOfTile = type;
+        this.typeOfArrangement = typeOfArrangement;
+    }
+
 
     public Tile(Coordinate coordinate) {
         this.typeOfTile = TypeOfTile.GREEN;
         this.coordinate = coordinate;
-        this.typeOfTile = TypeOfTile.GREEN;
+
+        this.typeOfArrangement = TypeOfArrangement.NONE;
+
     }
 
     public int getCoordinnateX() {
@@ -106,7 +126,12 @@ public class Tile {
     }
 
     public void eatBamboo(){
-        this.bamboo--;
+        if(this.getTypeOfArrangement()!= TypeOfArrangement.ENCLOSURE){
+            this.bamboo--;
+        }
+        if (this.bamboo < 0) {
+            this.bamboo = 0;
+        }
 
     }
 
@@ -115,8 +140,14 @@ public class Tile {
     }
 
 
-    public int grow(int i) {
-        bamboo+=i;
+    public int grow() {
+        if (this.getTypeOfArrangement()==TypeOfArrangement.FERTILIZER){
+            this.bamboo+=2;
+        }
+        else {
+                this.bamboo++;
+        }
+
         if(bamboo>4) bamboo =4;
 
         return bamboo;
@@ -145,6 +176,14 @@ public class Tile {
             }
         }
         return false;
+    }
+
+    public TypeOfArrangement getTypeOfArrangement() {
+        return typeOfArrangement;
+    }
+
+    public void setTypeOfArrangement(TypeOfArrangement typeOfArrangement) {
+        this.typeOfArrangement = typeOfArrangement;
     }
 }
 

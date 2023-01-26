@@ -7,7 +7,9 @@ public class Player {
     private int point = 0;
     private String nom;
     private final Board board;
-    private int nbBamboo = 0;
+    private  int nbBambooGreen = 0;
+    private int nbBambooYellow = 0;
+    private int nbBambooRed = 0;
     private int nbActions = 2;
 
     private ObjectiveInterface focusCard = null;
@@ -135,16 +137,6 @@ public class Player {
                 this.playAction();
             }
         }
-        /* PREVIOUS VERSION -- KEEP IT HERE
-        int numberTile = this.board.getBoardTiles().size();
-        Tile tileToMove = this.board.getBoardTiles().get(numberTile-1);
-        System.out.println(this.board.moveGardenerOn(tileToMove.getCoordinate()));
-        this.playAction();
-
-        if(this.getNbActions()==1){
-            System.out.println(this.board.moveGardenerOn(tileToMove.getCoordinate()));
-            this.playAction();
-        }*/
 
         if(this.focusCard.isValid(this, this.board)){
             this.setPoint(this.getPoint()+this.focusCard.getNbPointsWin());
@@ -219,7 +211,7 @@ public class Player {
         }
         if (this.focusCard.isValid(this, this.board)){
             ObjectivePanda card = (ObjectivePanda) this.focusCard;
-            this.resetNbBamboo(card.getNbToEat());
+            this.resetNbBamboo(card.getNbToEat(),card.getTypeOfTile());
             this.setPoint(this.focusCard.getNbPointsWin()+this.getPoint());
             this.objectives.remove(focusCard);
             this.focusCard = null;
@@ -240,12 +232,16 @@ public class Player {
         this.focusCard = card;
     }
 
-    public void resetNbBamboo(){
-        this.nbBamboo = 0;
+    public void resetNbBamboo(TypeOfTile type){
+        if(type == TypeOfTile.RED) this.nbBambooRed = 0;
+        if(type == TypeOfTile.YELLOW) this.nbBambooYellow = 0;
+        if(type == TypeOfTile.GREEN) this.nbBambooGreen = 0;
     }
 
-    private void resetNbBamboo(int value) {
-        this.nbBamboo -= value;
+    private void resetNbBamboo(int value, TypeOfTile type) {
+        if(type == TypeOfTile.RED) this.nbBambooRed = value;
+        if(type == TypeOfTile.YELLOW) this.nbBambooYellow = value;
+        if(type == TypeOfTile.GREEN) this.nbBambooGreen = value;
     }
 
     public String addTile(Tile tile){
@@ -267,12 +263,45 @@ public class Player {
         this.objectives = objectives;
     }
 
-    public int getNbBamboo() {
-        return this.nbBamboo;
+    public int getNbBambooGreen() {
+        return nbBambooGreen;
     }
 
-    public void upNbBamboo(){
-        this.nbBamboo++;
+    public int getNbBambooYellow() {
+        return nbBambooYellow;
+    }
+
+    public int getNbBambooRed() {
+        return nbBambooRed;
+    }
+
+    public void upBambooGreen() {
+        this.nbBambooGreen++;
+    }
+
+    public void upBambooYellow() {
+        this.nbBambooYellow++;
+    }
+
+    public void upBambooRed() {
+        this.nbBambooRed++;
+    }
+
+    public int getNbBamboo(TypeOfTile type) {
+        if(type == TypeOfTile.RED) return this.nbBambooRed;
+        if(type == TypeOfTile.YELLOW) return this.nbBambooYellow;
+        if(type == TypeOfTile.GREEN) return this.nbBambooGreen;
+        return 0;
+    }
+
+    public void upNbBamboo(TypeOfTile type) {
+        if(type == TypeOfTile.RED){
+            this.upBambooRed();
+        }else if (type == TypeOfTile.YELLOW) {
+            this.upBambooYellow();
+        }else if (type == TypeOfTile.GREEN) {
+            this.upBambooGreen();
+        }
     }
 
     public void pickPandaCard(){
@@ -293,5 +322,33 @@ public class Player {
         this.objectives.add(this.board.getGardenerCard());
         System.out.println("Le joueur "+this.getNom()+" a pioche une carte Jardinier!");
         this.playAction();
+    }
+
+    public Tile chooseBetterOf3Tiles(List<Tile> tiles){
+        if(tiles.get(0).getTypeOfTile().equals(focusCard.getType())) {
+            Tile ret = tiles.get(0);
+            tiles.remove(0);
+            this.board.putBackInTileStack(tiles.get(0)); this.board.putBackInTileStack(tiles.get(1));
+            return ret;
+        }else if(tiles.get(1).getTypeOfTile().equals(focusCard.getType())) {
+            Tile ret = tiles.get(1);
+            tiles.remove(1);
+            this.board.putBackInTileStack(tiles.get(0)); this.board.putBackInTileStack(tiles.get(1));
+            return ret;
+        }else if(tiles.get(2).getTypeOfTile().equals(focusCard.getType())) {
+            Tile ret = tiles.get(2);
+            tiles.remove(2);
+            this.board.putBackInTileStack(tiles.get(0)); this.board.putBackInTileStack(tiles.get(1));
+            return ret;
+        }else{
+            Tile ret = tiles.get(0);
+            tiles.remove(0);
+            this.board.putBackInTileStack(tiles.get(0)); this.board.putBackInTileStack(tiles.get(1));
+            return ret;
+        }
+    }
+
+    public void setFocusCard(ObjectiveInterface focusCard) {
+        this.focusCard = focusCard;
     }
 }

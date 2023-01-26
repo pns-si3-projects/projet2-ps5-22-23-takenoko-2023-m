@@ -61,7 +61,7 @@ public class Board {
 
     public String movePandaOn(Coordinate coordinate, Player player){
         this.panda.moveOn(coordinate,player);
-        return "Le panda a ete deplace en "+coordinate.getX()+", "+coordinate.getY() + " il possede maintenant : "+player.getNbBamboo() +" bambous";
+        return "Le panda a ete deplace en "+coordinate.getX()+", "+coordinate.getY() + " il possede maintenant : "+player.getNbBamboo(TypeOfTile.GREEN) +" bambous verts, "+player.getNbBamboo(TypeOfTile.YELLOW)+" bambous jaunes et "+player.getNbBamboo(TypeOfTile.RED)+" bambous roses";
     }
 
     public String addTile(Tile tile){
@@ -182,6 +182,10 @@ public class Board {
 
     public void putBackInTileStack(Tile tile) {
         tileStack.putBelow(tile);
+    }
+
+    public TileStack getTileStack() {
+        return tileStack;
     }
 }
 
