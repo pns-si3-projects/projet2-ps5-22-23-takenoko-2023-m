@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -79,5 +80,28 @@ class IrrigationTest {
         assertTrue(boardTiles.containsAll(bSlashIrrigation.getLegalIrrigationPlacement(boardTiles).get(1).getTiles()));
         assertTrue(boardTiles.containsAll(bSlashIrrigation.getLegalIrrigationPlacement(boardTiles).get(2).getTiles()));
         assertTrue(boardTiles.containsAll(bSlashIrrigation.getLegalIrrigationPlacement(boardTiles).get(3).getTiles()));
+    }
+
+    @Test
+    void testTilesAreIrrigated() {
+        assertTrue(boardTiles.get(boardTiles.indexOf(x0y0)).isIrrigated());
+        Tile x2y0 = new Tile(new Coordinate(2,0));
+        boardTiles.add(x2y0);
+        assertFalse(boardTiles.get(boardTiles.indexOf(x2y0)).isIrrigated());
+        new Irrigation(boardTiles.get(boardTiles.indexOf(x2y0)), boardTiles.get(boardTiles.indexOf(x1y0)));
+        assertTrue(boardTiles.get(boardTiles.indexOf(x2y0)).isIrrigated());
+    }
+
+
+    @Test
+    void testExceptionThrowing() {
+        //Irrigation shouldThrowAnException = new Irrigation(boardTiles.get(boardTiles.indexOf(xn1y1)), boardTiles.get(boardTiles.indexOf(x1y1)));
+        //assertThrows(RuntimeException.class , (Executable) new Irrigation(boardTiles.get(boardTiles.indexOf(xn1y1)), boardTiles.get(boardTiles.indexOf(x1y1))));
+        try {
+            Irrigation youShouldNotExist = new Irrigation(boardTiles.get(boardTiles.indexOf(xn1y1)), boardTiles.get(boardTiles.indexOf(x1y1)));
+        } catch (RuntimeException e) {
+            assertTrue(true);   //asserts that it caught the exception;
+            assertEquals("These tiles are not neighbours (" + xn1y1 + "\t\t" + x1y1 + ")",e.getMessage());
+        }
     }
 }

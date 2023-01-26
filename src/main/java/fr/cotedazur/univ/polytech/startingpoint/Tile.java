@@ -6,6 +6,7 @@ public class Tile {
     private final Coordinate coordinate;
     private int bamboo = 0;
     private TypeOfTile typeOfTile;
+    private boolean isIrrigated = false;
     public Tile(Coordinate coordinate, TypeOfTile type){
         this.coordinate = coordinate;
         this.typeOfTile = type;
@@ -32,6 +33,12 @@ public class Tile {
 
     public Coordinate getCoordinate() {
         return coordinate;
+    }
+    public void irrigate() {
+        this.isIrrigated = true;
+    }
+    public boolean isIrrigated() {
+        return isIrrigated;
     }
 
     //tests to see if the tile to test is neighbour to this tile

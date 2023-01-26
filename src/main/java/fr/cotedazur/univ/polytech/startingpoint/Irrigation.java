@@ -2,30 +2,37 @@ package fr.cotedazur.univ.polytech.startingpoint;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Irrigation {
-    private Tile referencedTile1;   //must be a reference to a tile placed in the board
-    private Tile referencedTile2;   //must be a reference to a tile placed in the board
+    private final Tile referencedTile1;   //must be a reference to a tile placed in the board
+    private final Tile referencedTile2;   //must be a reference to a tile placed in the board
 
-    private TypeOfIrrigation irrigationType;
+    private final TypeOfIrrigation irrigationType;
 
-    public Irrigation(Tile referencedTile1, Tile referencedTile2) {
-        //STILL NEEDS TO CHANGE IRRIGATION STATE OF BOTH THE TILES (TODO)
-        //TODO check that tiles are neighbours
+    public Irrigation(Tile referencedTile1, Tile referencedTile2) throws RuntimeException {
+
+        if (!referencedTile1.isNeighbour(referencedTile2)) {
+            throw new RuntimeException( "These tiles are not neighbours (" + referencedTile1 + "\t\t" + referencedTile2 + ")" );
+        }
+
         this.referencedTile1 = referencedTile1;
         this.referencedTile2 = referencedTile2;
 
+        this.referencedTile1.irrigate();
+        this.referencedTile2.irrigate();
+
         //checks for the type of irrigation
         if (referencedTile1.getCoordinate().getY() == referencedTile2.getCoordinate().getY()) {
-            irrigationType = TypeOfIrrigation.vertical.vertical;
+            irrigationType = TypeOfIrrigation.vertical;
         } else if (referencedTile1.getCoordinate().getX() == referencedTile2.getCoordinate().getX()) {
-            irrigationType = TypeOfIrrigation.fSlash.fSlash;
+            irrigationType = TypeOfIrrigation.fSlash;
         } else {
-            irrigationType = TypeOfIrrigation.bSlash.bSlash;
+            irrigationType = TypeOfIrrigation.bSlash;
         }
     }
 
-    public ArrayList<Tile> getTiles() {
+    public List<Tile> getTiles() {
         return new ArrayList<>(Arrays.asList(referencedTile1,referencedTile2));
     }
 
@@ -33,7 +40,7 @@ public class Irrigation {
         return irrigationType;
     }
 
-    public ArrayList<Irrigation> getLegalIrrigationPlacement (ArrayList<Tile> boardTiles) {     //needs to get the boardTiles to know which position is legal (if one of the two tiles defining an irrigation does not exist in boardTiles then it is not a legal position for an irrigation
+    public List<Irrigation> getLegalIrrigationPlacement (List<Tile> boardTiles) {     //needs to get the boardTiles to know which position is legal (if one of the two tiles defining an irrigation does not exist in boardTiles then it is not a legal position for an irrigation
         ArrayList<Tile> tilesForIrrigationNeighbours = new ArrayList<>();
         switch (irrigationType) {
             case vertical -> {
@@ -45,7 +52,6 @@ public class Irrigation {
                 if (boardTiles.contains(tmpBotTile)) {
                     tilesForIrrigationNeighbours.add(tmpBotTile);
                 }
-                break;
             }
             case fSlash -> {
                 Tile tmpLeftTile = new Tile(new Coordinate(referencedTile2.getCoordinnateX()-1, referencedTile2.getCoordinnateY()));        //the Tile being the "bottom left" neighbour of both the tiles of the irrigation (in my representation of the board)
@@ -56,7 +62,6 @@ public class Irrigation {
                 if (boardTiles.contains(tmpRightTile)) {
                     tilesForIrrigationNeighbours.add(tmpRightTile);
                 }
-                break;
             }
             case bSlash -> {
                 Tile tmpLeftTile = new Tile(new Coordinate(referencedTile1.getCoordinnateX(), referencedTile2.getCoordinnateY()));      //the Tile being the "top left" neighbour of both the tiles of the irrigation (in my representation of the board)
