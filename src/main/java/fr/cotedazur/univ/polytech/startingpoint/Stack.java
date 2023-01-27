@@ -14,7 +14,7 @@ public abstract class Stack<T> {
     }
 
     public void putBelow(T o){
-        this.list.add( o);
+        this.list.add(o);
     }
 
     public T pick(T o){

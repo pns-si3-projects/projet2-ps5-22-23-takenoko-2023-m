@@ -3,7 +3,7 @@ package fr.cotedazur.univ.polytech.startingpoint;
 import java.util.ArrayList;
 
 public class Tile {
-    private final Coordinate coordinate;
+    private Coordinate coordinate;
     private int bamboo = 0;
     private TypeOfTile typeOfTile;
 
@@ -52,6 +52,10 @@ public class Tile {
 
     public Coordinate getCoordinate() {
         return coordinate;
+    }
+
+    public void setCoordinate(Coordinate coordinate) {
+        this.coordinate = coordinate;
     }
 
     //tests to see if the tile to test is neighbour to this tile

@@ -6,15 +6,20 @@ public class ObjectiveGardener implements ObjectiveInterface {
     private String type = "gardener";
     private int nbBambooRequired;
 
-    public ObjectiveGardener(String type,int nbBambooRequired, int nbPointsWin){
+    private TypeOfTile typeOfTile;
+
+    public ObjectiveGardener(String type,int nbBambooRequired, int nbPointsWin, TypeOfTile typeOfTile){
         this.type = type;
         this.nbPointsWin = nbPointsWin;
         this.nbBambooRequired = nbBambooRequired;
+        this.typeOfTile = typeOfTile;
     }
 
     public int getNbPointsWin() {
         return nbPointsWin;
     }
+
+    public TypeOfTile getTypeOfTile(){ return this.typeOfTile;}
 
     public void setNbPointsWin(int nb) {
         this.nbPointsWin = nb;
