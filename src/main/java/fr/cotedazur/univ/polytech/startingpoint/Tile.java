@@ -132,8 +132,7 @@ public class Tile {
     // scans the available tiles to move panda and gardener from this Tile considering the available Tiles in boardTiles
     @Override
     public String toString() {
-        String str = "Tile at x = " + coordinate.getX() + ", y = " + coordinate.getY();
-        return str;
+        return "Tile at x = " + coordinate.getX() + ", y = " + coordinate.getY();
     }
 
     public void eatBamboo(){

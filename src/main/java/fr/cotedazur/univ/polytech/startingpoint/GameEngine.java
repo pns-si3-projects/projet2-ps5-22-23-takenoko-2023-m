@@ -4,10 +4,13 @@ import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.*;
 
 public class GameEngine {
     Board board;
     List<Bot> playerList = new ArrayList<>();
+    private static final Logger LOGGER = Logger.getLogger(GameEngine.class.getName());
+
 
     public GameEngine(Board board, List<Bot> players){
         this.board = board;
@@ -19,7 +22,7 @@ public class GameEngine {
         int indexPlayer = 0;
         int nbTour = 1;
         while(true){
-            System.out.println("<       > Tour numero : "+nbTour+" <       >");
+            LOGGER.info("<       > Tour numero : "+nbTour+" <       >");
             this.playerList.get(indexPlayer).play();
             //On vérifie si un joueur atteint le nombre max de points
             if (this.playerList.get(indexPlayer).getPoint() >= 9){
@@ -33,6 +36,7 @@ public class GameEngine {
             }
         }
     }
+
     public void printWinner(Bot p){
         System.out.println("Le joueur est gagnant est : "+p.getNom()+" avec un score de "+p.getPoint()+" points marques");
     }

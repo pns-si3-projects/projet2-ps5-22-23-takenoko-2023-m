@@ -9,8 +9,6 @@ public class ObjectiveGardener extends ObjectifWithOneColor implements Objective
     private String type = "gardener";
     private int nbBambooRequired;
 
-    private TypeOfTile typeOfTile;
-
     public ObjectiveGardener(String type,int nbBambooRequired, int nbPointsWin, TypeOfTile typeOfTile){
         super(typeOfTile);
         this.type = type;

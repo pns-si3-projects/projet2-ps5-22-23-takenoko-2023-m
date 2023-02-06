@@ -4,7 +4,6 @@ import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
 
 import java.util.ArrayList;
 import java.util.List;
-
 public class Board {
     private List<Tile> boardTiles = new ArrayList<>();
 

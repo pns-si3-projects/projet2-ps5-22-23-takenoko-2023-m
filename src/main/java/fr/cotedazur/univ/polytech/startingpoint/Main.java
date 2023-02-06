@@ -1,13 +1,14 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.bots.PrimaryBot;
-
 import java.util.ArrayList;
+import java.util.logging.*;
 import java.util.List;
 
 public class Main {
-
+    private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static void main(String... args) {
+        LOGGER.setLevel(Level.SEVERE);
         Board board = new Board();
 
         Bot bot1 = new PrimaryBot(board, "Simon");
