@@ -1,13 +1,16 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-public class ObjectivePanda implements ObjectiveInterface{
+import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
+import fr.cotedazur.univ.polytech.startingpoint.bots.PrimaryBot;
+
+public class ObjectivePanda extends ObjectifWithOneColor implements ObjectiveInterface{
 
         private String type = "panda";
-
         private int nbToEat;
         private int nbPointsWin;
 
-        public ObjectivePanda(String type, int nbToEat, int nbPointsWin){
+        public ObjectivePanda(String type, int nbToEat, int nbPointsWin, TypeOfTile typeOfTile) {
+            super(typeOfTile);
             this.type = type;
             this.nbToEat = nbToEat;
             this.nbPointsWin = nbPointsWin;
@@ -16,13 +19,17 @@ public class ObjectivePanda implements ObjectiveInterface{
 
         public int getNbPointsWin() { return this.nbPointsWin; }
 
-
-        public boolean isValid(Player p, Board b){
-            return p.getNbBamboo()>=this.nbToEat;   //fixed bug in case the player already has bamboo and the amount is higher
+        public boolean isValid(Bot p, Board b){
+            return p.getNbBamboo(this.typeOfTile)>=this.nbToEat;   //fixed bug in case the player already has bamboo and the amount is higher
         }
 
+    @Override
+    public void play(PrimaryBot player) {
+        player.playForPandaCard();
+    }
 
-        public String getType() {
+
+    public String getType() {
             return type;
         }
 

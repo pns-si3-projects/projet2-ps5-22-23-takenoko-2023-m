@@ -1,9 +1,10 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Tile {
-    private final Coordinate coordinate;
+    private Coordinate coordinate;
     private int bamboo = 0;
     private TypeOfTile typeOfTile;
     public Tile(Coordinate coordinate, TypeOfTile type){
@@ -50,8 +51,8 @@ public class Tile {
     }
 
     //scans the available Tiles to move panda and gardener considering boardTiles
-    public ArrayList<Coordinate> scanAvailableCoordinatesToMove (ArrayList<Tile> boardTiles) {
-        ArrayList<Coordinate> availableCoordinates = new ArrayList<>();
+    public List<Coordinate> scanAvailableCoordinatesToMove (List<Tile> boardTiles) {
+        List<Coordinate> availableCoordinates = new ArrayList<>();
 
         for (int i = 0; i < boardTiles.size(); i++) {
             boolean isOnSimpleX = this.getCoordinnateX() == boardTiles.get(i).getCoordinnateX();    //simpleX means only the line that only changes on x
@@ -125,6 +126,10 @@ public class Tile {
 
     public void setTypeOfTile(TypeOfTile typeOfTile) {
         this.typeOfTile = typeOfTile;
+    }
+
+    public void setCoordinate(Coordinate coordinate) {
+        this.coordinate = coordinate;
     }
 }
 

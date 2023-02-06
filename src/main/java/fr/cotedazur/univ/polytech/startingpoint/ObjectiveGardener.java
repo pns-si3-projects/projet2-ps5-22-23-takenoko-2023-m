@@ -1,15 +1,22 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 
+import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
+import fr.cotedazur.univ.polytech.startingpoint.bots.PrimaryBot;
+
 public class ObjectiveGardener implements ObjectiveInterface {
     private int nbPointsWin;
     private String type = "gardener";
     private int nbBambooRequired;
 
-    public ObjectiveGardener(String type,int nbBambooRequired, int nbPointsWin){
+    private TypeOfTile typeOfTile;
+
+    public ObjectiveGardener(String type,int nbBambooRequired, int nbPointsWin, TypeOfTile typeOfTile){
+        super();
         this.type = type;
         this.nbPointsWin = nbPointsWin;
         this.nbBambooRequired = nbBambooRequired;
+        this.typeOfTile = typeOfTile;
     }
 
     public int getNbPointsWin() {
@@ -22,7 +29,7 @@ public class ObjectiveGardener implements ObjectiveInterface {
 
     public int getNbBambooRequired() { return this.nbBambooRequired; }
 
-    public boolean isValid(Player p,Board b){
+    public boolean isValid(Bot p, Board b){
         for(Tile tile : b.getBoardTiles()){
             if(tile.getBamboo() == this.getNbBambooRequired()){
                 return true;
@@ -30,6 +37,12 @@ public class ObjectiveGardener implements ObjectiveInterface {
         }
         return false;
     }
+
+    @Override
+    public void play(PrimaryBot player) {
+        player.playForGardenerCard();
+    }
+
     public String getType() {
         return type;
     }

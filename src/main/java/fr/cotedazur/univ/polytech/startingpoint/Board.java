@@ -1,10 +1,12 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
+import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
-    private ArrayList<Tile> boardTiles = new ArrayList<>();
+    private List<Tile> boardTiles = new ArrayList<>();
 
     public Gardener getGardener() {
         return gardener;
@@ -27,6 +29,11 @@ public class Board {
 
     private final TileStack tileStack = new TileStack();
 
+    private final ArrangementStack enclosureStack = new ArrangementStack(TypeOfArrangement.ENCLOSURE);
+    private final ArrangementStack basinStack = new ArrangementStack(TypeOfArrangement.BASIN);
+    private final ArrangementStack fertilizerStack = new ArrangementStack(TypeOfArrangement.FERTILIZER);
+
+
     final PatternDetector patternDetector = new PatternDetector(this);
 
     //constructor setting up the first tile of the board
@@ -34,6 +41,9 @@ public class Board {
         this.stackGardener.generate();
         this.stackPanda.generate();
         this.stackPlot.generate();
+        this.basinStack.generate();
+        this.enclosureStack.generate();
+        this.fertilizerStack.generate();
         this.addTile(new Tile(new Coordinate(0,0),TypeOfTile.POND));
     }
 
@@ -59,9 +69,9 @@ public class Board {
 
     }
 
-    public String movePandaOn(Coordinate coordinate, Player player){
+    public String movePandaOn(Coordinate coordinate, Bot player){
         this.panda.moveOn(coordinate,player);
-        return "Le panda a ete deplace en "+coordinate.getX()+", "+coordinate.getY() + " il possede maintenant : "+player.getNbBamboo() +" bambous";
+        return "Le panda a ete deplace en "+coordinate.getX()+", "+coordinate.getY() + " il possede maintenant : "+player.getNbBamboo(TypeOfTile.GREEN) +" bambous verts, "+player.getNbBamboo(TypeOfTile.YELLOW)+" bambous jaunes et "+player.getNbBamboo(TypeOfTile.RED)+" bambous roses";
     }
 
     public String addTile(Tile tile){
@@ -71,7 +81,7 @@ public class Board {
     }
 
 
-    public ArrayList<Tile> getBoardTiles() {
+    public List<Tile> getBoardTiles() {
         return boardTiles;
     }
 
@@ -86,10 +96,10 @@ public class Board {
 
     //this method returns an ArrayList of all the possible positions that are in contact with the edge of the board and at a legal position = near 0,0 or with two neighbours
 
-    public ArrayList<Coordinate> scanAvailableTilePosition() {
+    public List<Coordinate> scanAvailableTilePosition() {
 
-        ArrayList<Coordinate> occupiedCoordinates = new ArrayList<>();
-        ArrayList<Coordinate> availableCoordinates = new ArrayList<>();
+        List<Coordinate> occupiedCoordinates = new ArrayList<>();
+        List<Coordinate> availableCoordinates = new ArrayList<>();
 
         // n complexity, gets the coordinates of all the tiles of the board
         for (int i = 0; i < boardTiles.size(); i++) {
@@ -115,13 +125,12 @@ public class Board {
                 }
 
                 //checks if the close neighbour is legal == has two neighbours on the board
-                //TODO not quite implemented yet
                 if (closeNeighbours.get(j).getNumberOfNeighbours(occupiedCoordinates) < 2) {
                     isIllegal = true;   //the tile is illegal
                     //except if it is near 0,0
-                    ArrayList<Coordinate> near0_0 = new Coordinate(0,0).getNeighbourCoordinates();
+                    List<Coordinate> near0_0 = new Coordinate(0,0).getNeighbourCoordinates();
                     if (near0_0.contains(closeNeighbours.get(j))) {
-                        //the tile is neat 0,0 and thus is legal
+                        //the tile is near 0,0 and thus is legal
                         isIllegal = false;
                     }
 
@@ -135,7 +144,7 @@ public class Board {
         return availableCoordinates;
     }
 
-    public void setBoardTiles(ArrayList<Tile> boardTiles) {
+    public void setBoardTiles(List<Tile> boardTiles) {
         this.boardTiles = boardTiles;
     }
 
@@ -183,6 +192,33 @@ public class Board {
 
     public void putBackInTileStack(Tile tile) {
         tileStack.putBelow(tile);
+    }
+
+
+    public ObjectiveStackGardener getStackGardener() {
+        return stackGardener;
+    }
+
+    public ArrangementStack getEnclosureStack() {
+        return enclosureStack;
+    }
+
+    public ArrangementStack getBasinStack() {
+        return basinStack;
+    }
+
+    public ArrangementStack getFertilizerStack() {
+        return fertilizerStack;
+    }
+        
+
+    public TileStack getTileStack() {
+        return tileStack;
+
+    }
+
+    public PatternDetector getPatternBoard() {
+        return patternDetector;
     }
 }
 
