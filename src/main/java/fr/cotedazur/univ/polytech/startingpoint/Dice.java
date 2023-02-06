@@ -1,5 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
+import java.util.Random;
+
 public class Dice {
     public Dice() {
         this.meteo = Meteo.NONE;
@@ -18,7 +20,16 @@ public class Dice {
 
 
     public void randomMeteo(){
-        int random = (int) (Math.random() * 6);
+
+        Random rand = new Random();
+        int random = -1;
+        for(int i=0;i<10;i++){
+
+            random = rand.nextInt(6);
+
+        }
+
+
         switch (random) {
             case 0 -> this.meteo = Meteo.RAIN;
             case 1 -> this.meteo = Meteo.SUN;
