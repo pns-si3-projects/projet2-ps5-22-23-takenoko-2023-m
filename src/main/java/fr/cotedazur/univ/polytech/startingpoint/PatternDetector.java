@@ -185,8 +185,12 @@ public class PatternDetector {
                 for(Coordinate coordinate : tilesOfSameTypeNearCoordinate){
                     if(board.isInBoard(coordinate.getX(),coordinate.getY())) {
                         List<Coordinate> possibleCoordinates = board.getAvailableCoordinateNear(coordinate);
-                        //remove coordinae forming a triangle
+                        //remove coordinate forming a triangle
                         possibleCoordinates.removeAll(tile.getNeighbourCoordinateTogetherWith(new Tile(coordinate)));
+
+                        possibleCoordinates.remove(bestCoordinateForLineNear(firstTileCoordinate,List.of(coordinate)));
+                        possibleCoordinates.remove(bestCoordinateForLineNear(firstTileCoordinate,List.of(coordinate)));
+                        //remove coordinate forming a line
                         for (Coordinate coordinateTogether : possibleCoordinates) {
                             if (!board.isInBoard(coordinateTogether.getX(), coordinateTogether.getY())) {
                                 return coordinateTogether;

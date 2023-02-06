@@ -102,6 +102,9 @@ class PatternDetectorTest {
         board.addTile(new Tile(new Coordinate(-2,-1),TypeOfTile.GREEN));
         board.addTile(new Tile(new Coordinate(-2,1),TypeOfTile.GREEN));
         board.addTile(new Tile(new Coordinate(0,-1),TypeOfTile.GREEN));
+        assertEquals(new Coordinate(-3,1),board.patternDetector.bestCoordinateForBoomrang(new ObjectivePlot(new Pattern(TypeOfPattern.BOOMRANG,TypeOfTile.RED))));
+        board.addTile(new Tile(new Coordinate(-3,1),TypeOfTile.GREEN));
         assertEquals(new Coordinate(-1,1),board.patternDetector.bestCoordinateForBoomrang(new ObjectivePlot(new Pattern(TypeOfPattern.BOOMRANG,TypeOfTile.RED))));
+
     }
 }
