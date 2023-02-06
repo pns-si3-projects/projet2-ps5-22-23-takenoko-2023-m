@@ -67,6 +67,7 @@ public class Player {
 
     public void play(){
         if(this.nbTours >1){
+            this.board.getDice().randomMeteo();
             while(this.board.getDice().getMeteo()==Meteo.NONE || this.board.getDice().getMeteo()==Meteo.QUESTIONMARK){
                 this.board.getDice().randomMeteo();
             }
