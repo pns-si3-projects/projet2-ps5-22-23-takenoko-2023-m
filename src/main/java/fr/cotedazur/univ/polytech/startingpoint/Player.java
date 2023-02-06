@@ -69,7 +69,7 @@ public class Player {
             this.playForPatternCard();
         }
         this.checkPatternOnBoard();
-        LOGGER.info("");
+        LOGGER.info("\n");
     }
 
     public void playForPatternCard(){
