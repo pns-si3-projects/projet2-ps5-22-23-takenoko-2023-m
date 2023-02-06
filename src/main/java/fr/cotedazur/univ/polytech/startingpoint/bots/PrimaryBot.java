@@ -10,7 +10,6 @@ import java.util.logging.Logger;
 
 public class PrimaryBot extends Bot {
     private ObjectiveInterface focusCard = null;
-    private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     public PrimaryBot(Board board, String name) {
         super(board, name);
@@ -23,17 +22,17 @@ public class PrimaryBot extends Bot {
         }
         this.focusCard.play(this);
         this.checkPatternOnBoard();
-        LOGGER.info("\n");
+        Main.LOGGER.info("\n");
     }
 
     public void playForPatternCard(){
         ObjectivePlot objectivePlot = (ObjectivePlot) this.focusCard;
         List<TypeOfTile> colors = objectivePlot.getColors();
         List<Tile> tilesPicked = board.pickThreeTiles();
-        LOGGER.info("Le joueur " +this.getNom() +" a pioche les tuiles suivantes :");
+        Main.LOGGER.info("Le joueur " +this.getNom() +" a pioche les tuiles suivantes :");
         for(Tile tile : tilesPicked){
             String message = tile.getTypeOfTile().toString();
-            LOGGER.info(message);
+            Main.LOGGER.info(message);
         }
         if(objectivePlot.getPattern().getType().equals(TypeOfPattern.LINE)){
             boolean isPlaced = false;
@@ -42,7 +41,7 @@ public class PrimaryBot extends Bot {
                 if(tile.getTypeOfTile().equals(colors.get(0))&&!isPlaced){
                     isPlaced = true;
                     String ret = board.addTile(new Tile(board.bestCoordinateForLine(objectivePlot),tile.getTypeOfTile()))+ " de type:"+tile.getTypeOfTile();
-                    LOGGER.info(ret);
+                    Main.LOGGER.info(ret);
                 }
                 else{
                     tilesToPutBackInStack.add(tile);
@@ -50,7 +49,7 @@ public class PrimaryBot extends Bot {
             }
             if(!isPlaced){
                 String message = board.addTile(new Tile(board.scanAvailableTilePosition().get(0),tilesPicked.get(0).getTypeOfTile()))+ " de type:"+tilesPicked.get(0).getTypeOfTile();
-                LOGGER.info(message);
+                Main.LOGGER.info(message);
                 board.putBackInTileStack(tilesPicked.get(1));
                 board.putBackInTileStack(tilesPicked.get(2));
             }
@@ -75,7 +74,7 @@ public class PrimaryBot extends Bot {
             if(board.getPatternBoard().getPatternBoardList().contains(objectivePlot.getPattern())){
                 this.point += objectivePlot.getNbPointsWin();
                 String message = "Le joueur "+this.getNom()+" a gagne "+objectivePlot.getNbPointsWin()+" points pour avoir realise le pattern "+objectivePlot;
-                LOGGER.info(message);
+                Main.LOGGER.info(message);
                 this.objectives.remove(objectivePlot);
             }
         }
@@ -89,7 +88,7 @@ public class PrimaryBot extends Bot {
             Tile toAdd = chooseBetterOf3Tiles(tilesPicked);
             toAdd.setCoordinate(availableCoordinates.get(0));
             String message = this.board.addTile(toAdd);
-            LOGGER.info(message);
+            Main.LOGGER.info(message);
             this.playAction();
         }
 
@@ -102,7 +101,7 @@ public class PrimaryBot extends Bot {
                 Tile toAdd = chooseBetterOf3Tiles(tilesPicked);
                 toAdd.setCoordinate(availableCoordinates.get(0));
                 String message = this.board.addTile(toAdd);
-                LOGGER.info(message);
+                Main.LOGGER.info(message);
                 this.playAction();
             }else{
                 boolean moved = false;
@@ -111,7 +110,7 @@ public class PrimaryBot extends Bot {
                     ObjectiveGardener objectiveGardener = (ObjectiveGardener) this.focusCard;
                     if(potentialTile.getTypeOfTile().equals(objectiveGardener.getTypeOfTile())){ //It's the same color so we moove
                         String message = this.board.moveGardenerOn(availablePositionsGardener.get(0));
-                        LOGGER.info(message);
+                        Main.LOGGER.info(message);
                         this.playAction();
                         moved = true;
                         break;
@@ -123,7 +122,7 @@ public class PrimaryBot extends Bot {
                     Tile toAdd = chooseBetterOf3Tiles(tilesPicked);
                     toAdd.setCoordinate(availableCoordinates.get(0));
                     String message = this.board.addTile(toAdd);
-                    LOGGER.info(message);
+                    Main.LOGGER.info(message);
                     this.playAction();
                 }
 
@@ -135,7 +134,7 @@ public class PrimaryBot extends Bot {
             List<ObjectiveInterface> objectifs = this.getObjective();
             objectifs.remove(focusCard);
             this.focusCard = null;
-            LOGGER.info("Objecti jardinier realise");
+            Main.LOGGER.info("Objecti jardinier realise");
         }
     }
 
@@ -150,7 +149,7 @@ public class PrimaryBot extends Bot {
                 Tile toAdd = chooseBetterOf3Tiles(tilesPicked);
                 toAdd.setCoordinate(availablePositions.get(0));
                 String message = this.board.addTile(toAdd);
-                LOGGER.info(message);
+                Main.LOGGER.info(message);
                 this.playAction();
             } else {
                 boolean pandaMove = false;
@@ -158,7 +157,7 @@ public class PrimaryBot extends Bot {
                     ObjectivePanda objectivePanda = (ObjectivePanda) this.focusCard;
                     if (this.board.getTile(co).getBamboo() > 0 && this.board.getTile(co).getTypeOfTile().equals(objectivePanda.getTypeOfTile())) {
                         String message = this.board.movePandaOn(co, this);
-                        LOGGER.info(message);
+                        Main.LOGGER.info(message);
                         this.playAction();
                         pandaMove = true;
                         break;
@@ -195,7 +194,7 @@ public class PrimaryBot extends Bot {
                         }
                         if (canGrowBamboo) {
                             String message = this.board.moveGardenerOn(availablePositionGardener.get(i));
-                            LOGGER.info(message);
+                            Main.LOGGER.info(message);
                             gardenerMove = true;
                             this.playAction();
                         }
@@ -206,7 +205,7 @@ public class PrimaryBot extends Bot {
                         Tile toAdd = chooseBetterOf3Tiles(tilesPicked);
                         toAdd.setCoordinate(availableCoordinates.get(0));
                         String message = this.board.addTile(toAdd);
-                        LOGGER.info(message);
+                        Main.LOGGER.info(message);
                         this.playAction();
                     }
                     //end of new code (if it does not fit in the issue just comment out and add to a new issue)
@@ -219,7 +218,7 @@ public class PrimaryBot extends Bot {
             this.setPoint(this.focusCard.getNbPointsWin()+this.getPoint());
             this.objectives.remove(focusCard);
             this.focusCard = null;
-            LOGGER.info("Objectif panda realise");
+            Main.LOGGER.info("Objectif panda realise");
         }
     }
 
@@ -233,6 +232,7 @@ public class PrimaryBot extends Bot {
                 card = cardObj;
             }
         }
+        //Main.LOGGER.severe("La carte la plus interessante est : " + card.toString() +" pour " +this.getNom());
         this.focusCard = card;
     }
 

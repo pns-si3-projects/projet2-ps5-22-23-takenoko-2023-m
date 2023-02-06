@@ -9,8 +9,6 @@ import java.util.logging.*;
 public class GameEngine {
     Board board;
     List<Bot> playerList = new ArrayList<>();
-    private static final Logger LOGGER = Logger.getLogger(GameEngine.class.getName());
-
 
     public GameEngine(Board board, List<Bot> players){
         this.board = board;
@@ -22,7 +20,7 @@ public class GameEngine {
         int indexPlayer = 0;
         int nbTour = 1;
         while(true){
-            LOGGER.info("<       > Tour numero : "+nbTour+" <       >");
+            Main.LOGGER.info("<       > Tour numero : "+nbTour+" <       >");
             this.playerList.get(indexPlayer).play();
             //On vérifie si un joueur atteint le nombre max de points
             if (this.playerList.get(indexPlayer).getPoint() >= 9){
@@ -34,10 +32,14 @@ public class GameEngine {
                 indexPlayer=0;
                 nbTour++;
             }
+            if(nbTour == 25){
+                Main.LOGGER.severe("Nombre de tour max atteint");
+                break;
+            }
         }
     }
 
     public void printWinner(Bot p){
-        System.out.println("Le joueur est gagnant est : "+p.getNom()+" avec un score de "+p.getPoint()+" points marques");
+        Main.LOGGER.severe("Le joueur est gagnant est : "+p.getNom()+" avec un score de "+p.getPoint()+" points marques");
     }
 }

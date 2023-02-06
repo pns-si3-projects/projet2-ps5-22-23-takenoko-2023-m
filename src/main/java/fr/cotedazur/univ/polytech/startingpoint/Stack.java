@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.logging.*;
 public abstract class Stack<T> {
     public List<T> list;
-    private static final Logger LOGGER = Logger.getLogger( Stack.class.getName() );
 
     protected Stack(List<T> list){
         this.list = list;
@@ -33,7 +32,7 @@ public abstract class Stack<T> {
 
 
 
-        LOGGER.info("L'objectif voulu n'est pas dans la pile");
+        Main.LOGGER.info("L'objectif voulu n'est pas dans la pile");
         return null;
     }
 

@@ -6,7 +6,7 @@ import java.util.logging.*;
 import java.util.List;
 
 public class Main {
-    private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    public final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static void main(String... args) {
         LOGGER.setLevel(Level.SEVERE);
         Board board = new Board();
