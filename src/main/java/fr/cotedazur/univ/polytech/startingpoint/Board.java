@@ -6,6 +6,16 @@ import java.util.List;
 public class Board {
     private ArrayList<Tile> boardTiles = new ArrayList<>();
 
+    public Meteo getMeteo() {
+        return meteo;
+    }
+
+    public void setMeteo(Meteo meteo) {
+        this.meteo = meteo;
+    }
+
+    private Meteo meteo = Meteo.NONE;
+
     public Gardener getGardener() {
         return gardener;
     }
@@ -64,7 +74,6 @@ public class Board {
         int nbBamboo = this.getTile(coordinate).getBamboo();
         return "Le jardinier à été déplacé en "+coordinate.getX()+", "+coordinate.getY() + " voici les tuiles affectées : \n" + bNumber + "La case " + coordinate + " a poussé et est maintenant à " + this.getTile(coordinate).getBamboo() + " bambou(s)\n";
 
-
     }
 
     public String movePandaOn(Coordinate coordinate, Player player){
@@ -76,6 +85,19 @@ public class Board {
         boardTiles.add(tile);
         patternDetector.detectPatternNear(tile.getCoordinate());
         return "Une carte a ete posee en:"+tile.getCoordinnateX()+" "+tile.getCoordinnateY();
+    }
+
+    public void randomMeteo(){
+        int random = (int) (Math.random() * 6);
+        switch (random) {
+            case 0 -> this.meteo = Meteo.RAIN;
+            case 1 -> this.meteo = Meteo.SUN;
+            case 2 -> this.meteo = Meteo.QUESTIONMARK;
+            case 3 -> this.meteo = Meteo.LIGHTNING;
+            case 4 -> this.meteo = Meteo.WIND;
+            case 5 -> this.meteo = Meteo.CLOUD;
+            default -> this.meteo = Meteo.NONE;
+        }
     }
 
 
@@ -193,7 +215,6 @@ public class Board {
         tileStack.putBelow(tile);
     }
 
-
     public ObjectiveStackGardener getStackGardener() {
         return stackGardener;
     }
@@ -209,11 +230,8 @@ public class Board {
     public ArrangementStack getFertilizerStack() {
         return fertilizerStack;
     }
-        
 
     public TileStack getTileStack() {
         return tileStack;
-
     }
 }
-
