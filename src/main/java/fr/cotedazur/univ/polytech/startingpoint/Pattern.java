@@ -50,4 +50,8 @@ public class Pattern {
         }
         return "Pattern de type "+this.type+" et de couleur "+this.firstColor;
     }
+
+    public TypeOfPattern getType() {
+        return type;
+    }
 }

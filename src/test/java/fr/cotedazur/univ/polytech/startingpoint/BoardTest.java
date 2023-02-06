@@ -1,5 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
+import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
+import fr.cotedazur.univ.polytech.startingpoint.bots.PrimaryBot;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -49,7 +51,7 @@ class BoardTest {
     @Test
     void testPutBackWithPlayer(){
         Board board = new Board();
-        Player p =  new Player(board, "Simon");
+        PrimaryBot p =  new PrimaryBot(board, "Simon");
         p.checkBetterCard();
         List<Tile> liste = board.pickThreeTiles();
         assertEquals(24,board.getTileStack().sizeTileStack());

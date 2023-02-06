@@ -1,12 +1,15 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
+import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class GameEngine {
     Board board;
-    ArrayList<Player> playerList = new ArrayList<>();
+    List<Bot> playerList = new ArrayList<>();
 
-    public GameEngine(Board board, ArrayList<Player> players){
+    public GameEngine(Board board, List<Bot> players){
         this.board = board;
         this.playerList = players;
     }
@@ -30,7 +33,7 @@ public class GameEngine {
             }
         }
     }
-    public void printWinner(Player p){
+    public void printWinner(Bot p){
         System.out.println("Le joueur est gagnant est : "+p.getNom()+" avec un score de "+p.getPoint()+" points marques");
     }
 }
