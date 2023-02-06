@@ -6,6 +6,16 @@ import java.util.List;
 public class Board {
     private List<Tile> boardTiles = new ArrayList<>();
 
+    public Dice getDice() {
+        return dice;
+    }
+
+    public void setDice(Dice dice) {
+        this.dice = dice;
+    }
+
+    private Dice dice = new Dice();
+
     public Gardener getGardener() {
         return gardener;
     }
@@ -62,7 +72,6 @@ public class Board {
 
         String bNumber = gardener.moveOn(coordinate);
         return "Le jardinier à été déplacé en "+coordinate.getX()+", "+coordinate.getY() + " voici les tuiles affectées : \n" + bNumber + "La case " + coordinate + " a poussé et est maintenant à " + this.getTile(coordinate).getBamboo() + " bambou(s)\n";
-
 
     }
 
@@ -191,7 +200,6 @@ public class Board {
         tileStack.putBelow(tile);
     }
 
-
     public ObjectiveStackGardener getStackGardener() {
         return stackGardener;
     }
@@ -207,11 +215,8 @@ public class Board {
     public ArrangementStack getFertilizerStack() {
         return fertilizerStack;
     }
-        
 
     public TileStack getTileStack() {
         return tileStack;
-
     }
 }
-
