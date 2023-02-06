@@ -27,6 +27,9 @@ public class Board {
 
     private final TileStack tileStack = new TileStack();
 
+    private final ArrayList<Irrigation> placedIrrigations = new ArrayList<>();  //placed irrigations MUST be created using the board tiles for them to be modified by the irrigation
+    private final ArrayList<Irrigation> legalIrrigationPlacement = new ArrayList<>();   //hypothetical irrigations MUST be created using only coordinates
+
     private final ArrangementStack enclosureStack = new ArrangementStack(TypeOfArrangement.ENCLOSURE);
     private final ArrangementStack basinStack = new ArrangementStack(TypeOfArrangement.BASIN);
     private final ArrangementStack fertilizerStack = new ArrangementStack(TypeOfArrangement.FERTILIZER);
@@ -76,6 +79,18 @@ public class Board {
         boardTiles.add(tile);
         patternDetector.detectPatternNear(tile.getCoordinate());
         return "Une carte a ete posee en:"+tile.getCoordinnateX()+" "+tile.getCoordinnateY();
+    }
+
+    public String addIrrigation(Irrigation irrigation) {    //gets a dummyIrrigation
+        Tile tmpTile1 = this.getTile(irrigation.getCoordinates().get(0));
+        Tile tmpTile2 = this.getTile(irrigation.getCoordinates().get(1));
+        Irrigation newIrrigation = new Irrigation(tmpTile1,tmpTile2);
+        placedIrrigations.add(newIrrigation);
+        legalIrrigationPlacement.remove(legalIrrigationPlacement.indexOf(irrigation));
+        return "Une irrigation a été ajoutée en : " + newIrrigation;
+    }
+    public ArrayList<Irrigation> getLegalIrrigationPlacement() {
+        return legalIrrigationPlacement;
     }
 
 

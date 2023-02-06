@@ -104,4 +104,9 @@ class IrrigationTest {
             assertEquals("These tiles are not neighbours (" + xn1y1 + "\t\t" + x1y1 + ")",e.getMessage());
         }
     }
+
+    @Test
+    void testEquals() {
+        assertTrue(verticalIrrigation.equals(new Irrigation(x0y0,x1y0)));
+    }
 }
