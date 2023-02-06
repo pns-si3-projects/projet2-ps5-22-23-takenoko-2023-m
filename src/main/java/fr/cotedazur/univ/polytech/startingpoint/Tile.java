@@ -176,10 +176,6 @@ public class Tile {
         this.typeOfTile = typeOfTile;
     }
 
-    public void setCoordinate(Coordinate coordinate) {
-        this.coordinate = coordinate;
-    }
-
     @Override
     public boolean equals (Object o) {
         if (o != null) {

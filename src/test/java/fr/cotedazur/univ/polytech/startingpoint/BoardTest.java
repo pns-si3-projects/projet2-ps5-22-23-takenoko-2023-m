@@ -58,24 +58,4 @@ class BoardTest {
         Tile t = p.chooseBetterOf3Tiles(liste);
         assertEquals(26,board.getTileStack().sizeTileStack());
     }
-
-    @Test
-    void testPutBackInTileStack(){
-        Board board = new Board();
-        assertEquals(27, board.getTileStack().sizeTileStack());
-        Tile t = new Tile(TypeOfTile.RED);
-        board.putBackInTileStack(t);
-        assertEquals(28,board.getTileStack().sizeTileStack());
-    }
-
-    @Test
-    void testPutBackWithPlayer(){
-        Board board = new Board();
-        Player p =  new Player(board, "Simon");
-        p.checkBetterCard();
-        List<Tile> liste = board.pickThreeTiles();
-        assertEquals(24,board.getTileStack().sizeTileStack());
-        Tile t = p.chooseBetterOf3Tiles(liste);
-        assertEquals(26,board.getTileStack().sizeTileStack());
-    }
 }

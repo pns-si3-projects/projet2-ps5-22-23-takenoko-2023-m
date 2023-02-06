@@ -11,7 +11,7 @@ public class ObjectivePanda extends ObjectifWithOneColor implements ObjectiveInt
         private int nbPointsWin;
 
         public ObjectivePanda(String type, int nbToEat, int nbPointsWin, TypeOfTile typeOfTile) {
-            super();
+            super(typeOfTile);
             this.type = type;
             this.nbToEat = nbToEat;
             this.nbPointsWin = nbPointsWin;

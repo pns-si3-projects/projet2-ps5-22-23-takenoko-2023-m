@@ -7,7 +7,6 @@ import java.util.List;
 
 public class Board {
     private List<Tile> boardTiles = new ArrayList<>();
-    private List<Tile> boardTiles = new ArrayList<>();
 
     public Dice getDice() {
         return dice;

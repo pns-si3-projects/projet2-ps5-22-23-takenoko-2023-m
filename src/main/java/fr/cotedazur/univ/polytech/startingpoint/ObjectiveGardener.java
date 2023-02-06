@@ -12,7 +12,7 @@ public class ObjectiveGardener extends ObjectifWithOneColor implements Objective
     private TypeOfTile typeOfTile;
 
     public ObjectiveGardener(String type,int nbBambooRequired, int nbPointsWin, TypeOfTile typeOfTile){
-        super();
+        super(typeOfTile);
         this.type = type;
         this.nbPointsWin = nbPointsWin;
         this.nbBambooRequired = nbBambooRequired;
