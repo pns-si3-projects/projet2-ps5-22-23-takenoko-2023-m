@@ -22,6 +22,8 @@ public class MeteoTest {
         b.getDice().randomMeteo();
         assertNotEquals(b.getDice().getMeteo(), Meteo.NONE);
 
+
+
     }
 
 }

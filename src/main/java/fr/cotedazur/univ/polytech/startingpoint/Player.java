@@ -11,6 +11,8 @@ public class Player {
     private int nbBambooRed = 0;
     private int nbActions = 2;
 
+    private int nbTours = 1;
+
     public List<TypeOfArrangement> getListArrangement() {
         return listArrangement;
     }
@@ -53,10 +55,23 @@ public class Player {
         System.out.println("Le joueur " +this.getNom() +" vient de jouer");
     }
 
-    public void resetNbActions() { this.nbActions = 2;}
+    public void resetNbActions() {
+        if (this.board.getDice().getMeteo() == Meteo.SUN) {
+            this.nbActions = 3;
+        } else {
+            this.nbActions = 2;
+        }
+    }
+
 
 
     public void play(){
+        if(this.nbTours >1){
+            while(this.board.getDice().getMeteo()==Meteo.NONE || this.board.getDice().getMeteo()==Meteo.QUESTIONMARK){
+                this.board.getDice().randomMeteo();
+            }
+        }
+        System.out.println(" la meteo est " + this.board.getDice().getMeteo());
         this.resetNbActions();
         if (this.focusCard == null){
             checkBetterCard();
@@ -65,11 +80,25 @@ public class Player {
         if(this.focusCard instanceof ObjectiveGardener){
             this.playForGardenerCard();
         }else if(this.focusCard instanceof ObjectivePanda){
-            this.playForPandaCard();
+            ObjectivePanda objectivePanda = (ObjectivePanda) this.focusCard;
+            if(this.board.getDice().getMeteo()==Meteo.LIGHTNING){
+                for(Tile tile : this.board.getBoardTiles()){
+                    if(tile.getTypeOfTile().equals(objectivePanda.getTypeOfTile())){
+                        this.board.getPanda().moveOn(tile.getCoordinate(),this);
+                        this.playAction();
+                        break;
+                    }
+                }
+            }
+            else{
+                this.playForPandaCard();
+            }
+
         }else{
             this.playForPatternCard();
         }
         this.checkPatternOnBoard();
+        this.nbTours ++;
         System.out.println();
     }
 
