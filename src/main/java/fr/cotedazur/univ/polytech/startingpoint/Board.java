@@ -208,6 +208,8 @@ public class Board {
 
     public ArrangementStack getFertilizerStack() {
         return fertilizerStack;
+    }
+        
 
     public TileStack getTileStack() {
         return tileStack;
