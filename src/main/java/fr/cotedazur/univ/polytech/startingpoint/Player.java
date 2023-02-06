@@ -358,4 +358,32 @@ public class Player {
         System.out.println("Le joueur "+this.getNom()+" a pioche une carte Jardinier!");
         this.playAction();
     }
+
+    public Tile chooseBetterOf3Tiles(List<Tile> tiles){
+        if(tiles.get(0).getTypeOfTile().equals(focusCard.getType())) {
+            Tile ret = tiles.get(0);
+            tiles.remove(0);
+            this.board.putBackInTileStack(tiles.get(0)); this.board.putBackInTileStack(tiles.get(1));
+            return ret;
+        }else if(tiles.get(1).getTypeOfTile().equals(focusCard.getType())) {
+            Tile ret = tiles.get(1);
+            tiles.remove(1);
+            this.board.putBackInTileStack(tiles.get(0)); this.board.putBackInTileStack(tiles.get(1));
+            return ret;
+        }else if(tiles.get(2).getTypeOfTile().equals(focusCard.getType())) {
+            Tile ret = tiles.get(2);
+            tiles.remove(2);
+            this.board.putBackInTileStack(tiles.get(0)); this.board.putBackInTileStack(tiles.get(1));
+            return ret;
+        }else{
+            Tile ret = tiles.get(0);
+            tiles.remove(0);
+            this.board.putBackInTileStack(tiles.get(0)); this.board.putBackInTileStack(tiles.get(1));
+            return ret;
+        }
+    }
+
+    public void setFocusCard(ObjectiveInterface focusCard) {
+        this.focusCard = focusCard;
+    }
 }
