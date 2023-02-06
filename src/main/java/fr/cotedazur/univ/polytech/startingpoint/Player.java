@@ -76,7 +76,6 @@ public class Player {
         if (this.focusCard == null){
             checkBetterCard();
         }
-        this.focusCard.play(this);
         if(this.focusCard instanceof ObjectiveGardener){
             this.playForGardenerCard();
         }else if(this.focusCard instanceof ObjectivePanda){
@@ -103,6 +102,7 @@ public class Player {
     }
 
     public void playForPatternCard(){
+        System.out.println("la focus card = " +this.focusCard);
         ObjectivePlot objectivePlot = (ObjectivePlot) this.focusCard;
         List<TypeOfTile> colors = objectivePlot.getColors();
         List<Tile> tilesPicked = board.pickThreeTiles();
