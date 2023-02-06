@@ -4,7 +4,7 @@ import fr.cotedazur.univ.polytech.startingpoint.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.logging.*;
 public abstract class Bot {
     protected int point = 0;
     protected String nom;
@@ -26,7 +26,7 @@ public abstract class Bot {
     public void pickPandaCard(){
         ObjectivePanda objectivePanda = this.board.getPandaCard();
         this.objectives.add(objectivePanda);
-        System.out.println("Le joueur "+this.getNom()+" a pioche une carte Panda et qui vaut "+objectivePanda.getNbPointsWin()+" points");
+        Main.LOGGER.info("Le joueur "+this.getNom()+" a pioche une carte Panda et qui vaut "+objectivePanda.getNbPointsWin()+" points");
         this.playAction();
     }
 
@@ -34,14 +34,14 @@ public abstract class Bot {
         //TODO : make possible to pick other objective than LINE
         ObjectivePlot objectivePlot = this.board.getPlotCard();
         this.objectives.add(objectivePlot);
-        System.out.println("Le joueur "+this.getNom()+" a pioche une carte Pattern de type "+objectivePlot.getType()+" et de couleur "+objectivePlot.getColors().get(0)+" et qui vaut "+objectivePlot.getNbPointsWin()+" points");
+        Main.LOGGER.info("Le joueur "+this.getNom()+" a pioche une carte Pattern de type "+objectivePlot.getType()+" et de couleur "+objectivePlot.getColors().get(0)+" et qui vaut "+objectivePlot.getNbPointsWin()+" points");
         this.playAction();
     }
 
     public void pickGardenerCard(){
         ObjectiveGardener objectiveGardener = this.board.getGardenerCard();
         this.objectives.add(objectiveGardener);
-        System.out.println("Le joueur "+this.getNom()+" a pioche une carte Jardinier et qui vaut "+objectiveGardener.getNbPointsWin());
+        Main.LOGGER.info("Le joueur "+this.getNom()+" a pioche une carte Jardinier et qui vaut "+objectiveGardener.getNbPointsWin());
         this.playAction();
     }
 
@@ -71,7 +71,7 @@ public abstract class Bot {
 
     public void playAction() {
         this.nbActions -= 1;
-        System.out.println("Le joueur " +this.getNom() +" vient de jouer");
+        Main.LOGGER.info("Le joueur " +this.getNom() +" vient de jouer");
     }
 
     public void resetNbActions() { this.nbActions = 2;}
