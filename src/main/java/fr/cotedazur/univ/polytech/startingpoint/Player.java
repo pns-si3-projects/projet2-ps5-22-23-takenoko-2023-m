@@ -1,8 +1,9 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.logging.*;
 public class Player {
+    private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private int point = 0;
     private String nom;
     private final Board board;
@@ -49,7 +50,7 @@ public class Player {
 
     public void playAction() {
         this.nbActions -= 1;
-        System.out.println("Le joueur " +this.getNom() +" vient de jouer");
+        LOGGER.info("Le joueur " +this.getNom() +" vient de jouer");
     }
 
     public void resetNbActions() { this.nbActions = 2;}
@@ -68,14 +69,14 @@ public class Player {
             this.playForPatternCard();
         }
         this.checkPatternOnBoard();
-        System.out.println();
+        LOGGER.info("");
     }
 
     public void playForPatternCard(){
         ObjectivePlot objectivePlot = (ObjectivePlot) this.focusCard;
         List<TypeOfTile> colors = objectivePlot.getColors();
         List<Tile> tilesPicked = board.pickThreeTiles();
-        System.out.println("Le joueur " +this.getNom() +" a pioche les tuiles suivantes :");
+        LOGGER.info("Le joueur " +this.getNom() +" a pioche les tuiles suivantes :");
         for(Tile tile : tilesPicked){
             System.out.println(tile.getTypeOfTile());
         }
@@ -85,14 +86,16 @@ public class Player {
             for(Tile tile : tilesPicked){
                 if(tile.getTypeOfTile().equals(colors.get(0))&&!isPlaced){
                     isPlaced = true;
-                    System.out.println(board.addTile(new Tile(board.bestCoordinateForLine(objectivePlot),tile.getTypeOfTile()))+ " de type:"+tile.getTypeOfTile());
+                    String ret = board.addTile(new Tile(board.bestCoordinateForLine(objectivePlot),tile.getTypeOfTile()))+ " de type:"+tile.getTypeOfTile();
+                    LOGGER.info(ret);
                 }
                 else{
                     tilesToPutBackInStack.add(tile);
                 }
             }
             if(!isPlaced){
-                System.out.println(board.addTile(new Tile(board.scanAvailableTilePosition().get(0),tilesPicked.get(0).getTypeOfTile()))+ " de type:"+tilesPicked.get(0).getTypeOfTile());
+                String message = board.addTile(new Tile(board.scanAvailableTilePosition().get(0),tilesPicked.get(0).getTypeOfTile()))+ " de type:"+tilesPicked.get(0).getTypeOfTile();
+                LOGGER.info(message);
                 board.putBackInTileStack(tilesPicked.get(1));
                 board.putBackInTileStack(tilesPicked.get(2));
             }
@@ -116,7 +119,8 @@ public class Player {
         for(ObjectivePlot objectivePlot : objectivePlotList){
             if(board.patternDetector.getPatternBoardList().contains(objectivePlot.getPattern())){
                 this.point += objectivePlot.getNbPointsWin();
-                System.out.println("Le joueur "+this.getNom()+" a gagne "+objectivePlot.getNbPointsWin()+" points pour avoir realise le pattern "+objectivePlot);
+                String message = "Le joueur "+this.getNom()+" a gagne "+objectivePlot.getNbPointsWin()+" points pour avoir realise le pattern "+objectivePlot;
+                LOGGER.info(message);
                 this.objectives.remove(objectivePlot);
             }
         }
@@ -129,19 +133,21 @@ public class Player {
             List<Tile> tilesPicked = board.pickThreeTiles();
             Tile toAdd = chooseBetterOf3Tiles(tilesPicked);
             toAdd.setCoordinate(availableCoordinates.get(0));
-            System.out.println(this.board.addTile(toAdd));
+            String message = this.board.addTile(toAdd);
+            LOGGER.info(message);
             this.playAction();
         }
         //While the player can play
         while(this.getNbActions()>0) {
             Tile gardenerPosition = this.board.getGardener().getTile();
             ArrayList<Coordinate> availablePositionsGardener = gardenerPosition.scanAvailableCoordinatesToMove(this.board.getBoardTiles());
-            if(availablePositionsGardener.size()==0){ //If we can't moove the gardener on any tile
+            if(availablePositionsGardener.isEmpty()){ //If we can't moove the gardener on any tile
                 ArrayList<Coordinate> availableCoordinates = this.board.scanAvailableTilePosition();
                 List<Tile> tilesPicked = board.pickThreeTiles();
                 Tile toAdd = chooseBetterOf3Tiles(tilesPicked);
                 toAdd.setCoordinate(availableCoordinates.get(0));
-                System.out.println(this.board.addTile(toAdd));
+                String message = this.board.addTile(toAdd);
+                LOGGER.info(message);
                 this.playAction();
             }else{
                 boolean moved = false;
@@ -149,7 +155,8 @@ public class Player {
                     Tile potentialTile = this.board.getTile(co);
                     ObjectiveGardener objectiveGardener = (ObjectiveGardener) this.focusCard;
                     if(potentialTile.getTypeOfTile().equals(objectiveGardener.getTypeOfTile())){ //It's the same color so we moove
-                        System.out.println(this.board.moveGardenerOn(availablePositionsGardener.get(0)));
+                        String message = this.board.moveGardenerOn(availablePositionsGardener.get(0));
+                        LOGGER.info(message);
                         this.playAction();
                         moved = true;
                         break;
@@ -160,7 +167,8 @@ public class Player {
                     List<Tile> tilesPicked = board.pickThreeTiles();
                     Tile toAdd = chooseBetterOf3Tiles(tilesPicked);
                     toAdd.setCoordinate(availableCoordinates.get(0));
-                    System.out.println(this.board.addTile(toAdd));
+                    String message = this.board.addTile(toAdd);
+                    LOGGER.info(message);
                     this.playAction();
                 }
 
@@ -169,10 +177,10 @@ public class Player {
 
         if(this.focusCard.isValid(this, this.board)){
             this.setPoint(this.getPoint()+this.focusCard.getNbPointsWin());
-            ArrayList<ObjectiveInterface> objectifs = this.getObjective();
+            ArrayList<ObjectiveInterface> objectifs = (ArrayList<ObjectiveInterface>) this.getObjective();
             objectifs.remove(focusCard);
             this.focusCard = null;
-            System.out.println("Objecti jardinier realise");
+            LOGGER.info("Objecti jardinier realise");
         }
     }
 
@@ -180,19 +188,21 @@ public class Player {
         while(this.getNbActions() > 0) {
             Tile positionPanda = this.board.getPanda().getTile();
             ArrayList<Coordinate> availablePositionPanda = positionPanda.scanAvailableCoordinatesToMove(this.board.getBoardTiles());
-            if (availablePositionPanda.size() == 0) {
+            if (availablePositionPanda.isEmpty()) {
                 ArrayList<Coordinate> availablePositions = this.board.scanAvailableTilePosition();
                 List<Tile> tilesPicked = board.pickThreeTiles();
                 Tile toAdd = chooseBetterOf3Tiles(tilesPicked);
                 toAdd.setCoordinate(availablePositions.get(0));
-                System.out.println(this.board.addTile(toAdd));
+                String message = this.board.addTile(toAdd);
+                LOGGER.info(message);
                 this.playAction();
             } else {
                 boolean pandaMove = false;
                 for (Coordinate co : availablePositionPanda) {
                     ObjectivePanda objectivePanda = (ObjectivePanda) this.focusCard;
                     if (this.board.getTile(co).getBamboo() > 0 && this.board.getTile(co).getTypeOfTile().equals(objectivePanda.getTypeOfTile())) {
-                        System.out.println(this.board.movePandaOn(co, this));
+                        String message = this.board.movePandaOn(co, this);
+                        LOGGER.info(message);
                         this.playAction();
                         pandaMove = true;
                         break;
@@ -228,7 +238,8 @@ public class Player {
                             }
                         }
                         if (canGrowBamboo) {
-                            System.out.println(this.board.moveGardenerOn(availablePositionGardener.get(i)));
+                            String message = this.board.moveGardenerOn(availablePositionGardener.get(i));
+                            LOGGER.info(message);
                             gardenerMove = true;
                             this.playAction();
                         }
@@ -238,7 +249,8 @@ public class Player {
                         List<Tile> tilesPicked = board.pickThreeTiles();
                         Tile toAdd = chooseBetterOf3Tiles(tilesPicked);
                         toAdd.setCoordinate(availableCoordinates.get(0));
-                        System.out.println(this.board.addTile(toAdd));
+                        String message = this.board.addTile(toAdd);
+                        LOGGER.info(message);
                         this.playAction();
                     }
                     //end of new code (if it does not fit in the issue just comment out and add to a new issue)
@@ -251,7 +263,7 @@ public class Player {
             this.setPoint(this.focusCard.getNbPointsWin()+this.getPoint());
             this.objectives.remove(focusCard);
             this.focusCard = null;
-            System.out.println("Objectif panda realise");
+            LOGGER.info("Objectif panda realise");
         }
     }
 
@@ -284,7 +296,7 @@ public class Player {
         return this.board.addTile(tile);
     }
 
-    public ArrayList<ObjectiveInterface> getObjective() {
+    public List<ObjectiveInterface> getObjective() {
         return objectives;
     }
 
@@ -295,8 +307,8 @@ public class Player {
         this.objectives.add(objective);
     }
 
-    public void setObjectives(ArrayList<ObjectiveInterface> objectives) {
-        this.objectives = objectives;
+    public void setObjectives(List<ObjectiveInterface> objectives) {
+        this.objectives = (ArrayList<ObjectiveInterface>) objectives;
     }
 
     public void pickArrangement(TypeOfArrangement t){
@@ -305,18 +317,18 @@ public class Player {
                 case NONE:
                     throw new IllegalArgumentException("il faut choisir un type valide");
                 case FERTILIZER:
-                    if(this.board.getFertilizerStack().getStack().size()>0){
+                    if(!this.board.getFertilizerStack().getStack().isEmpty()){
                         this.getListArrangement().add(this.board.getFertilizerStack().pick(t));
                     }
                     break;
                 case BASIN:
-                    if(this.board.getBasinStack().getStack().size()>0){
+                    if(!this.board.getBasinStack().getStack().isEmpty()){
                         this.getListArrangement().add(this.board.getBasinStack().pick(t));
 
                     }
                     break;
                 case ENCLOSURE:
-                    if(this.board.getEnclosureStack().getStack().size()>0){
+                    if(!this.board.getEnclosureStack().getStack().isEmpty()){
                         this.getListArrangement().add(this.board.getEnclosureStack().pick(t));
                     }
                     break;
@@ -373,22 +385,21 @@ public class Player {
     public void pickPandaCard(){
         ObjectivePanda objectivePanda = this.board.getPandaCard();
         this.objectives.add(objectivePanda);
-        System.out.println("Le joueur "+this.getNom()+" a pioche une carte Panda et qui vaut "+objectivePanda.getNbPointsWin()+" points");
+        LOGGER.info("Le joueur "+this.getNom()+" a pioche une carte Panda et qui vaut "+objectivePanda.getNbPointsWin()+" points");
         this.playAction();
     }
 
     public void pickPlotCard(){
-        //TODO : make possible to pick other objective than LINE
         ObjectivePlot objectivePlot = this.board.getPlotCard();
         this.objectives.add(objectivePlot);
-        System.out.println("Le joueur "+this.getNom()+" a pioche une carte Pattern de type "+objectivePlot.getType()+" et de couleur "+objectivePlot.getColors().get(0)+" et qui vaut "+objectivePlot.getNbPointsWin()+" points");
+        LOGGER.info("Le joueur "+this.getNom()+" a pioche une carte Pattern de type "+objectivePlot.getType()+" et de couleur "+objectivePlot.getColors().get(0)+" et qui vaut "+objectivePlot.getNbPointsWin()+" points");
         this.playAction();
     }
 
     public void pickGardenerCard(){
         ObjectiveGardener objectiveGardener = this.board.getGardenerCard();
         this.objectives.add(objectiveGardener);
-        System.out.println("Le joueur "+this.getNom()+" a pioche une carte Jardinier et qui vaut "+objectiveGardener.getNbPointsWin());
+        LOGGER.info("Le joueur "+this.getNom()+" a pioche une carte Jardinier et qui vaut "+objectiveGardener.getNbPointsWin());
         this.playAction();
     }
 
