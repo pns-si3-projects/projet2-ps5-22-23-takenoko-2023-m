@@ -88,6 +88,20 @@ class PatternDetectorTest {
         assertEquals(new Coordinate(2,0),coordinate);
         board.addTile(new Tile(new Coordinate(-1,0),TypeOfTile.RED));
         board.addTile(new Tile(new Coordinate(-2,0),TypeOfTile.RED));
-        assertEquals(new Coordinate(-3,0),board.patternDetector.bestCoordinateForLine(new ObjectivePlot(new Pattern(TypeOfPattern.TRIANGLE,TypeOfTile.RED))));
+        assertEquals(new Coordinate(-3,0),board.patternDetector.bestCoordinateForLine(new ObjectivePlot(new Pattern(TypeOfPattern.LINE,TypeOfTile.RED))));
+    }
+    @Test
+    void bestCoordinateForBoomrang() {
+        board.addTile(new Tile(new Coordinate(1,-1),TypeOfTile.GREEN));
+        board.addTile(new Tile(new Coordinate(2,-1),TypeOfTile.GREEN));
+        board.addTile(new Tile(new Coordinate(1,1),TypeOfTile.GREEN));
+        Coordinate coordinate = board.patternDetector.bestCoordinateForBoomrang(new ObjectivePlot(new Pattern(TypeOfPattern.BOOMRANG,TypeOfTile.RED)));
+        assertTrue(new Coordinate(2,0).equals(coordinate)||new Coordinate(0,1).equals(coordinate));
+        board.addTile(new Tile(new Coordinate(-1,0),TypeOfTile.RED));
+        board.addTile(new Tile(new Coordinate(-2,0),TypeOfTile.RED));
+        board.addTile(new Tile(new Coordinate(-2,-1),TypeOfTile.GREEN));
+        board.addTile(new Tile(new Coordinate(-2,1),TypeOfTile.GREEN));
+        board.addTile(new Tile(new Coordinate(0,-1),TypeOfTile.GREEN));
+        assertEquals(new Coordinate(-1,1),board.patternDetector.bestCoordinateForBoomrang(new ObjectivePlot(new Pattern(TypeOfPattern.BOOMRANG,TypeOfTile.RED))));
     }
 }

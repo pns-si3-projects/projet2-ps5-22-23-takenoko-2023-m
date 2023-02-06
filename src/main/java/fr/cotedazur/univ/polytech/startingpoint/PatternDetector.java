@@ -175,6 +175,53 @@ public class PatternDetector {
         }
         return null;
     }
+    public Coordinate bestCoordinateForBoomrang(ObjectivePlot objectivePlot){
+        Coordinate bestCoordinate = null;
+        for(Tile tile : this.getBoardTileOfType(objectivePlot.getColors())){
+            Coordinate firstTileCoordinate = tile.getCoordinate();
+            List<Coordinate> tilesOfSameTypeNearCoordinate = new ArrayList<>();
+            detectTileOfSameTypeNear(firstTileCoordinate).forEach(t->tilesOfSameTypeNearCoordinate.add(t.getCoordinate()));
+            if(!tilesOfSameTypeNearCoordinate.isEmpty()){
+                for(Coordinate coordinate : tilesOfSameTypeNearCoordinate){
+                    if(board.isInBoard(coordinate.getX(),coordinate.getY())) {
+                        List<Coordinate> possibleCoordinates = board.getAvailableCoordinateNear(coordinate);
+                        //remove coordinae forming a triangle
+                        possibleCoordinates.removeAll(tile.getNeighbourCoordinateTogetherWith(new Tile(coordinate)));
+                        for (Coordinate coordinateTogether : possibleCoordinates) {
+                            if (!board.isInBoard(coordinateTogether.getX(), coordinateTogether.getY())) {
+                                return coordinateTogether;
+                            }
+                        }
+                    }
+                }
+            }
+            if(bestCoordinate == null){
+                List<Coordinate> availableCoordinate = board.getAvailableCoordinateNear(firstTileCoordinate);
+                bestCoordinate = bestCoordinateForBoomrangNear(tile,availableCoordinate);
+            }
+
+        }
+        return bestCoordinate==null?board.scanAvailableTilePosition().get(0):bestCoordinate;
+    }
+
+    private Coordinate bestCoordinateForBoomrangNear(Tile tile, List<Coordinate> availableCoordinate) {
+        if(!availableCoordinate.isEmpty()){
+            for(Coordinate coordinate : availableCoordinate){
+                    List<Coordinate> possibleCoordinates = new Tile(coordinate).getNeighbourCoordinates();
+                    possibleCoordinates.remove(tile.getCoordinate());
+                    possibleCoordinates.remove(bestCoordinateForLineNear(coordinate, possibleCoordinates));
+                    possibleCoordinates.remove(bestCoordinateForLineNear(coordinate, possibleCoordinates));
+                    possibleCoordinates.remove(bestCoordinateForTriangleNear(tile, possibleCoordinates));
+                    possibleCoordinates.remove(bestCoordinateForTriangleNear(tile, possibleCoordinates));
+                    for (Coordinate coordinateTogether : possibleCoordinates) {
+                        if (!board.isInBoard(coordinateTogether.getX(), coordinateTogether.getY())) {
+                            return coordinate;
+                        }
+                    }
+            }
+        }
+        return null;
+    }
 
     /**
      * Find in the board all the tiles of a specific type
