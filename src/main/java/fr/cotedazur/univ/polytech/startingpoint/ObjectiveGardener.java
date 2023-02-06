@@ -1,15 +1,19 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 
-public class ObjectiveGardener implements ObjectiveInterface {
+public class ObjectiveGardener extends ObjectifWithOneColor implements ObjectiveInterface {
     private int nbPointsWin;
     private String type = "gardener";
     private int nbBambooRequired;
 
-    public ObjectiveGardener(String type,int nbBambooRequired, int nbPointsWin){
+    private TypeOfTile typeOfTile;
+
+    public ObjectiveGardener(String type,int nbBambooRequired, int nbPointsWin, TypeOfTile typeOfTile){
+        super(typeOfTile);
         this.type = type;
         this.nbPointsWin = nbPointsWin;
         this.nbBambooRequired = nbBambooRequired;
+        this.typeOfTile = typeOfTile;
     }
 
     public int getNbPointsWin() {

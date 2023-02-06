@@ -24,15 +24,15 @@ class PandaTest {
 
     @Test
     void movePandaOnCaseWithBamboo(){
-        assertEquals(0,player.getNbBamboo());
+        assertEquals(0,player.getNbBamboo(TypeOfTile.GREEN));
         this.board.movePandaOn(new Coordinate(1,0),player);
-        assertEquals(1,player.getNbBamboo());
+        assertEquals(1,player.getNbBamboo(TypeOfTile.GREEN));
         assertEquals(0,board.getTile(new Coordinate(1,0)).getBamboo());
     }
 
     @Test
     void movePandaOnCaseWithoutBamboo(){
         this.board.movePandaOn(new Coordinate(2,0),player);
-        assertEquals(0,player.getNbBamboo());
+        assertEquals(0,player.getNbBamboo(TypeOfTile.GREEN));
     }
 }

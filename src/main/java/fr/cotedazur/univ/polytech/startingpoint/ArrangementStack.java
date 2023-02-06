@@ -44,9 +44,7 @@ public class ArrangementStack extends Stack<TypeOfArrangement>{
     public void generate() {
         for(int i = 0; i < 3; i++){
             this.putBelow(this.getType());
-
         }
-
     }
 
     public TypeOfArrangement getType() {

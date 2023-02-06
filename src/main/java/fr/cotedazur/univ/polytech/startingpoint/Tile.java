@@ -4,17 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Tile {
-    private final Coordinate coordinate;
+    private Coordinate coordinate;
     private int bamboo = 0;
     private TypeOfTile typeOfTile;
-
+    private boolean isIrrigated = false;
     private TypeOfArrangement typeOfArrangement=TypeOfArrangement.NONE;
+
     public Tile(Coordinate coordinate, TypeOfTile type){
         this.coordinate = coordinate;
 
         this.typeOfTile = type;
         this.typeOfArrangement = TypeOfArrangement.NONE;
     }
+    public Tile(Coordinate coordinate, TypeOfTile type, TypeOfArrangement typeOfArrangement){
+        this.coordinate = coordinate;
+        this.typeOfTile = type;
+        this.typeOfArrangement = typeOfArrangement;
+    }
+
 
     public Tile(int x, int y, TypeOfTile type, TypeOfArrangement typeOfArrangement){
         coordinate = new Coordinate(x, y);
@@ -53,6 +60,16 @@ public class Tile {
 
     public Coordinate getCoordinate() {
         return coordinate;
+    }
+    public void irrigate() {
+        this.isIrrigated = true;
+    }
+    public boolean isIrrigated() {
+        return isIrrigated;
+    }
+
+    public void setCoordinate(Coordinate coordinate) {
+        this.coordinate = coordinate;
     }
 
     //tests to see if the tile to test is neighbour to this tile
@@ -139,7 +156,7 @@ public class Tile {
             this.bamboo+=2;
         }
         else {
-            this.bamboo++;
+                this.bamboo++;
         }
 
         if(bamboo>4) bamboo =4;
@@ -157,6 +174,23 @@ public class Tile {
 
     public void setTypeOfTile(TypeOfTile typeOfTile) {
         this.typeOfTile = typeOfTile;
+    }
+
+    @Override
+    public boolean equals (Object o) {
+        if (o != null) {
+            if (o instanceof Tile) {
+                Tile t = (Tile) o;
+                if(t.getCoordinate()==null && this.getCoordinate()==null && t.getTypeOfTile().equals(this.getTypeOfTile())){
+                    return true;
+                }else if(t.getCoordinate()!=null && this.getCoordinate()!=null && t.getCoordinate().equals(this.getCoordinate()) && t.getTypeOfTile().equals(this.getTypeOfTile())){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        }
+        return false;
     }
 
     public TypeOfArrangement getTypeOfArrangement() {

@@ -27,6 +27,11 @@ public class Board {
 
     private final TileStack tileStack = new TileStack();
 
+    private final ArrangementStack enclosureStack = new ArrangementStack(TypeOfArrangement.ENCLOSURE);
+    private final ArrangementStack basinStack = new ArrangementStack(TypeOfArrangement.BASIN);
+    private final ArrangementStack fertilizerStack = new ArrangementStack(TypeOfArrangement.FERTILIZER);
+
+
     final PatternDetector patternDetector = new PatternDetector(this);
 
     //constructor setting up the first tile of the board
@@ -34,6 +39,9 @@ public class Board {
         this.stackGardener.generate();
         this.stackPanda.generate();
         this.stackPlot.generate();
+        this.basinStack.generate();
+        this.enclosureStack.generate();
+        this.fertilizerStack.generate();
         this.addTile(new Tile(new Coordinate(0,0),TypeOfTile.POND));
     }
 
@@ -60,7 +68,7 @@ public class Board {
 
     public String movePandaOn(Coordinate coordinate, Player player){
         this.panda.moveOn(coordinate,player);
-        return "Le panda a ete deplace en "+coordinate.getX()+", "+coordinate.getY() + " il possede maintenant : "+player.getNbBamboo() +" bambous";
+        return "Le panda a ete deplace en "+coordinate.getX()+", "+coordinate.getY() + " il possede maintenant : "+player.getNbBamboo(TypeOfTile.GREEN) +" bambous verts, "+player.getNbBamboo(TypeOfTile.YELLOW)+" bambous jaunes et "+player.getNbBamboo(TypeOfTile.RED)+" bambous roses";
     }
 
     public String addTile(Tile tile){
@@ -114,13 +122,12 @@ public class Board {
                 }
 
                 //checks if the close neighbour is legal == has two neighbours on the board
-                //TODO not quite implemented yet
                 if (closeNeighbours.get(j).getNumberOfNeighbours(occupiedCoordinates) < 2) {
                     isIllegal = true;   //the tile is illegal
                     //except if it is near 0,0
                     List<Coordinate> near0_0 = new Coordinate(0,0).getNeighbourCoordinates();
                     if (near0_0.contains(closeNeighbours.get(j))) {
-                        //the tile is neat 0,0 and thus is legal
+                        //the tile is near 0,0 and thus is legal
                         isIllegal = false;
                     }
 
@@ -182,6 +189,29 @@ public class Board {
 
     public void putBackInTileStack(Tile tile) {
         tileStack.putBelow(tile);
+    }
+
+
+    public ObjectiveStackGardener getStackGardener() {
+        return stackGardener;
+    }
+
+    public ArrangementStack getEnclosureStack() {
+        return enclosureStack;
+    }
+
+    public ArrangementStack getBasinStack() {
+        return basinStack;
+    }
+
+    public ArrangementStack getFertilizerStack() {
+        return fertilizerStack;
+    }
+        
+
+    public TileStack getTileStack() {
+        return tileStack;
+
     }
 }
 
