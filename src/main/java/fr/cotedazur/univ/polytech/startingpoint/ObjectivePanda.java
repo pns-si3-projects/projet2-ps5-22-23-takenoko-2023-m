@@ -6,11 +6,12 @@ import fr.cotedazur.univ.polytech.startingpoint.bots.PrimaryBot;
 public class ObjectivePanda extends ObjectifWithOneColor implements ObjectiveInterface{
 
         private String type = "panda";
+
         private int nbToEat;
         private int nbPointsWin;
 
         public ObjectivePanda(String type, int nbToEat, int nbPointsWin, TypeOfTile typeOfTile) {
-            super(typeOfTile);
+            super();
             this.type = type;
             this.nbToEat = nbToEat;
             this.nbPointsWin = nbPointsWin;

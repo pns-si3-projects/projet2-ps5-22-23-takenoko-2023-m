@@ -22,14 +22,14 @@ public class Gardener {
     private String spreadGrowing(Coordinate coordinate) {;
         ArrayList<Tile> tilesGrown = new ArrayList<>();
         tilesGrown.add(board.getTile(coordinate));
-        board.getTile(coordinate).grow(1);
+        board.getTile(coordinate).grow();
         int sizeGrown = 1;
         String res = "";
         for(int i = 0; i<sizeGrown;i++){
             for(Coordinate c : tilesGrown.get(i).getNeighbourCoordinates()){
                 if(board.isInBoard(c.getX(),c.getY())&&board.getTile(c).getTypeOfTile().equals(tile.getTypeOfTile())&& !(tilesGrown.contains(board.getTile(c)))){
                     tilesGrown.add(board.getTile(c));
-                    board.getTile(c).grow(1);
+                    board.getTile(c).grow();
                     sizeGrown++;
                     res += "La case "+board.getTile(c).getCoordinate()+" a pousse et est maintenant a "+ board.getTile(c).getBamboo() +" bambou(s)\n";
                 }

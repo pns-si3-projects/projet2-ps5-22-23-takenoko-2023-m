@@ -4,7 +4,7 @@ package fr.cotedazur.univ.polytech.startingpoint;
 import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.bots.PrimaryBot;
 
-public class ObjectiveGardener implements ObjectiveInterface {
+public class ObjectiveGardener extends ObjectifWithOneColor implements ObjectiveInterface {
     private int nbPointsWin;
     private String type = "gardener";
     private int nbBambooRequired;

@@ -7,6 +7,17 @@ import java.util.List;
 
 public class Board {
     private List<Tile> boardTiles = new ArrayList<>();
+    private List<Tile> boardTiles = new ArrayList<>();
+
+    public Dice getDice() {
+        return dice;
+    }
+
+    public void setDice(Dice dice) {
+        this.dice = dice;
+    }
+
+    private Dice dice = new Dice();
 
     public Gardener getGardener() {
         return gardener;
@@ -144,7 +155,7 @@ public class Board {
         return availableCoordinates;
     }
 
-    public void setBoardTiles(List<Tile> boardTiles) {
+    public void setBoardTiles(ArrayList<Tile> boardTiles) {
         this.boardTiles = boardTiles;
     }
 
@@ -210,7 +221,7 @@ public class Board {
     public ArrangementStack getFertilizerStack() {
         return fertilizerStack;
     }
-        
+
 
     public TileStack getTileStack() {
         return tileStack;
