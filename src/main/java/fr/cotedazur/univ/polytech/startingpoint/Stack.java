@@ -18,12 +18,18 @@ public abstract class Stack<T> {
     }
 
     public T pick(T o){
-        for (T objective: list){
-            if (objective.equals(o)){
-                list.remove(objective);
-                return o;
+        if(this.list.size()==0){
+            throw new ArrayIndexOutOfBoundsException("pile vide");
+        }
+        else{
+            for (T objective: list){
+                if (objective.equals(o)){
+                    list.remove(objective);
+                    return o;
+                }
             }
         }
+
 
 
         System.out.println("L'objectif voulu n'est pas dans la pile");

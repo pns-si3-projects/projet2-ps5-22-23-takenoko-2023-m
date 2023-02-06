@@ -14,6 +14,12 @@ public class Tile {
         this.typeOfTile = type;
         this.typeOfArrangement = TypeOfArrangement.NONE;
     }
+    public Tile(Coordinate coordinate, TypeOfTile type, TypeOfArrangement typeOfArrangement){
+        this.coordinate = coordinate;
+        this.typeOfTile = type;
+        this.typeOfArrangement = typeOfArrangement;
+    }
+
 
     public Tile(int x, int y, TypeOfTile type, TypeOfArrangement typeOfArrangement){
         coordinate = new Coordinate(x, y);
