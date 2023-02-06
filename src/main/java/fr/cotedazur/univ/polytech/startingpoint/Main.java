@@ -1,9 +1,10 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 import java.util.ArrayList;
-
+import java.util.logging.*;
 public class Main {
-
+    private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static void main(String... args) {
+        LOGGER.setLevel(Level.SEVERE);
         Board board = new Board();
 
         Player bot1 = new Player(board, "Simon");

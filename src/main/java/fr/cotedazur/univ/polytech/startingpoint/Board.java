@@ -2,7 +2,6 @@ package fr.cotedazur.univ.polytech.startingpoint;
 
 import java.util.ArrayList;
 import java.util.List;
-
 public class Board {
     private ArrayList<Tile> boardTiles = new ArrayList<>();
 

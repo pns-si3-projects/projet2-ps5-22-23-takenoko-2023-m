@@ -78,7 +78,8 @@ public class Player {
         List<Tile> tilesPicked = board.pickThreeTiles();
         LOGGER.info("Le joueur " +this.getNom() +" a pioche les tuiles suivantes :");
         for(Tile tile : tilesPicked){
-            System.out.println(tile.getTypeOfTile());
+            String message = tile.getTypeOfTile().toString();
+            LOGGER.info(message);
         }
         if(objectivePlot.getPattern().type.equals(TypeOfPattern.LINE)){
             boolean isPlaced = false;

@@ -9,4 +9,5 @@ public enum TypeOfTile {
     public boolean equals(TypeOfTile type) {
         return this.toString().equals(type.toString());
     }
+
 }

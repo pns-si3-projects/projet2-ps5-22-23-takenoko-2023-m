@@ -7,13 +7,10 @@ public class ObjectivePlot implements ObjectiveInterface {
     final Pattern pattern;
     final int nbPointsWin;
 
-    private TypeOfTile typeOfTile;
-
 
     public ObjectivePlot(Pattern pattern){
         this.pattern = pattern;
         this.nbPointsWin = generatePatternPoint();
-        this.typeOfTile = null; //this type of card dont have a typeOfTile because it can got different colors
     }
 
     public int getNbPointsWin(){
