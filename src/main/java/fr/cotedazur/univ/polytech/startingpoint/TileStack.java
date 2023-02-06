@@ -70,4 +70,8 @@ public class TileStack extends Stack<Tile>{
         this.putBelow(new Tile(TypeOfTile.RED,TypeOfArrangement.BASIN));
         this.putBelow(new Tile(TypeOfTile.RED,TypeOfArrangement.ENCLOSURE));
     }
+
+    public int sizeTileStack(){
+        return this.list.size();
+    }
 }

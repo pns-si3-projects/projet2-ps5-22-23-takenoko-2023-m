@@ -7,10 +7,13 @@ public class ObjectivePlot implements ObjectiveInterface {
     final Pattern pattern;
     final int nbPointsWin;
 
+    private TypeOfTile typeOfTile;
+
 
     public ObjectivePlot(Pattern pattern){
         this.pattern = pattern;
         this.nbPointsWin = generatePatternPoint();
+        this.typeOfTile = null; //this type of card dont have a typeOfTile because it can got different colors
     }
 
     public int getNbPointsWin(){
@@ -27,13 +30,14 @@ public class ObjectivePlot implements ObjectiveInterface {
         }
         return false;
     }
+
     private int generatePatternPoint() {
         int sumOfPoint;
         if(this.pattern.type.equals(TypeOfPattern.SQUARE)){
             sumOfPoint = 3;
         }
         //normally 2
-        else sumOfPoint = 10;
+        else sumOfPoint = 2;
         if(this.pattern.firstColor.equals(TypeOfTile.YELLOW)) return sumOfPoint+1;
         else if(this.pattern.firstColor.equals(TypeOfTile.RED)) return sumOfPoint+2;
         else return sumOfPoint;

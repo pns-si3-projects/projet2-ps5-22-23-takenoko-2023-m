@@ -26,7 +26,6 @@ public class Player {
         this.pickGardenerCard();
         this.pickPlotCard();
         this.pickPandaCard();
-        //System.out.println(objectives);
     }
 
     public int getPoint() {
@@ -124,22 +123,47 @@ public class Player {
     }
 
     public void playForGardenerCard(){
+        //Check if there is only 1 tile (the central one) on the board
         if (this.board.getBoardTiles().size() == 1){
             ArrayList<Coordinate> availableCoordinates = this.board.scanAvailableTilePosition();
-            System.out.println(this.board.addTile(new Tile(new Coordinate(availableCoordinates.get(0).getX(), availableCoordinates.get(0).getY()))));
+            List<Tile> tilesPicked = board.pickThreeTiles();
+            Tile toAdd = chooseBetterOf3Tiles(tilesPicked);
+            toAdd.setCoordinate(availableCoordinates.get(0));
+            System.out.println(this.board.addTile(toAdd));
             this.playAction();
         }
-
+        //While the player can play
         while(this.getNbActions()>0) {
             Tile gardenerPosition = this.board.getGardener().getTile();
             ArrayList<Coordinate> availablePositionsGardener = gardenerPosition.scanAvailableCoordinatesToMove(this.board.getBoardTiles());
-            if(availablePositionsGardener.size()==0){
+            if(availablePositionsGardener.size()==0){ //If we can't moove the gardener on any tile
                 ArrayList<Coordinate> availableCoordinates = this.board.scanAvailableTilePosition();
-                System.out.println(this.board.addTile(new Tile(availableCoordinates.get(0))));
+                List<Tile> tilesPicked = board.pickThreeTiles();
+                Tile toAdd = chooseBetterOf3Tiles(tilesPicked);
+                toAdd.setCoordinate(availableCoordinates.get(0));
+                System.out.println(this.board.addTile(toAdd));
                 this.playAction();
             }else{
-                System.out.println(this.board.moveGardenerOn(availablePositionsGardener.get(0)));
-                this.playAction();
+                boolean moved = false;
+                for(Coordinate co : availablePositionsGardener){ //We'll check if one of the availableTile is the same color as our focus card
+                    Tile potentialTile = this.board.getTile(co);
+                    ObjectiveGardener objectiveGardener = (ObjectiveGardener) this.focusCard;
+                    if(potentialTile.getTypeOfTile().equals(objectiveGardener.getTypeOfTile())){ //It's the same color so we moove
+                        System.out.println(this.board.moveGardenerOn(availablePositionsGardener.get(0)));
+                        this.playAction();
+                        moved = true;
+                        break;
+                    }
+                }
+                if(!moved){ //If all of the tile's color != focus card's color so we just pick and place another tile
+                    ArrayList<Coordinate> availableCoordinates = this.board.scanAvailableTilePosition();
+                    List<Tile> tilesPicked = board.pickThreeTiles();
+                    Tile toAdd = chooseBetterOf3Tiles(tilesPicked);
+                    toAdd.setCoordinate(availableCoordinates.get(0));
+                    System.out.println(this.board.addTile(toAdd));
+                    this.playAction();
+                }
+
             }
         }
 
@@ -153,17 +177,21 @@ public class Player {
     }
 
     public void playForPandaCard(){
-
         while(this.getNbActions() > 0) {
             Tile positionPanda = this.board.getPanda().getTile();
             ArrayList<Coordinate> availablePositionPanda = positionPanda.scanAvailableCoordinatesToMove(this.board.getBoardTiles());
             if (availablePositionPanda.size() == 0) {
                 ArrayList<Coordinate> availablePositions = this.board.scanAvailableTilePosition();
-                System.out.println(this.board.addTile(new Tile(availablePositions.get(0))));
+                List<Tile> tilesPicked = board.pickThreeTiles();
+                Tile toAdd = chooseBetterOf3Tiles(tilesPicked);
+                toAdd.setCoordinate(availablePositions.get(0));
+                System.out.println(this.board.addTile(toAdd));
+                this.playAction();
             } else {
                 boolean pandaMove = false;
                 for (Coordinate co : availablePositionPanda) {
-                    if (this.board.getTile(co).getBamboo() > 0) {
+                    ObjectivePanda objectivePanda = (ObjectivePanda) this.focusCard;
+                    if (this.board.getTile(co).getBamboo() > 0 && this.board.getTile(co).getTypeOfTile().equals(objectivePanda.getTypeOfTile())) {
                         System.out.println(this.board.movePandaOn(co, this));
                         this.playAction();
                         pandaMove = true;
@@ -207,7 +235,10 @@ public class Player {
                     }
                     if (!gardenerMove) {
                         ArrayList<Coordinate> availableCoordinates = this.board.scanAvailableTilePosition();
-                        System.out.println(this.board.addTile(new Tile(availableCoordinates.get(0))));
+                        List<Tile> tilesPicked = board.pickThreeTiles();
+                        Tile toAdd = chooseBetterOf3Tiles(tilesPicked);
+                        toAdd.setCoordinate(availableCoordinates.get(0));
+                        System.out.println(this.board.addTile(toAdd));
                         this.playAction();
                     }
                     //end of new code (if it does not fit in the issue just comment out and add to a new issue)
@@ -340,8 +371,9 @@ public class Player {
     }
 
     public void pickPandaCard(){
-        this.objectives.add(this.board.getPandaCard());
-        System.out.println("Le joueur "+this.getNom()+" a pioche une carte Panda!");
+        ObjectivePanda objectivePanda = this.board.getPandaCard();
+        this.objectives.add(objectivePanda);
+        System.out.println("Le joueur "+this.getNom()+" a pioche une carte Panda et qui vaut "+objectivePanda.getNbPointsWin()+" points");
         this.playAction();
     }
 
@@ -349,13 +381,14 @@ public class Player {
         //TODO : make possible to pick other objective than LINE
         ObjectivePlot objectivePlot = this.board.getPlotCard();
         this.objectives.add(objectivePlot);
-        System.out.println("Le joueur "+this.getNom()+" a pioche une carte Pattern de type "+objectivePlot.getType()+" et de couleur "+objectivePlot.getColors().get(0)+"!");
+        System.out.println("Le joueur "+this.getNom()+" a pioche une carte Pattern de type "+objectivePlot.getType()+" et de couleur "+objectivePlot.getColors().get(0)+" et qui vaut "+objectivePlot.getNbPointsWin()+" points");
         this.playAction();
     }
 
     public void pickGardenerCard(){
-        this.objectives.add(this.board.getGardenerCard());
-        System.out.println("Le joueur "+this.getNom()+" a pioche une carte Jardinier!");
+        ObjectiveGardener objectiveGardener = this.board.getGardenerCard();
+        this.objectives.add(objectiveGardener);
+        System.out.println("Le joueur "+this.getNom()+" a pioche une carte Jardinier et qui vaut "+objectiveGardener.getNbPointsWin());
         this.playAction();
     }
 
@@ -363,17 +396,20 @@ public class Player {
         if(tiles.get(0).getTypeOfTile().equals(focusCard.getType())) {
             Tile ret = tiles.get(0);
             tiles.remove(0);
-            this.board.putBackInTileStack(tiles.get(0)); this.board.putBackInTileStack(tiles.get(1));
+            this.board.putBackInTileStack(tiles.get(0));
+            this.board.putBackInTileStack(tiles.get(1));
             return ret;
         }else if(tiles.get(1).getTypeOfTile().equals(focusCard.getType())) {
             Tile ret = tiles.get(1);
             tiles.remove(1);
-            this.board.putBackInTileStack(tiles.get(0)); this.board.putBackInTileStack(tiles.get(1));
+            this.board.putBackInTileStack(tiles.get(0));
+            this.board.putBackInTileStack(tiles.get(1));
             return ret;
         }else if(tiles.get(2).getTypeOfTile().equals(focusCard.getType())) {
             Tile ret = tiles.get(2);
             tiles.remove(2);
-            this.board.putBackInTileStack(tiles.get(0)); this.board.putBackInTileStack(tiles.get(1));
+            this.board.putBackInTileStack(tiles.get(0));
+            this.board.putBackInTileStack(tiles.get(1));
             return ret;
         }else{
             Tile ret = tiles.get(0);
