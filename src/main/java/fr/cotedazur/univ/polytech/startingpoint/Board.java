@@ -6,6 +6,16 @@ import java.util.List;
 public class Board {
     private ArrayList<Tile> boardTiles = new ArrayList<>();
 
+    public Dice getDice() {
+        return dice;
+    }
+
+    public void setDice(Dice dice) {
+        this.dice = dice;
+    }
+
+    private Dice dice = new Dice();
+
     public Gardener getGardener() {
         return gardener;
     }
@@ -64,7 +74,6 @@ public class Board {
         int nbBamboo = this.getTile(coordinate).getBamboo();
         return "Le jardinier à été déplacé en "+coordinate.getX()+", "+coordinate.getY() + " voici les tuiles affectées : \n" + bNumber + "La case " + coordinate + " a poussé et est maintenant à " + this.getTile(coordinate).getBamboo() + " bambou(s)\n";
 
-
     }
 
     public String movePandaOn(Coordinate coordinate, Player player){
@@ -77,6 +86,8 @@ public class Board {
         patternDetector.detectPatternNear(tile.getCoordinate());
         return "Une carte a ete posee en:"+tile.getCoordinnateX()+" "+tile.getCoordinnateY();
     }
+
+
 
 
     public ArrayList<Tile> getBoardTiles() {
@@ -192,7 +203,6 @@ public class Board {
         tileStack.putBelow(tile);
     }
 
-
     public ObjectiveStackGardener getStackGardener() {
         return stackGardener;
     }
@@ -208,11 +218,8 @@ public class Board {
     public ArrangementStack getFertilizerStack() {
         return fertilizerStack;
     }
-        
 
     public TileStack getTileStack() {
         return tileStack;
-
     }
 }
-
