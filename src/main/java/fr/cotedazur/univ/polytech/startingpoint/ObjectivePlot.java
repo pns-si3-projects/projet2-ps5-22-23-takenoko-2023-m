@@ -31,11 +31,6 @@ public class ObjectivePlot implements ObjectiveInterface {
         return false;
     }
 
-    @Override
-    public TypeOfTile getTypeOfTile() {
-        return typeOfTile;
-    }
-
     private int generatePatternPoint() {
         int sumOfPoint;
         if(this.pattern.type.equals(TypeOfPattern.SQUARE)){

@@ -70,13 +70,6 @@ public class Board {
         return "Une carte a ete posee en:"+tile.getCoordinnateX()+" "+tile.getCoordinnateY();
     }
 
-    public String addTile(Tile tile, Coordinate co){
-        tile.setCoordinate(co);
-        boardTiles.add(tile);
-        patternDetector.detectPatternNear(tile.getCoordinate());
-        return "Une carte a ete posee en:"+tile.getCoordinnateX()+" "+tile.getCoordinnateY();
-    }
-
 
     public ArrayList<Tile> getBoardTiles() {
         return boardTiles;

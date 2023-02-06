@@ -123,7 +123,8 @@ public class Player {
             ArrayList<Coordinate> availableCoordinates = this.board.scanAvailableTilePosition();
             List<Tile> tilesPicked = board.pickThreeTiles();
             Tile toAdd = chooseBetterOf3Tiles(tilesPicked);
-            System.out.println(this.board.addTile(toAdd,availableCoordinates.get(0)));
+            toAdd.setCoordinate(availableCoordinates.get(0));
+            System.out.println(this.board.addTile(toAdd));
             this.playAction();
         }
         //While the player can play
@@ -134,13 +135,15 @@ public class Player {
                 ArrayList<Coordinate> availableCoordinates = this.board.scanAvailableTilePosition();
                 List<Tile> tilesPicked = board.pickThreeTiles();
                 Tile toAdd = chooseBetterOf3Tiles(tilesPicked);
-                System.out.println(this.board.addTile(toAdd,availableCoordinates.get(0)));
+                toAdd.setCoordinate(availableCoordinates.get(0));
+                System.out.println(this.board.addTile(toAdd));
                 this.playAction();
             }else{
                 boolean moved = false;
                 for(Coordinate co : availablePositionsGardener){ //We'll check if one of the availableTile is the same color as our focus card
                     Tile potentialTile = this.board.getTile(co);
-                    if(potentialTile.getTypeOfTile().equals(focusCard.getType())){ //It's the same color so we moove
+                    ObjectiveGardener objectiveGardener = (ObjectiveGardener) this.focusCard;
+                    if(potentialTile.getTypeOfTile().equals(objectiveGardener.getTypeOfTile())){ //It's the same color so we moove
                         System.out.println(this.board.moveGardenerOn(availablePositionsGardener.get(0)));
                         this.playAction();
                         moved = true;
@@ -151,7 +154,8 @@ public class Player {
                     ArrayList<Coordinate> availableCoordinates = this.board.scanAvailableTilePosition();
                     List<Tile> tilesPicked = board.pickThreeTiles();
                     Tile toAdd = chooseBetterOf3Tiles(tilesPicked);
-                    System.out.println(this.board.addTile(toAdd,availableCoordinates.get(0)));
+                    toAdd.setCoordinate(availableCoordinates.get(0));
+                    System.out.println(this.board.addTile(toAdd));
                     this.playAction();
                 }
 
@@ -175,12 +179,14 @@ public class Player {
                 ArrayList<Coordinate> availablePositions = this.board.scanAvailableTilePosition();
                 List<Tile> tilesPicked = board.pickThreeTiles();
                 Tile toAdd = chooseBetterOf3Tiles(tilesPicked);
-                System.out.println(this.board.addTile(toAdd, availablePositions.get(0)));
+                toAdd.setCoordinate(availablePositions.get(0));
+                System.out.println(this.board.addTile(toAdd));
                 this.playAction();
             } else {
                 boolean pandaMove = false;
                 for (Coordinate co : availablePositionPanda) {
-                    if (this.board.getTile(co).getBamboo() > 0 && this.board.getTile(co).getTypeOfTile().equals(focusCard.getTypeOfTile())) {
+                    ObjectivePanda objectivePanda = (ObjectivePanda) this.focusCard;
+                    if (this.board.getTile(co).getBamboo() > 0 && this.board.getTile(co).getTypeOfTile().equals(objectivePanda.getTypeOfTile())) {
                         System.out.println(this.board.movePandaOn(co, this));
                         this.playAction();
                         pandaMove = true;
@@ -226,7 +232,8 @@ public class Player {
                         ArrayList<Coordinate> availableCoordinates = this.board.scanAvailableTilePosition();
                         List<Tile> tilesPicked = board.pickThreeTiles();
                         Tile toAdd = chooseBetterOf3Tiles(tilesPicked);
-                        System.out.println(this.board.addTile(toAdd, availableCoordinates.get(0)));
+                        toAdd.setCoordinate(availableCoordinates.get(0));
+                        System.out.println(this.board.addTile(toAdd));
                         this.playAction();
                     }
                     //end of new code (if it does not fit in the issue just comment out and add to a new issue)
