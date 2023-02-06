@@ -6,15 +6,15 @@ import java.util.List;
 public class Board {
     private ArrayList<Tile> boardTiles = new ArrayList<>();
 
-    public Meteo getMeteo() {
-        return meteo;
+    public Dice getDice() {
+        return dice;
     }
 
-    public void setMeteo(Meteo meteo) {
-        this.meteo = meteo;
+    public void setDice(Dice dice) {
+        this.dice = dice;
     }
 
-    private Meteo meteo = Meteo.NONE;
+    private Dice dice = new Dice();
 
     public Gardener getGardener() {
         return gardener;
@@ -87,18 +87,7 @@ public class Board {
         return "Une carte a ete posee en:"+tile.getCoordinnateX()+" "+tile.getCoordinnateY();
     }
 
-    public void randomMeteo(){
-        int random = (int) (Math.random() * 6);
-        switch (random) {
-            case 0 -> this.meteo = Meteo.RAIN;
-            case 1 -> this.meteo = Meteo.SUN;
-            case 2 -> this.meteo = Meteo.QUESTIONMARK;
-            case 3 -> this.meteo = Meteo.LIGHTNING;
-            case 4 -> this.meteo = Meteo.WIND;
-            case 5 -> this.meteo = Meteo.CLOUD;
-            default -> this.meteo = Meteo.NONE;
-        }
-    }
+
 
 
     public ArrayList<Tile> getBoardTiles() {

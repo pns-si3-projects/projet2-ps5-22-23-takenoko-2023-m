@@ -18,9 +18,9 @@ public class MeteoTest {
     void testDice() {
         //a faire avec un mock
         Board b = new Board();
-        assertEquals(b.getMeteo(), Meteo.NONE);
-        b.randomMeteo();
-        assertNotEquals(b.getMeteo(), Meteo.NONE);
+        assertEquals(b.getDice().getMeteo(), Meteo.NONE);
+        b.getDice().randomMeteo();
+        assertNotEquals(b.getDice().getMeteo(), Meteo.NONE);
 
     }
 
