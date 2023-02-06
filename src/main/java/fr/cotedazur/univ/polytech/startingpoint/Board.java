@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Board {
@@ -28,7 +29,7 @@ public class Board {
     private final TileStack tileStack = new TileStack();
 
     private final ArrayList<Irrigation> placedIrrigations = new ArrayList<>();  //placed irrigations MUST be created using the board tiles for them to be modified by the irrigation
-    private final ArrayList<Irrigation> legalIrrigationPlacement = new ArrayList<>();   //hypothetical irrigations MUST be created using only coordinates
+    private final ArrayList<Irrigation> legalIrrigationPlacement;   //hypothetical irrigations MUST be created using only coordinates
 
     private final ArrangementStack enclosureStack = new ArrangementStack(TypeOfArrangement.ENCLOSURE);
     private final ArrangementStack basinStack = new ArrangementStack(TypeOfArrangement.BASIN);
@@ -46,6 +47,14 @@ public class Board {
         this.enclosureStack.generate();
         this.fertilizerStack.generate();
         this.addTile(new Tile(new Coordinate(0,0),TypeOfTile.POND));
+        this.legalIrrigationPlacement = new ArrayList<>(Arrays.asList(
+                new Irrigation(new Coordinate(1,0),new Coordinate(0,1)),
+                new Irrigation(new Coordinate(0,1),new Coordinate(-1,1)),
+                new Irrigation(new Coordinate(-1,1),new Coordinate(-1,0)),
+                new Irrigation(new Coordinate(-1,0),new Coordinate(0,-1)),
+                new Irrigation(new Coordinate(0,-1),new Coordinate(1,-1)),
+                new Irrigation(new Coordinate(1,-1),new Coordinate(1,0))
+                ));
     }
 
     public ObjectivePanda getPandaCard(){
@@ -82,12 +91,22 @@ public class Board {
     }
 
     public String addIrrigation(Irrigation irrigation) {    //gets a dummyIrrigation
-        Tile tmpTile1 = this.getTile(irrigation.getCoordinates().get(0));
-        Tile tmpTile2 = this.getTile(irrigation.getCoordinates().get(1));
-        Irrigation newIrrigation = new Irrigation(tmpTile1,tmpTile2);
-        placedIrrigations.add(newIrrigation);
-        legalIrrigationPlacement.remove(legalIrrigationPlacement.indexOf(irrigation));
-        return "Une irrigation a été ajoutée en : " + newIrrigation;
+        if (legalIrrigationPlacement.contains(irrigation)) {
+            Tile tmpTile1 = this.getTile(irrigation.getCoordinates().get(0));
+            Tile tmpTile2 = this.getTile(irrigation.getCoordinates().get(1));
+            Irrigation newIrrigation = new Irrigation(tmpTile1, tmpTile2);
+            placedIrrigations.add(newIrrigation);
+            legalIrrigationPlacement.remove(legalIrrigationPlacement.indexOf(irrigation));
+
+            ArrayList<Irrigation> neighbourIrrigations = irrigation.getNeighbourIrrigations();
+            for (int i = 0; i < neighbourIrrigations.size(); i++) { //adds the new legal irrigation placements
+                if (!legalIrrigationPlacement.contains(neighbourIrrigations.get(i))) ;
+                legalIrrigationPlacement.add(neighbourIrrigations.get(i));
+            }
+
+            return "Une irrigation a été ajoutée en : " + newIrrigation;
+        }
+        return "vous ne pouvez pas placer cette irrigation ici";
     }
     public ArrayList<Irrigation> getLegalIrrigationPlacement() {
         return legalIrrigationPlacement;

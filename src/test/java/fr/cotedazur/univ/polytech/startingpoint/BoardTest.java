@@ -56,4 +56,25 @@ class BoardTest {
         Tile t = p.chooseBetterOf3Tiles(liste);
         assertEquals(26,board.getTileStack().sizeTileStack());
     }
+
+    @Test
+    void testIrrigationPlacement() {
+        Board board = new Board();
+        board.addTile(new Tile(new Coordinate(1,0)));
+        board.addTile(new Tile(new Coordinate(0,1)));
+        board.addTile(new Tile(new Coordinate(1,1)));
+        ArrayList<Irrigation> legalIrrigationPlacement = board.getLegalIrrigationPlacement();
+        board.addIrrigation(legalIrrigationPlacement.get(0));
+        board.addIrrigation(new Irrigation(new Coordinate(1,0), new Coordinate(1,1)));
+    }
+    @Test
+    void testLegalIrrigationPlacement() {
+        Board board = new Board();
+        ArrayList<Irrigation> legalIrrigationPlacement = board.getLegalIrrigationPlacement();
+        assertTrue(legalIrrigationPlacement.size() == 6);
+        board.addTile(new Tile(new Coordinate(1,0)));
+        board.addTile(new Tile(new Coordinate(0,1)));
+        board.addIrrigation(legalIrrigationPlacement.get(0));
+        assertTrue(legalIrrigationPlacement.size() == 7);       //-1, +2
+    }
 }

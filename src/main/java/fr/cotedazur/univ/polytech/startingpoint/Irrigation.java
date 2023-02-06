@@ -113,7 +113,7 @@ public class Irrigation {
         return legalNeighbours;
     }
 
-    private ArrayList<Irrigation> getNeighbourIrrigations() {
+    public ArrayList<Irrigation> getNeighbourIrrigations() {
         ArrayList<Irrigation> neighbours = new ArrayList<>();
         switch (irrigationType) {
             case vertical -> {
@@ -148,14 +148,16 @@ public class Irrigation {
 
     @Override
     public String toString() {
-        return "Irrigation between : " + referencedTile1.toString() + "\t\t" + referencedTile2.toString();
+        return "Irrigation between : " + coordinate1.toString() + "\t\t" + coordinate2.toString();
     }
     @Override
     public boolean equals(Object o) {
-        if (o instanceof Irrigation) {
-            Irrigation i = (Irrigation) o;
-            if ((this.coordinate1.equals(i.getCoordinates().get(0))) && (this.coordinate2.equals(i.getCoordinates().get(1)))) {
-                return true;
+        if (o != null) {
+            if (o instanceof Irrigation) {
+                Irrigation i = (Irrigation) o;
+                if ((this.coordinate1.equals(i.getCoordinates().get(0))) && (this.coordinate2.equals(i.getCoordinates().get(1)))) {
+                    return true;
+                }
             }
         }
         return false;
