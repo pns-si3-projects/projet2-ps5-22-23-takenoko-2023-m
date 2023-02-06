@@ -20,8 +20,13 @@ public class ObjectivePanda extends ObjectifWithOneColor implements ObjectiveInt
             return p.getNbBamboo(this.typeOfTile)>=this.nbToEat;   //fixed bug in case the player already has bamboo and the amount is higher
         }
 
+    @Override
+    public void play(Player player) {
+        player.playForPandaCard();
+    }
 
-        public String getType() {
+
+    public String getType() {
             return type;
         }
 

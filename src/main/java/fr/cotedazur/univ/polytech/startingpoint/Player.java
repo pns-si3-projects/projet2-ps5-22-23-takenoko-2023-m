@@ -26,6 +26,7 @@ public class Player {
         this.pickGardenerCard();
         this.pickPlotCard();
         this.pickPandaCard();
+        //System.out.println(objectives);
     }
 
     public int getPoint() {
@@ -60,6 +61,7 @@ public class Player {
         if (this.focusCard == null){
             checkBetterCard();
         }
+        this.focusCard.play(this);
         if(this.focusCard instanceof ObjectiveGardener){
             this.playForGardenerCard();
         }else if(this.focusCard instanceof ObjectivePanda){
@@ -125,19 +127,19 @@ public class Player {
     public void playForGardenerCard(){
         //Check if there is only 1 tile (the central one) on the board
         if (this.board.getBoardTiles().size() == 1){
-            ArrayList<Coordinate> availableCoordinates = this.board.scanAvailableTilePosition();
+            List<Coordinate> availableCoordinates = this.board.scanAvailableTilePosition();
             List<Tile> tilesPicked = board.pickThreeTiles();
             Tile toAdd = chooseBetterOf3Tiles(tilesPicked);
             toAdd.setCoordinate(availableCoordinates.get(0));
             System.out.println(this.board.addTile(toAdd));
             this.playAction();
         }
-        //While the player can play
+
         while(this.getNbActions()>0) {
             Tile gardenerPosition = this.board.getGardener().getTile();
-            ArrayList<Coordinate> availablePositionsGardener = gardenerPosition.scanAvailableCoordinatesToMove(this.board.getBoardTiles());
+            List<Coordinate> availablePositionsGardener = gardenerPosition.scanAvailableCoordinatesToMove(this.board.getBoardTiles());
             if(availablePositionsGardener.size()==0){ //If we can't moove the gardener on any tile
-                ArrayList<Coordinate> availableCoordinates = this.board.scanAvailableTilePosition();
+                List<Coordinate> availableCoordinates = this.board.scanAvailableTilePosition();
                 List<Tile> tilesPicked = board.pickThreeTiles();
                 Tile toAdd = chooseBetterOf3Tiles(tilesPicked);
                 toAdd.setCoordinate(availableCoordinates.get(0));
@@ -156,7 +158,7 @@ public class Player {
                     }
                 }
                 if(!moved){ //If all of the tile's color != focus card's color so we just pick and place another tile
-                    ArrayList<Coordinate> availableCoordinates = this.board.scanAvailableTilePosition();
+                    List<Coordinate> availableCoordinates = this.board.scanAvailableTilePosition();
                     List<Tile> tilesPicked = board.pickThreeTiles();
                     Tile toAdd = chooseBetterOf3Tiles(tilesPicked);
                     toAdd.setCoordinate(availableCoordinates.get(0));
@@ -169,7 +171,7 @@ public class Player {
 
         if(this.focusCard.isValid(this, this.board)){
             this.setPoint(this.getPoint()+this.focusCard.getNbPointsWin());
-            ArrayList<ObjectiveInterface> objectifs = this.getObjective();
+            List<ObjectiveInterface> objectifs = this.getObjective();
             objectifs.remove(focusCard);
             this.focusCard = null;
             System.out.println("Objecti jardinier realise");
@@ -177,11 +179,12 @@ public class Player {
     }
 
     public void playForPandaCard(){
+
         while(this.getNbActions() > 0) {
             Tile positionPanda = this.board.getPanda().getTile();
-            ArrayList<Coordinate> availablePositionPanda = positionPanda.scanAvailableCoordinatesToMove(this.board.getBoardTiles());
+            List<Coordinate> availablePositionPanda = positionPanda.scanAvailableCoordinatesToMove(this.board.getBoardTiles());
             if (availablePositionPanda.size() == 0) {
-                ArrayList<Coordinate> availablePositions = this.board.scanAvailableTilePosition();
+                List<Coordinate> availablePositions = this.board.scanAvailableTilePosition();
                 List<Tile> tilesPicked = board.pickThreeTiles();
                 Tile toAdd = chooseBetterOf3Tiles(tilesPicked);
                 toAdd.setCoordinate(availablePositions.get(0));
@@ -210,7 +213,7 @@ public class Player {
                     //if there is no bamboo available to the panda, the player will try to move the gardener onto a Tile accessible to the panda
                     boolean gardenerMove = false;
                     Tile positionGardener = this.board.getGardener().getTile();
-                    ArrayList<Coordinate> availablePositionGardener = positionGardener.scanAvailableCoordinatesToMove(this.board.getBoardTiles());
+                    List<Coordinate> availablePositionGardener = positionGardener.scanAvailableCoordinatesToMove(this.board.getBoardTiles());
                     for (int i = 0; i < availablePositionGardener.size(); i++) {    //cycles through all the tiles where the gardener can go
 
                         //if the gardener can be moved to a tile where the panda can go
@@ -234,7 +237,7 @@ public class Player {
                         }
                     }
                     if (!gardenerMove) {
-                        ArrayList<Coordinate> availableCoordinates = this.board.scanAvailableTilePosition();
+                        List<Coordinate> availableCoordinates = this.board.scanAvailableTilePosition();
                         List<Tile> tilesPicked = board.pickThreeTiles();
                         Tile toAdd = chooseBetterOf3Tiles(tilesPicked);
                         toAdd.setCoordinate(availableCoordinates.get(0));
@@ -284,7 +287,7 @@ public class Player {
         return this.board.addTile(tile);
     }
 
-    public ArrayList<ObjectiveInterface> getObjective() {
+    public List<ObjectiveInterface> getObjective() {
         return objectives;
     }
 

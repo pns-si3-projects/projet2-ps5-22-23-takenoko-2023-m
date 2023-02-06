@@ -6,7 +6,7 @@ public interface ObjectiveInterface {
     public String toString();
     public int getNbPointsWin();
     public boolean isValid(Player player, Board b);
-
+    public void play(Player player);
 }
 
 

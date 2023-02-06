@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
-    private ArrayList<Tile> boardTiles = new ArrayList<>();
+    private List<Tile> boardTiles = new ArrayList<>();
 
     public Dice getDice() {
         return dice;
@@ -71,7 +71,6 @@ public class Board {
     public String moveGardenerOn(Coordinate coordinate){
 
         String bNumber = gardener.moveOn(coordinate);
-        int nbBamboo = this.getTile(coordinate).getBamboo();
         return "Le jardinier à été déplacé en "+coordinate.getX()+", "+coordinate.getY() + " voici les tuiles affectées : \n" + bNumber + "La case " + coordinate + " a poussé et est maintenant à " + this.getTile(coordinate).getBamboo() + " bambou(s)\n";
 
     }
@@ -88,9 +87,7 @@ public class Board {
     }
 
 
-
-
-    public ArrayList<Tile> getBoardTiles() {
+    public List<Tile> getBoardTiles() {
         return boardTiles;
     }
 
@@ -105,10 +102,10 @@ public class Board {
 
     //this method returns an ArrayList of all the possible positions that are in contact with the edge of the board and at a legal position = near 0,0 or with two neighbours
 
-    public ArrayList<Coordinate> scanAvailableTilePosition() {
+    public List<Coordinate> scanAvailableTilePosition() {
 
-        ArrayList<Coordinate> occupiedCoordinates = new ArrayList<>();
-        ArrayList<Coordinate> availableCoordinates = new ArrayList<>();
+        List<Coordinate> occupiedCoordinates = new ArrayList<>();
+        List<Coordinate> availableCoordinates = new ArrayList<>();
 
         // n complexity, gets the coordinates of all the tiles of the board
         for (int i = 0; i < boardTiles.size(); i++) {
@@ -137,7 +134,7 @@ public class Board {
                 if (closeNeighbours.get(j).getNumberOfNeighbours(occupiedCoordinates) < 2) {
                     isIllegal = true;   //the tile is illegal
                     //except if it is near 0,0
-                    ArrayList<Coordinate> near0_0 = new Coordinate(0,0).getNeighbourCoordinates();
+                    List<Coordinate> near0_0 = new Coordinate(0,0).getNeighbourCoordinates();
                     if (near0_0.contains(closeNeighbours.get(j))) {
                         //the tile is near 0,0 and thus is legal
                         isIllegal = false;
@@ -153,7 +150,7 @@ public class Board {
         return availableCoordinates;
     }
 
-    public void setBoardTiles(ArrayList<Tile> boardTiles) {
+    public void setBoardTiles(List<Tile> boardTiles) {
         this.boardTiles = boardTiles;
     }
 

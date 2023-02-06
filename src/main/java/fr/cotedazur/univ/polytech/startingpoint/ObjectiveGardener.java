@@ -34,6 +34,12 @@ public class ObjectiveGardener extends ObjectifWithOneColor implements Objective
         }
         return false;
     }
+
+    @Override
+    public void play(Player player) {
+        player.playForGardenerCard();
+    }
+
     public String getType() {
         return type;
     }

@@ -31,6 +31,11 @@ public class ObjectivePlot implements ObjectiveInterface {
         return false;
     }
 
+    @Override
+    public void play(Player player) {
+        player.playForPatternCard();
+    }
+
     private int generatePatternPoint() {
         int sumOfPoint;
         if(this.pattern.type.equals(TypeOfPattern.SQUARE)){

@@ -20,8 +20,8 @@ class BoardTest {
 
     @Test   //tests for the fisrt version, the one that only requires new tiles to be touching the edge, not the ones having two neighbours
     void testScanAvailableTilePosition() {
-        ArrayList<Coordinate> tilesToTest = twoTiles.scanAvailableTilePosition();
-        ArrayList<Coordinate> trueTiles = new ArrayList<>();
+        List<Coordinate> tilesToTest = twoTiles.scanAvailableTilePosition();
+        List<Coordinate> trueTiles = new ArrayList<>();
 
         trueTiles.add(new Coordinate(-1, 0));
         trueTiles.add(new Coordinate(-1, 1));
@@ -33,7 +33,7 @@ class BoardTest {
         assertEquals(5, tilesToTest.size());
         for (int i = 0; i < tilesToTest.size(); i++) {
             //System.out.println(tilesToTest.get(i));   //only to visualise the ArrayList
-            assertTrue(tilesToTest.get(i).equals(trueTiles.get(i)));
+            assertEquals(tilesToTest.get(i), trueTiles.get(i));
         }
     }
 
