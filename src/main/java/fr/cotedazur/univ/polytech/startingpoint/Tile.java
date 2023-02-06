@@ -180,8 +180,12 @@ public class Tile {
         if (o != null) {
             if (o instanceof Tile) {
                 Tile t = (Tile) o;
-                if (this.coordinate.equals(t.getCoordinate())) {
+                if(t.getCoordinate()==null && this.getCoordinate()==null && t.getTypeOfTile().equals(this.getTypeOfTile())){
                     return true;
+                }else if(t.getCoordinate()!=null && this.getCoordinate()!=null && t.getCoordinate().equals(this.getCoordinate()) && t.getTypeOfTile().equals(this.getTypeOfTile())){
+                    return true;
+                }else{
+                    return false;
                 }
             }
         }
