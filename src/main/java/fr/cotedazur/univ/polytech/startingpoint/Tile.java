@@ -6,8 +6,9 @@ public class Tile {
     private final Coordinate coordinate;
     private int bamboo = 0;
     private TypeOfTile typeOfTile;
-
+    private boolean isIrrigated = false;
     private TypeOfArrangement typeOfArrangement=TypeOfArrangement.NONE;
+
     public Tile(Coordinate coordinate, TypeOfTile type){
         this.coordinate = coordinate;
 
@@ -58,6 +59,12 @@ public class Tile {
 
     public Coordinate getCoordinate() {
         return coordinate;
+    }
+    public void irrigate() {
+        this.isIrrigated = true;
+    }
+    public boolean isIrrigated() {
+        return isIrrigated;
     }
 
     //tests to see if the tile to test is neighbour to this tile
@@ -144,7 +151,7 @@ public class Tile {
             this.bamboo+=2;
         }
         else {
-            this.bamboo++;
+                this.bamboo++;
         }
 
         if(bamboo>4) bamboo =4;
@@ -162,6 +169,19 @@ public class Tile {
 
     public void setTypeOfTile(TypeOfTile typeOfTile) {
         this.typeOfTile = typeOfTile;
+    }
+
+    @Override
+    public boolean equals (Object o) {
+        if (o != null) {
+            if (o instanceof Tile) {
+                Tile t = (Tile) o;
+                if (this.coordinate.equals(t.getCoordinate())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public TypeOfArrangement getTypeOfArrangement() {

@@ -123,13 +123,12 @@ public class Board {
                 }
 
                 //checks if the close neighbour is legal == has two neighbours on the board
-                //TODO not quite implemented yet
                 if (closeNeighbours.get(j).getNumberOfNeighbours(occupiedCoordinates) < 2) {
                     isIllegal = true;   //the tile is illegal
                     //except if it is near 0,0
                     ArrayList<Coordinate> near0_0 = new Coordinate(0,0).getNeighbourCoordinates();
                     if (near0_0.contains(closeNeighbours.get(j))) {
-                        //the tile is neat 0,0 and thus is legal
+                        //the tile is near 0,0 and thus is legal
                         isIllegal = false;
                     }
 
