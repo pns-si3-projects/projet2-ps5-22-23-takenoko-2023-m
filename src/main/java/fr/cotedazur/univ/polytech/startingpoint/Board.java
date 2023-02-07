@@ -1,8 +1,9 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
+import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
+
 import java.util.ArrayList;
 import java.util.List;
-
 public class Board {
     private List<Tile> boardTiles = new ArrayList<>();
 
@@ -71,11 +72,13 @@ public class Board {
     public String moveGardenerOn(Coordinate coordinate){
 
         String bNumber = gardener.moveOn(coordinate);
+        int nbBamboo = this.getTile(coordinate).getBamboo();
         return "Le jardinier à été déplacé en "+coordinate.getX()+", "+coordinate.getY() + " voici les tuiles affectées : \n" + bNumber + "La case " + coordinate + " a poussé et est maintenant à " + this.getTile(coordinate).getBamboo() + " bambou(s)\n";
+
 
     }
 
-    public String movePandaOn(Coordinate coordinate, Player player){
+    public String movePandaOn(Coordinate coordinate, Bot player){
         this.panda.moveOn(coordinate,player);
         return "Le panda a ete deplace en "+coordinate.getX()+", "+coordinate.getY() + " il possede maintenant : "+player.getNbBamboo(TypeOfTile.GREEN) +" bambous verts, "+player.getNbBamboo(TypeOfTile.YELLOW)+" bambous jaunes et "+player.getNbBamboo(TypeOfTile.RED)+" bambous roses";
     }
@@ -150,7 +153,7 @@ public class Board {
         return availableCoordinates;
     }
 
-    public void setBoardTiles(List<Tile> boardTiles) {
+    public void setBoardTiles(ArrayList<Tile> boardTiles) {
         this.boardTiles = boardTiles;
     }
 
@@ -200,6 +203,7 @@ public class Board {
         tileStack.putBelow(tile);
     }
 
+
     public ObjectiveStackGardener getStackGardener() {
         return stackGardener;
     }
@@ -216,7 +220,14 @@ public class Board {
         return fertilizerStack;
     }
 
+
     public TileStack getTileStack() {
         return tileStack;
+
+    }
+
+    public PatternDetector getPatternBoard() {
+        return patternDetector;
     }
 }
+

@@ -1,9 +1,8 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 import java.util.List;
-
+import java.util.logging.*;
 public class ObjectiveStackGardener extends Stack<ObjectiveGardener> {
-
 
     @Override
     public void generate() {
@@ -51,7 +50,7 @@ public class ObjectiveStackGardener extends Stack<ObjectiveGardener> {
                 return o;
             }
         }
-        System.out.println("L'objectif voulu n'est pas dans la pile");
+        Main.LOGGER.info("L'objectif voulu n'est pas dans la pile");
         return null;
     }
 

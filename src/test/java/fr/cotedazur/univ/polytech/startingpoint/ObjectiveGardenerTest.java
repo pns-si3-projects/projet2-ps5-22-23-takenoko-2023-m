@@ -1,5 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
+import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
+import fr.cotedazur.univ.polytech.startingpoint.bots.PrimaryBot;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -27,7 +29,7 @@ class ObjectiveGardenerTest {
     void isValid() {
         Board board = new Board();
         ObjectiveGardener objectiveGardener = new ObjectiveGardener("gardener",3, 11,TypeOfTile.GREEN);
-        Player bot1 = new Player(board, "Robot 1");
+        Bot bot1 = new PrimaryBot(board, "Robot 1");
         board.addTile(new Tile(new Coordinate(0,0)));
         board.addTile(new Tile(new Coordinate(1,0)));
         board.addTile(new Tile(new Coordinate(0,1)));
