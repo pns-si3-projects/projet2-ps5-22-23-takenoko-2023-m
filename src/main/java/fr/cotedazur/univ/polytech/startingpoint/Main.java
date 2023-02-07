@@ -28,10 +28,6 @@ public class Main {
         writer.writeNext(headers);
 
 
-
-
-    public static void main(String... args) {
-
         Args parameters = new Args();
         JCommander.newBuilder()
                 .addObject(parameters)
