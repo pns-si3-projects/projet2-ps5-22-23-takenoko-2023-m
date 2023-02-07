@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Tile {
     private Coordinate coordinate;
@@ -75,7 +76,7 @@ public class Tile {
     //check coordinate system at : https://www.redblobgames.com/grids/hexagons/#neighbors-axial
     //maybe consider to refactor it to only return Coordinate item
     public boolean isNeighbour (Tile tileToTest) {
-        ArrayList<Coordinate> neighboursToTest = this.getNeighbourCoordinates();
+        List<Coordinate> neighboursToTest = this.getNeighbourCoordinates();
         for (int i = 0; i < 6; i++) {
             boolean sameX = tileToTest.getCoordinnateX() == neighboursToTest.get(i).getX();
             boolean sameY = tileToTest.getCoordinnateY() == neighboursToTest.get(i).getY();
@@ -87,8 +88,8 @@ public class Tile {
     }
 
     //scans the available Tiles to move panda and gardener considering boardTiles
-    public ArrayList<Coordinate> scanAvailableCoordinatesToMove (ArrayList<Tile> boardTiles) {
-        ArrayList<Coordinate> availableCoordinates = new ArrayList<>();
+    public List<Coordinate> scanAvailableCoordinatesToMove (List<Tile> boardTiles) {
+        List<Coordinate> availableCoordinates = new ArrayList<>();
 
         for (int i = 0; i < boardTiles.size(); i++) {
             boolean isOnSimpleX = this.getCoordinnateX() == boardTiles.get(i).getCoordinnateX();    //simpleX means only the line that only changes on x
@@ -131,8 +132,7 @@ public class Tile {
     // scans the available tiles to move panda and gardener from this Tile considering the available Tiles in boardTiles
     @Override
     public String toString() {
-        String str = "Tile at x = " + coordinate.getX() + ", y = " + coordinate.getY();
-        return str;
+        return "Tile at x = " + coordinate.getX() + ", y = " + coordinate.getY();
     }
 
     public void eatBamboo(){
@@ -199,6 +199,12 @@ public class Tile {
 
     public void setTypeOfArrangement(TypeOfArrangement typeOfArrangement) {
         this.typeOfArrangement = typeOfArrangement;
+    }
+
+    public List<Coordinate> getNeighbourCoordinateTogetherWith(Tile tile) {
+        List<Coordinate> neighbourCoordinates = this.getNeighbourCoordinates();
+        neighbourCoordinates.retainAll(tile.getNeighbourCoordinates());
+        return neighbourCoordinates;
     }
 }
 

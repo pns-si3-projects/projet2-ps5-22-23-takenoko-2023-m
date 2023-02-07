@@ -1,5 +1,8 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
+import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
+import fr.cotedazur.univ.polytech.startingpoint.bots.PrimaryBot;
+
 import java.util.List;
 
 public class ObjectivePlot implements ObjectiveInterface {
@@ -7,20 +10,17 @@ public class ObjectivePlot implements ObjectiveInterface {
     final Pattern pattern;
     final int nbPointsWin;
 
-    private TypeOfTile typeOfTile;
-
 
     public ObjectivePlot(Pattern pattern){
         this.pattern = pattern;
         this.nbPointsWin = generatePatternPoint();
-        this.typeOfTile = null; //this type of card dont have a typeOfTile because it can got different colors
     }
 
     public int getNbPointsWin(){
         return this.nbPointsWin;
     }
 
-    public boolean isValid(Player p, Board b){
+    public boolean isValid(Bot p, Board b){
         for(Tile tile : b.getBoardTiles()){
             for(Tile tile2 : b.getBoardTiles()){
                 if(tile.isNeighbour(tile2)){
@@ -29,6 +29,11 @@ public class ObjectivePlot implements ObjectiveInterface {
             }
         }
         return false;
+    }
+
+    @Override
+    public void play(PrimaryBot player) {
+        player.playForPatternCard();
     }
 
     private int generatePatternPoint() {
