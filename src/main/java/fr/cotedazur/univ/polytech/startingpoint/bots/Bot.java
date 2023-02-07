@@ -158,6 +158,12 @@ public abstract class Bot {
             this.upBambooGreen();
         }
     }
+    public void playForPandaCard(){
+    }
+    public void playForPatternCard(){
+    }
+    public void playForGardenerCard(){
+    }
 
     public void play() {
     }
