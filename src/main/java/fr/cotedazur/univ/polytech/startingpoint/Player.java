@@ -132,7 +132,13 @@ public class Player {
                 board.putBackInTileStack(tilesToPutBackInStack.get(0));
                 board.putBackInTileStack(tilesToPutBackInStack.get(1));
             }
-            this.playAction();
+            if(board.getDice().getMeteo()!=Meteo.RAIN){
+                this.playAction();
+            }
+            else{
+                board.getDice().setMeteo(Meteo.NONE);
+            }
+
         }
 
     }
