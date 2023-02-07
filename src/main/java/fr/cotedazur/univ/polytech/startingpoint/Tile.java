@@ -153,16 +153,18 @@ public class Tile {
 
 
     public int grow() {
-        if (this.getTypeOfArrangement()==TypeOfArrangement.FERTILIZER){
-            this.bamboo+=2;
-        }
-        else {
+        if (this.isIrrigated) {
+            if (this.getTypeOfArrangement() == TypeOfArrangement.FERTILIZER) {
+                this.bamboo += 2;
+            } else {
                 this.bamboo++;
+            }
+
+            if (bamboo > 4) bamboo = 4;
+
+            return bamboo;
         }
-
-        if(bamboo>4) bamboo =4;
-
-        return bamboo;
+        return -1;
     }
 
     public int getBamboo() {
@@ -193,6 +195,7 @@ public class Tile {
         }
         return false;
     }
+
 
     public TypeOfArrangement getTypeOfArrangement() {
         return typeOfArrangement;

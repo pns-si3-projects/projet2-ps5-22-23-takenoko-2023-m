@@ -32,7 +32,7 @@ public class ObjectivePlot implements ObjectiveInterface {
     }
 
     @Override
-    public void play(PrimaryBot player) {
+    public void play(Bot player) {
         player.playForPatternCard();
     }
 

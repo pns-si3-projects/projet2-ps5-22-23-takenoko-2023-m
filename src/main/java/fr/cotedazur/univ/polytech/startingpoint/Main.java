@@ -20,5 +20,6 @@ public class Main {
         listPlayer.add(bot2);
         GameEngine game = new GameEngine(board, listPlayer);
         game.launchGame();
+
     }
 }

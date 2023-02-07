@@ -9,7 +9,7 @@ public interface ObjectiveInterface {
     public String toString();
     public int getNbPointsWin();
     public boolean isValid(Bot player, Board b);
-    public void play(PrimaryBot player);
+    public void play(Bot player);
 }
 
 
