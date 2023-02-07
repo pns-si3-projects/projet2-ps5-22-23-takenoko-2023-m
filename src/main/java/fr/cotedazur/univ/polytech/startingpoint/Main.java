@@ -1,9 +1,31 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 import java.util.ArrayList;
 
+import com.beust.jcommander.JCommander;
 public class Main {
 
+
+
     public static void main(String... args) {
+        System.out.println(args[0]);
+
+        Args parameters = new Args();
+        JCommander.newBuilder()
+                .addObject(Args.class)
+                .build()
+                .parse(args);
+
+        if (parameters.twoThousands) {
+            System.out.println("2000");
+        }
+        if (parameters.demo) {
+            System.out.println("demo");
+        }
+        if (parameters.csv) {
+            System.out.println("csv");
+        }
+
+
         Board board = new Board();
 
         Player bot1 = new Player(board, "Simon");
