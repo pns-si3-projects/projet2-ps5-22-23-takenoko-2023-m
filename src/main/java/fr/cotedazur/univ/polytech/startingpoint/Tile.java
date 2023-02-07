@@ -69,7 +69,9 @@ public class Tile {
     }
 
     public void setCoordinate(Coordinate coordinate) {
-        this.coordinate = coordinate;
+        if(this.coordinate == null){
+            this.coordinate = coordinate;
+        }
     }
 
     //tests to see if the tile to test is neighbour to this tile

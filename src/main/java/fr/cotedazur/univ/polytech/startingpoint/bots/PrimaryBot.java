@@ -48,28 +48,31 @@ public class PrimaryBot extends Bot {
             String message = tile.getTypeOfTile().toString();
             Main.LOGGER.info(message);
         }
-        if(objectivePlot.getPattern().getType().equals(TypeOfPattern.LINE)){
-            boolean isPlaced = false;
-            List<Tile> tilesToPutBackInStack = new ArrayList<>();
-            for(Tile tile : tilesPicked){
-                if(tile.getTypeOfTile().equals(colors.get(0))&&!isPlaced){
-                    isPlaced = true;
-                    String ret = board.addTile(new Tile(board.bestCoordinateForLine(objectivePlot),tile.getTypeOfTile()))+ " de type:"+tile.getTypeOfTile();
-                    Main.LOGGER.info(ret);
+        boolean isPlaced = false;
+        List<Tile> tilesToPutBackInStack = new ArrayList<>();
+        for(Tile tile : tilesPicked){
+            if(tile.getTypeOfTile().equals(colors.get(0))&&!isPlaced){
+                isPlaced = true;
+                String returnMessage;
+                switch (objectivePlot.getPattern().getType()) {
+                    case BOOMRANG:
+                        returnMessage = board.addTile(new Tile(board.bestCoordinateForBoomrang(objectivePlot), tile.getTypeOfTile())) + " de type:" + tile.getTypeOfTile();
+                        break;
+                    case LINE:
+                        returnMessage = board.addTile(new Tile(board.bestCoordinateForLine(objectivePlot), tile.getTypeOfTile())) + " de type:" + tile.getTypeOfTile();
+                        break;
+                    case TRIANGLE:
+                        returnMessage = board.addTile(new Tile(board.bestCoordinateForTriangle(objectivePlot), tile.getTypeOfTile())) + " de type:" + tile.getTypeOfTile();
+                        break;
+                    default:
+                        returnMessage = "Aucun type de pattern n'a ete trouve";
+                        break;
                 }
-                else{
-                    tilesToPutBackInStack.add(tile);
-                }
-            }
-            if(!isPlaced){
-                String message = board.addTile(new Tile(board.scanAvailableTilePosition().get(0),tilesPicked.get(0).getTypeOfTile()))+ " de type:"+tilesPicked.get(0).getTypeOfTile();
-                Main.LOGGER.info(message);
-                board.putBackInTileStack(tilesPicked.get(1));
-                board.putBackInTileStack(tilesPicked.get(2));
+                String ret = board.addTile(new Tile(board.bestCoordinateForLine(objectivePlot),tile.getTypeOfTile()))+ " de type:"+tile.getTypeOfTile();
+                Main.LOGGER.info(ret);
             }
             else{
-                board.putBackInTileStack(tilesToPutBackInStack.get(0));
-                board.putBackInTileStack(tilesToPutBackInStack.get(1));
+                tilesToPutBackInStack.add(tile);
             }
             if(board.getDice().getMeteo()!=Meteo.RAIN){
                 this.playAction();
@@ -77,8 +80,18 @@ public class PrimaryBot extends Bot {
             else{
                 board.getDice().setMeteo(Meteo.NONE);
             }
-
         }
+        if(!isPlaced){
+            String message = board.addTile(new Tile(board.scanAvailableTilePosition().get(0),tilesPicked.get(0).getTypeOfTile()))+ " de type:"+tilesPicked.get(0).getTypeOfTile();
+            Main.LOGGER.info(message);
+            board.putBackInTileStack(tilesPicked.get(1));
+            board.putBackInTileStack(tilesPicked.get(2));
+        }
+        else{
+            board.putBackInTileStack(tilesToPutBackInStack.get(0));
+            board.putBackInTileStack(tilesToPutBackInStack.get(1));
+        }
+        this.playAction();
 
     }
 
