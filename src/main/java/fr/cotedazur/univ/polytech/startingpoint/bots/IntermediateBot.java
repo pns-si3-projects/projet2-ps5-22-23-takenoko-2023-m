@@ -54,11 +54,19 @@ public class IntermediateBot extends Bot {
     }
 
     public void playForGardenerCard(){
+        while(getNbActions()>0){
+            ObjectiveGardener objectif = findObjectiveGardener();
+            Tile tileOfGardener = board.getGardener().getTile();
+            List<Coordinate> availablePositionsForGarderner = tileOfGardener.scanAvailableCoordinatesToMove(board.getBoardTiles());
+            if(availablePositionsForGarderner.isEmpty()){
+
+            }
+        }
     }
 
     public void playForPandaCard(){
         while(getNbActions()>0){
-            ObjectiveGardener objectif = (ObjectiveGardener) this.objectives.get(0);
+            ObjectivePanda objectif = findObjectivePanda();
             Tile tileOfPanda = this.board.getPanda().getTile();
             List<Coordinate> availableCoordinates = tileOfPanda.scanAvailableCoordinatesToMove(this.board.getBoardTiles());
             boolean moove = false;
@@ -86,6 +94,7 @@ public class IntermediateBot extends Bot {
                     if(getNbActions()==0){
                         if(objectif.isValid(this,board)){
                             setPoint(getPoint()+objectif.getNbPointsWin());
+                            upNbObjectifsRealises();
                             objectives.remove(0);
                         }
                     }else{
@@ -148,5 +157,32 @@ public class IntermediateBot extends Bot {
             this.board.putBackInTileStack(tiles.get(0)); this.board.putBackInTileStack(tiles.get(1));
             return ret;
         }
+    }
+
+    public ObjectiveGardener findObjectiveGardener(){
+        for(int i = 0; i!= objectives.size(); i++){
+            if(objectives.get(i) instanceof ObjectiveGardener){
+                return (ObjectiveGardener) objectives.get(i);
+            }
+        }
+        return null;
+    }
+
+    public ObjectivePanda findObjectivePanda(){
+        for(int i=0; i!= objectives.size(); i++){
+            if(objectives.get(i) instanceof ObjectivePanda){
+                return (ObjectivePanda) objectives.get(i);
+            }
+        }
+        return null;
+    }
+
+    public ObjectivePlot findObjectivePlot(){
+        for(int i=0; i!= objectives.size(); i++){
+            if(objectives.get(i) instanceof ObjectivePlot){
+                return (ObjectivePlot) objectives.get(i);
+            }
+        }
+        return null;
     }
 }

@@ -19,13 +19,13 @@ public class GameEngine {
     //On boucle sur le jeu
         int indexPlayer = 0;
         int nbTour = 1;
+        boolean isGameFinished = false;
         while(true){
             Main.LOGGER.info("<       > Tour numero : "+nbTour+" <       >");
             this.playerList.get(indexPlayer).play();
-            //On vérifie si un joueur atteint le nombre max de points
-            if (this.playerList.get(indexPlayer).getPoint() >= 9){
-                printWinner(this.playerList.get(indexPlayer));
-                break;
+            if (this.playerList.get(indexPlayer).getNbObjectifsRealises() ==9){
+                isGameFinished = true;
+                this.playerList.get(indexPlayer).setPoint(playerList.get(indexPlayer).getPoint()+2);
             }
             indexPlayer +=1;
             if(indexPlayer == this.playerList.size()){
@@ -36,10 +36,24 @@ public class GameEngine {
                 Main.LOGGER.severe("Nombre de tour max atteint");
                 break;
             }
+            if(isGameFinished){
+                int points = -1;
+                boolean verif = false;
+                Bot ret = null;
+                for(Bot b : playerList){
+                    if(b.getPoint()>points){
+                        ret = b;
+                    }else if(b.getPoint()==points){
+                        verif = true;
+                    }
+                }
+                printWinner(ret,verif);
+            }
         }
     }
 
-    public void printWinner(Bot p){
-        Main.LOGGER.severe("Le joueur est gagnant est : "+p.getNom()+" avec un score de "+p.getPoint()+" points marques");
+    public void printWinner(Bot p, boolean isEgality){
+        if(!isEgality) Main.LOGGER.severe("Le joueur est gagnant est : "+p.getNom()+" avec un score de "+p.getPoint()+" points marques");
+        else Main.LOGGER.severe("Egalite entre les deux joueurs ! ");
     }
 }
