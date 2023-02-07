@@ -30,6 +30,10 @@ public class Pattern {
         }
         return false;
     }
+    @Override
+    public int hashCode() {
+        return this.type.hashCode()+this.firstColor.hashCode()+this.secondColor.hashCode();
+    }
 
     public List<TypeOfTile> getColors() {
         List<TypeOfTile> colors = new ArrayList<>();
@@ -38,5 +42,16 @@ public class Pattern {
             colors.add(this.secondColor);
         }
         return colors;
+    }
+    @Override
+    public String toString(){
+        if(this.type.equals(TypeOfPattern.SQUARE)){
+            return "Pattern de type "+this.type + " et de couleur " + this.firstColor + " et " + this.secondColor;
+        }
+        return "Pattern de type "+this.type+" et de couleur "+this.firstColor;
+    }
+
+    public TypeOfPattern getType() {
+        return type;
     }
 }

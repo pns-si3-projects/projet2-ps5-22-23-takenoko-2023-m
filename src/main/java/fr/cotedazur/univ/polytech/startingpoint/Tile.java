@@ -1,25 +1,53 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Tile {
-    private final Coordinate coordinate;
+    private Coordinate coordinate;
     private int bamboo = 0;
     private TypeOfTile typeOfTile;
+    private boolean isIrrigated = false;
+    private TypeOfArrangement typeOfArrangement=TypeOfArrangement.NONE;
+
     public Tile(Coordinate coordinate, TypeOfTile type){
         this.coordinate = coordinate;
+
         this.typeOfTile = type;
+        this.typeOfArrangement = TypeOfArrangement.NONE;
+    }
+    public Tile(Coordinate coordinate, TypeOfTile type, TypeOfArrangement typeOfArrangement){
+        this.coordinate = coordinate;
+        this.typeOfTile = type;
+        this.typeOfArrangement = typeOfArrangement;
+    }
+
+
+    public Tile(int x, int y, TypeOfTile type, TypeOfArrangement typeOfArrangement){
+        coordinate = new Coordinate(x, y);
+        this.typeOfTile = type;
+        this.typeOfArrangement = typeOfArrangement;
     }
 
     public Tile(TypeOfTile type){
         coordinate = null;
         this.typeOfTile = type;
+        this.typeOfArrangement = TypeOfArrangement.NONE;
     }
+
+    public Tile(TypeOfTile type, TypeOfArrangement typeOfArrangement){
+        coordinate = null;
+        this.typeOfTile = type;
+        this.typeOfArrangement = typeOfArrangement;
+    }
+
 
     public Tile(Coordinate coordinate) {
         this.typeOfTile = TypeOfTile.GREEN;
         this.coordinate = coordinate;
-        this.typeOfTile = TypeOfTile.GREEN;
+
+        this.typeOfArrangement = TypeOfArrangement.NONE;
+
     }
 
     public int getCoordinnateX() {
@@ -33,12 +61,24 @@ public class Tile {
     public Coordinate getCoordinate() {
         return coordinate;
     }
+    public void irrigate() {
+        this.isIrrigated = true;
+    }
+    public boolean isIrrigated() {
+        return isIrrigated;
+    }
+
+    public void setCoordinate(Coordinate coordinate) {
+        if(this.coordinate == null){
+            this.coordinate = coordinate;
+        }
+    }
 
     //tests to see if the tile to test is neighbour to this tile
     //check coordinate system at : https://www.redblobgames.com/grids/hexagons/#neighbors-axial
     //maybe consider to refactor it to only return Coordinate item
     public boolean isNeighbour (Tile tileToTest) {
-        ArrayList<Coordinate> neighboursToTest = this.getNeighbourCoordinates();
+        List<Coordinate> neighboursToTest = this.getNeighbourCoordinates();
         for (int i = 0; i < 6; i++) {
             boolean sameX = tileToTest.getCoordinnateX() == neighboursToTest.get(i).getX();
             boolean sameY = tileToTest.getCoordinnateY() == neighboursToTest.get(i).getY();
@@ -50,8 +90,8 @@ public class Tile {
     }
 
     //scans the available Tiles to move panda and gardener considering boardTiles
-    public ArrayList<Coordinate> scanAvailableCoordinatesToMove (ArrayList<Tile> boardTiles) {
-        ArrayList<Coordinate> availableCoordinates = new ArrayList<>();
+    public List<Coordinate> scanAvailableCoordinatesToMove (List<Tile> boardTiles) {
+        List<Coordinate> availableCoordinates = new ArrayList<>();
 
         for (int i = 0; i < boardTiles.size(); i++) {
             boolean isOnSimpleX = this.getCoordinnateX() == boardTiles.get(i).getCoordinnateX();    //simpleX means only the line that only changes on x
@@ -94,12 +134,16 @@ public class Tile {
     // scans the available tiles to move panda and gardener from this Tile considering the available Tiles in boardTiles
     @Override
     public String toString() {
-        String str = "Tile at x = " + coordinate.getX() + ", y = " + coordinate.getY();
-        return str;
+        return "Tile at x = " + coordinate.getX() + ", y = " + coordinate.getY();
     }
 
     public void eatBamboo(){
-        this.bamboo--;
+        if(this.getTypeOfArrangement()!= TypeOfArrangement.ENCLOSURE){
+            this.bamboo--;
+        }
+        if (this.bamboo < 0) {
+            this.bamboo = 0;
+        }
 
     }
 
@@ -108,11 +152,19 @@ public class Tile {
     }
 
 
-    public int grow(int i) {
-        bamboo+=i;
-        if(bamboo>4) bamboo =4;
+    public int grow() {
+        if (this.isIrrigated) {
+            if (this.getTypeOfArrangement() == TypeOfArrangement.FERTILIZER) {
+                this.bamboo += 2;
+            } else {
+                this.bamboo++;
+            }
 
-        return bamboo;
+            if (bamboo > 4) bamboo = 4;
+
+            return bamboo;
+        }
+        return -1;
     }
 
     public int getBamboo() {
@@ -125,6 +177,38 @@ public class Tile {
 
     public void setTypeOfTile(TypeOfTile typeOfTile) {
         this.typeOfTile = typeOfTile;
+    }
+
+    @Override
+    public boolean equals (Object o) {
+        if (o != null) {
+            if (o instanceof Tile) {
+                Tile t = (Tile) o;
+                if(t.getCoordinate()==null && this.getCoordinate()==null && t.getTypeOfTile().equals(this.getTypeOfTile())){
+                    return true;
+                }else if(t.getCoordinate()!=null && this.getCoordinate()!=null && t.getCoordinate().equals(this.getCoordinate()) && t.getTypeOfTile().equals(this.getTypeOfTile())){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
+
+
+    public TypeOfArrangement getTypeOfArrangement() {
+        return typeOfArrangement;
+    }
+
+    public void setTypeOfArrangement(TypeOfArrangement typeOfArrangement) {
+        this.typeOfArrangement = typeOfArrangement;
+    }
+
+    public List<Coordinate> getNeighbourCoordinateTogetherWith(Tile tile) {
+        List<Coordinate> neighbourCoordinates = this.getNeighbourCoordinates();
+        neighbourCoordinates.retainAll(tile.getNeighbourCoordinates());
+        return neighbourCoordinates;
     }
 }
 
