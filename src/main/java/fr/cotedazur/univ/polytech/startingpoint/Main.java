@@ -11,7 +11,7 @@ public class Main {
 
         Args parameters = new Args();
         JCommander.newBuilder()
-                .addObject(Args.class)
+                .addObject(parameters)
                 .build()
                 .parse(args);
 
