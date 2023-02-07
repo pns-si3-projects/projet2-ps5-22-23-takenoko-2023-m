@@ -16,16 +16,20 @@ class GardenerTest {
         board.addTile(new Tile(new Coordinate(0,1),TypeOfTile.RED));
         board.addTile(new Tile(new Coordinate(1,1),TypeOfTile.GREEN));
         board.addTile(new Tile(new Coordinate(1,2),TypeOfTile.YELLOW));
+        //irrigation is now required for bamboo to grow
+        for (Tile t : board.getBoardTiles()) {
+            t.irrigate();
+        }
 
     }
     @Test
     @DisplayName("Gardener is moving to a tile ungrown")
     void moveOnUngrown() {
         System.out.println(board.moveGardenerOn(new Coordinate(1,0)));
-        assertTrue(board.getTile(new Coordinate(1,0)).getBamboo()==1);
-        assertTrue(board.getTile(new Coordinate(1,1)).getBamboo()==1);
-        assertFalse(board.getTile(new Coordinate(0,1)).getBamboo()==1);
-        assertFalse(board.getTile(new Coordinate(1,2)).getBamboo()==1);
+        assertEquals(1, board.getTile(new Coordinate(1, 0)).getBamboo());
+        assertEquals(1, board.getTile(new Coordinate(1, 1)).getBamboo());
+        assertNotEquals(1, board.getTile(new Coordinate(0, 1)).getBamboo());
+        assertNotEquals(1, board.getTile(new Coordinate(1, 2)).getBamboo());
 
     }
     @Test
@@ -35,7 +39,14 @@ class GardenerTest {
         tileTest4.setBamboo(4);
         board.addTile(tileTest4);
         System.out.println(board.moveGardenerOn(new Coordinate(2,2)));
-        assertTrue(board.getTile(new Coordinate(2,2)).getBamboo()==4);
+        assertEquals(4, board.getTile(new Coordinate(2, 2)).getBamboo());
+    }
+
+    @Test
+    void testMoveOnNotIrrigate() {
+        board.addTile(new Tile(new Coordinate(0,2)));
+        System.out.println(board.moveGardenerOn(new Coordinate(0,2)));
+        assertTrue(board.getTile(new Coordinate(0,2)).getBamboo() == 0);
     }
 
 

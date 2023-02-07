@@ -18,20 +18,70 @@ public class PatternDetector {
     public void detectPatternNear(Coordinate coordinate){
         ArrayList<Tile> tileOfSameType = this.detectTileOfSameTypeNear(coordinate);
         for(Tile tile : tileOfSameType){
+            boolean isDetectedAsLineOrTriangle;
             //detection of a pattern of type LINE
-            //TODO : detect if the LINE pattern even if the tile is place at the center of the line
-            Coordinate tileCoord = tile.getCoordinate();
-            int possibleTileX = tileCoord.getX()+tileCoord.getX()-coordinate.getX();
-            int possibleTileY = tileCoord.getY()+tileCoord.getY()-coordinate.getY();
-            //check if a tile exist on this position and if it's the same type
-            if(board.isInBoard(possibleTileX,possibleTileY)&&board.getTile(new Coordinate(possibleTileX,possibleTileY)).getTypeOfTile().equals(tile.getTypeOfTile())){
-                patternBoardList.add(new Pattern(TypeOfPattern.LINE,tile.getTypeOfTile()));
+            isDetectedAsLineOrTriangle = this.detectIfLine(tile,coordinate);
+            if(tileOfSameType.size()>1) {
+                if(isDetectedAsLineOrTriangle){
+                    this.detectIfTriangle(tile, coordinate, tileOfSameType);
+                }
+                else{
+                    isDetectedAsLineOrTriangle = this.detectIfTriangle(tile, coordinate, tileOfSameType);
+                }
+                //detection of a pattern of tye BOOMRANG when the coordinate is at the center of the pattern
+                if (!isDetectedAsLineOrTriangle) {
+                    addToPatternList(new Pattern(TypeOfPattern.BOOMRANG, tile.getTypeOfTile()));
+                }
             }
+            if(!isDetectedAsLineOrTriangle){
+                ArrayList<Tile> tileOfSameType2 = this.detectTileOfSameTypeNear(tile.getCoordinate());
+                tileOfSameType2.remove(board.getTile(coordinate));
+                if(!tileOfSameType2.isEmpty() ){
+                    addToPatternList(new Pattern(TypeOfPattern.BOOMRANG,tile.getTypeOfTile()));
+                }
+            }
+        }
 
+
+
+        }
+
+    private boolean detectIfTriangle(Tile tile, Coordinate coordinate, ArrayList<Tile> tileOfSameType) {
+        for(Tile tile2 : tileOfSameType){
+            if(!tile.equals(tile2)&&tile.isNeighbour(board.getTile(coordinate))&&tile2.isNeighbour(board.getTile(coordinate))&&tile.isNeighbour(tile2)){
+                addToPatternList(new Pattern(TypeOfPattern.TRIANGLE,tile.getTypeOfTile()));
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean detectIfLine(Tile tile, Coordinate coordinate) {
+        Coordinate tileCoordinate = tile.getCoordinate();
+        //possible position of a tile to create a pattern line
+        int possibleTileX = tileCoordinate.getX()+tileCoordinate.getX()-coordinate.getX();
+        int possibleTileY = tileCoordinate.getY()+tileCoordinate.getY()-coordinate.getY();
+        int possibleTileX2 = coordinate.getX()+coordinate.getX()-tileCoordinate.getX();
+        int possibleTileY2 = coordinate.getY()+coordinate.getY()-tileCoordinate.getY();
+        //check if a tile exist on this position and if it's the same type
+        if(board.isInBoard(possibleTileX,possibleTileY)&&board.getTile(new Coordinate(possibleTileX,possibleTileY)).getTypeOfTile().equals(tile.getTypeOfTile())){
+            addToPatternList(new Pattern(TypeOfPattern.LINE,tile.getTypeOfTile()));
+            return true;
+        }
+        if(board.isInBoard(possibleTileX2,possibleTileY2)&&board.getTile(new Coordinate(possibleTileX2,possibleTileY2)).getTypeOfTile().equals(tile.getTypeOfTile())){
+            addToPatternList(new Pattern(TypeOfPattern.LINE,tile.getTypeOfTile()));
+            return true;
+        }
+        return false;
+    }
+
+    private void addToPatternList(Pattern pattern) {
+        if(!patternBoardList.contains(pattern)){
+            patternBoardList.add(pattern);
         }
     }
 
-    public ArrayList<Pattern> getPatternBoardList() {
+    public List<Pattern> getPatternBoardList() {
         return patternBoardList;
     }
 
@@ -60,31 +110,121 @@ public class PatternDetector {
         Coordinate bestCoordinate = null;
         for(Tile tile : this.getBoardTileOfType(objectivePlot.getColors())){
             Coordinate firstTileCoordinate = tile.getCoordinate();
-            List<Tile> tilesOfSameTypeNear = detectTileOfSameTypeNear(firstTileCoordinate);
-            if(!tilesOfSameTypeNear.isEmpty()){
-                for(Tile tileOfSameTypeNear : tilesOfSameTypeNear){
-                    Coordinate secondTileCoordinate = tileOfSameTypeNear.getCoordinate();
-                    int possibleTileX = secondTileCoordinate.getX()+secondTileCoordinate.getX()-firstTileCoordinate.getX();
-                    int possibleTileY = secondTileCoordinate.getY()+secondTileCoordinate.getY()-firstTileCoordinate.getY();
-                    if(!board.isInBoard(possibleTileX,possibleTileY)){
+            List<Coordinate> tilesOfSameTypeNearCoordinate = new ArrayList<>();
+            detectTileOfSameTypeNear(firstTileCoordinate).forEach(t->tilesOfSameTypeNearCoordinate.add(t.getCoordinate()));
+            Coordinate possibleCoordinate = bestCoordinateForLineNear(firstTileCoordinate,tilesOfSameTypeNearCoordinate);
+            if(possibleCoordinate!=null){
+                return possibleCoordinate;
+            }
+         if(bestCoordinate == null){
+                List<Coordinate> availableCoordinate = board.getAvailableCoordinateNear(firstTileCoordinate);
+                bestCoordinate = bestCoordinateForLineNear(firstTileCoordinate,availableCoordinate);
+            }
+        }
+        return bestCoordinate==null?board.scanAvailableTilePosition().get(0):bestCoordinate;
+    }
+
+    private Coordinate bestCoordinateForLineNear(Coordinate firstTileCoordinate, List<Coordinate> tilesOfSameTypeNearCoordinate) {
+        if(!tilesOfSameTypeNearCoordinate.isEmpty()){
+            for(Coordinate secondTileCoordinate : tilesOfSameTypeNearCoordinate){
+                int possibleTileX = secondTileCoordinate.getX()+secondTileCoordinate.getX()-firstTileCoordinate.getX();
+                int possibleTileY = secondTileCoordinate.getY()+secondTileCoordinate.getY()-firstTileCoordinate.getY();
+                if(!board.isInBoard(possibleTileX,possibleTileY)){
+                    if(board.isInBoard(secondTileCoordinate.getX(), secondTileCoordinate.getY())){
                         return new Coordinate(possibleTileX,possibleTileY);
+                    }
+                    return secondTileCoordinate;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * find the best coordinate to place a tile to complete a pattern of type TRIANGLE
+     * @param objectivePlot the objective we need to complete
+     * @return the best coordinate to place a tile
+     */
+    public Coordinate bestCoordinateForTriangle(ObjectivePlot objectivePlot) {
+        Coordinate bestCoordinate = null;
+        for(Tile tile : this.getBoardTileOfType(objectivePlot.getColors())){
+            Coordinate firstTileCoordinate = tile.getCoordinate();
+            List<Coordinate> tilesOfSameTypeNearCoordinate = new ArrayList<>();
+            detectTileOfSameTypeNear(firstTileCoordinate).forEach(t->tilesOfSameTypeNearCoordinate.add(t.getCoordinate()));
+            Coordinate possibleCoordinate = bestCoordinateForTriangleNear(tile,tilesOfSameTypeNearCoordinate);
+            if(possibleCoordinate!=null){
+                return possibleCoordinate;
+            }
+            if(bestCoordinate == null){
+                List<Coordinate> availableCoordinate = board.getAvailableCoordinateNear(firstTileCoordinate);
+                bestCoordinate = bestCoordinateForTriangleNear(tile,availableCoordinate);
+            }
+
+        }
+        return bestCoordinate==null?board.scanAvailableTilePosition().get(0):bestCoordinate;
+    }
+    private Coordinate bestCoordinateForTriangleNear(Tile tile, List<Coordinate> availableCoordinate) {
+        if(!availableCoordinate.isEmpty()){
+            for(Coordinate coordinate : availableCoordinate){
+                for(Coordinate coordinateTogether : tile.getNeighbourCoordinateTogetherWith(new Tile(coordinate))){
+                    if(!board.isInBoard(coordinateTogether.getX(),coordinateTogether.getY())){
+                        return coordinateTogether;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+    public Coordinate bestCoordinateForBoomrang(ObjectivePlot objectivePlot){
+        Coordinate bestCoordinate = null;
+        for(Tile tile : this.getBoardTileOfType(objectivePlot.getColors())){
+            Coordinate firstTileCoordinate = tile.getCoordinate();
+            List<Coordinate> tilesOfSameTypeNearCoordinate = new ArrayList<>();
+            detectTileOfSameTypeNear(firstTileCoordinate).forEach(t->tilesOfSameTypeNearCoordinate.add(t.getCoordinate()));
+            if(!tilesOfSameTypeNearCoordinate.isEmpty()){
+                for(Coordinate coordinate : tilesOfSameTypeNearCoordinate){
+                    if(board.isInBoard(coordinate.getX(),coordinate.getY())) {
+                        List<Coordinate> possibleCoordinates = board.getAvailableCoordinateNear(coordinate);
+                        //remove coordinate forming a triangle
+                        possibleCoordinates.removeAll(tile.getNeighbourCoordinateTogetherWith(new Tile(coordinate)));
+
+                        possibleCoordinates.remove(bestCoordinateForLineNear(firstTileCoordinate,List.of(coordinate)));
+                        possibleCoordinates.remove(bestCoordinateForLineNear(firstTileCoordinate,List.of(coordinate)));
+                        //remove coordinate forming a line
+                        for (Coordinate coordinateTogether : possibleCoordinates) {
+                            if (!board.isInBoard(coordinateTogether.getX(), coordinateTogether.getY())) {
+                                return coordinateTogether;
+                            }
+                        }
                     }
                 }
             }
             if(bestCoordinate == null){
                 List<Coordinate> availableCoordinate = board.getAvailableCoordinateNear(firstTileCoordinate);
-                for(Coordinate coordinate : availableCoordinate){
-                    int possibleTileX = coordinate.getX()+coordinate.getX()-firstTileCoordinate.getX();
-                    int possibleTileY = coordinate.getY()+coordinate.getY()-firstTileCoordinate.getY();
-                    if(!board.isInBoard(possibleTileX,possibleTileY)){
-                        bestCoordinate = coordinate;
+                bestCoordinate = bestCoordinateForBoomrangNear(tile,availableCoordinate);
+            }
+
+        }
+        return bestCoordinate==null?board.scanAvailableTilePosition().get(0):bestCoordinate;
+    }
+
+    private Coordinate bestCoordinateForBoomrangNear(Tile tile, List<Coordinate> availableCoordinate) {
+        if(!availableCoordinate.isEmpty()){
+            for(Coordinate coordinate : availableCoordinate){
+                    List<Coordinate> possibleCoordinates = new Tile(coordinate).getNeighbourCoordinates();
+                    possibleCoordinates.remove(tile.getCoordinate());
+                    possibleCoordinates.remove(bestCoordinateForLineNear(coordinate, possibleCoordinates));
+                    possibleCoordinates.remove(bestCoordinateForLineNear(coordinate, possibleCoordinates));
+                    possibleCoordinates.remove(bestCoordinateForTriangleNear(tile, possibleCoordinates));
+                    possibleCoordinates.remove(bestCoordinateForTriangleNear(tile, possibleCoordinates));
+                    for (Coordinate coordinateTogether : possibleCoordinates) {
+                        if (!board.isInBoard(coordinateTogether.getX(), coordinateTogether.getY())) {
+                            return coordinate;
+                        }
                     }
-                }
             }
         }
-        if(bestCoordinate == null)
-            bestCoordinate = board.scanAvailableTilePosition().get(0);
-        return bestCoordinate;
+        return null;
     }
 
     /**

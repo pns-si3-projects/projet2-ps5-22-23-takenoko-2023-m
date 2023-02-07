@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Coordinate {
     private int x;
@@ -38,7 +39,7 @@ public class Coordinate {
     }
 
 
-    public int getNumberOfNeighbours(ArrayList<Coordinate> boardCoordinates) {
+    public int getNumberOfNeighbours(List<Coordinate> boardCoordinates) {
         int nbNeighbours = 0;
         ArrayList<Coordinate> closeNeighbours = this.getNeighbourCoordinates();
 

@@ -23,9 +23,8 @@ public class ObjectiveStackPlot extends Stack<ObjectivePlot> {
 
 
     @Override
-    public void generate() {
-        //List<TypeOfPattern> types = Arrays.asList(TypeOfPattern.LINE,TypeOfPattern.TRIANGLE,TypeOfPattern.BOOMRANG,TypeOfPattern.SQUARE);
-        List<TypeOfPattern> types = Arrays.asList(TypeOfPattern.LINE);
+    public void generate() {;
+        List<TypeOfPattern> types = Arrays.asList(TypeOfPattern.LINE,TypeOfPattern.TRIANGLE,TypeOfPattern.BOOMRANG);
         List<TypeOfTile> colors = Arrays.asList(TypeOfTile.YELLOW,TypeOfTile.RED,TypeOfTile.GREEN);
         for(TypeOfPattern type : types){
             for(TypeOfTile color : colors){
@@ -36,9 +35,7 @@ public class ObjectiveStackPlot extends Stack<ObjectivePlot> {
                 }
             }
         }
-        //this.putBelow(new ObjectivePlot(new Pattern(TypeOfPattern.SQUARE,TypeOfTile.YELLOW,TypeOfTile.RED)));
-        //this.putBelow(new ObjectivePlot(new Pattern(TypeOfPattern.SQUARE,TypeOfTile.RED,TypeOfTile.GREEN)));
-        //this.putBelow(new ObjectivePlot(new Pattern(TypeOfPattern.SQUARE,TypeOfTile.GREEN,TypeOfTile.YELLOW)));
+
 
     }
 }
