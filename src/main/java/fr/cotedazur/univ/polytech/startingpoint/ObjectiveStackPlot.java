@@ -24,7 +24,7 @@ public class ObjectiveStackPlot extends Stack<ObjectivePlot> {
 
     @Override
     public void generate() {;
-        List<TypeOfPattern> types = Arrays.asList(TypeOfPattern.LINE);
+        List<TypeOfPattern> types = Arrays.asList(TypeOfPattern.LINE,TypeOfPattern.TRIANGLE,TypeOfPattern.BOOMRANG);
         List<TypeOfTile> colors = Arrays.asList(TypeOfTile.YELLOW,TypeOfTile.RED,TypeOfTile.GREEN);
         for(TypeOfPattern type : types){
             for(TypeOfTile color : colors){

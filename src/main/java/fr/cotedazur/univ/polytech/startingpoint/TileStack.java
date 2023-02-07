@@ -24,10 +24,6 @@ public class TileStack extends Stack<Tile>{
         return super.pick(o);
     }
 
-    @Override
-    public Tile randomPick() {
-        return super.randomPick();
-    }
 
     public List<Tile> pickThreeTiles(){
         List<Tile> tiles = new ArrayList<>();
