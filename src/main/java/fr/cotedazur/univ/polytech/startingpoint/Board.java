@@ -183,6 +183,12 @@ public class Board {
     public Coordinate bestCoordinateForLine(ObjectivePlot objectivePlot) {
         return patternDetector.bestCoordinateForLine(objectivePlot);
     }
+    public Coordinate bestCoordinateForBoomrang(ObjectivePlot objectivePlot) {
+        return patternDetector.bestCoordinateForBoomrang(objectivePlot);
+    }
+    public Coordinate bestCoordinateForTriangle(ObjectivePlot objectivePlot) {
+        return patternDetector.bestCoordinateForTriangle(objectivePlot);
+    }
 
     /**
      * Find all availbable coordinates near a specific coordinate

@@ -8,7 +8,7 @@ import java.util.List;
 public class Main {
     public final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static void main(String... args) {
-        LOGGER.setLevel(Level.SEVERE);
+        LOGGER.setLevel(Level.INFO);
         Board board = new Board();
 
         Bot bot1 = new PrimaryBot(board, "Simon");
