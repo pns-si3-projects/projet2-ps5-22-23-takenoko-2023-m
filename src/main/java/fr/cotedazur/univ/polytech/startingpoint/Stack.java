@@ -2,36 +2,42 @@ package fr.cotedazur.univ.polytech.startingpoint;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.logging.*;
 public abstract class Stack<T> {
     public List<T> list;
 
-    public Stack(List<T> list){
+    protected Stack(List<T> list){
         this.list = list;
     }
-    public Stack(){
+    protected Stack(){
         this.list = new ArrayList<T>();
     }
 
     public void putBelow(T o){
-        this.list.add( o);
+        this.list.add(o);
     }
 
     public T pick(T o){
-        for (T objective: list){
-            if (objective.equals(o)){
-                list.remove(objective);
-                return o;
+        if(this.list.isEmpty()){
+            throw new ArrayIndexOutOfBoundsException("pile vide");
+        }
+        else{
+            for (T objective: list){
+                if (objective.equals(o)){
+                    list.remove(objective);
+                    return o;
+                }
             }
         }
 
 
-        System.out.println("L'objectif voulu n'est pas dans la pile");
+
+        Main.LOGGER.info("L'objectif voulu n'est pas dans la pile");
         return null;
     }
 
     public T randomPick(){
-        if(list.size()== 0){
+        if(list.isEmpty()){
             throw new IllegalArgumentException("La pile est vide");
         }
         int i = (int) (Math.random() * list.size());
