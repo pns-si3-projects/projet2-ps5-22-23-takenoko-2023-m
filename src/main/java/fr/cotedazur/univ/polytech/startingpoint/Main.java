@@ -16,7 +16,7 @@ import com.beust.jcommander.JCommander;
 public class Main {
     public final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     static File file = new File("stats/test.csv");
-    public static void main(String... args) throws IOException {
+    public static void main(String[] args) throws IOException {
 
         String file = "stats/gamestats.csv";
         CSVWriter writer = new CSVWriter(new FileWriter(file));
@@ -28,9 +28,6 @@ public class Main {
         writer.writeNext(headers);
 
 
-
-
-    public static void main(String... args) {
 
         Args parameters = new Args();
         JCommander.newBuilder()
