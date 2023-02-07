@@ -192,6 +192,7 @@ public class Tile {
         return false;
     }
 
+
     public TypeOfArrangement getTypeOfArrangement() {
         return typeOfArrangement;
     }
