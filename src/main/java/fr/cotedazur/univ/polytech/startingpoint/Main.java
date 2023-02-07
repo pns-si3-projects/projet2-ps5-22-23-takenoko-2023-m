@@ -11,6 +11,7 @@ import java.util.List;
 import com.opencsv.*;
 import java.io.FileReader;
 import java.net.URL;
+import com.beust.jcommander.JCommander;
 
 public class Main {
     public final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -28,6 +29,24 @@ public class Main {
 
 
 
+
+    public static void main(String... args) {
+
+        Args parameters = new Args();
+        JCommander.newBuilder()
+                .addObject(parameters)
+                .build()
+                .parse(args);
+
+        if (parameters.twoThousands) {
+            System.out.println("2000");
+        }
+        if (parameters.demo) {
+            System.out.println("demo");
+        }
+        if (parameters.csv) {
+            System.out.println("csv");
+        }
 
         LOGGER.setLevel(Level.SEVERE);
         Board board = new Board();
