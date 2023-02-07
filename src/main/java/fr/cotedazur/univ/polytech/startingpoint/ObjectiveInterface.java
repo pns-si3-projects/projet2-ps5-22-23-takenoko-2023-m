@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
+import fr.cotedazur.univ.polytech.startingpoint.bots.IntermediateBot;
 import fr.cotedazur.univ.polytech.startingpoint.bots.PrimaryBot;
 
 public interface ObjectiveInterface {
@@ -10,6 +11,7 @@ public interface ObjectiveInterface {
     public int getNbPointsWin();
     public boolean isValid(Bot player, Board b);
     public void play(PrimaryBot player);
+    public void play(IntermediateBot player);
 }
 
 

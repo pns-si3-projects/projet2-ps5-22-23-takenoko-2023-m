@@ -1,11 +1,13 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
+import fr.cotedazur.univ.polytech.startingpoint.bots.IntermediateBot;
 import fr.cotedazur.univ.polytech.startingpoint.bots.PrimaryBot;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -104,5 +106,16 @@ class PlayerTest {
 
         assertEquals(TypeOfTile.GREEN, tile.getTypeOfTile());
         assertEquals(26, board.getTileStack().getStack().size());
+    }
+
+    @Test
+    void testSortObjective(){
+        Board board = new Board();
+        Main.LOGGER.setLevel(Level.SEVERE);
+        IntermediateBot ib = new IntermediateBot(board,"Simon");
+        ib.getObjective().sort((o1, o2) -> o2.getNbPointsWin() - o1.getNbPointsWin());
+        assertTrue(ib.getObjective().get(0).getNbPointsWin() > ib.getObjective().get(2).getNbPointsWin());
+        Main.LOGGER.severe(Integer.toString(ib.getObjective().get(0).getNbPointsWin()));
+        Main.LOGGER.severe(Integer.toString(ib.getObjective().get(2).getNbPointsWin()));
     }
 }

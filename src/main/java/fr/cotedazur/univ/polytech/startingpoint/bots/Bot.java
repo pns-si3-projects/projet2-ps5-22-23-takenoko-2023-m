@@ -154,4 +154,9 @@ public abstract class Bot {
 
     public void play() {
     }
+
+    public void upNbActions(){
+        this.nbActions += 1;
+    }
+
 }

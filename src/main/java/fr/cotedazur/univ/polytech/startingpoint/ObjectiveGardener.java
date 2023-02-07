@@ -2,6 +2,7 @@ package fr.cotedazur.univ.polytech.startingpoint;
 
 
 import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
+import fr.cotedazur.univ.polytech.startingpoint.bots.IntermediateBot;
 import fr.cotedazur.univ.polytech.startingpoint.bots.PrimaryBot;
 
 public class ObjectiveGardener extends ObjectifWithOneColor implements ObjectiveInterface {
@@ -38,6 +39,11 @@ public class ObjectiveGardener extends ObjectifWithOneColor implements Objective
 
     @Override
     public void play(PrimaryBot player) {
+        player.playForGardenerCard();
+    }
+
+    @Override
+    public void play(IntermediateBot player) {
         player.playForGardenerCard();
     }
 

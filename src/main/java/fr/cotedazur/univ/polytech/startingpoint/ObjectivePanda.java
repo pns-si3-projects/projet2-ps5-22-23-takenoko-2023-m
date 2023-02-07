@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
+import fr.cotedazur.univ.polytech.startingpoint.bots.IntermediateBot;
 import fr.cotedazur.univ.polytech.startingpoint.bots.PrimaryBot;
 
 public class ObjectivePanda extends ObjectifWithOneColor implements ObjectiveInterface{
@@ -29,6 +30,8 @@ public class ObjectivePanda extends ObjectifWithOneColor implements ObjectiveInt
         player.playForPandaCard();
     }
 
+    public void play(IntermediateBot player) { player.playForPandaCard(); }
+
 
     public String getType() {
             return type;
@@ -44,5 +47,6 @@ public class ObjectivePanda extends ObjectifWithOneColor implements ObjectiveInt
         public String toString(){
             return "Objectif de type "+this.type + " et de nombre de bambou a manger " + this.nbToEat;
         }
+
 
 }
