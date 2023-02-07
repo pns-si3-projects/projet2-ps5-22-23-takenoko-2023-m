@@ -10,12 +10,12 @@ import java.util.List;
 class BoardTest {
     Board twoTiles = new Board();
     Tile t0_0 = new Tile(new Coordinate(0,0));
-    Tile t1_0 = new Tile(new Coordinate(1,0));
+    Tile tx1y0 = new Tile(new Coordinate(1,0));
 
     @BeforeEach
     void setup() {
         twoTiles.addTile(t0_0);
-        twoTiles.addTile(t1_0);
+        twoTiles.addTile(tx1y0);
     }
 
     @Test   //tests for the fisrt version, the one that only requires new tiles to be touching the edge, not the ones having two neighbours
@@ -59,13 +59,25 @@ class BoardTest {
 
     @Test
     void testIrrigationPlacement() {
+        Tile tx0y1 = new Tile(new Coordinate(0,1));
+        Tile tx1y1 = new Tile(new Coordinate(1,1));
         Board board = new Board();
-        board.addTile(new Tile(new Coordinate(1,0)));
-        board.addTile(new Tile(new Coordinate(0,1)));
-        board.addTile(new Tile(new Coordinate(1,1)));
+        board.addTile(tx1y0);
+        board.addTile(tx0y1);
+        board.addTile(tx1y1);
         ArrayList<Irrigation> legalIrrigationPlacement = board.getLegalIrrigationPlacement();
         board.addIrrigation(legalIrrigationPlacement.get(0));
+        assertTrue(tx1y0.isIrrigated());
+        assertTrue(tx0y1.isIrrigated());
+        assertFalse(tx1y1.isIrrigated());
         board.addIrrigation(new Irrigation(new Coordinate(1,0), new Coordinate(1,1)));
+        System.out.println(legalIrrigationPlacement);
+        assertEquals(7, legalIrrigationPlacement.size());
+        assertTrue(tx1y0.isIrrigated());
+        assertTrue(tx0y1.isIrrigated());
+        assertTrue(tx1y1.isIrrigated());
+
+
     }
     @Test
     void testLegalIrrigationPlacement() {

@@ -124,7 +124,7 @@ public class Irrigation {
             }
             case fSlash -> {
                 Irrigation leftNeighbour = new Irrigation(coordinate2, new Coordinate(coordinate2.getX()-1, coordinate2.getY()));
-                Irrigation rightNeighbour = new Irrigation(coordinate1, new Coordinate(coordinate1.getX()+1, coordinate2.getY()));
+                Irrigation rightNeighbour = new Irrigation(coordinate1, new Coordinate(coordinate1.getX()+1, coordinate1.getY()));
                 neighbours.add(leftNeighbour);
                 neighbours.add(rightNeighbour);
             }
