@@ -102,27 +102,32 @@ public abstract class Bot {
     }
 
     public void pickArrangement(TypeOfArrangement t){
+        if(board.getDice().getMeteo()==Meteo.CLOUD){
+            switch (t){
+                case NONE:
+                    throw new IllegalArgumentException("il faut choisir un type valide");
+                case FERTILIZER:
+                    if(this.board.getFertilizerStack().getStack().size()>0){
+                        this.getListArrangement().add(this.board.getFertilizerStack().pick(t));
+                    }
+                    break;
+                case BASIN:
+                    if(this.board.getBasinStack().getStack().size()>0){
+                        this.getListArrangement().add(this.board.getBasinStack().pick(t));
 
-        switch (t){
-            case NONE:
-                throw new IllegalArgumentException("il faut choisir un type valide");
-            case FERTILIZER:
-                if(this.board.getFertilizerStack().getStack().size()>0){
-                    this.getListArrangement().add(this.board.getFertilizerStack().pick(t));
-                }
-                break;
-            case BASIN:
-                if(this.board.getBasinStack().getStack().size()>0){
-                    this.getListArrangement().add(this.board.getBasinStack().pick(t));
-
-                }
-                break;
-            case ENCLOSURE:
-                if(this.board.getEnclosureStack().getStack().size()>0){
-                    this.getListArrangement().add(this.board.getEnclosureStack().pick(t));
-                }
-                break;
+                    }
+                    break;
+                case ENCLOSURE:
+                    if(this.board.getEnclosureStack().getStack().size()>0){
+                        this.getListArrangement().add(this.board.getEnclosureStack().pick(t));
+                    }
+                    break;
+            }
         }
+        else{
+            throw new IllegalArgumentException("il faut choisir un type valide ou que le temps soit couvert");
+        }
+
 
     }
     public void setArrangement(Tile tile, TypeOfArrangement t){

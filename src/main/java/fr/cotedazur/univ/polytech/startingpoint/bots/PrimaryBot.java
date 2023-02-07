@@ -39,7 +39,7 @@ public class PrimaryBot extends Bot {
     }
 
     public void playForPatternCard(){
-        System.out.println("la focus card = " +this.focusCard);
+        Main.LOGGER.info("la focus card = " +this.focusCard);
         ObjectivePlot objectivePlot = (ObjectivePlot) this.focusCard;
         List<TypeOfTile> colors = objectivePlot.getColors();
         List<Tile> tilesPicked = board.pickThreeTiles();
