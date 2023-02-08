@@ -83,6 +83,27 @@ class IrrigationTest {
     }
 
     @Test
+    void testNeighbourIrrigation() {
+        //Test for vertical irrigations
+        assertTrue(verticalIrrigation.getNeighbourIrrigations().contains(new Irrigation(new Coordinate(0,0), new Coordinate(1,-1))));
+        assertTrue(verticalIrrigation.getNeighbourIrrigations().contains(new Irrigation(new Coordinate(1,0), new Coordinate(1,-1))));
+        assertTrue(verticalIrrigation.getNeighbourIrrigations().contains(new Irrigation(new Coordinate(0,0), new Coordinate(0,1))));
+        assertTrue(verticalIrrigation.getNeighbourIrrigations().contains(new Irrigation(new Coordinate(1,0), new Coordinate(0,1))));
+
+        //Test for fslash irrigations
+        assertTrue(fSlashIrrigation.getNeighbourIrrigations().contains(new Irrigation(new Coordinate(1,0), new Coordinate(0,1))));
+        assertTrue(fSlashIrrigation.getNeighbourIrrigations().contains(new Irrigation(new Coordinate(0,1), new Coordinate(1,1))));
+        assertTrue(fSlashIrrigation.getNeighbourIrrigations().contains(new Irrigation(new Coordinate(1,0), new Coordinate(2,0))));
+        assertTrue(fSlashIrrigation.getNeighbourIrrigations().contains(new Irrigation(new Coordinate(1,1), new Coordinate(2,0))));
+
+        //Test for bslash irrigations
+        assertTrue(bSlashIrrigation.getNeighbourIrrigations().contains(new Irrigation(new Coordinate(-1,0), new Coordinate(0,0))));
+        assertTrue(bSlashIrrigation.getNeighbourIrrigations().contains(new Irrigation(new Coordinate(-1,0), new Coordinate(-1,1))));
+        assertTrue(bSlashIrrigation.getNeighbourIrrigations().contains(new Irrigation(new Coordinate(0,0), new Coordinate(0,1))));
+        assertTrue(bSlashIrrigation.getNeighbourIrrigations().contains(new Irrigation(new Coordinate(-1,1), new Coordinate(0,1))));
+    }
+
+    @Test
     void testTilesAreIrrigated() {
         assertTrue(boardTiles.get(boardTiles.indexOf(x0y0)).isIrrigated());
         Tile x2y0 = new Tile(new Coordinate(2,0));
@@ -108,5 +129,6 @@ class IrrigationTest {
     @Test
     void testEquals() {
         assertTrue(verticalIrrigation.equals(new Irrigation(x0y0,x1y0)));
+        assertTrue(verticalIrrigation.equals(new Irrigation(x1y0,x0y0)));
     }
 }
