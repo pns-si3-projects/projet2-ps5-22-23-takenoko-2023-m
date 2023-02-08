@@ -19,6 +19,19 @@ public class PrimaryBot extends Bot {
 
     @Override
     public void play(){
+        if(this.getObjective().size()==0){
+            if(this.board.getStackGardener().getStack().size()!=0){
+                this.getObjective().add(this.board.getStackGardener().randomPick());
+
+            }
+            else if(this.board.getStackPanda().getStack().size()!=0){
+                this.getObjective().add(this.board.getStackPanda().randomPick());
+            }
+            else if(this.board.getStackPlot().getStack().size()!=0){
+                this.getObjective().add(this.board.getStackPlot().randomPick());
+
+            }
+        }
         if(this.nbTours >1){
             this.board.getDice().randomMeteo();
             while(this.board.getDice().getMeteo()==Meteo.NONE || this.board.getDice().getMeteo()==Meteo.QUESTIONMARK){
