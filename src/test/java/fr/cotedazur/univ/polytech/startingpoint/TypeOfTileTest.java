@@ -15,4 +15,6 @@ class TypeOfTileTest {
         TypeOfTile red2 = TypeOfTile.RED;
         assertTrue(red.equals(red2));
     }
+
+
 }

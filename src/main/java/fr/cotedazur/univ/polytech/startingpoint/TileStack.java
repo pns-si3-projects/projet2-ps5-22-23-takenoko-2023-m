@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class TileStack extends Stack<Tile>{
@@ -32,9 +33,20 @@ public class TileStack extends Stack<Tile>{
     public List<Tile> pickThreeTiles(){
         List<Tile> tiles = new ArrayList<>();
         for (int i = 0; i < 3; i++){
-            tiles.add(randomPick());
+            Tile tile = randomPick();
+            tiles.add(tile);
+            list.remove(tile);
         }
+
         return tiles;
+    }
+
+    public void addTile(Tile tile){
+        list.add(tile);
+    }
+
+    public void setStack(List<Tile> list){
+        this.list = list;
     }
 
 

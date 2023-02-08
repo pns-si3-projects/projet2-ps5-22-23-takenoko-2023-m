@@ -92,4 +92,11 @@ class TileTest {
     void getNeighbourCoordinateTogetherWith() {
 
     }
+
+    @Test
+    void generateKeyTile(){
+        Tile t = new Tile(TypeOfTile.RED);
+        Tile tt = new Tile(TypeOfTile.RED);
+        assertTrue(t.getKey()!=tt.getKey());
+    }
 }

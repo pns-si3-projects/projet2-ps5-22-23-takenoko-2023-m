@@ -22,7 +22,12 @@ public class ObjectivePanda extends ObjectifWithOneColor implements ObjectiveInt
         public int getNbPointsWin() { return this.nbPointsWin; }
 
         public boolean isValid(Bot p, Board b){
-            return p.getNbBamboo(this.typeOfTile)>=this.nbToEat;   //fixed bug in case the player already has bamboo and the amount is higher
+            if(p.getNbBamboo(this.typeOfTile)>=this.nbToEat){
+                p.resetNbBamboo(this.typeOfTile);
+                return true;
+            }else{
+                return false;
+            }
         }
 
     @Override
@@ -47,6 +52,5 @@ public class ObjectivePanda extends ObjectifWithOneColor implements ObjectiveInt
         public String toString(){
             return "Objectif de type "+this.type + " et de nombre de bambou a manger " + this.nbToEat;
         }
-
 
 }

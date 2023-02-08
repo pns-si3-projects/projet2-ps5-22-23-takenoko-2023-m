@@ -5,8 +5,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Irrigation {
+
+
     private final Tile referencedTile1;   //must be a reference to a tile placed in the board
     private final Tile referencedTile2;   //must be a reference to a tile placed in the board
+    private final Coordinate coordinate1;
+    private final Coordinate coordinate2;
 
     private final TypeOfIrrigation irrigationType;
 
@@ -22,18 +26,43 @@ public class Irrigation {
         this.referencedTile1.irrigate();
         this.referencedTile2.irrigate();
 
-        //checks for the type of irrigation
-        if (referencedTile1.getCoordinate().getY() == referencedTile2.getCoordinate().getY()) {
-            irrigationType = TypeOfIrrigation.vertical;
-        } else if (referencedTile1.getCoordinate().getX() == referencedTile2.getCoordinate().getX()) {
-            irrigationType = TypeOfIrrigation.fSlash;
+        this.coordinate1 = referencedTile1.getCoordinate();
+        this.coordinate2 = referencedTile2.getCoordinate();
+
+        this.irrigationType = this.detectTypeOfIrrigation();
+    }
+
+    public Irrigation (Coordinate coordinate1, Coordinate coordinate2) throws RuntimeException {
+        ArrayList<Coordinate> coordinate1Neighbours = coordinate1.getNeighbourCoordinates();
+        if (!coordinate1Neighbours.contains(coordinate2)) {
+            throw new RuntimeException("Tiles are not neighbours");
+        }
+
+        this.coordinate1 = coordinate1;
+        this.coordinate2 = coordinate2;
+
+        this.referencedTile1 = null;
+        this.referencedTile2 = null;
+
+        this.irrigationType = this.detectTypeOfIrrigation();
+    }
+
+    private TypeOfIrrigation detectTypeOfIrrigation() {
+        if (coordinate1.getY() == coordinate2.getY()) {
+            return TypeOfIrrigation.vertical;
+        } else if (coordinate1.getX() == coordinate2.getX()) {
+                return TypeOfIrrigation.fSlash;
         } else {
-            irrigationType = TypeOfIrrigation.bSlash;
+            return TypeOfIrrigation.bSlash;
         }
     }
 
     public List<Tile> getTiles() {
         return new ArrayList<>(Arrays.asList(referencedTile1,referencedTile2));
+    }
+
+    public List<Coordinate> getCoordinates() {
+        return new ArrayList<>(Arrays.asList(coordinate1,coordinate2));
     }
 
     public TypeOfIrrigation getIrrigationType() {
@@ -84,8 +113,53 @@ public class Irrigation {
         return legalNeighbours;
     }
 
+    public ArrayList<Irrigation> getNeighbourIrrigations() {
+        ArrayList<Irrigation> neighbours = new ArrayList<>();
+        switch (irrigationType) {
+            case vertical -> {
+                Irrigation topNeighbour = new Irrigation(coordinate2, new Coordinate(coordinate2.getX(), coordinate2.getY()-1));
+                Irrigation botNeighbour = new Irrigation(coordinate1, new Coordinate(coordinate1.getX(), coordinate1.getY()+1));
+                neighbours.add(topNeighbour);
+                neighbours.add(botNeighbour);
+            }
+            case fSlash -> {
+                Irrigation leftNeighbour = new Irrigation(coordinate2, new Coordinate(coordinate2.getX()-1, coordinate2.getY()));
+                Irrigation rightNeighbour = new Irrigation(coordinate1, new Coordinate(coordinate1.getX()+1, coordinate1.getY()));
+                neighbours.add(leftNeighbour);
+                neighbours.add(rightNeighbour);
+            }
+            case bSlash -> {
+                Irrigation leftIrrigation = new Irrigation(coordinate1, new Coordinate(coordinate1.getX(), coordinate2.getY()));
+                Irrigation rightIrrigation = new Irrigation(coordinate2, new Coordinate(coordinate2.getX(), coordinate1.getY()));
+                neighbours.add(leftIrrigation);
+                neighbours.add(rightIrrigation);
+            }
+        }
+        return neighbours;
+    }
+
+    public boolean isNeighbour (Irrigation potentialNeighbour) {
+        ArrayList<Irrigation> thisNeighbours = this.getNeighbourIrrigations();
+        if (thisNeighbours.contains(potentialNeighbour)) {
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public String toString() {
-        return "Irrigation between : " + referencedTile1.toString() + "\t\t" + referencedTile2.toString();
+        return "Irrigation between : " + coordinate1.toString() + "\t\t" + coordinate2.toString();
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (o != null) {
+            if (o instanceof Irrigation) {
+                Irrigation i = (Irrigation) o;
+                if ((this.coordinate1.equals(i.getCoordinates().get(0))) && (this.coordinate2.equals(i.getCoordinates().get(1)))) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

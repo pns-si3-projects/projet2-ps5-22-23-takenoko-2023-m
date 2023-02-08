@@ -16,6 +16,7 @@ public abstract class Bot {
     protected int nbObjectifsRealises = 0;
     protected ArrayList<ObjectiveInterface> objectives = new ArrayList<ObjectiveInterface>();
     protected List<TypeOfArrangement> listArrangement = new ArrayList<TypeOfArrangement>();
+    protected int nbTours = 1;
 
     public Bot(Board board, String nom){
         this.nom = nom;
@@ -75,7 +76,13 @@ public abstract class Bot {
         Main.LOGGER.info("Le joueur " +this.getNom() +" vient de jouer");
     }
 
-    public void resetNbActions() { this.nbActions = 2;}
+    public void resetNbActions() {
+        if (this.board.getDice().getMeteo() == Meteo.SUN) {
+            this.nbActions = 3;
+        } else {
+            this.nbActions = 2;
+        }
+    }
     public void resetNbBamboo(TypeOfTile type){
         if(type == TypeOfTile.RED) this.nbBambooRed = 0;
         if(type == TypeOfTile.YELLOW) this.nbBambooYellow = 0;
@@ -96,27 +103,32 @@ public abstract class Bot {
     }
 
     public void pickArrangement(TypeOfArrangement t){
+        if(board.getDice().getMeteo()==Meteo.CLOUD){
+            switch (t){
+                case NONE:
+                    throw new IllegalArgumentException("il faut choisir un type valide");
+                case FERTILIZER:
+                    if(this.board.getFertilizerStack().getStack().size()>0){
+                        this.getListArrangement().add(this.board.getFertilizerStack().pick(t));
+                    }
+                    break;
+                case BASIN:
+                    if(this.board.getBasinStack().getStack().size()>0){
+                        this.getListArrangement().add(this.board.getBasinStack().pick(t));
 
-        switch (t){
-            case NONE:
-                throw new IllegalArgumentException("il faut choisir un type valide");
-            case FERTILIZER:
-                if(this.board.getFertilizerStack().getStack().size()>0){
-                    this.getListArrangement().add(this.board.getFertilizerStack().pick(t));
-                }
-                break;
-            case BASIN:
-                if(this.board.getBasinStack().getStack().size()>0){
-                    this.getListArrangement().add(this.board.getBasinStack().pick(t));
-
-                }
-                break;
-            case ENCLOSURE:
-                if(this.board.getEnclosureStack().getStack().size()>0){
-                    this.getListArrangement().add(this.board.getEnclosureStack().pick(t));
-                }
-                break;
+                    }
+                    break;
+                case ENCLOSURE:
+                    if(this.board.getEnclosureStack().getStack().size()>0){
+                        this.getListArrangement().add(this.board.getEnclosureStack().pick(t));
+                    }
+                    break;
+            }
         }
+        else{
+            throw new IllegalArgumentException("il faut choisir un type valide ou que le temps soit couvert");
+        }
+
 
     }
     public void setArrangement(Tile tile, TypeOfArrangement t){
@@ -151,6 +163,12 @@ public abstract class Bot {
         }else if (type == TypeOfTile.GREEN) {
             this.upBambooGreen();
         }
+    }
+    public void playForPandaCard(){
+    }
+    public void playForPatternCard(){
+    }
+    public void playForGardenerCard(){
     }
 
     public void play() {

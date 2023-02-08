@@ -79,5 +79,4 @@ public class ObjectivePlot implements ObjectiveInterface {
 
 
 
-
 }

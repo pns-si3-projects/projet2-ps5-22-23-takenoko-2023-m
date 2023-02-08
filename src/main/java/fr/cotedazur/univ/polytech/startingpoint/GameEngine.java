@@ -4,6 +4,7 @@ import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 import java.util.logging.*;
 
 public class GameEngine {
@@ -23,7 +24,7 @@ public class GameEngine {
         while(true){
             Main.LOGGER.info("<       > Tour numero : "+nbTour+" <       >");
             this.playerList.get(indexPlayer).play();
-            if (this.playerList.get(indexPlayer).getNbObjectifsRealises() ==9){
+            if (this.playerList.get(indexPlayer).getNbObjectifsRealises() >=9){
                 isGameFinished = true;
                 this.playerList.get(indexPlayer).setPoint(playerList.get(indexPlayer).getPoint()+2);
             }
@@ -32,7 +33,7 @@ public class GameEngine {
                 indexPlayer=0;
                 nbTour++;
             }
-            if(nbTour == 25){
+            if(nbTour == 100000){
                 Main.LOGGER.severe("Nombre de tour max atteint");
                 break;
             }
@@ -48,6 +49,7 @@ public class GameEngine {
                     }
                 }
                 printWinner(ret,verif);
+                break;
             }
         }
     }

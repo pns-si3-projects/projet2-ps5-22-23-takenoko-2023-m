@@ -30,7 +30,8 @@ public class ObjectiveGardener extends ObjectifWithOneColor implements Objective
 
     public boolean isValid(Bot p, Board b){
         for(Tile tile : b.getBoardTiles()){
-            if(tile.getBamboo() == this.getNbBambooRequired()){
+            if(tile.getBamboo() >= this.getNbBambooRequired() && tile.getTypeOfTile().equals(this.getTypeOfTile())){
+                tile.setBamboo(0);
                 return true;
             }
         }
@@ -57,5 +58,6 @@ public class ObjectiveGardener extends ObjectifWithOneColor implements Objective
     public String toString(){
         return "Objectif de type "+this.type;
     }
+
 
 }
