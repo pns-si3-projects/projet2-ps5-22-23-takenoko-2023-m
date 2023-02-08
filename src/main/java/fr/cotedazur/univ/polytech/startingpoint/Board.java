@@ -111,9 +111,15 @@ public class Board {
 
             ArrayList<Irrigation> neighbourIrrigations = irrigation.getNeighbourIrrigations();
             for (int i = 0; i < neighbourIrrigations.size(); i++) { //adds the new legal irrigation placements
-                if (!legalIrrigationPlacement.contains(neighbourIrrigations.get(i))) ;
-                legalIrrigationPlacement.add(neighbourIrrigations.get(i));
+                if (!legalIrrigationPlacement.contains(neighbourIrrigations.get(i))) {
+                    if (!placedIrrigations.contains(neighbourIrrigations.get(i))) {
+                        legalIrrigationPlacement.add(neighbourIrrigations.get(i));
+                    }
+                }
             }
+
+            this.patternDetector.detectPatternNear(irrigation.getCoordinates().get(0));
+            this.patternDetector.detectPatternNear(irrigation.getCoordinates().get(1));
 
             return "Une irrigation a été ajoutée en : " + newIrrigation;
         }

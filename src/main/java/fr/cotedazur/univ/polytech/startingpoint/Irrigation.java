@@ -117,22 +117,34 @@ public class Irrigation {
         ArrayList<Irrigation> neighbours = new ArrayList<>();
         switch (irrigationType) {
             case vertical -> {
-                Irrigation topNeighbour = new Irrigation(coordinate2, new Coordinate(coordinate2.getX(), coordinate2.getY()-1));
-                Irrigation botNeighbour = new Irrigation(coordinate1, new Coordinate(coordinate1.getX(), coordinate1.getY()+1));
-                neighbours.add(topNeighbour);
-                neighbours.add(botNeighbour);
+                Irrigation topLeftNeighbour = new Irrigation(coordinate1, new Coordinate(coordinate2.getX(), coordinate2.getY()-1));
+                Irrigation topRightNeighbour = new Irrigation(coordinate2, new Coordinate(coordinate2.getX(), coordinate2.getY()-1));
+                Irrigation botLeftNeighbour = new Irrigation(coordinate1, new Coordinate(coordinate1.getX(), coordinate1.getY()+1));
+                Irrigation botRightNeighbour = new Irrigation(coordinate2, new Coordinate(coordinate1.getX(), coordinate1.getY()+1));
+                neighbours.add(topLeftNeighbour);
+                neighbours.add(topRightNeighbour);
+                neighbours.add(botLeftNeighbour);
+                neighbours.add(botRightNeighbour);
             }
             case fSlash -> {
-                Irrigation leftNeighbour = new Irrigation(coordinate2, new Coordinate(coordinate2.getX()-1, coordinate2.getY()));
-                Irrigation rightNeighbour = new Irrigation(coordinate1, new Coordinate(coordinate1.getX()+1, coordinate1.getY()));
-                neighbours.add(leftNeighbour);
-                neighbours.add(rightNeighbour);
+                Irrigation leftTopNeighbour = new Irrigation(coordinate1, new Coordinate(coordinate2.getX()-1, coordinate2.getY()));
+                Irrigation leftBotNeighbour = new Irrigation(coordinate2, new Coordinate(coordinate2.getX()-1, coordinate2.getY()));
+                Irrigation rightTopNeighbour = new Irrigation(coordinate1, new Coordinate(coordinate1.getX()+1, coordinate1.getY()));
+                Irrigation rightBotNeighbour = new Irrigation(coordinate2, new Coordinate(coordinate1.getX()+1, coordinate1.getY()));
+                neighbours.add(leftTopNeighbour);
+                neighbours.add(leftBotNeighbour);
+                neighbours.add(rightTopNeighbour);
+                neighbours.add(rightBotNeighbour);
             }
             case bSlash -> {
-                Irrigation leftIrrigation = new Irrigation(coordinate1, new Coordinate(coordinate1.getX(), coordinate2.getY()));
-                Irrigation rightIrrigation = new Irrigation(coordinate2, new Coordinate(coordinate2.getX(), coordinate1.getY()));
-                neighbours.add(leftIrrigation);
-                neighbours.add(rightIrrigation);
+                Irrigation leftTopIrrigation = new Irrigation(coordinate2, new Coordinate(coordinate1.getX(), coordinate2.getY()));
+                Irrigation leftBotIrrigation = new Irrigation(coordinate1, new Coordinate(coordinate1.getX(), coordinate2.getY()));
+                Irrigation rightTopIrrigation = new Irrigation(coordinate2, new Coordinate(coordinate2.getX(), coordinate1.getY()));
+                Irrigation rightBotIrrigation = new Irrigation(coordinate1, new Coordinate(coordinate2.getX(), coordinate1.getY()));
+                neighbours.add(leftTopIrrigation);
+                neighbours.add(leftBotIrrigation);
+                neighbours.add(rightTopIrrigation);
+                neighbours.add(rightBotIrrigation);
             }
         }
         return neighbours;
@@ -156,6 +168,9 @@ public class Irrigation {
             if (o instanceof Irrigation) {
                 Irrigation i = (Irrigation) o;
                 if ((this.coordinate1.equals(i.getCoordinates().get(0))) && (this.coordinate2.equals(i.getCoordinates().get(1)))) {
+                    return true;
+                }
+                if ((this.coordinate2.equals(i.getCoordinates().get(0))) && (this.coordinate1.equals(i.getCoordinates().get(1)))) {
                     return true;
                 }
             }

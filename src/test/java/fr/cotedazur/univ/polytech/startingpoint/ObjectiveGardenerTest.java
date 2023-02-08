@@ -35,6 +35,9 @@ class ObjectiveGardenerTest {
         board.addTile(new Tile(new Coordinate(0,1)));
         board.addTile(new Tile(new Coordinate(1,1)));
         board.addTile(new Tile(new Coordinate(1,2)));
+        for (int i = 0; i < board.getBoardTiles().size(); i++) {
+            board.getBoardTiles().get(i).irrigate();
+        }
         board.moveGardenerOn(new Coordinate(1,0));
         board.moveGardenerOn(new Coordinate(1,1));
         board.moveGardenerOn(new Coordinate(1,0));

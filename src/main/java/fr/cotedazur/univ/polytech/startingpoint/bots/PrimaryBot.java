@@ -42,56 +42,61 @@ public class PrimaryBot extends Bot {
         Main.LOGGER.info("la focus card = " +this.focusCard);
         ObjectivePlot objectivePlot = (ObjectivePlot) this.focusCard;
         List<TypeOfTile> colors = objectivePlot.getColors();
-        List<Tile> tilesPicked = board.pickThreeTiles();
-        Main.LOGGER.info("Le joueur " +this.getNom() +" a pioche les tuiles suivantes :");
-        for(Tile tile : tilesPicked){
-            String message = tile.getTypeOfTile().toString();
-            Main.LOGGER.info(message);
-        }
-        boolean isPlaced = false;
-        List<Tile> tilesToPutBackInStack = new ArrayList<>();
-        for(Tile tile : tilesPicked){
-            if(tile.getTypeOfTile().equals(colors.get(0))&&!isPlaced){
-                isPlaced = true;
-                String returnMessage;
-                switch (objectivePlot.getPattern().getType()) {
-                    case BOOMRANG:
-                        returnMessage = board.addTile(new Tile(board.bestCoordinateForBoomrang(objectivePlot), tile.getTypeOfTile())) + " de type:" + tile.getTypeOfTile();
-                        break;
-                    case LINE:
-                        returnMessage = board.addTile(new Tile(board.bestCoordinateForLine(objectivePlot), tile.getTypeOfTile())) + " de type:" + tile.getTypeOfTile();
-                        break;
-                    case TRIANGLE:
-                        returnMessage = board.addTile(new Tile(board.bestCoordinateForTriangle(objectivePlot), tile.getTypeOfTile())) + " de type:" + tile.getTypeOfTile();
-                        break;
-                    default:
-                        returnMessage = "Aucun type de pattern n'a ete trouve";
-                        break;
+        if(this.board.getTileStack().sizeTileStack()>2){
+            System.out.println(this.board.getTileStack().sizeTileStack());
+            List<Tile> tilesPicked = board.pickThreeTiles();
+            Main.LOGGER.info("Le joueur " +this.getNom() +" a pioche les tuiles suivantes :");
+            for(Tile tile : tilesPicked){
+                String message = tile.getTypeOfTile().toString();
+                Main.LOGGER.info(message);
+            }
+            boolean isPlaced = false;
+            List<Tile> tilesToPutBackInStack = new ArrayList<>();
+            for(Tile tile : tilesPicked){
+                if(tile.getTypeOfTile().equals(colors.get(0))&&!isPlaced){
+                    isPlaced = true;
+                    String returnMessage;
+                    switch (objectivePlot.getPattern().getType()) {
+                        case BOOMRANG:
+                            returnMessage = board.addTile(new Tile(board.bestCoordinateForBoomrang(objectivePlot), tile.getTypeOfTile())) + " de type:" + tile.getTypeOfTile();
+                            break;
+                        case LINE:
+                            returnMessage = board.addTile(new Tile(board.bestCoordinateForLine(objectivePlot), tile.getTypeOfTile())) + " de type:" + tile.getTypeOfTile();
+                            break;
+                        case TRIANGLE:
+                            returnMessage = board.addTile(new Tile(board.bestCoordinateForTriangle(objectivePlot), tile.getTypeOfTile())) + " de type:" + tile.getTypeOfTile();
+                            break;
+                        default:
+                            returnMessage = "Aucun type de pattern n'a ete trouve";
+                            break;
+                    }
+                    String ret = board.addTile(new Tile(board.bestCoordinateForLine(objectivePlot),tile.getTypeOfTile()))+ " de type:"+tile.getTypeOfTile();
+                    Main.LOGGER.info(ret);
                 }
-                String ret = board.addTile(new Tile(board.bestCoordinateForLine(objectivePlot),tile.getTypeOfTile()))+ " de type:"+tile.getTypeOfTile();
-                Main.LOGGER.info(ret);
+                else{
+                    tilesToPutBackInStack.add(tile);
+                }
+                if(board.getDice().getMeteo()!=Meteo.RAIN){
+                    this.playAction();
+                }
+                else{
+                    board.getDice().setMeteo(Meteo.NONE);
+                }
+            }
+            if(!isPlaced){
+                String message = board.addTile(new Tile(board.scanAvailableTilePosition().get(0),tilesPicked.get(0).getTypeOfTile()))+ " de type:"+tilesPicked.get(0).getTypeOfTile();
+                Main.LOGGER.info(message);
+                board.putBackInTileStack(tilesPicked.get(1));
+                board.putBackInTileStack(tilesPicked.get(2));
             }
             else{
-                tilesToPutBackInStack.add(tile);
+                board.putBackInTileStack(tilesToPutBackInStack.get(0));
+                board.putBackInTileStack(tilesToPutBackInStack.get(1));
             }
-            if(board.getDice().getMeteo()!=Meteo.RAIN){
-                this.playAction();
-            }
-            else{
-                board.getDice().setMeteo(Meteo.NONE);
-            }
+            this.playAction();
+
+
         }
-        if(!isPlaced){
-            String message = board.addTile(new Tile(board.scanAvailableTilePosition().get(0),tilesPicked.get(0).getTypeOfTile()))+ " de type:"+tilesPicked.get(0).getTypeOfTile();
-            Main.LOGGER.info(message);
-            board.putBackInTileStack(tilesPicked.get(1));
-            board.putBackInTileStack(tilesPicked.get(2));
-        }
-        else{
-            board.putBackInTileStack(tilesToPutBackInStack.get(0));
-            board.putBackInTileStack(tilesToPutBackInStack.get(1));
-        }
-        this.playAction();
 
     }
 
@@ -118,8 +123,8 @@ public class PrimaryBot extends Bot {
         if (this.board.getBoardTiles().size() == 1){
             List<Coordinate> availableCoordinates = this.board.scanAvailableTilePosition();
             List<Tile> tilesPicked = board.pickThreeTiles();
-            Tile toAdd = chooseBetterOf3Tiles(tilesPicked);
-            toAdd.setCoordinate(availableCoordinates.get(0));
+            Tile bestCard = chooseBetterOf3Tiles(tilesPicked);
+            Tile toAdd = new Tile(availableCoordinates.get(0), bestCard.getTypeOfTile(), bestCard.getTypeOfArrangement());
             String message = this.board.addTile(toAdd);
             Main.LOGGER.info(message);
             this.playAction();
@@ -131,8 +136,8 @@ public class PrimaryBot extends Bot {
             if(availablePositionsGardener.size()==0){ //If we can't moove the gardener on any tile
                 List<Coordinate> availableCoordinates = this.board.scanAvailableTilePosition();
                 List<Tile> tilesPicked = board.pickThreeTiles();
-                Tile toAdd = chooseBetterOf3Tiles(tilesPicked);
-                toAdd.setCoordinate(availableCoordinates.get(0));
+                Tile bestCard = chooseBetterOf3Tiles(tilesPicked);
+                Tile toAdd = new Tile(availableCoordinates.get(0), bestCard.getTypeOfTile(), bestCard.getTypeOfArrangement());
                 String message = this.board.addTile(toAdd);
                 Main.LOGGER.info(message);
                 this.playAction();
@@ -149,13 +154,26 @@ public class PrimaryBot extends Bot {
                         break;
                     }
                 }
-                if(!moved){ //If all of the tile's color != focus card's color so we just pick and place another tile
+                if(!moved && this.board.getTileStack().sizeTileStack()>2){ //If all of the tile's color != focus card's color so we just pick and place another tile
                     List<Coordinate> availableCoordinates = this.board.scanAvailableTilePosition();
                     List<Tile> tilesPicked = board.pickThreeTiles();
-                    Tile toAdd = chooseBetterOf3Tiles(tilesPicked);
-                    toAdd.setCoordinate(availableCoordinates.get(0));
+                    Tile bestCard = chooseBetterOf3Tiles(tilesPicked);
+                    Tile toAdd = new Tile(availableCoordinates.get(0), bestCard.getTypeOfTile(), bestCard.getTypeOfArrangement());
                     String message = this.board.addTile(toAdd);
                     Main.LOGGER.info(message);
+                    this.playAction();
+                }
+                else if(!moved && this.board.getTileStack().sizeTileStack()<=2 && this.board.getTileStack().sizeTileStack() >0){ //If we can't pick 3 tiles because there is only 2 left in the stack
+                    List<Coordinate> availableCoordinates = this.board.scanAvailableTilePosition();
+                    Tile tilePicked = board.getTileStack().randomPick();
+
+                    //tilePicked.setCoordinate(availableCoordinates.get(0));
+                    Tile toAdd = new Tile(availableCoordinates.get(0), tilePicked.getTypeOfTile(), tilePicked.getTypeOfArrangement());
+                    String message = this.board.addTile(toAdd);
+                    Main.LOGGER.info(message);
+                    this.playAction();
+                }
+                else{
                     this.playAction();
                 }
 
@@ -167,7 +185,7 @@ public class PrimaryBot extends Bot {
             List<ObjectiveInterface> objectifs = this.getObjective();
             objectifs.remove(focusCard);
             this.focusCard = null;
-            Main.LOGGER.info("Objecti jardinier realise");
+            Main.LOGGER.info("Objectif jardinier realise");
         }
     }
 
@@ -189,8 +207,8 @@ public class PrimaryBot extends Bot {
                 if (availablePositionPanda.size() == 0) {
                     List<Coordinate> availablePositions = this.board.scanAvailableTilePosition();
                     List<Tile> tilesPicked = board.pickThreeTiles();
-                    Tile toAdd = chooseBetterOf3Tiles(tilesPicked);
-                    toAdd.setCoordinate(availablePositions.get(0));
+                    Tile bestCard = chooseBetterOf3Tiles(tilesPicked);
+                    Tile toAdd = new Tile(availablePositions.get(0), bestCard.getTypeOfTile(), bestCard.getTypeOfArrangement());
                     String message = this.board.addTile(toAdd);
                     Main.LOGGER.info(message);
                     this.playAction();
@@ -207,14 +225,7 @@ public class PrimaryBot extends Bot {
                         }
                     }
                     if (!pandaMove) {
-                    /*
-                    //old code that only allows to place tiles : may be of use after this
-                    ArrayList<Coordinate> availablePositions = this.board.scanAvailableTilePosition();
-                    System.out.println(this.board.addTile(new Tile(availablePositions.get(0).getX(),availablePositions.get(0).getY())));
-                    this.playAction();
-                    */
 
-                        //new code to implement if needed. it will allow the player to move the gardener to grow at least one tile available to the panda
                         //if there is no bamboo available to the panda, the player will try to move the gardener onto a Tile accessible to the panda
                         boolean gardenerMove = false;
                         Tile positionGardener = this.board.getGardener().getTile();
@@ -245,8 +256,8 @@ public class PrimaryBot extends Bot {
                         if (!gardenerMove) {
                             List<Coordinate> availableCoordinates = this.board.scanAvailableTilePosition();
                             List<Tile> tilesPicked = board.pickThreeTiles();
-                            Tile toAdd = chooseBetterOf3Tiles(tilesPicked);
-                            toAdd.setCoordinate(availableCoordinates.get(0));
+                            Tile bestCard = chooseBetterOf3Tiles(tilesPicked);
+                            Tile toAdd = new Tile(availableCoordinates.get(0), bestCard.getTypeOfTile(), bestCard.getTypeOfArrangement());
                             String message = this.board.addTile(toAdd);
                             Main.LOGGER.info(message);
                             this.playAction();
@@ -273,8 +284,13 @@ public class PrimaryBot extends Bot {
         int max = -1;
         for(ObjectiveInterface cardObj : objectives){
             if(cardObj.getNbPointsWin() > max){
-                max = cardObj.getNbPointsWin();
-                card = cardObj;
+                if(cardObj instanceof ObjectivePlot && this.board.getTileStack().sizeTileStack()==0){
+
+                }
+                else {
+                    max = cardObj.getNbPointsWin();
+                    card = cardObj;
+                }
             }
         }
         //Main.LOGGER.severe("La carte la plus interessante est : " + card.toString() +" pour " +this.getNom());
