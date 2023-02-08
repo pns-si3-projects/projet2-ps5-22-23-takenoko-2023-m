@@ -33,6 +33,14 @@ public class Board {
 
     private final ObjectiveStackGardener stackGardener = new ObjectiveStackGardener();
 
+    public ObjectiveStackPanda getStackPanda() {
+        return stackPanda;
+    }
+
+    public ObjectiveStackPlot getStackPlot() {
+        return stackPlot;
+    }
+
     private final ObjectiveStackPanda stackPanda = new ObjectiveStackPanda();
 
     private final ObjectiveStackPlot stackPlot = new ObjectiveStackPlot();

@@ -43,7 +43,7 @@ public class Main {
         int nbParties = 1;
         if (parameters.twoThousands) {
             System.out.println("2000");
-            nbParties = 2000;
+            nbParties = 1000;
             LOGGER.setLevel(Level.SEVERE);
         }
         if (parameters.demo) {
@@ -99,6 +99,46 @@ public class Main {
         String[] bot2Info = {bot2.getNom(),""+victoireBot2,""+(victoireBot2/nbParties)*100+"%"};
         listBot.add(bot1Info);
         listBot.add(bot2Info);
+
+
+        if (parameters.twoThousands) {
+            victoireBot1=0;
+            victoireBot2=0;
+            for(int i=0;i<nbParties;i++){
+
+                Board board = new Board();
+
+                bot1 = new PrimaryBot(board, "Simon");
+                bot2 = new PrimaryBot(board, "Damien");
+
+
+                List<Bot> listPlayer = new ArrayList<>();
+                listPlayer.add(bot1);
+                listPlayer.add(bot2);
+                GameEngine game = new GameEngine(board, listPlayer);
+                game.launchGame();
+                if (bot1.getPoint()>bot2.getPoint()) {
+                    victoireBot1++;
+                } else {
+                    victoireBot2++;
+                }
+
+
+
+            }
+            String[] bot12Info = {bot1.getNom(),""+victoireBot1,""+(victoireBot1/(nbParties))*100+"%"};
+            String[] bot22Info = {bot2.getNom(),""+victoireBot2,""+(victoireBot2/(nbParties))*100+"%"};
+            String[] blanc = {"","",""};
+            String[] header2 = {"Nom", "Nombre_de_victoires","Taux_de_victoire_sur_"+nbParties+"_parties"};
+            listBot.add(blanc);
+            listBot.add(header2);
+            listBot.add(bot12Info);
+            listBot.add(bot22Info);
+
+        }
+
+
+
         csvManager.setListBot(listBot);
         csvManager.setNbParties(nbParties);
         csvManager.writeCSV();
@@ -108,7 +148,7 @@ public class Main {
         //String[] bot2Info = {bot2.getNom(),""+bot2.getPoint(),"1"};
         //writer.writeNext(bot1Info);
         //writer.writeNext(bot2Info);
-        //writer.close();
+
 
 
     }
