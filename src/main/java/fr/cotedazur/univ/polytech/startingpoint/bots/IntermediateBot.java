@@ -20,11 +20,10 @@ public class IntermediateBot extends Bot {
             this.board.getDice().randomMeteo();
             switch(this.board.getDice().getMeteo()){
                 case SUN -> this.upNbActions();
-                case RAIN -> Main.LOGGER.info("//ATT QUE QUENTIN PR POUR PRENDRE SA METHODE DANS BOARD");
-                case WIND -> Main.LOGGER.info("//WAIT");
                 case LIGHTNING -> playLigntningDice();
                 case CLOUD -> playCloudDice();
                 case QUESTIONMARK -> playLigntningDice(); //A revoir potentiellement
+                default -> Main.LOGGER.info("Météo non prise en compte");
             }
         }
         this.objectives.get(0).play(this);
@@ -331,7 +330,7 @@ public class IntermediateBot extends Bot {
         return null;
     }
 
-    private void checkPatternOnBoard() {
+    public void checkPatternOnBoard() {
         //take objective of type ObjectivePlot from the list objectives
         ArrayList<ObjectivePlot> objectivePlotList = new ArrayList<>();
         for(ObjectiveInterface objective : this.objectives){
@@ -349,7 +348,7 @@ public class IntermediateBot extends Bot {
         }
     }
 
-    private void playGardenerForSpecificTile(TypeOfTile type, Tile tileOfPanda){
+    public void playGardenerForSpecificTile(TypeOfTile type, Tile tileOfPanda){
         boolean action = false;
         List<Tile> tileList = board.getBoardTiles();
         List<Coordinate> coordinateToMoovePanda = tileOfPanda.scanAvailableCoordinatesToMove(tileList);
@@ -390,7 +389,7 @@ public class IntermediateBot extends Bot {
         }
     }
 
-    private void playForIrrigation(){
+    public void playForIrrigation(){
         ArrayList<Irrigation> listeIrrigations = board.getLegalIrrigationPlacement();
         for(Irrigation irrigation : listeIrrigations){
             boolean verif = board.addIrrigation(irrigation);
