@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
+import fr.cotedazur.univ.polytech.startingpoint.bots.IntermediateBot;
 import fr.cotedazur.univ.polytech.startingpoint.bots.PrimaryBot;
 
 import java.util.List;
@@ -32,9 +33,15 @@ public class ObjectivePlot implements ObjectiveInterface {
     }
 
     @Override
-    public void play(Bot player) {
+    public void play(PrimaryBot player) {
         player.playForPatternCard();
     }
+
+    @Override
+    public void play(IntermediateBot player) {
+        player.playForPatternCard();
+    }
+
 
     private int generatePatternPoint() {
         int sumOfPoint;
@@ -68,7 +75,6 @@ public class ObjectivePlot implements ObjectiveInterface {
     public List<TypeOfTile> getColors(){
         return this.pattern.getColors();
     }
-
 
 
 

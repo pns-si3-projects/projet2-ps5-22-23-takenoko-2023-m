@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 import com.opencsv.exceptions.CsvException;
 import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
+import fr.cotedazur.univ.polytech.startingpoint.bots.IntermediateBot;
 import fr.cotedazur.univ.polytech.startingpoint.bots.PrimaryBot;
 
 import java.io.File;
@@ -16,6 +17,7 @@ import com.beust.jcommander.JCommander;
 
 public class Main {
     public final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
     static File file = new File("stats/test.csv");
 
 
@@ -52,7 +54,7 @@ public class Main {
         }
         if (parameters.csv) {
             System.out.println("csv");
-            nbParties = 100;
+            nbParties = 1000;
             LOGGER.setLevel(Level.SEVERE);
         }
 
@@ -61,8 +63,8 @@ public class Main {
         double victoireBot1=0;
         double victoireBot2=0;
         List<String[]> listBot = new ArrayList<>();
-        Bot bot1 = new PrimaryBot(new Board(), "Simon");
-        Bot bot2 = new PrimaryBot(new Board(), "Damien");
+        Bot bot1 = new IntermediateBot(new Board(), "Simon");
+        Bot bot2 = new IntermediateBot(new Board(), "Damien");
 
 
 
@@ -70,8 +72,8 @@ public class Main {
             listBot.clear();
             Board board = new Board();
 
-            bot1 = new PrimaryBot(board, "Simon");
-            bot2 = new PrimaryBot(board, "Damien");
+            bot1 = new IntermediateBot(board, "Simon");
+            bot2 = new IntermediateBot(board, "Damien");
 
 
             List<Bot> listPlayer = new ArrayList<>();
@@ -148,7 +150,6 @@ public class Main {
         //String[] bot2Info = {bot2.getNom(),""+bot2.getPoint(),"1"};
         //writer.writeNext(bot1Info);
         //writer.writeNext(bot2Info);
-
 
 
     }

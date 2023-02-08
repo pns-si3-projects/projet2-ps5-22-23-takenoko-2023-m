@@ -66,6 +66,7 @@ public class Board {
         this.enclosureStack.generate();
         this.fertilizerStack.generate();
         this.addTile(new Tile(new Coordinate(0,0),TypeOfTile.POND));
+        boardTiles.get(0).irrigate();
         this.legalIrrigationPlacement = new ArrayList<>(Arrays.asList(
                 new Irrigation(new Coordinate(1,0),new Coordinate(0,1)),
                 new Irrigation(new Coordinate(0,1),new Coordinate(-1,1)),
@@ -103,7 +104,13 @@ public class Board {
         return "Le panda a ete deplace en "+coordinate.getX()+", "+coordinate.getY() + " il possede maintenant : "+player.getNbBamboo(TypeOfTile.GREEN) +" bambous verts, "+player.getNbBamboo(TypeOfTile.YELLOW)+" bambous jaunes et "+player.getNbBamboo(TypeOfTile.RED)+" bambous roses";
     }
 
-    public String addTile(Tile tile){
+    public String addTile(final Tile tile){
+        List<Tile> listeTile = getBoardTiles();
+        for(Tile t : listeTile){
+            if(t.getCoordinate().equals(tile.getCoordinate())){
+                return "On ne peut pas poser cette tuile ! ";
+            }
+        }
         boardTiles.add(tile);
         patternDetector.detectPatternNear(tile.getCoordinate());
         return "Une carte a ete posee en:"+tile.getCoordinnateX()+" "+tile.getCoordinnateY();
@@ -113,6 +120,7 @@ public class Board {
         if (legalIrrigationPlacement.contains(irrigation)) {
             Tile tmpTile1 = this.getTile(irrigation.getCoordinates().get(0));
             Tile tmpTile2 = this.getTile(irrigation.getCoordinates().get(1));
+
             if ((tmpTile1 != null) && (tmpTile2 != null)) {
                 Irrigation newIrrigation = new Irrigation(tmpTile1, tmpTile2);
                 placedIrrigations.add(newIrrigation);
@@ -134,6 +142,7 @@ public class Board {
         }
         return false;
     }
+
     public ArrayList<Irrigation> getLegalIrrigationPlacement() {
         return legalIrrigationPlacement;
     }

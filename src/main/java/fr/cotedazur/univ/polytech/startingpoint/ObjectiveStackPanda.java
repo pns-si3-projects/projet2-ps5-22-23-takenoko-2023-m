@@ -48,10 +48,10 @@ public class ObjectiveStackPanda extends Stack<ObjectivePanda> {
             this.putBelow(new ObjectivePanda("panda", 2,3,TypeOfTile.GREEN));
         }
         for(int i=0; i<4;i++){
-            this.putBelow(new ObjectivePanda("panda", 2,4,TypeOfTile.GREEN));
+            this.putBelow(new ObjectivePanda("panda", 2,4,TypeOfTile.YELLOW));
         }
         for(int i=0; i<3;i++){
-            this.putBelow(new ObjectivePanda("panda", 2,5,TypeOfTile.GREEN));
+            this.putBelow(new ObjectivePanda("panda", 2,5,TypeOfTile.RED));
         }
         for(int i=0; i<3;i++){
             this.putBelow(new ObjectivePanda("panda", 3,6,TypeOfTile.GREEN));

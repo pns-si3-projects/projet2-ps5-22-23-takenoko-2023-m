@@ -2,6 +2,7 @@ package fr.cotedazur.univ.polytech.startingpoint;
 
 
 import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
+import fr.cotedazur.univ.polytech.startingpoint.bots.IntermediateBot;
 import fr.cotedazur.univ.polytech.startingpoint.bots.PrimaryBot;
 
 public class ObjectiveGardener extends ObjectifWithOneColor implements ObjectiveInterface {
@@ -29,7 +30,8 @@ public class ObjectiveGardener extends ObjectifWithOneColor implements Objective
 
     public boolean isValid(Bot p, Board b){
         for(Tile tile : b.getBoardTiles()){
-            if(tile.getBamboo() == this.getNbBambooRequired()){
+            if(tile.getBamboo() >= this.getNbBambooRequired() && tile.getTypeOfTile().equals(this.getTypeOfTile())){
+                tile.setBamboo(0);
                 return true;
             }
         }
@@ -37,7 +39,12 @@ public class ObjectiveGardener extends ObjectifWithOneColor implements Objective
     }
 
     @Override
-    public void play(Bot player) {
+    public void play(PrimaryBot player) {
+        player.playForGardenerCard();
+    }
+
+    @Override
+    public void play(IntermediateBot player) {
         player.playForGardenerCard();
     }
 
@@ -51,5 +58,6 @@ public class ObjectiveGardener extends ObjectifWithOneColor implements Objective
     public String toString(){
         return "Objectif de type "+this.type;
     }
+
 
 }
