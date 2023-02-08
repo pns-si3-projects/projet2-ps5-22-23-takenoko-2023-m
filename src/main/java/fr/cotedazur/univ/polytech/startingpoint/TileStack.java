@@ -27,9 +27,17 @@ public class TileStack extends Stack<Tile>{
 
     public List<Tile> pickThreeTiles(){
         List<Tile> tiles = new ArrayList<>();
-        for (int i = 0; i < 3; i++){
-            tiles.add(randomPick());
+        if(this.getStack().size() < 3){
+            for(int i=0; i < this.getStack().size(); i++){
+                tiles.add(this.randomPick());
+            }
         }
+        else{
+            for (int i = 0; i < 3; i++){
+                tiles.add(randomPick());
+            }
+        }
+
         return tiles;
     }
 
