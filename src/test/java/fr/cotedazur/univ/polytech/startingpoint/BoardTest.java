@@ -74,7 +74,7 @@ class BoardTest {
         assertFalse(tx1y1.isIrrigated());
         board.addIrrigation(new Irrigation(new Coordinate(1,0), new Coordinate(1,1)));
         System.out.println(legalIrrigationPlacement);
-        assertEquals(7, legalIrrigationPlacement.size());
+        assertEquals(10, legalIrrigationPlacement.size());
         assertTrue(tx1y0.isIrrigated());
         assertTrue(tx0y1.isIrrigated());
         assertTrue(tx1y1.isIrrigated());
@@ -89,7 +89,7 @@ class BoardTest {
         board.addTile(new Tile(new Coordinate(1,0)));
         board.addTile(new Tile(new Coordinate(0,1)));
         board.addIrrigation(legalIrrigationPlacement.get(0));
-        assertTrue(legalIrrigationPlacement.size() == 7);       //-1, +2
+        assertEquals(9, legalIrrigationPlacement.size());   //-1, +4
     }
 
     @Test

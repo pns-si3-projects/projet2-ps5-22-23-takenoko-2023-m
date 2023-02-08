@@ -7,7 +7,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+
 import java.util.logging.Level;
+
+import java.util.Arrays;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -102,7 +106,12 @@ class PlayerTest {
         bot1.setFocusCard(new ObjectivePanda("panda",1,80,TypeOfTile.GREEN));
         ArrayList<Tile> tiles = (ArrayList<Tile>) board.pickThreeTiles();
         assertEquals(24, board.getTileStack().getStack().size());
-        Tile tile = bot1.chooseBetterOf3Tiles(tiles);
+        ArrayList<Tile> dummyTiles = new ArrayList<>(Arrays.asList(
+                new Tile(null, TypeOfTile.GREEN),
+                new Tile(null, TypeOfTile.RED),
+                new Tile(null, TypeOfTile.YELLOW)
+        ));
+        Tile tile = bot1.chooseBetterOf3Tiles(dummyTiles);
 
         assertEquals(TypeOfTile.GREEN, tile.getTypeOfTile());
         assertEquals(26, board.getTileStack().getStack().size());

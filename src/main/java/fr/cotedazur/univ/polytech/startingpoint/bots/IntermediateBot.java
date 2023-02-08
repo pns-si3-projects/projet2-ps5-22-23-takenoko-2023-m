@@ -15,9 +15,7 @@ public class IntermediateBot extends Bot {
 
     public void play(){
         this.resetNbActions();
-        //Sort Objectives by nbPointsWin
         this.objectives.sort((o1, o2) -> o2.getNbPointsWin() - o1.getNbPointsWin());
-        //Main.LOGGER.severe("La carte focus est de type "+objectives.get(0).getType());
         if(nbTour > 1){
             this.board.getDice().randomMeteo();
             switch(this.board.getDice().getMeteo()){
@@ -75,13 +73,17 @@ public class IntermediateBot extends Bot {
             Tile tileOfGardener = board.getGardener().getTile();
             List<Coordinate> availablePositionsForGarderner = tileOfGardener.scanAvailableCoordinatesToMove(board.getBoardTiles());
             if(availablePositionsForGarderner.isEmpty()){
-                List<Coordinate> availableCoordinatesToPutTile = this.board.scanAvailableTilePosition();
-                List<Tile> tilesPicked = board.pickThreeTiles();
-                Tile bestCard = chooseBetterOf3Tiles(tilesPicked);
-                Tile toAdd = new Tile(availableCoordinatesToPutTile.get(0),bestCard.getTypeOfTile(),bestCard.getTypeOfArrangement());
-                String message = this.board.addTile(toAdd);
-                Main.LOGGER.info(message);
-                this.playAction();
+                if(board.getTileStack().sizeTileStack()>2){
+                    List<Coordinate> availableCoordinatesToPutTile = this.board.scanAvailableTilePosition();
+                    List<Tile> tilesPicked = board.pickThreeTiles();
+                    Tile bestCard = chooseBetterOf3Tiles(tilesPicked);
+                    Tile toAdd = new Tile(availableCoordinatesToPutTile.get(0),bestCard.getTypeOfTile(),bestCard.getTypeOfArrangement());
+                    String message = this.board.addTile(toAdd);
+                    Main.LOGGER.info(message);
+                    this.playAction();
+                }else{
+                   playForIrrigation();
+                }
             }else{
                 ArrayList<Coordinate> availablePositionsForGarderner2 = new ArrayList<>();
                 for(Coordinate co : availablePositionsForGarderner){
@@ -135,6 +137,20 @@ public class IntermediateBot extends Bot {
                                     }
                                 }
                             }
+                            if(board.getTileStack().sizeTileStack()>2){
+                                List<Coordinate> availableCoordinatesToPutTile = this.board.scanAvailableTilePosition();
+                                List<Tile> tilesPicked = board.pickThreeTiles();
+                                Tile bestCard = chooseBetterOf3Tiles(tilesPicked);
+                                Tile toAdd = new Tile(availableCoordinatesToPutTile.get(0),bestCard.getTypeOfTile(),bestCard.getTypeOfArrangement());
+                                String message = this.board.addTile(toAdd);
+                                Main.LOGGER.info(message);
+                                this.playAction();
+                            }else{
+                                playForIrrigation();
+                            }
+                        }
+                    }else{
+                        if(board.getTileStack().sizeTileStack()>2){
                             List<Coordinate> availableCoordinatesToPutTile = this.board.scanAvailableTilePosition();
                             List<Tile> tilesPicked = board.pickThreeTiles();
                             Tile bestCard = chooseBetterOf3Tiles(tilesPicked);
@@ -142,8 +158,12 @@ public class IntermediateBot extends Bot {
                             String message = this.board.addTile(toAdd);
                             Main.LOGGER.info(message);
                             this.playAction();
+                        }else{
+                            playForIrrigation();
                         }
-                    }else{
+                    }
+                }else{
+                    if(board.getTileStack().sizeTileStack()>2){
                         List<Coordinate> availableCoordinatesToPutTile = this.board.scanAvailableTilePosition();
                         List<Tile> tilesPicked = board.pickThreeTiles();
                         Tile bestCard = chooseBetterOf3Tiles(tilesPicked);
@@ -151,15 +171,9 @@ public class IntermediateBot extends Bot {
                         String message = this.board.addTile(toAdd);
                         Main.LOGGER.info(message);
                         this.playAction();
+                    }else{
+                        playForIrrigation();
                     }
-                }else{
-                    List<Coordinate> availableCoordinatesToPutTile = this.board.scanAvailableTilePosition();
-                    List<Tile> tilesPicked = board.pickThreeTiles();
-                    Tile bestCard = chooseBetterOf3Tiles(tilesPicked);
-                    Tile toAdd = new Tile(availableCoordinatesToPutTile.get(0),bestCard.getTypeOfTile(),bestCard.getTypeOfArrangement());
-                    String message = this.board.addTile(toAdd);
-                    Main.LOGGER.info(message);
-                    this.playAction();
                 }
             }
 
@@ -174,13 +188,17 @@ public class IntermediateBot extends Bot {
             List<Coordinate> availableCoordinates = tileOfPanda.scanAvailableCoordinatesToMove(this.board.getBoardTiles());
             boolean moove = false;
             if(availableCoordinates.isEmpty()){
-                List<Coordinate> availableCoordinatesToPutTile = this.board.scanAvailableTilePosition();
-                List<Tile> tilesPicked = board.pickThreeTiles();
-                Tile bestCard = chooseBetterOf3Tiles(tilesPicked);
-                Tile toAdd = new Tile(availableCoordinatesToPutTile.get(0),bestCard.getTypeOfTile(),bestCard.getTypeOfArrangement());
-                String message = this.board.addTile(toAdd);
-                Main.LOGGER.info(message);
-                this.playAction();
+                if(board.getTileStack().sizeTileStack()>2){
+                    List<Coordinate> availableCoordinatesToPutTile = this.board.scanAvailableTilePosition();
+                    List<Tile> tilesPicked = board.pickThreeTiles();
+                    Tile bestCard = chooseBetterOf3Tiles(tilesPicked);
+                    Tile toAdd = new Tile(availableCoordinatesToPutTile.get(0),bestCard.getTypeOfTile(),bestCard.getTypeOfArrangement());
+                    String message = this.board.addTile(toAdd);
+                    Main.LOGGER.info(message);
+                    this.playAction();
+                }else{
+                    playForIrrigation();
+                }
             }else{
                 for(Coordinate co : availableCoordinates){
                     Tile tile = this.board.getTile(co);
@@ -204,44 +222,47 @@ public class IntermediateBot extends Bot {
         ObjectivePlot objectif = findObjectivePlot();
         Main.LOGGER.info("la focus card = " +objectif);
         List<TypeOfTile> colors = objectif.getColors();
-        List<Tile> tilesPicked = board.pickThreeTiles();
-        Main.LOGGER.info("Le joueur " +this.getNom() +" a pioche les tuiles suivantes :");
-        for(Tile tile : tilesPicked){
-            String message = tile.getTypeOfTile().toString();
-            Main.LOGGER.info(message);
-        }
-        if(objectif.getPattern().getType().equals(TypeOfPattern.LINE)){
-            boolean isPlaced = false;
-            List<Tile> tilesToPutBackInStack = new ArrayList<>();
+        if(board.getTileStack().sizeTileStack()>2){
+            List<Tile> tilesPicked = board.pickThreeTiles();
+            Main.LOGGER.info("Le joueur " +this.getNom() +" a pioche les tuiles suivantes :");
             for(Tile tile : tilesPicked){
-                if(tile.getTypeOfTile().equals(colors.get(0))&&!isPlaced){
-                    isPlaced = true;
-                    String ret = board.addTile(new Tile(board.bestCoordinateForLine(objectif),tile.getTypeOfTile()))+ " de type:"+tile.getTypeOfTile();
-                    Main.LOGGER.info(ret);
+                String message = tile.getTypeOfTile().toString();
+                Main.LOGGER.info(message);
+            }
+            if(objectif.getPattern().getType().equals(TypeOfPattern.LINE)){
+                boolean isPlaced = false;
+                List<Tile> tilesToPutBackInStack = new ArrayList<>();
+                for(Tile tile : tilesPicked){
+                    if(tile.getTypeOfTile().equals(colors.get(0))&&!isPlaced){
+                        isPlaced = true;
+                        String ret = board.addTile(new Tile(board.bestCoordinateForLine(objectif),tile.getTypeOfTile()))+ " de type:"+tile.getTypeOfTile();
+                        Main.LOGGER.info(ret);
+                    }
+                    else{
+                        tilesToPutBackInStack.add(tile);
+                    }
+                }
+                if(!isPlaced){
+                    String message = board.addTile(new Tile(board.scanAvailableTilePosition().get(0),tilesPicked.get(0).getTypeOfTile()))+ " de type:"+tilesPicked.get(0).getTypeOfTile();
+                    Main.LOGGER.info(message);
+                    board.putBackInTileStack(tilesPicked.get(1));
+                    board.putBackInTileStack(tilesPicked.get(2));
                 }
                 else{
-                    tilesToPutBackInStack.add(tile);
+                    board.putBackInTileStack(tilesToPutBackInStack.get(0));
+                    board.putBackInTileStack(tilesToPutBackInStack.get(1));
                 }
-            }
-            if(!isPlaced){
-                String message = board.addTile(new Tile(board.scanAvailableTilePosition().get(0),tilesPicked.get(0).getTypeOfTile()))+ " de type:"+tilesPicked.get(0).getTypeOfTile();
-                Main.LOGGER.info(message);
-                board.putBackInTileStack(tilesPicked.get(1));
-                board.putBackInTileStack(tilesPicked.get(2));
-            }
-            else{
-                board.putBackInTileStack(tilesToPutBackInStack.get(0));
-                board.putBackInTileStack(tilesToPutBackInStack.get(1));
-            }
-            if(board.getDice().getMeteo()!=Meteo.RAIN){
-                this.playAction();
-            }
-            else{
-                board.getDice().setMeteo(Meteo.NONE);
-            }
+                if(board.getDice().getMeteo()!=Meteo.RAIN){
+                    this.playAction();
+                }
+                else{
+                    board.getDice().setMeteo(Meteo.NONE);
+                }
 
+            }
+        }else{
+            playForIrrigation();
         }
-
     }
 
 
@@ -347,14 +368,24 @@ public class IntermediateBot extends Bot {
             }
         }
         if(!action && this.getNbActions()>0){
-            List<Coordinate> availableCoordinatesToPutTile = this.board.scanAvailableTilePosition();
-            List<Tile> tilesPicked = board.pickThreeTiles();
-            Tile bestCard = chooseBetterOf3Tiles(tilesPicked);
-            Tile toAdd = new Tile(availableCoordinatesToPutTile.get(0),bestCard.getTypeOfTile(),bestCard.getTypeOfArrangement());
-            String message = this.board.addTile(toAdd);
-            Main.LOGGER.info(message);
-            this.playAction();
+            if(board.getTileStack().sizeTileStack()>2){
+                List<Coordinate> availableCoordinatesToPutTile = this.board.scanAvailableTilePosition();
+                List<Tile> tilesPicked = board.pickThreeTiles();
+                Tile bestCard = chooseBetterOf3Tiles(tilesPicked);
+                Tile toAdd = new Tile(availableCoordinatesToPutTile.get(0),bestCard.getTypeOfTile(),bestCard.getTypeOfArrangement());
+                String message = this.board.addTile(toAdd);
+                Main.LOGGER.info(message);
+                this.playAction();
+            }else{
+                playForIrrigation();
+            }
         }
+    }
+
+    private void playForIrrigation(){
+        //List<Irrigation> listeIrrigation = board.getLegalIrrigationPlacement();
+        //Main.LOGGER.info(board.addIrrigation(listeIrrigation.get(0)));
+        playAction();
     }
 
 

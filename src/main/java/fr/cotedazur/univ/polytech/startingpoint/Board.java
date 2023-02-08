@@ -33,6 +33,14 @@ public class Board {
 
     private final ObjectiveStackGardener stackGardener = new ObjectiveStackGardener();
 
+    public ObjectiveStackPanda getStackPanda() {
+        return stackPanda;
+    }
+
+    public ObjectiveStackPlot getStackPlot() {
+        return stackPlot;
+    }
+
     private final ObjectiveStackPanda stackPanda = new ObjectiveStackPanda();
 
     private final ObjectiveStackPlot stackPlot = new ObjectiveStackPlot();
@@ -119,11 +127,17 @@ public class Board {
             ArrayList<Irrigation> neighbourIrrigations = irrigation.getNeighbourIrrigations();
             for (int i = 0; i < neighbourIrrigations.size(); i++) { //adds the new legal irrigation placements
                 if (!legalIrrigationPlacement.contains(neighbourIrrigations.get(i))) {
+
                     if(!placedIrrigations.contains(neighbourIrrigations.get(i))) {
+
                         legalIrrigationPlacement.add(neighbourIrrigations.get(i));
                     }
                 }
             }
+
+            this.patternDetector.detectPatternNear(irrigation.getCoordinates().get(0));
+            this.patternDetector.detectPatternNear(irrigation.getCoordinates().get(1));
+
             return "Une irrigation a été ajoutée en : " + newIrrigation;
         }
         return "vous ne pouvez pas placer cette irrigation ici";
@@ -226,6 +240,12 @@ public class Board {
      */
     public Coordinate bestCoordinateForLine(ObjectivePlot objectivePlot) {
         return patternDetector.bestCoordinateForLine(objectivePlot);
+    }
+    public Coordinate bestCoordinateForBoomrang(ObjectivePlot objectivePlot) {
+        return patternDetector.bestCoordinateForBoomrang(objectivePlot);
+    }
+    public Coordinate bestCoordinateForTriangle(ObjectivePlot objectivePlot) {
+        return patternDetector.bestCoordinateForTriangle(objectivePlot);
     }
 
     /**
