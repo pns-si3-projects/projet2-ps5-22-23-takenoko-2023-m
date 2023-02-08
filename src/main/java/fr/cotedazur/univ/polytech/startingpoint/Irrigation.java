@@ -13,18 +13,20 @@ public class Irrigation {
     private final Coordinate coordinate2;
 
     private final TypeOfIrrigation irrigationType;
+    private Board board;
 
-    public Irrigation(Tile referencedTile1, Tile referencedTile2) throws RuntimeException {
+    public Irrigation(Tile referencedTile1, Tile referencedTile2, Board board) throws RuntimeException {
 
         if (!referencedTile1.isNeighbour(referencedTile2)) {
             throw new RuntimeException( "These tiles are not neighbours (" + referencedTile1 + "\t\t" + referencedTile2 + ")" );
         }
+        this.board=board;
 
         this.referencedTile1 = referencedTile1;
         this.referencedTile2 = referencedTile2;
 
-        this.referencedTile1.irrigate();
-        this.referencedTile2.irrigate();
+        this.referencedTile1.irrigate(board);
+        this.referencedTile2.irrigate(board);
 
         this.coordinate1 = referencedTile1.getCoordinate();
         this.coordinate2 = referencedTile2.getCoordinate();
@@ -106,8 +108,8 @@ public class Irrigation {
 
         ArrayList<Irrigation> legalNeighbours = new ArrayList<>();
         for (int i = 0 ; i < tilesForIrrigationNeighbours.size(); i++) {
-            legalNeighbours.add(new Irrigation(boardTiles.get(boardTiles.indexOf(tilesForIrrigationNeighbours.get(i))), referencedTile1));  //adds an irrigation that gets the reference of the neighbour Tile from boardTiles and one of the tiles of this Irrigation
-            legalNeighbours.add(new Irrigation(boardTiles.get(boardTiles.indexOf(tilesForIrrigationNeighbours.get(i))), referencedTile2));  //adds an irrigation that gets the reference of the neighbour Tile from boardTiles and one of the tiles of this Irrigation
+            legalNeighbours.add(new Irrigation(boardTiles.get(boardTiles.indexOf(tilesForIrrigationNeighbours.get(i))), referencedTile1,board));  //adds an irrigation that gets the reference of the neighbour Tile from boardTiles and one of the tiles of this Irrigation
+            legalNeighbours.add(new Irrigation(boardTiles.get(boardTiles.indexOf(tilesForIrrigationNeighbours.get(i))), referencedTile2,board));  //adds an irrigation that gets the reference of the neighbour Tile from boardTiles and one of the tiles of this Irrigation
         }
 
         return legalNeighbours;

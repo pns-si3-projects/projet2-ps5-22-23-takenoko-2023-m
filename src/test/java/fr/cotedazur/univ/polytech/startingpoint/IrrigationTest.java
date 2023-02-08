@@ -18,6 +18,7 @@ class IrrigationTest {
     Tile xn1y1;
     Tile x0y1;
     Tile x1y1;
+    Board board;
 
     Irrigation verticalIrrigation;
 
@@ -34,9 +35,11 @@ class IrrigationTest {
         x0y1 = new Tile(new Coordinate(0,1));
         x1y1 = new Tile(new Coordinate(1,1));
         boardTiles = new ArrayList<>( Arrays.asList(x0y0,x1y0,xn1y1,x0y1,x1y1) );
-        verticalIrrigation = new Irrigation(x0y0,x1y0);
-        fSlashIrrigation = new Irrigation(x1y0,x1y1);
-        bSlashIrrigation = new Irrigation(x0y0,xn1y1);
+        board = new Board();
+        board.setBoardTiles(boardTiles);
+        verticalIrrigation = new Irrigation(x0y0,x1y0,board);
+        fSlashIrrigation = new Irrigation(x1y0,x1y1,board);
+        bSlashIrrigation = new Irrigation(x0y0,xn1y1,board);
     }
 
     @Test
@@ -88,7 +91,7 @@ class IrrigationTest {
         Tile x2y0 = new Tile(new Coordinate(2,0));
         boardTiles.add(x2y0);
         assertFalse(boardTiles.get(boardTiles.indexOf(x2y0)).isIrrigated());
-        new Irrigation(boardTiles.get(boardTiles.indexOf(x2y0)), boardTiles.get(boardTiles.indexOf(x1y0)));
+        new Irrigation(boardTiles.get(boardTiles.indexOf(x2y0)), boardTiles.get(boardTiles.indexOf(x1y0)),board);
         assertTrue(boardTiles.get(boardTiles.indexOf(x2y0)).isIrrigated());
     }
 
@@ -98,7 +101,7 @@ class IrrigationTest {
         //Irrigation shouldThrowAnException = new Irrigation(boardTiles.get(boardTiles.indexOf(xn1y1)), boardTiles.get(boardTiles.indexOf(x1y1)));
         //assertThrows(RuntimeException.class , (Executable) new Irrigation(boardTiles.get(boardTiles.indexOf(xn1y1)), boardTiles.get(boardTiles.indexOf(x1y1))));
         try {
-            Irrigation youShouldNotExist = new Irrigation(boardTiles.get(boardTiles.indexOf(xn1y1)), boardTiles.get(boardTiles.indexOf(x1y1)));
+            Irrigation youShouldNotExist = new Irrigation(boardTiles.get(boardTiles.indexOf(xn1y1)), boardTiles.get(boardTiles.indexOf(x1y1)),board);
         } catch (RuntimeException e) {
             assertTrue(true);   //asserts that it caught the exception;
             assertEquals("These tiles are not neighbours (" + xn1y1 + "\t\t" + x1y1 + ")",e.getMessage());
@@ -107,6 +110,6 @@ class IrrigationTest {
 
     @Test
     void testEquals() {
-        assertTrue(verticalIrrigation.equals(new Irrigation(x0y0,x1y0)));
+        assertTrue(verticalIrrigation.equals(new Irrigation(x0y0,x1y0,board)));
     }
 }

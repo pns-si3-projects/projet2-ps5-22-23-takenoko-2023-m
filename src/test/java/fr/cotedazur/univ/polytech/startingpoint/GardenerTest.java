@@ -18,7 +18,7 @@ class GardenerTest {
         board.addTile(new Tile(new Coordinate(1,2),TypeOfTile.YELLOW));
         //irrigation is now required for bamboo to grow
         for (Tile t : board.getBoardTiles()) {
-            t.irrigate();
+            t.irrigate(board);
         }
 
     }

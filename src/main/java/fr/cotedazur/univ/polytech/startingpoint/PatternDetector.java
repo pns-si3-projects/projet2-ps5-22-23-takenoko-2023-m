@@ -5,7 +5,7 @@ import java.util.List;
 
 public class PatternDetector {
     private final Board board;
-    final ArrayList<Pattern> patternBoardList = new ArrayList<>();
+    final List<Pattern> patternBoardList = new ArrayList<>();
 
     public PatternDetector(Board board) {
         this.board = board;
@@ -16,7 +16,13 @@ public class PatternDetector {
      * @param coordinate the coordinate of the new tile
      */
     public void detectPatternNear(Coordinate coordinate){
-        ArrayList<Tile> tileOfSameType = this.detectTileOfSameTypeNear(coordinate);
+        System.out.println(board.getBoardTiles());
+        System.out.println(coordinate);
+        if(!board.getTile(coordinate).isIrrigated()){
+            return;
+        }
+        List<Tile> tileOfSameType = this.detectTileOfSameTypeNear(coordinate);
+        tileOfSameType = this.filterTileNotIrrigate(tileOfSameType);
         for(Tile tile : tileOfSameType){
             boolean isDetectedAsLineOrTriangle;
             //detection of a pattern of type LINE
@@ -34,8 +40,9 @@ public class PatternDetector {
                 }
             }
             if(!isDetectedAsLineOrTriangle){
-                ArrayList<Tile> tileOfSameType2 = this.detectTileOfSameTypeNear(tile.getCoordinate());
+                List<Tile> tileOfSameType2 = this.detectTileOfSameTypeNear(tile.getCoordinate());
                 tileOfSameType2.remove(board.getTile(coordinate));
+                tileOfSameType2 = this.filterTileNotIrrigate(tileOfSameType2);
                 if(!tileOfSameType2.isEmpty() ){
                     addToPatternList(new Pattern(TypeOfPattern.BOOMRANG,tile.getTypeOfTile()));
                 }
@@ -46,7 +53,18 @@ public class PatternDetector {
 
         }
 
-    private boolean detectIfTriangle(Tile tile, Coordinate coordinate, ArrayList<Tile> tileOfSameType) {
+    private List<Tile> filterTileNotIrrigate(List<Tile> tileOfSameType) {
+        List<Tile> tileOfSameTypeIrrigate = new ArrayList<>();
+        for(Tile tile : tileOfSameType){
+            if(tile.isIrrigated()){
+                tileOfSameTypeIrrigate.add(tile);
+            }
+        }
+        return tileOfSameTypeIrrigate;
+    }
+
+    private boolean detectIfTriangle(Tile tile, Coordinate coordinate, List<Tile> tileOfSameType) {
+        tileOfSameType = this.filterTileNotIrrigate(tileOfSameType);
         for(Tile tile2 : tileOfSameType){
             if(!tile.equals(tile2)&&tile.isNeighbour(board.getTile(coordinate))&&tile2.isNeighbour(board.getTile(coordinate))&&tile.isNeighbour(tile2)){
                 addToPatternList(new Pattern(TypeOfPattern.TRIANGLE,tile.getTypeOfTile()));
@@ -64,11 +82,11 @@ public class PatternDetector {
         int possibleTileX2 = coordinate.getX()+coordinate.getX()-tileCoordinate.getX();
         int possibleTileY2 = coordinate.getY()+coordinate.getY()-tileCoordinate.getY();
         //check if a tile exist on this position and if it's the same type
-        if(board.isInBoard(possibleTileX,possibleTileY)&&board.getTile(new Coordinate(possibleTileX,possibleTileY)).getTypeOfTile().equals(tile.getTypeOfTile())){
+        if(board.isInBoard(possibleTileX,possibleTileY)&&board.getTile(new Coordinate(possibleTileX,possibleTileY)).getTypeOfTile().equals(tile.getTypeOfTile())&& board.getTile(new Coordinate(possibleTileX,possibleTileY)).isIrrigated()){
             addToPatternList(new Pattern(TypeOfPattern.LINE,tile.getTypeOfTile()));
             return true;
         }
-        if(board.isInBoard(possibleTileX2,possibleTileY2)&&board.getTile(new Coordinate(possibleTileX2,possibleTileY2)).getTypeOfTile().equals(tile.getTypeOfTile())){
+        if(board.isInBoard(possibleTileX2,possibleTileY2)&&board.getTile(new Coordinate(possibleTileX2,possibleTileY2)).getTypeOfTile().equals(tile.getTypeOfTile())&&board.getTile(new Coordinate(possibleTileX2,possibleTileY2)).isIrrigated()){
             addToPatternList(new Pattern(TypeOfPattern.LINE,tile.getTypeOfTile()));
             return true;
         }
@@ -90,9 +108,9 @@ public class PatternDetector {
      * @param coordinate the coordinate of the tile to check
      * @return an ArrayList of tiles of the same type
      */
-    private ArrayList<Tile> detectTileOfSameTypeNear(Coordinate coordinate) {
-        ArrayList<Tile> tileOfSameType = new ArrayList<>();
-        ArrayList<Coordinate> neighbourCoordinates = board.getTile(coordinate).getNeighbourCoordinates();
+    private List<Tile> detectTileOfSameTypeNear(Coordinate coordinate) {
+        List<Tile> tileOfSameType = new ArrayList<>();
+        List<Coordinate> neighbourCoordinates = board.getTile(coordinate).getNeighbourCoordinates();
         neighbourCoordinates.forEach(c-> {
             if(board.isInBoard(c.getX(),c.getY()) && board.getTile(c).getTypeOfTile().equals(board.getTile(coordinate).getTypeOfTile())){
                 tileOfSameType.add(board.getTile(c));

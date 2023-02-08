@@ -10,61 +10,113 @@ class PatternDetectorTest {
     @BeforeEach
     void setUp() {
         board = new Board();
-        board.addTile(new Tile(new Coordinate(1,0),TypeOfTile.RED));
+        Tile tile = new Tile(new Coordinate(1,0),TypeOfTile.RED);
+        board.addTile(tile);
+        tile.irrigate(board);
     }
 
     @Test
     void detectLINEPatternNearHorizontal() {
-        board.addTile(new Tile(new Coordinate(2,0),TypeOfTile.RED));
+        Tile tile1 = new Tile(new Coordinate(2,0),TypeOfTile.RED);
+        board.addTile(tile1);
+        tile1.irrigate(board);
         assertEquals(0,board.patternDetector.getPatternBoardList().size());
-        board.addTile(new Tile(new Coordinate(3,0),TypeOfTile.RED));
+        Tile tile2 = new Tile(new Coordinate(3,0),TypeOfTile.RED);
+        board.addTile(tile2);
+        tile2.irrigate(board);
         assertEquals(1,board.patternDetector.getPatternBoardList().size());
-        board.addTile(new Tile(new Coordinate(4,0),TypeOfTile.GREEN));
+        Tile tile3 = new Tile(new Coordinate(4,0),TypeOfTile.GREEN);
+        board.addTile(tile3);
+        tile3.irrigate(board);
+        assertEquals(1,board.patternDetector.getPatternBoardList().size());
+    }
+    @Test
+    void detectLINEPatternNearIrrigation() {
+        Tile tile1 = new Tile(new Coordinate(2,0),TypeOfTile.RED);
+        board.addTile(tile1);
+        assertEquals(0,board.patternDetector.getPatternBoardList().size());
+        Tile tile2 = new Tile(new Coordinate(3,0),TypeOfTile.RED);
+        board.addTile(tile2);
+        assertEquals(0,board.patternDetector.getPatternBoardList().size());
+        Tile tile3 = new Tile(new Coordinate(4,0),TypeOfTile.GREEN);
+        board.addTile(tile3);
+        assertEquals(0,board.patternDetector.getPatternBoardList().size());
+        tile1.irrigate(board);
+        assertEquals(0,board.patternDetector.getPatternBoardList().size());
+        tile2.irrigate(board);
+        assertEquals(1,board.patternDetector.getPatternBoardList().size());
+        tile3.irrigate(board);
         assertEquals(1,board.patternDetector.getPatternBoardList().size());
     }
     @Test
     void detectLINEPatternNearCenter() {
-        board.addTile(new Tile(new Coordinate(3,0),TypeOfTile.RED));
+        Tile tile1 = new Tile(new Coordinate(3,0),TypeOfTile.RED);
+        board.addTile(tile1);
+        tile1.irrigate(board);
         assertEquals(0,board.patternDetector.getPatternBoardList().size());
-        board.addTile(new Tile(new Coordinate(2,0),TypeOfTile.RED));
+        Tile tile2 = new Tile(new Coordinate(2,0),TypeOfTile.RED);
+        board.addTile(tile2);
+        tile2.irrigate(board);
         System.out.println(board.patternDetector.getPatternBoardList());
         assertEquals(1,board.patternDetector.getPatternBoardList().size());
         assertEquals(TypeOfPattern.LINE,board.patternDetector.getPatternBoardList().get(0).type);
     }
     @Test
     void detectLINEPatternNearDiagonal() {
-        board.addTile(new Tile(new Coordinate(1,-1),TypeOfTile.RED));
+        Tile tile1 = new Tile(new Coordinate(1,-1),TypeOfTile.RED);
+        board.addTile(tile1);
+        tile1.irrigate(board);
         assertEquals(0,board.patternDetector.getPatternBoardList().size());
-        board.addTile(new Tile(new Coordinate(1,-2),TypeOfTile.RED));
+        Tile tile2 = new Tile(new Coordinate(1,-2),TypeOfTile.RED);
+        board.addTile(tile2);
+        tile2.irrigate(board);
         assertEquals(1,board.patternDetector.getPatternBoardList().size());
-        board.addTile(new Tile(new Coordinate(1,-3),TypeOfTile.GREEN));
+        Tile tile3 = new Tile(new Coordinate(1,-3),TypeOfTile.RED);
+        board.addTile(tile3);
+        tile3.irrigate(board);
         assertEquals(1,board.patternDetector.getPatternBoardList().size());
     }
     @Test
     void detectTRIANGLEPatternNear() {
-        board.addTile(new Tile(new Coordinate(2,-1),TypeOfTile.RED));
+        Tile tile1 = new Tile(new Coordinate(2,-1),TypeOfTile.RED);
+        board.addTile(tile1);
+        tile1.irrigate(board);
         assertEquals(0,board.patternDetector.getPatternBoardList().size());
-        board.addTile(new Tile(new Coordinate(2,-0),TypeOfTile.RED));
+        Tile tile2 = new Tile(new Coordinate(2,0),TypeOfTile.RED);
+        board.addTile(tile2);
+        tile2.irrigate(board);
         System.out.println(board.patternDetector.getPatternBoardList());
         assertEquals(TypeOfPattern.TRIANGLE,board.patternDetector.getPatternBoardList().get(0).type);
-        board.addTile(new Tile(new Coordinate(1,-1),TypeOfTile.GREEN));
+        Tile tile3 = new Tile(new Coordinate(1,-1),TypeOfTile.RED);
+        board.addTile(tile3);
+        tile3.irrigate(board);
         assertEquals(1,board.patternDetector.getPatternBoardList().size());
     }
 
     @Test
     void detectBOOMRANGPatternNear() {
-        board.addTile(new Tile(new Coordinate(0,1),TypeOfTile.RED));
+        Tile tile1 = new Tile(new Coordinate(0,1),TypeOfTile.RED);
+        board.addTile(tile1);
+        tile1.irrigate(board);
         assertEquals(0,board.patternDetector.getPatternBoardList().size());
-        board.addTile(new Tile(new Coordinate(0,2),TypeOfTile.RED));
+        Tile tile2 = new Tile(new Coordinate(0,2),TypeOfTile.RED);
+        board.addTile(tile2);
+        tile2.irrigate(board);
         assertEquals(TypeOfPattern.BOOMRANG,board.patternDetector.getPatternBoardList().get(0).type);
-        board.addTile(new Tile(new Coordinate(-1,1),TypeOfTile.GREEN));
+        Tile tile3 = new Tile(new Coordinate(-1,1),TypeOfTile.GREEN);
+        board.addTile(tile3);
+        tile3.irrigate(board);
         assertEquals(1,board.patternDetector.getPatternBoardList().size());
     }
     @Test
     void detectBOOMRANGPatternNearCenter() {
-        board.addTile(new Tile(new Coordinate(0,2),TypeOfTile.RED));
+        Tile tile1 = new Tile(new Coordinate(0,2),TypeOfTile.RED);
+        board.addTile(tile1);
+        tile1.irrigate(board);
         assertEquals(0,board.patternDetector.getPatternBoardList().size());
-        board.addTile(new Tile(new Coordinate(0,1),TypeOfTile.RED));
+        Tile tile2 = new Tile(new Coordinate(0,1),TypeOfTile.RED);
+        board.addTile(tile2);
+        tile2.irrigate(board);
         assertEquals(TypeOfPattern.BOOMRANG,board.patternDetector.getPatternBoardList().get(0).type);
     }
     @Test
@@ -105,6 +157,5 @@ class PatternDetectorTest {
         assertEquals(new Coordinate(-3,1),board.patternDetector.bestCoordinateForBoomrang(new ObjectivePlot(new Pattern(TypeOfPattern.BOOMRANG,TypeOfTile.RED))));
         board.addTile(new Tile(new Coordinate(-3,1),TypeOfTile.GREEN));
         assertEquals(new Coordinate(-1,1),board.patternDetector.bestCoordinateForBoomrang(new ObjectivePlot(new Pattern(TypeOfPattern.BOOMRANG,TypeOfTile.RED))));
-
     }
 }

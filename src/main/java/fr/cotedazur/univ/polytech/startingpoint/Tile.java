@@ -61,8 +61,9 @@ public class Tile {
     public Coordinate getCoordinate() {
         return coordinate;
     }
-    public void irrigate() {
+    public void irrigate(Board board) {
         this.isIrrigated = true;
+        board.patternDetector.detectPatternNear(this.getCoordinate());
     }
     public boolean isIrrigated() {
         return isIrrigated;

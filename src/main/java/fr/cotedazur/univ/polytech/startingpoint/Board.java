@@ -105,7 +105,7 @@ public class Board {
         if (legalIrrigationPlacement.contains(irrigation)) {
             Tile tmpTile1 = this.getTile(irrigation.getCoordinates().get(0));
             Tile tmpTile2 = this.getTile(irrigation.getCoordinates().get(1));
-            Irrigation newIrrigation = new Irrigation(tmpTile1, tmpTile2);
+            Irrigation newIrrigation = new Irrigation(tmpTile1, tmpTile2, this);
             placedIrrigations.add(newIrrigation);
             legalIrrigationPlacement.remove(legalIrrigationPlacement.indexOf(irrigation));
 
