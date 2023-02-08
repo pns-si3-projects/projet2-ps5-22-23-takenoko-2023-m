@@ -84,6 +84,7 @@ class IrrigationTest {
 
     @Test
     void testNeighbourIrrigation() {
+
         //Test for vertical irrigations
         assertTrue(verticalIrrigation.getNeighbourIrrigations().contains(new Irrigation(new Coordinate(0,0), new Coordinate(1,-1))));
         assertTrue(verticalIrrigation.getNeighbourIrrigations().contains(new Irrigation(new Coordinate(1,0), new Coordinate(1,-1))));
@@ -101,6 +102,37 @@ class IrrigationTest {
         assertTrue(bSlashIrrigation.getNeighbourIrrigations().contains(new Irrigation(new Coordinate(-1,0), new Coordinate(-1,1))));
         assertTrue(bSlashIrrigation.getNeighbourIrrigations().contains(new Irrigation(new Coordinate(0,0), new Coordinate(0,1))));
         assertTrue(bSlashIrrigation.getNeighbourIrrigations().contains(new Irrigation(new Coordinate(-1,1), new Coordinate(0,1))));
+
+        Board board = new Board();
+        board.addTile(x0y0);
+        board.addTile(x1y0);
+        board.addTile(x1y1);
+        board.addTile(x0y1);
+        board.addTile(xn1y1);
+
+        Irrigation tmp = new Irrigation(x0y1.getCoordinate(), xn1y1.getCoordinate());
+        Irrigation tmp2 = new Irrigation(x0y1, xn1y1);
+        //board.addIrrigation(new Irrigation(xn1y1.getCoordinate(), x0y1.getCoordinate()));
+        board.addIrrigation(new Irrigation(x0y1.getCoordinate(), xn1y1.getCoordinate()));
+
+
+/*
+        Irrigation test = new Irrigation(x0y1.getCoordinate(), xn1y1.getCoordinate());
+        Irrigation test2 = new Irrigation(x0y1, xn1y1);*/
+/*
+        ArrayList<Irrigation> legalIrrigationPlacement = board.getLegalIrrigationPlacement();
+        for (int i = 0; i < legalIrrigationPlacement.size(); i++) {
+            System.out.println(legalIrrigationPlacement.get(i));
+
+            if (board.getTile(legalIrrigationPlacement.get(i).getCoordinates().get(0)) != null) {
+                if (board.getTile(legalIrrigationPlacement.get(i).getCoordinates().get(1)) != null) {
+                    board.addIrrigation(legalIrrigationPlacement.get(i));
+                    System.out.println("added irrigation " + legalIrrigationPlacement.get(i));
+                    i--;
+                }
+            }
+
+        }*/
     }
 
     @Test

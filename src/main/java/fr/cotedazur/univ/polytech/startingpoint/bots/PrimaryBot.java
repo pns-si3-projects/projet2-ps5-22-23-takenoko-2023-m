@@ -33,7 +33,6 @@ public class PrimaryBot extends Bot {
         ObjectivePlot objectivePlot = (ObjectivePlot) this.focusCard;
         List<TypeOfTile> colors = objectivePlot.getColors();
         if(this.board.getTileStack().sizeTileStack()>2){
-            System.out.println(this.board.getTileStack().sizeTileStack());
             List<Tile> tilesPicked = board.pickThreeTiles();
             Main.LOGGER.info("Le joueur " +this.getNom() +" a pioche les tuiles suivantes :");
             for(Tile tile : tilesPicked){

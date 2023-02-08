@@ -33,6 +33,14 @@ public class Board {
 
     private final ObjectiveStackGardener stackGardener = new ObjectiveStackGardener();
 
+    public ObjectiveStackPanda getStackPanda() {
+        return stackPanda;
+    }
+
+    public ObjectiveStackPlot getStackPlot() {
+        return stackPlot;
+    }
+
     private final ObjectiveStackPanda stackPanda = new ObjectiveStackPanda();
 
     private final ObjectiveStackPlot stackPlot = new ObjectiveStackPlot();
@@ -58,6 +66,7 @@ public class Board {
         this.enclosureStack.generate();
         this.fertilizerStack.generate();
         this.addTile(new Tile(new Coordinate(0,0),TypeOfTile.POND));
+        boardTiles.get(0).irrigate();
         this.legalIrrigationPlacement = new ArrayList<>(Arrays.asList(
                 new Irrigation(new Coordinate(1,0),new Coordinate(0,1)),
                 new Irrigation(new Coordinate(0,1),new Coordinate(-1,1)),
@@ -95,36 +104,45 @@ public class Board {
         return "Le panda a ete deplace en "+coordinate.getX()+", "+coordinate.getY() + " il possede maintenant : "+player.getNbBamboo(TypeOfTile.GREEN) +" bambous verts, "+player.getNbBamboo(TypeOfTile.YELLOW)+" bambous jaunes et "+player.getNbBamboo(TypeOfTile.RED)+" bambous roses";
     }
 
-    public String addTile(Tile tile){
+    public String addTile(final Tile tile){
+        List<Tile> listeTile = getBoardTiles();
+        for(Tile t : listeTile){
+            if(t.getCoordinate().equals(tile.getCoordinate())){
+                return "On ne peut pas poser cette tuile ! ";
+            }
+        }
         boardTiles.add(tile);
         patternDetector.detectPatternNear(tile.getCoordinate());
         return "Une carte a ete posee en:"+tile.getCoordinnateX()+" "+tile.getCoordinnateY();
     }
 
-    public String addIrrigation(Irrigation irrigation) {    //gets a dummyIrrigation
+    public boolean addIrrigation(Irrigation irrigation) {    //gets a dummyIrrigation
         if (legalIrrigationPlacement.contains(irrigation)) {
             Tile tmpTile1 = this.getTile(irrigation.getCoordinates().get(0));
             Tile tmpTile2 = this.getTile(irrigation.getCoordinates().get(1));
-            Irrigation newIrrigation = new Irrigation(tmpTile1, tmpTile2);
-            placedIrrigations.add(newIrrigation);
-            legalIrrigationPlacement.remove(legalIrrigationPlacement.indexOf(irrigation));
 
-            ArrayList<Irrigation> neighbourIrrigations = irrigation.getNeighbourIrrigations();
-            for (int i = 0; i < neighbourIrrigations.size(); i++) { //adds the new legal irrigation placements
-                if (!legalIrrigationPlacement.contains(neighbourIrrigations.get(i))) {
-                    if (!placedIrrigations.contains(neighbourIrrigations.get(i))) {
-                        legalIrrigationPlacement.add(neighbourIrrigations.get(i));
+            if ((tmpTile1 != null) && (tmpTile2 != null)) {
+                Irrigation newIrrigation = new Irrigation(tmpTile1, tmpTile2);
+                placedIrrigations.add(newIrrigation);
+                legalIrrigationPlacement.remove(legalIrrigationPlacement.indexOf(irrigation));
+
+                ArrayList<Irrigation> neighbourIrrigations = irrigation.getNeighbourIrrigations();
+                for (int i = 0; i < neighbourIrrigations.size(); i++) { //adds the new legal irrigation placements
+                    if (!legalIrrigationPlacement.contains(neighbourIrrigations.get(i))) {
+                        if (!placedIrrigations.contains(neighbourIrrigations.get(i))) {
+                            legalIrrigationPlacement.add(neighbourIrrigations.get(i));
+                        }
                     }
                 }
+
+                this.patternDetector.detectPatternNear(irrigation.getCoordinates().get(0));
+                this.patternDetector.detectPatternNear(irrigation.getCoordinates().get(1));
+                return true;
             }
-
-            this.patternDetector.detectPatternNear(irrigation.getCoordinates().get(0));
-            this.patternDetector.detectPatternNear(irrigation.getCoordinates().get(1));
-
-            return "Une irrigation a été ajoutée en : " + newIrrigation;
         }
-        return "vous ne pouvez pas placer cette irrigation ici";
+        return false;
     }
+
     public ArrayList<Irrigation> getLegalIrrigationPlacement() {
         return legalIrrigationPlacement;
     }
@@ -157,7 +175,7 @@ public class Board {
 
         for (int i = 0; i < boardTiles.size(); i++) {       //cycling through all the tiles of the board
             //we get all the neighbours of tile[i]
-            ArrayList<Coordinate> closeNeighbours = boardTiles.get(i).getNeighbourCoordinates();
+            List<Coordinate> closeNeighbours = boardTiles.get(i).getNeighbourCoordinates();
             for (int j = 0; j < closeNeighbours.size(); j++) {
                 boolean isDouble = false;
                 boolean isPlaced = false;
