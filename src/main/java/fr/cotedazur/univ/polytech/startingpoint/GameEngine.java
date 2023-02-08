@@ -34,7 +34,7 @@ public class GameEngine {
                 nbTour++;
             }
             if(nbTour == 100000){
-                Main.LOGGER.severe("Nombre de tour max atteint");
+                Main.LOGGER.info("Nombre de tour max atteint");
                 break;
             }
             if(isGameFinished){
@@ -57,7 +57,7 @@ public class GameEngine {
     }
 
     public void printWinner(Bot p, boolean isEgality, int pointsPerdant){
-        if(!isEgality) Main.LOGGER.severe("Le joueur est gagnant est : "+p.getNom()+" avec un score de "+p.getPoint()+" points marques \nLe perdant possède "+pointsPerdant+" points");
-        else Main.LOGGER.severe("Egalite entre les deux joueurs ! ");
+        if(!isEgality) Main.LOGGER.info("Le joueur est gagnant est : "+p.getNom()+" avec un score de "+p.getPoint()+" points marques \nLe perdant possède "+pointsPerdant+" points");
+        else Main.LOGGER.info("Egalite entre les deux joueurs ! ");
     }
 }
