@@ -1,5 +1,9 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
+import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
+import fr.cotedazur.univ.polytech.startingpoint.bots.IntermediateBot;
+import fr.cotedazur.univ.polytech.startingpoint.bots.PrimaryBot;
+
 import java.util.List;
 
 public class ObjectivePlot implements ObjectiveInterface {
@@ -17,7 +21,7 @@ public class ObjectivePlot implements ObjectiveInterface {
         return this.nbPointsWin;
     }
 
-    public boolean isValid(Player p, Board b){
+    public boolean isValid(Bot p, Board b){
         for(Tile tile : b.getBoardTiles()){
             for(Tile tile2 : b.getBoardTiles()){
                 if(tile.isNeighbour(tile2)){
@@ -27,13 +31,25 @@ public class ObjectivePlot implements ObjectiveInterface {
         }
         return false;
     }
+
+    @Override
+    public void play(PrimaryBot player) {
+        player.playForPatternCard();
+    }
+
+    @Override
+    public void play(IntermediateBot player) {
+        player.playForPatternCard();
+    }
+
+
     private int generatePatternPoint() {
         int sumOfPoint;
         if(this.pattern.type.equals(TypeOfPattern.SQUARE)){
             sumOfPoint = 3;
         }
         //normally 2
-        else sumOfPoint = 10;
+        else sumOfPoint = 2;
         if(this.pattern.firstColor.equals(TypeOfTile.YELLOW)) return sumOfPoint+1;
         else if(this.pattern.firstColor.equals(TypeOfTile.RED)) return sumOfPoint+2;
         else return sumOfPoint;
@@ -59,7 +75,6 @@ public class ObjectivePlot implements ObjectiveInterface {
     public List<TypeOfTile> getColors(){
         return this.pattern.getColors();
     }
-
 
 
 

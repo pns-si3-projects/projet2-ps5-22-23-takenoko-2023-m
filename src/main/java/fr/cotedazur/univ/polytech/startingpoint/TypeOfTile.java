@@ -4,5 +4,5 @@ public enum TypeOfTile {
     RED,
     GREEN,
     YELLOW,
-    POND
+    POND;
 }

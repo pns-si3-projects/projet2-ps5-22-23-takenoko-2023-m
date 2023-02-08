@@ -1,27 +1,26 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 import java.util.List;
-
+import java.util.logging.*;
 public class ObjectiveStackGardener extends Stack<ObjectiveGardener> {
-
 
     @Override
     public void generate() {
         for(int i=0; i<3;i++){
-            this.putBelow(new ObjectiveGardener("gardener", 4,4));
+            this.putBelow(new ObjectiveGardener("gardener", 4,4, TypeOfTile.GREEN));
         }
         for(int i=0; i<4;i++){
-            this.putBelow(new ObjectiveGardener("gardener", 4,5));
+            this.putBelow(new ObjectiveGardener("gardener", 4,5,TypeOfTile.YELLOW));
         }
         for(int i=0; i<3;i++){
-            this.putBelow(new ObjectiveGardener("gardener", 4,6));
+            this.putBelow(new ObjectiveGardener("gardener", 4,6,TypeOfTile.RED));
         }
-        this.putBelow(new ObjectiveGardener("gardener", 4,3));
-        this.putBelow(new ObjectiveGardener("gardener", 4,7));
+        this.putBelow(new ObjectiveGardener("gardener", 4,3,TypeOfTile.GREEN));
+        this.putBelow(new ObjectiveGardener("gardener", 4,7,TypeOfTile.RED));
 
-        this.putBelow(new ObjectiveGardener("gardener", 3,6));
-        this.putBelow(new ObjectiveGardener("gardener", 3,7));
-        this.putBelow(new ObjectiveGardener("gardener", 3,8));
+        this.putBelow(new ObjectiveGardener("gardener", 3,6,TypeOfTile.YELLOW));
+        this.putBelow(new ObjectiveGardener("gardener", 3,7,TypeOfTile.GREEN));
+        this.putBelow(new ObjectiveGardener("gardener", 3,8,TypeOfTile.RED));
 
     }
 
@@ -51,7 +50,7 @@ public class ObjectiveStackGardener extends Stack<ObjectiveGardener> {
                 return o;
             }
         }
-        System.out.println("L'objectif voulu n'est pas dans la pile");
+        Main.LOGGER.info("L'objectif voulu n'est pas dans la pile");
         return null;
     }
 

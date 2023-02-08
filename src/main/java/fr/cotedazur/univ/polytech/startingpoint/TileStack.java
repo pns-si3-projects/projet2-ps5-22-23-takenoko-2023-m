@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class TileStack extends Stack<Tile>{
@@ -14,51 +15,54 @@ public class TileStack extends Stack<Tile>{
         this.generate();
     }
 
-    @Override
-    public void putBelow(Tile o) {
-        super.putBelow(o);
-    }
 
-    @Override
-    public Tile pick(Tile o) {
-        return super.pick(o);
-    }
 
-    @Override
-    public Tile randomPick() {
-        return super.randomPick();
-    }
 
     public List<Tile> pickThreeTiles(){
         List<Tile> tiles = new ArrayList<>();
+
         for (int i = 0; i < 3; i++){
-            tiles.add(randomPick());
+            Tile tile = randomPick();
+            tiles.add(tile);
+            list.remove(tile);
         }
+
         return tiles;
     }
 
-
-
-    @Override
-    public String toString() {
-        return super.toString();
+    public void addTile(Tile tile){
+        list.add(tile);
     }
 
-    @Override
-    public List<Tile> getStack() {
-        return super.getStack();
+    public void setStack(List<Tile> list){
+        this.list = list;
     }
+
+
 
     @Override
     public void generate() {
-        for(int i = 0; i < 9; i++){
+        for(int i = 0; i < 6; i++){
             this.putBelow(new Tile(TypeOfTile.YELLOW));
         }
-        for(int i = 0; i < 11; i++){
+        this.putBelow(new Tile(TypeOfTile.YELLOW,TypeOfArrangement.FERTILIZER));
+        this.putBelow(new Tile(TypeOfTile.YELLOW,TypeOfArrangement.BASIN));
+        this.putBelow(new Tile(TypeOfTile.YELLOW,TypeOfArrangement.ENCLOSURE));
+        for(int i = 0; i < 8; i++){
             this.putBelow(new Tile(TypeOfTile.GREEN));
         }
-        for(int i = 0; i < 7; i++){
+        this.putBelow(new Tile(TypeOfTile.GREEN,TypeOfArrangement.FERTILIZER));
+        this.putBelow(new Tile(TypeOfTile.GREEN,TypeOfArrangement.BASIN));
+        this.putBelow(new Tile(TypeOfTile.GREEN,TypeOfArrangement.ENCLOSURE));
+        for(int i = 0; i < 4; i++){
             this.putBelow(new Tile(TypeOfTile.RED));
         }
+        this.putBelow(new Tile(TypeOfTile.RED,TypeOfArrangement.FERTILIZER));
+        this.putBelow(new Tile(TypeOfTile.RED,TypeOfArrangement.BASIN));
+        this.putBelow(new Tile(TypeOfTile.RED,TypeOfArrangement.ENCLOSURE));
+    }
+
+    public int sizeTileStack(){
+        return this.list.size();
     }
 }
