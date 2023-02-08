@@ -13,10 +13,11 @@ import java.io.FileReader;
 import java.net.URL;
 import com.beust.jcommander.JCommander;
 
-public class Main {
+public class Main <T>{
     public final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     static File file = new File("stats/test.csv");
+
 
 
     public static void main(String... args) throws IOException, CsvException {
@@ -39,6 +40,9 @@ public class Main {
                 .parse(args);
 
         CSVManager csvManager = new CSVManager(1, "stats/gamestats.csv", new ArrayList<String[]>());
+        List<List<String>> list = new ArrayList<List<String>>();
+        list = csvManager.readerCSV();
+        System.out.println(list);
 
         int nbParties = 1;
         if (parameters.twoThousands) {
@@ -52,7 +56,7 @@ public class Main {
         }
         if (parameters.csv) {
             System.out.println("csv");
-            nbParties = 100;
+            nbParties = 1;
             LOGGER.setLevel(Level.SEVERE);
         }
 
@@ -98,10 +102,21 @@ public class Main {
         }
 
         listBot.clear();
-        String[] bot1Info = {bot1.getNom(),""+victoireBot1,""+(victoireBot1/nbParties)*100+"%"};
-        String[] bot2Info = {bot2.getNom(),""+victoireBot2,""+(victoireBot2/nbParties)*100+"%"};
-        listBot.add(bot1Info);
-        listBot.add(bot2Info);
+        if(parameters.csv){
+            nbParties += Integer.parseInt(list.get(0).get(0));
+            victoireBot1 += Double.parseDouble(list.get(1).get(1));
+            victoireBot2 += Double.parseDouble(list.get(2).get(1));
+            String[] bot1Info = {bot1.getNom(),""+victoireBot1,""+(victoireBot1/nbParties)*100+"%"};
+            String[] bot2Info = {bot2.getNom(),""+victoireBot2,""+(victoireBot2/nbParties)*100+"%"};
+            listBot.add(bot1Info);
+            listBot.add(bot2Info);
+        }
+        else{
+            String[] bot1Info = {bot1.getNom(),""+victoireBot1,""+(victoireBot1/nbParties)*100+"%"};
+            String[] bot2Info = {bot2.getNom(),""+victoireBot2,""+(victoireBot2/nbParties)*100+"%"};
+            listBot.add(bot1Info);
+            listBot.add(bot2Info);
+        }
 
 
         if (parameters.twoThousands) {
