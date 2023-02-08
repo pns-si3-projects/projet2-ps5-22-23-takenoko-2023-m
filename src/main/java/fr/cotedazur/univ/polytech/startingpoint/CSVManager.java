@@ -39,6 +39,10 @@ public class CSVManager {
         writer.close();
     }
 
+    public void addCSV(String[] bot) throws IOException{
+
+    }
+
 
 
     public void setListBot(List<String[]> listBot) {
