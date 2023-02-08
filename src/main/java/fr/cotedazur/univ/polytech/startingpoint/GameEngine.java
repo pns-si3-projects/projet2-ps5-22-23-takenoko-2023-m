@@ -44,18 +44,20 @@ public class GameEngine {
                 for(Bot b : playerList){
                     if(b.getPoint()>points){
                         ret = b;
+                        points = b.getPoint();
                     }else if(b.getPoint()==points){
                         verif = true;
                     }
                 }
-                printWinner(ret,verif);
+                playerList.remove(ret);
+                printWinner(ret,verif,playerList.get(0).getPoint());
                 break;
             }
         }
     }
 
-    public void printWinner(Bot p, boolean isEgality){
-        if(!isEgality) Main.LOGGER.severe("Le joueur est gagnant est : "+p.getNom()+" avec un score de "+p.getPoint()+" points marques");
+    public void printWinner(Bot p, boolean isEgality, int pointsPerdant){
+        if(!isEgality) Main.LOGGER.severe("Le joueur est gagnant est : "+p.getNom()+" avec un score de "+p.getPoint()+" points marques \nLe perdant possède "+pointsPerdant+" points");
         else Main.LOGGER.severe("Egalite entre les deux joueurs ! ");
     }
 }

@@ -9,13 +9,12 @@ public class Irrigation {
 
     private final Tile referencedTile1;   //must be a reference to a tile placed in the board
     private final Tile referencedTile2;   //must be a reference to a tile placed in the board
-    private final Coordinate coordinate1;
-    private final Coordinate coordinate2;
+    private Coordinate coordinate1;
+    private Coordinate coordinate2;
 
     private final TypeOfIrrigation irrigationType;
 
     public Irrigation(Tile referencedTile1, Tile referencedTile2) throws RuntimeException {
-
         if (!referencedTile1.isNeighbour(referencedTile2)) {
             throw new RuntimeException( "These tiles are not neighbours (" + referencedTile1 + "\t\t" + referencedTile2 + ")" );
         }
@@ -30,12 +29,15 @@ public class Irrigation {
         this.coordinate2 = referencedTile2.getCoordinate();
 
         this.irrigationType = this.detectTypeOfIrrigation();
+        this.fixCoordinateOrder();
+
+
     }
 
     public Irrigation (Coordinate coordinate1, Coordinate coordinate2) throws RuntimeException {
         ArrayList<Coordinate> coordinate1Neighbours = coordinate1.getNeighbourCoordinates();
         if (!coordinate1Neighbours.contains(coordinate2)) {
-            throw new RuntimeException("Tiles are not neighbours");
+            throw new RuntimeException("Tiles are not neighbours ( " + coordinate1 + "\t\t" + coordinate2 + " )");
         }
 
         this.coordinate1 = coordinate1;
@@ -45,8 +47,38 @@ public class Irrigation {
         this.referencedTile2 = null;
 
         this.irrigationType = this.detectTypeOfIrrigation();
+        this.fixCoordinateOrder();
     }
 
+    private void fixCoordinateOrder() {
+        switch (irrigationType) {
+            case vertical -> {
+                if (coordinate1.getX() > coordinate2.getX()) {
+                    Coordinate tmp = coordinate1;
+                    this.coordinate1 = coordinate2;
+                    this.coordinate2 = tmp;
+                }
+            }
+            case fSlash -> {
+                if (coordinate1.getY() > coordinate2.getY()) {
+                    Coordinate tmp = coordinate1;
+                    this.coordinate1 = coordinate2;
+                    this.coordinate2 = tmp;
+                }
+            }
+            case bSlash -> {
+                if (coordinate1.getX() > coordinate2.getX()) {
+                    Coordinate tmp = coordinate1;
+                    this.coordinate1 = coordinate2;
+                    this.coordinate2 = tmp;
+                }
+            }
+
+
+
+
+        }
+    }
     private TypeOfIrrigation detectTypeOfIrrigation() {
         if (coordinate1.getY() == coordinate2.getY()) {
             return TypeOfIrrigation.vertical;

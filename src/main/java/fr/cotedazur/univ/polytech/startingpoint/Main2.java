@@ -12,12 +12,12 @@ public class Main2 {
         LOGGER.setLevel(Level.SEVERE);
         Board board = new Board();
 
-        //Bot bot1 = new IntermediateBot(board, "Simon");
-        Bot bot2 = new IntermediateBot(board, "Damien");
+        Bot bot1 = new IntermediateBot(board, "Damien");
+        Bot bot2 = new IntermediateBot(board, "Simon");
 
 
         List<Bot> listPlayer = new ArrayList<>();
-        //listPlayer.add(bot1);
+        listPlayer.add(bot1);
         listPlayer.add(bot2);
         GameEngine game = new GameEngine(board, listPlayer);
         game.launchGame();

@@ -34,7 +34,7 @@ public class IntermediateBot extends Bot {
                 setPoint(getPoint()+this.objectives.get(i).getNbPointsWin());
                 upNbObjectifsRealises();
                 toSuppress.add(this.objectives.get(i));
-                Main.LOGGER.severe("Objectif réalisé ! ");
+                Main.LOGGER.severe("Objectif réalisé par "+getNom());
             }
         }
         //Suppress all objectives that are done
@@ -116,24 +116,28 @@ public class IntermediateBot extends Bot {
                                     Tile t1 = board.getTile(i.getCoordinates().get(0));
                                     Tile t2 = board.getTile(i.getCoordinates().get(1));
                                     if(t1 != null && t2 != null){
-                                        Main.LOGGER.info(board.addIrrigation(i));
-                                        this.playAction();
-                                        isIrrigationPosed = true;
-                                        break;
+                                        isIrrigationPosed = board.addIrrigation(i);
+                                        if(isIrrigationPosed){
+                                            this.playAction();
+                                            break;
+                                        }
                                     }
                                 }
                             }
                             if(isIrrigationPosed) break;
                         }
                         if(!isIrrigationPosed){
-                            Main.LOGGER.info("Bite");
+                            //Main.LOGGER.info("Bite");
                             for(Irrigation irrigation : listOfIrrigation){
                                 Tile t1 = board.getTile(irrigation.getCoordinates().get(0));
                                 Tile t2 = board.getTile(irrigation.getCoordinates().get(1));
                                 if(t1 != null && t2 != null){
                                     if(getNbActions() > 0){
-                                        Main.LOGGER.info(board.addIrrigation(irrigation));
-                                        this.playAction();
+                                        boolean verif = board.addIrrigation(irrigation);
+                                        if(verif){
+                                            this.playAction();
+                                            break;
+                                        }
                                     }
                                 }
                             }
@@ -146,6 +150,7 @@ public class IntermediateBot extends Bot {
                                 Main.LOGGER.info(message);
                                 this.playAction();
                             }else{
+
                                 playForIrrigation();
                             }
                         }
@@ -159,6 +164,7 @@ public class IntermediateBot extends Bot {
                             Main.LOGGER.info(message);
                             this.playAction();
                         }else{
+
                             playForIrrigation();
                         }
                     }
@@ -359,9 +365,11 @@ public class IntermediateBot extends Bot {
                 }else{
                     for(Irrigation irrigation: availablePositionsIrrigation){
                         if((irrigation.getCoordinates().get(0).equals(co) || irrigation.getCoordinates().get(1).equals(co)) && !action && board.getTile(co).getTypeOfTile().equals(co)){
-                            Main.LOGGER.info(board.addIrrigation(irrigation));
-                            this.playAction();
-                            break;
+                            boolean verif = board.addIrrigation(irrigation);
+                            if(verif){
+                                this.playAction();
+                                break;
+                            }
                         }
                     }
                 }
@@ -383,9 +391,17 @@ public class IntermediateBot extends Bot {
     }
 
     private void playForIrrigation(){
-        //List<Irrigation> listeIrrigation = board.getLegalIrrigationPlacement();
-        //Main.LOGGER.info(board.addIrrigation(listeIrrigation.get(0)));
-        playAction();
+        ArrayList<Irrigation> listeIrrigations = board.getLegalIrrigationPlacement();
+        for(Irrigation irrigation : listeIrrigations){
+            boolean verif = board.addIrrigation(irrigation);
+            if(verif){
+                this.playAction();
+                break;
+            }else{
+                this.playAction();
+                this.playAction();
+            }
+        }
     }
 
 
