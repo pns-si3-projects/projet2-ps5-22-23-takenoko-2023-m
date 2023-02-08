@@ -275,5 +275,9 @@ public class Board {
     public PatternDetector getPatternBoard() {
         return patternDetector;
     }
+
+    public boolean isPlotCardEmpty() {
+        return stackPlot.getStack().isEmpty();
+    }
 }
 

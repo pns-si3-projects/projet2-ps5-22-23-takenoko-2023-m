@@ -13,9 +13,11 @@ public abstract class Bot {
     protected int nbBambooYellow = 0;
     protected int nbBambooRed = 0;
     protected int nbActions = 2;
+    protected int nbIrrigation = 0;
     protected ArrayList<ObjectiveInterface> objectives = new ArrayList<ObjectiveInterface>();
     protected List<TypeOfArrangement> listArrangement = new ArrayList<TypeOfArrangement>();
     protected int nbTours = 1;
+    protected int nbObjectifsRealise=0;
 
     public Bot(Board board, String nom){
         this.nom = nom;
@@ -24,6 +26,28 @@ public abstract class Bot {
         this.pickPlotCard();
         this.pickPandaCard();
     }
+    public void play() {
+        if(this.nbTours >1){
+            this.board.getDice().randomMeteo();
+        }
+        Main.LOGGER.info("La météo est  "  + this.board.getDice().getMeteo());
+        this.resetNbActions();
+        this.checkPatternOnBoard();
+        this.checkGardenerObjectiveOnBoard();
+        this.nbTours ++;
+    }
+
+    private void checkGardenerObjectiveOnBoard() {
+        for(int i =0; i!=this.objectives.size(); i++){
+            if(this.objectives.get(i).isValid(this, this.board)){
+                setPoint(getPoint()+this.objectives.get(i).getNbPointsWin());
+                nbObjectifsRealise++;
+                Main.LOGGER.severe(objectives.get(i).toString()+" a été réalisé ! ");
+                this.objectives.remove(i);
+            }
+        }
+    }
+
     public void pickPandaCard(){
         ObjectivePanda objectivePanda = this.board.getPandaCard();
         this.objectives.add(objectivePanda);
@@ -169,7 +193,21 @@ public abstract class Bot {
     }
     public void playForGardenerCard(){
     }
-
-    public void play() {
+    protected void checkPatternOnBoard() {
+        //take objective of type ObjectivePlot from the list objectives
+        ArrayList<ObjectivePlot> objectivePlotList = new ArrayList<>();
+        for(ObjectiveInterface objective : this.objectives){
+            if(objective instanceof ObjectivePlot){
+                objectivePlotList.add((ObjectivePlot) objective);
+            }
+        }
+        for(ObjectivePlot objectivePlot : objectivePlotList){
+            if(board.getPatternBoard().getPatternBoardList().contains(objectivePlot.getPattern())){
+                this.point += objectivePlot.getNbPointsWin();
+                String message = "Le joueur "+this.getNom()+" a gagne "+objectivePlot.getNbPointsWin()+" points pour avoir realise le pattern "+objectivePlot;
+                Main.LOGGER.info(message);
+                this.objectives.remove(objectivePlot);
+            }
+        }
     }
 }

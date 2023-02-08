@@ -19,16 +19,6 @@ public class PrimaryBot extends Bot {
 
     @Override
     public void play(){
-        if(this.nbTours >1){
-            this.board.getDice().randomMeteo();
-            while(this.board.getDice().getMeteo()==Meteo.NONE || this.board.getDice().getMeteo()==Meteo.QUESTIONMARK){
-                this.board.getDice().randomMeteo();
-            }
-        }
-        Main.LOGGER.info("La météo est  "  + this.board.getDice().getMeteo());
-
-
-        this.resetNbActions();
         if (this.focusCard == null){
             checkBetterCard();
         }
@@ -98,24 +88,6 @@ public class PrimaryBot extends Bot {
 
         }
 
-    }
-
-    private void checkPatternOnBoard() {
-        //take objective of type ObjectivePlot from the list objectives
-        ArrayList<ObjectivePlot> objectivePlotList = new ArrayList<>();
-        for(ObjectiveInterface objective : this.objectives){
-            if(objective instanceof ObjectivePlot){
-                objectivePlotList.add((ObjectivePlot) objective);
-            }
-        }
-        for(ObjectivePlot objectivePlot : objectivePlotList){
-            if(board.getPatternBoard().getPatternBoardList().contains(objectivePlot.getPattern())){
-                this.point += objectivePlot.getNbPointsWin();
-                String message = "Le joueur "+this.getNom()+" a gagne "+objectivePlot.getNbPointsWin()+" points pour avoir realise le pattern "+objectivePlot;
-                Main.LOGGER.info(message);
-                this.objectives.remove(objectivePlot);
-            }
-        }
     }
 
     public void playForGardenerCard(){
@@ -284,10 +256,7 @@ public class PrimaryBot extends Bot {
         int max = -1;
         for(ObjectiveInterface cardObj : objectives){
             if(cardObj.getNbPointsWin() > max){
-                if(cardObj instanceof ObjectivePlot && this.board.getTileStack().sizeTileStack()==0){
-
-                }
-                else {
+                if(!(cardObj instanceof ObjectivePlot && this.board.getTileStack().sizeTileStack()==0)){
                     max = cardObj.getNbPointsWin();
                     card = cardObj;
                 }

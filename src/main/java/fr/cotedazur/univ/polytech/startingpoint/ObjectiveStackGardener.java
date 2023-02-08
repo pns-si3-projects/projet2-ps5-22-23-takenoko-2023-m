@@ -6,21 +6,22 @@ public class ObjectiveStackGardener extends Stack<ObjectiveGardener> {
 
     @Override
     public void generate() {
+        //TODO Ajouter des arrangements différents
         for(int i=0; i<3;i++){
-            this.putBelow(new ObjectiveGardener("gardener", 4,4, TypeOfTile.GREEN));
+            this.putBelow(new ObjectiveGardener("gardener", 4,4, TypeOfTile.GREEN, TypeOfArrangement.NONE));
         }
         for(int i=0; i<4;i++){
-            this.putBelow(new ObjectiveGardener("gardener", 4,5,TypeOfTile.GREEN));
+            this.putBelow(new ObjectiveGardener("gardener", 4,5,TypeOfTile.GREEN, TypeOfArrangement.NONE));
         }
         for(int i=0; i<3;i++){
-            this.putBelow(new ObjectiveGardener("gardener", 4,6,TypeOfTile.GREEN));
+            this.putBelow(new ObjectiveGardener("gardener", 4,6,TypeOfTile.GREEN, TypeOfArrangement.NONE));
         }
-        this.putBelow(new ObjectiveGardener("gardener", 4,3,TypeOfTile.GREEN));
-        this.putBelow(new ObjectiveGardener("gardener", 4,7,TypeOfTile.GREEN));
+        this.putBelow(new ObjectiveGardener("gardener", 4,3,TypeOfTile.GREEN, TypeOfArrangement.NONE));
+        this.putBelow(new ObjectiveGardener("gardener", 4,7,TypeOfTile.GREEN, TypeOfArrangement.NONE));
 
-        this.putBelow(new ObjectiveGardener("gardener", 3,6,TypeOfTile.GREEN));
-        this.putBelow(new ObjectiveGardener("gardener", 3,7,TypeOfTile.GREEN));
-        this.putBelow(new ObjectiveGardener("gardener", 3,8,TypeOfTile.GREEN));
+        this.putBelow(new ObjectiveGardener("gardener", 3,6,TypeOfTile.GREEN, TypeOfArrangement.NONE));
+        this.putBelow(new ObjectiveGardener("gardener", 3,7,TypeOfTile.GREEN, TypeOfArrangement.NONE));
+        this.putBelow(new ObjectiveGardener("gardener", 3,8,TypeOfTile.GREEN, TypeOfArrangement.NONE));
 
     }
 

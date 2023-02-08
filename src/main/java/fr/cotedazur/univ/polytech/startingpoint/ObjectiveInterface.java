@@ -10,6 +10,7 @@ public interface ObjectiveInterface {
     public int getNbPointsWin();
     public boolean isValid(Bot player, Board b);
     public void play(Bot player);
+    public int getComplexity();
 }
 
 

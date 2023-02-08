@@ -9,14 +9,31 @@ public class ObjectiveGardener extends ObjectifWithOneColor implements Objective
     private String type = "gardener";
     private int nbBambooRequired;
 
-    public ObjectiveGardener(String type,int nbBambooRequired, int nbPointsWin, TypeOfTile typeOfTile){
+
+
+    private TypeOfArrangement typeOfArrangement;
+    private int complexity;
+
+    public ObjectiveGardener(String type,int nbBambooRequired, int nbPointsWin, TypeOfTile typeOfTile, TypeOfArrangement typeOfArrangement) {
         super(typeOfTile);
         this.type = type;
+        this.typeOfArrangement = typeOfArrangement;
         this.nbPointsWin = nbPointsWin;
         this.nbBambooRequired = nbBambooRequired;
         this.typeOfTile = typeOfTile;
     }
 
+    public void setComplexity(int complexity){
+        if(this.complexity>complexity){
+            this.complexity = complexity;
+        }
+    }
+    public int getComplexity(){
+        return this.complexity;
+    }
+    public TypeOfArrangement getTypeOfArrangement() {
+        return typeOfArrangement;
+    }
     public int getNbPointsWin() {
         return nbPointsWin;
     }

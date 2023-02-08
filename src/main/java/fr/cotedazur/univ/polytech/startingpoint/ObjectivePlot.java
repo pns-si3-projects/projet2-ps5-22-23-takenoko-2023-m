@@ -9,11 +9,21 @@ public class ObjectivePlot implements ObjectiveInterface {
 
     final Pattern pattern;
     final int nbPointsWin;
+    private int complexity;
 
 
     public ObjectivePlot(Pattern pattern){
         this.pattern = pattern;
         this.nbPointsWin = generatePatternPoint();
+    }
+    public void setComplexity(int complexity){
+        if(this.complexity>complexity){
+            this.complexity = complexity;
+        }
+    }
+
+    public int getComplexity(){
+        return this.complexity;
     }
 
     public int getNbPointsWin(){
