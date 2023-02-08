@@ -43,14 +43,10 @@ public class ObjectivePlot implements ObjectiveInterface {
     }
 
     @Override
-    public void play(PrimaryBot player) {
+    public void play(Bot player) {
         player.playForPatternCard();
     }
 
-    @Override
-    public void play(IntermediateBot player) {
-        player.playForPatternCard();
-    }
 
 
     private int generatePatternPoint() {

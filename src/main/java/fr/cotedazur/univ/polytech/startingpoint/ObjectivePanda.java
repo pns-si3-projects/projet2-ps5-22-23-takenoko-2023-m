@@ -40,11 +40,10 @@ public class ObjectivePanda extends ObjectifWithOneColor implements ObjectiveInt
         }
 
     @Override
-    public void play(PrimaryBot player) {
+    public void play(Bot player) {
         player.playForPandaCard();
     }
 
-    public void play(IntermediateBot player) { player.playForPandaCard(); }
 
 
     public String getType() {

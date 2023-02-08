@@ -56,14 +56,10 @@ public class ObjectiveGardener extends ObjectifWithOneColor implements Objective
     }
 
     @Override
-    public void play(PrimaryBot player) {
+    public void play(Bot player) {
         player.playForGardenerCard();
     }
 
-    @Override
-    public void play(IntermediateBot player) {
-        player.playForGardenerCard();
-    }
 
     public String getType() {
         return type;

@@ -34,7 +34,7 @@ public class IntermediateBot extends Bot {
                 setPoint(getPoint()+this.objectives.get(i).getNbPointsWin());
                 upNbObjectifsRealises();
                 toSuppress.add(this.objectives.get(i));
-                Main.LOGGER.severe("Objectif réalisé par "+getNom());
+                Main.LOGGER.info("Objectif réalisé par "+getNom());
             }
         }
         //Suppress all objectives that are done
@@ -329,24 +329,6 @@ public class IntermediateBot extends Bot {
             }
         }
         return null;
-    }
-
-    private void checkPatternOnBoard() {
-        //take objective of type ObjectivePlot from the list objectives
-        ArrayList<ObjectivePlot> objectivePlotList = new ArrayList<>();
-        for(ObjectiveInterface objective : this.objectives){
-            if(objective instanceof ObjectivePlot){
-                objectivePlotList.add((ObjectivePlot) objective);
-            }
-        }
-        for(ObjectivePlot objectivePlot : objectivePlotList){
-            if(board.getPatternBoard().getPatternBoardList().contains(objectivePlot.getPattern())){
-                this.point += objectivePlot.getNbPointsWin();
-                String message = "Le joueur "+this.getNom()+" a gagne "+objectivePlot.getNbPointsWin()+" points pour avoir realise le pattern "+objectivePlot;
-                Main.LOGGER.info(message);
-                this.objectives.remove(objectivePlot);
-            }
-        }
     }
 
     private void playGardenerForSpecificTile(TypeOfTile type, Tile tileOfPanda){

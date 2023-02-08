@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
+import java.util.List;
 import java.util.logging.Level;
 
 import java.util.Arrays;
@@ -104,9 +105,9 @@ class PlayerTest {
         Board board = new Board();
         PrimaryBot bot1 = new PrimaryBot(board,"bot1");
         bot1.setFocusCard(new ObjectivePanda("panda",1,80,TypeOfTile.GREEN));
-        ArrayList<Tile> tiles = (ArrayList<Tile>) board.pickThreeTiles();
+        List<Tile> tiles = (ArrayList<Tile>) board.pickThreeTiles();
         assertEquals(24, board.getTileStack().getStack().size());
-        ArrayList<Tile> dummyTiles = new ArrayList<>(Arrays.asList(
+        List<Tile> dummyTiles = new ArrayList<>(Arrays.asList(
                 new Tile(null, TypeOfTile.GREEN),
                 new Tile(null, TypeOfTile.RED),
                 new Tile(null, TypeOfTile.YELLOW)
