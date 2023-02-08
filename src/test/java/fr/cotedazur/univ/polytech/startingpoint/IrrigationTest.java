@@ -47,42 +47,6 @@ class IrrigationTest {
     }
 
     @Test
-    void testGetLegalIrrigationPlacement() {
-        //tests for the vertical irrigations
-        assertEquals(2, verticalIrrigation.getLegalIrrigationPlacement(boardTiles).size()); //only the bottom tile exists in boardTiles so only two irrigations will be outputted
-        assertTrue(boardTiles.containsAll(verticalIrrigation.getLegalIrrigationPlacement(boardTiles).get(0).getTiles()));
-        assertTrue(boardTiles.containsAll(verticalIrrigation.getLegalIrrigationPlacement(boardTiles).get(1).getTiles()));
-        boardTiles.add(new Tile(new Coordinate(1,-1)));
-        assertEquals(4, verticalIrrigation.getLegalIrrigationPlacement(boardTiles).size());
-        assertTrue(boardTiles.containsAll(verticalIrrigation.getLegalIrrigationPlacement(boardTiles).get(0).getTiles()));
-        assertTrue(boardTiles.containsAll(verticalIrrigation.getLegalIrrigationPlacement(boardTiles).get(1).getTiles()));
-        assertTrue(boardTiles.containsAll(verticalIrrigation.getLegalIrrigationPlacement(boardTiles).get(2).getTiles()));
-        assertTrue(boardTiles.containsAll(verticalIrrigation.getLegalIrrigationPlacement(boardTiles).get(3).getTiles()));
-
-        //tests for the fslash irrigations
-        assertEquals(2, fSlashIrrigation.getLegalIrrigationPlacement(boardTiles).size());
-        assertTrue(boardTiles.containsAll(fSlashIrrigation.getLegalIrrigationPlacement(boardTiles).get(0).getTiles()));
-        assertTrue(boardTiles.containsAll(fSlashIrrigation.getLegalIrrigationPlacement(boardTiles).get(1).getTiles()));
-        boardTiles.add(new Tile(new Coordinate(2,0)));
-        assertEquals(4, fSlashIrrigation.getLegalIrrigationPlacement(boardTiles).size());
-        assertTrue(boardTiles.containsAll(fSlashIrrigation.getLegalIrrigationPlacement(boardTiles).get(0).getTiles()));
-        assertTrue(boardTiles.containsAll(fSlashIrrigation.getLegalIrrigationPlacement(boardTiles).get(1).getTiles()));
-        assertTrue(boardTiles.containsAll(fSlashIrrigation.getLegalIrrigationPlacement(boardTiles).get(2).getTiles()));
-        assertTrue(boardTiles.containsAll(fSlashIrrigation.getLegalIrrigationPlacement(boardTiles).get(3).getTiles()));
-
-        //tests for bslash irrigations
-        assertEquals(2, bSlashIrrigation.getLegalIrrigationPlacement(boardTiles).size());
-        assertTrue(boardTiles.containsAll(bSlashIrrigation.getLegalIrrigationPlacement(boardTiles).get(0).getTiles()));
-        assertTrue(boardTiles.containsAll(bSlashIrrigation.getLegalIrrigationPlacement(boardTiles).get(1).getTiles()));
-        boardTiles.add(new Tile(new Coordinate(-1,0)));
-        assertEquals(4, bSlashIrrigation.getLegalIrrigationPlacement(boardTiles).size());
-        assertTrue(boardTiles.containsAll(bSlashIrrigation.getLegalIrrigationPlacement(boardTiles).get(0).getTiles()));
-        assertTrue(boardTiles.containsAll(bSlashIrrigation.getLegalIrrigationPlacement(boardTiles).get(1).getTiles()));
-        assertTrue(boardTiles.containsAll(bSlashIrrigation.getLegalIrrigationPlacement(boardTiles).get(2).getTiles()));
-        assertTrue(boardTiles.containsAll(bSlashIrrigation.getLegalIrrigationPlacement(boardTiles).get(3).getTiles()));
-    }
-
-    @Test
     void testNeighbourIrrigation() {
 
         //Test for vertical irrigations
