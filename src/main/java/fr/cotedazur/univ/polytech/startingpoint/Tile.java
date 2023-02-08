@@ -2,6 +2,7 @@ package fr.cotedazur.univ.polytech.startingpoint;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Tile {
     private Coordinate coordinate;
@@ -68,11 +69,6 @@ public class Tile {
         return isIrrigated;
     }
 
-//    public void setCoordinate(Coordinate coordinate) {
-//        if(this.coordinate == null){
-//            this.coordinate = coordinate;
-//        }
-//    }
 
     //tests to see if the tile to test is neighbour to this tile
     //check coordinate system at : https://www.redblobgames.com/grids/hexagons/#neighbors-axial
@@ -109,8 +105,8 @@ public class Tile {
 
     //returns an array of all the neighbour tiles, whether there is one tile at this place or not
     //the name may not be well-chosen, please feel free to propose a new one
-    public ArrayList<Coordinate> getNeighbourCoordinates () {
-        ArrayList<Coordinate> neighbourCoordinates = new ArrayList<>();
+    public List<Coordinate> getNeighbourCoordinates () {
+        List<Coordinate> neighbourCoordinates = new ArrayList<>();
 
         for (int i = -1; i < 2; i++) {
             for (int j = -1; j < 2; j++) {
@@ -122,12 +118,6 @@ public class Tile {
                 }
             }
         }
-        /*
-        //check the result :
-        System.out.println("size : " + neighbourCoordinates.size());
-        for (int i = 0; i < 6; i++) {
-            System.out.println(neighbourCoordinates.get(i));
-        }*/
         return neighbourCoordinates;
     }
 
@@ -181,21 +171,20 @@ public class Tile {
 
     @Override
     public boolean equals (Object o) {
-        if (o != null) {
-            if (o instanceof Tile) {
-                Tile t = (Tile) o;
-                if(t.getCoordinate()==null && this.getCoordinate()==null && t.getTypeOfTile().equals(this.getTypeOfTile())){
-                    return true;
-                }else if(t.getCoordinate()!=null && this.getCoordinate()!=null && t.getCoordinate().equals(this.getCoordinate()) && t.getTypeOfTile().equals(this.getTypeOfTile())){
-                    return true;
-                }else{
-                    return false;
-                }
+        if (o instanceof Tile t) {
+            if(t.getCoordinate()==null && this.getCoordinate()==null && t.getTypeOfTile().equals(this.getTypeOfTile())){
+                return true;
+            }else{
+                return t.getCoordinate()!=null && this.getCoordinate()!=null && t.getCoordinate().equals(this.getCoordinate()) && t.getTypeOfTile().equals(this.getTypeOfTile());
             }
         }
         return false;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(coordinate, bamboo, typeOfTile, isIrrigated, typeOfArrangement);
+    }
 
     public TypeOfArrangement getTypeOfArrangement() {
         return typeOfArrangement;

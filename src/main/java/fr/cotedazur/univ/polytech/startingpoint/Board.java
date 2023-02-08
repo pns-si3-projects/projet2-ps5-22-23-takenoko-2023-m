@@ -165,7 +165,7 @@ public class Board {
 
         for (int i = 0; i < boardTiles.size(); i++) {       //cycling through all the tiles of the board
             //we get all the neighbours of tile[i]
-            ArrayList<Coordinate> closeNeighbours = boardTiles.get(i).getNeighbourCoordinates();
+            List<Coordinate> closeNeighbours = boardTiles.get(i).getNeighbourCoordinates();
             for (int j = 0; j < closeNeighbours.size(); j++) {
                 boolean isDouble = false;
                 boolean isPlaced = false;

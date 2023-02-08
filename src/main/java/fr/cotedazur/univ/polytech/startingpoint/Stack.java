@@ -2,15 +2,14 @@ package fr.cotedazur.univ.polytech.startingpoint;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.*;
 public abstract class Stack<T> {
-    public List<T> list;
+    protected List<T> list;
 
     protected Stack(List<T> list){
         this.list = list;
     }
     protected Stack(){
-        this.list = new ArrayList<T>();
+        this.list = new ArrayList<>();
     }
 
     public void putBelow(T o){
@@ -49,11 +48,11 @@ public abstract class Stack<T> {
 
 
     public String toString(){
-        String s = "Pile d'objectifs : ";
+        StringBuilder s = new StringBuilder("Pile d'objectifs : ");
         for (T objective: list){
-            s += objective.toString() + " ";
+            s.append(objective.toString()).append(" ");
         }
-        return s;
+        return s.toString();
 
     }
 
