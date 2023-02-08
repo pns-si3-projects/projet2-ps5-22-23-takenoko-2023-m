@@ -13,6 +13,7 @@ public abstract class Bot {
     protected int nbBambooYellow = 0;
     protected int nbBambooRed = 0;
     protected int nbActions = 2;
+    protected int nbObjectifsRealises = 0;
     protected ArrayList<ObjectiveInterface> objectives = new ArrayList<ObjectiveInterface>();
     protected List<TypeOfArrangement> listArrangement = new ArrayList<TypeOfArrangement>();
     protected int nbTours = 1;
@@ -172,4 +173,17 @@ public abstract class Bot {
 
     public void play() {
     }
+
+    public void upNbActions(){
+        this.nbActions += 1;
+    }
+
+    public void upNbObjectifsRealises(){
+        nbObjectifsRealises+=1;
+    }
+
+    public int getNbObjectifsRealises(){
+        return nbObjectifsRealises;
+    }
+
 }

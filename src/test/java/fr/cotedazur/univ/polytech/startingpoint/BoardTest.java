@@ -91,4 +91,12 @@ class BoardTest {
         board.addIrrigation(legalIrrigationPlacement.get(0));
         assertEquals(9, legalIrrigationPlacement.size());   //-1, +4
     }
+
+    @Test
+    void testIsIrigated(){
+        Board board = new Board();
+        board.addTile(new Tile(new Coordinate(-1,0)));
+        assertTrue(board.getBoardTiles().get(1).isIrrigated());
+
+    }
 }

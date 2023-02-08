@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
+import fr.cotedazur.univ.polytech.startingpoint.bots.IntermediateBot;
 import fr.cotedazur.univ.polytech.startingpoint.bots.PrimaryBot;
 
 public class ObjectivePanda extends ObjectifWithOneColor implements ObjectiveInterface{
@@ -21,13 +22,20 @@ public class ObjectivePanda extends ObjectifWithOneColor implements ObjectiveInt
         public int getNbPointsWin() { return this.nbPointsWin; }
 
         public boolean isValid(Bot p, Board b){
-            return p.getNbBamboo(this.typeOfTile)>=this.nbToEat;   //fixed bug in case the player already has bamboo and the amount is higher
+            if(p.getNbBamboo(this.typeOfTile)>=this.nbToEat){
+                p.resetNbBamboo(this.typeOfTile);
+                return true;
+            }else{
+                return false;
+            }
         }
 
     @Override
-    public void play(Bot player) {
+    public void play(PrimaryBot player) {
         player.playForPandaCard();
     }
+
+    public void play(IntermediateBot player) { player.playForPandaCard(); }
 
 
     public String getType() {
