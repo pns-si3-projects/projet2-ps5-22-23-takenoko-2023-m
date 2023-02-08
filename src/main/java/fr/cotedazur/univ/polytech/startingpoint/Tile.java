@@ -68,11 +68,11 @@ public class Tile {
         return isIrrigated;
     }
 
-    public void setCoordinate(Coordinate coordinate) {
-        if(this.coordinate == null){
-            this.coordinate = coordinate;
-        }
-    }
+//    public void setCoordinate(Coordinate coordinate) {
+//        if(this.coordinate == null){
+//            this.coordinate = coordinate;
+//        }
+//    }
 
     //tests to see if the tile to test is neighbour to this tile
     //check coordinate system at : https://www.redblobgames.com/grids/hexagons/#neighbors-axial

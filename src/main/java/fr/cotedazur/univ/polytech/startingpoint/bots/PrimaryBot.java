@@ -118,8 +118,8 @@ public class PrimaryBot extends Bot {
         if (this.board.getBoardTiles().size() == 1){
             List<Coordinate> availableCoordinates = this.board.scanAvailableTilePosition();
             List<Tile> tilesPicked = board.pickThreeTiles();
-            Tile toAdd = chooseBetterOf3Tiles(tilesPicked);
-            toAdd.setCoordinate(availableCoordinates.get(0));
+            Tile bestCard = chooseBetterOf3Tiles(tilesPicked);
+            Tile toAdd = new Tile(availableCoordinates.get(0), bestCard.getTypeOfTile(), bestCard.getTypeOfArrangement());
             String message = this.board.addTile(toAdd);
             Main.LOGGER.info(message);
             this.playAction();
@@ -131,8 +131,8 @@ public class PrimaryBot extends Bot {
             if(availablePositionsGardener.size()==0){ //If we can't moove the gardener on any tile
                 List<Coordinate> availableCoordinates = this.board.scanAvailableTilePosition();
                 List<Tile> tilesPicked = board.pickThreeTiles();
-                Tile toAdd = chooseBetterOf3Tiles(tilesPicked);
-                toAdd.setCoordinate(availableCoordinates.get(0));
+                Tile bestCard = chooseBetterOf3Tiles(tilesPicked);
+                Tile toAdd = new Tile(availableCoordinates.get(0), bestCard.getTypeOfTile(), bestCard.getTypeOfArrangement());
                 String message = this.board.addTile(toAdd);
                 Main.LOGGER.info(message);
                 this.playAction();
@@ -152,8 +152,8 @@ public class PrimaryBot extends Bot {
                 if(!moved){ //If all of the tile's color != focus card's color so we just pick and place another tile
                     List<Coordinate> availableCoordinates = this.board.scanAvailableTilePosition();
                     List<Tile> tilesPicked = board.pickThreeTiles();
-                    Tile toAdd = chooseBetterOf3Tiles(tilesPicked);
-                    toAdd.setCoordinate(availableCoordinates.get(0));
+                    Tile bestCard = chooseBetterOf3Tiles(tilesPicked);
+                    Tile toAdd = new Tile(availableCoordinates.get(0), bestCard.getTypeOfTile(), bestCard.getTypeOfArrangement());
                     String message = this.board.addTile(toAdd);
                     Main.LOGGER.info(message);
                     this.playAction();
@@ -189,8 +189,8 @@ public class PrimaryBot extends Bot {
                 if (availablePositionPanda.size() == 0) {
                     List<Coordinate> availablePositions = this.board.scanAvailableTilePosition();
                     List<Tile> tilesPicked = board.pickThreeTiles();
-                    Tile toAdd = chooseBetterOf3Tiles(tilesPicked);
-                    toAdd.setCoordinate(availablePositions.get(0));
+                    Tile bestCard = chooseBetterOf3Tiles(tilesPicked);
+                    Tile toAdd = new Tile(availablePositions.get(0), bestCard.getTypeOfTile(), bestCard.getTypeOfArrangement());
                     String message = this.board.addTile(toAdd);
                     Main.LOGGER.info(message);
                     this.playAction();
@@ -207,14 +207,7 @@ public class PrimaryBot extends Bot {
                         }
                     }
                     if (!pandaMove) {
-                    /*
-                    //old code that only allows to place tiles : may be of use after this
-                    ArrayList<Coordinate> availablePositions = this.board.scanAvailableTilePosition();
-                    System.out.println(this.board.addTile(new Tile(availablePositions.get(0).getX(),availablePositions.get(0).getY())));
-                    this.playAction();
-                    */
 
-                        //new code to implement if needed. it will allow the player to move the gardener to grow at least one tile available to the panda
                         //if there is no bamboo available to the panda, the player will try to move the gardener onto a Tile accessible to the panda
                         boolean gardenerMove = false;
                         Tile positionGardener = this.board.getGardener().getTile();
@@ -245,8 +238,8 @@ public class PrimaryBot extends Bot {
                         if (!gardenerMove) {
                             List<Coordinate> availableCoordinates = this.board.scanAvailableTilePosition();
                             List<Tile> tilesPicked = board.pickThreeTiles();
-                            Tile toAdd = chooseBetterOf3Tiles(tilesPicked);
-                            toAdd.setCoordinate(availableCoordinates.get(0));
+                            Tile bestCard = chooseBetterOf3Tiles(tilesPicked);
+                            Tile toAdd = new Tile(availableCoordinates.get(0), bestCard.getTypeOfTile(), bestCard.getTypeOfArrangement());
                             String message = this.board.addTile(toAdd);
                             Main.LOGGER.info(message);
                             this.playAction();
