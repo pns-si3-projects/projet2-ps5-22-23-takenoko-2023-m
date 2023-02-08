@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 import com.opencsv.exceptions.CsvException;
 import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
+import fr.cotedazur.univ.polytech.startingpoint.bots.EasyBot;
 import fr.cotedazur.univ.polytech.startingpoint.bots.PrimaryBot;
 
 import java.io.File;
@@ -61,7 +62,7 @@ public class Main {
         double victoireBot1=0;
         double victoireBot2=0;
         List<String[]> listBot = new ArrayList<>();
-        Bot bot1 = new PrimaryBot(new Board(), "Simon");
+        Bot bot1 = new EasyBot(new Board(), "Simon");
         Bot bot2 = new PrimaryBot(new Board(), "Damien");
 
 
@@ -70,7 +71,7 @@ public class Main {
             listBot.clear();
             Board board = new Board();
 
-            bot1 = new PrimaryBot(board, "Simon");
+            bot1 = new EasyBot(board, "Simon");
             bot2 = new PrimaryBot(board, "Damien");
 
 
@@ -81,7 +82,7 @@ public class Main {
             game.launchGame();
             if (bot1.getPoint()>bot2.getPoint()) {
                 victoireBot1++;
-            } else {
+            } else if(bot1.getPoint()<bot2.getPoint()){
                 victoireBot2++;
             }
 
