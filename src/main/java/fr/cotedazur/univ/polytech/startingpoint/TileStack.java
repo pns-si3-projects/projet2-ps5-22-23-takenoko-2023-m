@@ -15,15 +15,7 @@ public class TileStack extends Stack<Tile>{
         this.generate();
     }
 
-    @Override
-    public void putBelow(Tile o) {
-        super.putBelow(o);
-    }
 
-    @Override
-    public Tile pick(Tile o) {
-        return super.pick(o);
-    }
 
 
     public List<Tile> pickThreeTiles(){
@@ -47,16 +39,6 @@ public class TileStack extends Stack<Tile>{
     }
 
 
-
-    @Override
-    public String toString() {
-        return super.toString();
-    }
-
-    @Override
-    public List<Tile> getStack() {
-        return super.getStack();
-    }
 
     @Override
     public void generate() {
