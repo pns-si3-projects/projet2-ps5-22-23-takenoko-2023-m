@@ -167,8 +167,9 @@ public class PrimaryBot extends Bot {
                     List<Coordinate> availableCoordinates = this.board.scanAvailableTilePosition();
                     Tile tilePicked = board.getTileStack().randomPick();
 
-                    tilePicked.setCoordinate(availableCoordinates.get(0));
-                    String message = this.board.addTile(tilePicked);
+                    //tilePicked.setCoordinate(availableCoordinates.get(0));
+                    Tile toAdd = new Tile(availableCoordinates.get(0), tilePicked.getTypeOfTile(), tilePicked.getTypeOfArrangement());
+                    String message = this.board.addTile(toAdd);
                     Main.LOGGER.info(message);
                     this.playAction();
                 }
