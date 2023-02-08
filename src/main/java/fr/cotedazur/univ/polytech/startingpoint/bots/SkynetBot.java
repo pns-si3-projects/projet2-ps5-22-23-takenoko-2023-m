@@ -7,7 +7,6 @@ import java.util.List;
 
 public class SkynetBot extends Bot {
     ObjectiveInterface focusedObjective;
-    private boolean meteoIsWind = false;
     public SkynetBot(Board board, String nom) {
         super(board, nom);
     }
@@ -19,9 +18,7 @@ public class SkynetBot extends Bot {
 
         switch (this.board.getDice().getMeteo()){
             case SUN -> this.nbActions++;
-            case RAIN -> playForRain();
-            case WIND -> meteoIsWind = true;
-            case LIGHTNING -> playForLightning();
+            case LIGHTNING -> movePandaToTheBestLocation();
             case CLOUD -> {
                 if(board.getBasinStack().getStack().isEmpty()&&board.getEnclosureStack().getStack().isEmpty()&&board.getFertilizerStack().getStack().isEmpty()){
                     chooseBestMeteo();
@@ -31,17 +28,19 @@ public class SkynetBot extends Bot {
             case QUESTIONMARK -> chooseBestMeteo();
         }
         focusedObjective.play(this);
-        meteoIsWind = false;
         Main.LOGGER.info("\n");
     }
 
-    private void playForRain() {
-    }
-
-    private void playForLightning() {
+    private void movePandaToTheBestLocation() {
     }
 
     private void chooseBestMeteo() {
+    }
+    public void playForPandaCard(){
+    }
+    public void playForPatternCard(){
+    }
+    public void playForGardenerCard(){
     }
 
     private void checkObjectiveToFocus() {
