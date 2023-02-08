@@ -25,6 +25,7 @@ class ArrangementTest {
     void testArrangmentEffect() {
         Tile tile = new Tile(0,1,TypeOfTile.GREEN, TypeOfArrangement.ENCLOSURE);
         assertEquals(0, tile.getBamboo());
+        tile.irrigate();
         tile.grow();
         assertEquals(1, tile.getBamboo());
         tile.eatBamboo();
@@ -32,6 +33,7 @@ class ArrangementTest {
 
         Tile tile2 = new Tile(1,0,TypeOfTile.RED, TypeOfArrangement.FERTILIZER);
         assertEquals(0, tile2.getBamboo());
+        tile2.irrigate();
         tile2.grow();
         assertEquals(2, tile2.getBamboo());
     }

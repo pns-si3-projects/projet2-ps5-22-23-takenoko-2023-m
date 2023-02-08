@@ -17,6 +17,8 @@ import com.beust.jcommander.JCommander;
 public class Main {
     public final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     static File file = new File("stats/test.csv");
+
+
     public static void main(String... args) throws IOException, CsvException {
 
         //String file = "stats/gamestats.csv";
@@ -27,6 +29,7 @@ public class Main {
 
         //Écrire les en-têtes de colonne dans le fichier
         //writer.writeNext(headers);
+
 
 
         Args parameters = new Args();

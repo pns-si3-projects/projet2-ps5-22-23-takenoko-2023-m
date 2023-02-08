@@ -18,6 +18,8 @@ public class ArrangementInGameTest {
         bot1.addTile(tile1);
         bot1.addTile(tile2);
 
+        board.getDice().setMeteo(Meteo.CLOUD);
+
         bot1.pickArrangement(TypeOfArrangement.ENCLOSURE);
 
         bot1.setArrangement(tile1,TypeOfArrangement.ENCLOSURE);
