@@ -16,7 +16,7 @@ public class PatternDetector {
      * @param coordinate the coordinate of the new tile
      */
     public void detectPatternNear(Coordinate coordinate){
-        ArrayList<Tile> tileOfSameType = this.detectTileOfSameTypeNear(coordinate);
+        List<Tile> tileOfSameType = this.detectTileOfSameTypeNear(coordinate);
         for(Tile tile : tileOfSameType){
             boolean isDetectedAsLineOrTriangle;
             //detection of a pattern of type LINE
@@ -34,7 +34,7 @@ public class PatternDetector {
                 }
             }
             if(!isDetectedAsLineOrTriangle){
-                ArrayList<Tile> tileOfSameType2 = this.detectTileOfSameTypeNear(tile.getCoordinate());
+                List<Tile> tileOfSameType2 = this.detectTileOfSameTypeNear(tile.getCoordinate());
                 tileOfSameType2.remove(board.getTile(coordinate));
                 if(!tileOfSameType2.isEmpty() ){
                     addToPatternList(new Pattern(TypeOfPattern.BOOMRANG,tile.getTypeOfTile()));
@@ -46,7 +46,7 @@ public class PatternDetector {
 
         }
 
-    private boolean detectIfTriangle(Tile tile, Coordinate coordinate, ArrayList<Tile> tileOfSameType) {
+    private boolean detectIfTriangle(Tile tile, Coordinate coordinate, List<Tile> tileOfSameType) {
         for(Tile tile2 : tileOfSameType){
             if(!tile.equals(tile2)&&tile.isNeighbour(board.getTile(coordinate))&&tile2.isNeighbour(board.getTile(coordinate))&&tile.isNeighbour(tile2)){
                 addToPatternList(new Pattern(TypeOfPattern.TRIANGLE,tile.getTypeOfTile()));
@@ -90,9 +90,9 @@ public class PatternDetector {
      * @param coordinate the coordinate of the tile to check
      * @return an ArrayList of tiles of the same type
      */
-    private ArrayList<Tile> detectTileOfSameTypeNear(Coordinate coordinate) {
-        ArrayList<Tile> tileOfSameType = new ArrayList<>();
-        ArrayList<Coordinate> neighbourCoordinates = board.getTile(coordinate).getNeighbourCoordinates();
+    private List<Tile> detectTileOfSameTypeNear(Coordinate coordinate) {
+        List<Tile> tileOfSameType = new ArrayList<>();
+        List<Coordinate> neighbourCoordinates = board.getTile(coordinate).getNeighbourCoordinates();
         neighbourCoordinates.forEach(c-> {
             if(board.isInBoard(c.getX(),c.getY()) && board.getTile(c).getTypeOfTile().equals(board.getTile(coordinate).getTypeOfTile())){
                 tileOfSameType.add(board.getTile(c));
