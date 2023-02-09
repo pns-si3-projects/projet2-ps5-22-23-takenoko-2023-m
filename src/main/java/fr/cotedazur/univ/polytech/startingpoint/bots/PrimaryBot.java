@@ -44,32 +44,19 @@ public class PrimaryBot extends Bot {
             for(Tile tile : tilesPicked){
                 if(tile.getTypeOfTile().equals(colors.get(0))&&!isPlaced){
                     isPlaced = true;
-                    String returnMessage;
-                    switch (objectivePlot.getPattern().getType()) {
-                        case BOOMRANG:
-                            returnMessage = board.addTile(new Tile(board.bestCoordinateForBoomrang(objectivePlot), tile.getTypeOfTile())) + " de type:" + tile.getTypeOfTile();
-                            break;
-                        case LINE:
-                            returnMessage = board.addTile(new Tile(board.bestCoordinateForLine(objectivePlot), tile.getTypeOfTile())) + " de type:" + tile.getTypeOfTile();
-                            break;
-                        case TRIANGLE:
-                            returnMessage = board.addTile(new Tile(board.bestCoordinateForTriangle(objectivePlot), tile.getTypeOfTile())) + " de type:" + tile.getTypeOfTile();
-                            break;
-                        default:
-                            returnMessage = "Aucun type de pattern n'a ete trouve";
-                            break;
-                    }
-                    String ret = board.addTile(new Tile(board.bestCoordinateForLine(objectivePlot),tile.getTypeOfTile()))+ " de type:"+tile.getTypeOfTile();
-                    Main.LOGGER.info(ret);
+                    String returnMessage = switch (objectivePlot.getPattern().getType()) {
+                        case BOOMRANG ->
+                                board.addTile(new Tile(board.bestCoordinateForBoomrang(objectivePlot), tile.getTypeOfTile())) + " de type:" + tile.getTypeOfTile();
+                        case LINE ->
+                                board.addTile(new Tile(board.bestCoordinateForLine(objectivePlot), tile.getTypeOfTile())) + " de type:" + tile.getTypeOfTile();
+                        case TRIANGLE ->
+                                board.addTile(new Tile(board.bestCoordinateForTriangle(objectivePlot), tile.getTypeOfTile())) + " de type:" + tile.getTypeOfTile();
+                        default -> "Aucun type de pattern n'a ete trouve";
+                    };
+                    Main.LOGGER.info(returnMessage);
                 }
                 else{
                     tilesToPutBackInStack.add(tile);
-                }
-                if(board.getDice().getMeteo()!=Meteo.RAIN){
-                    this.playAction();
-                }
-                else{
-                    board.getDice().setMeteo(Meteo.NONE);
                 }
             }
             if(!isPlaced){

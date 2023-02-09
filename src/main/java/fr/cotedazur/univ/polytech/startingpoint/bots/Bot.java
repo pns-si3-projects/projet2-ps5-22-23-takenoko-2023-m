@@ -38,13 +38,17 @@ public abstract class Bot {
     }
 
     private void checkGardenerObjectiveOnBoard() {
+        List<ObjectiveInterface> listObjectiveToRemove = new ArrayList<>();
         for(int i =0; i!=this.objectives.size(); i++){
             if(this.objectives.get(i).isValid(this, this.board)){
                 setPoint(getPoint()+this.objectives.get(i).getNbPointsWin());
                 this.upNbObjectifsRealises();
-                Main.LOGGER.severe(objectives.get(i).toString()+" a été réalisé ! ");
-                this.objectives.remove(i);
+                Main.LOGGER.info(objectives.get(i).toString()+" a été réalisé ! ");
+                listObjectiveToRemove.add(this.objectives.get(i));
             }
+        }
+        for(ObjectiveInterface o : listObjectiveToRemove){
+            this.objectives.remove(o);
         }
     }
 
