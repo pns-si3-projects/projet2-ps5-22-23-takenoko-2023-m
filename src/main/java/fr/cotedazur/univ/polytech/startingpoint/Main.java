@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.*;
 import java.util.List;
 import com.opencsv.*;
@@ -23,17 +24,6 @@ public class Main {
 
     public static void main(String... args) throws IOException, CsvException {
 
-        //String file = "stats/gamestats.csv";
-        //CSVWriter writer = new CSVWriter(new FileWriter(file));
-
-        //Créer un tableau de chaînes pour les en-têtes de colonne
-        //String[] headers = {"Nom", "Victoires", "NombreParties"};
-
-        //Écrire les en-têtes de colonne dans le fichier
-        //writer.writeNext(headers);
-
-
-
         Args parameters = new Args();
         JCommander.newBuilder()
                 .addObject(parameters)
@@ -44,18 +34,18 @@ public class Main {
 
         int nbParties = 1;
         if (parameters.twoThousands) {
-            System.out.println("2000");
             nbParties = 1000;
             LOGGER.setLevel(Level.SEVERE);
+            LOGGER.severe("Run mode : two thousand games");
         }
         if (parameters.demo) {
-            System.out.println("demo");
             LOGGER.setLevel(Level.INFO);
+            LOGGER.severe("Run mode : demo");
         }
         if (parameters.csv) {
-            System.out.println("csv");
-            nbParties = 1000;
+            nbParties = 10;
             LOGGER.setLevel(Level.SEVERE);
+            LOGGER.severe("Run mode : csv");
         }
 
         csvManager.setNbParties(nbParties);
@@ -67,6 +57,7 @@ public class Main {
         Bot bot2 = new IntermediateBot(new Board(), "Damien");
 
 
+        LOGGER.severe("Lancement de " + nbParties + " partie(s) avec des bots intermédiaires");
 
         for(int i=0;i<nbParties;i++){
             listBot.clear();
@@ -102,15 +93,22 @@ public class Main {
         listBot.add(bot1Info);
         listBot.add(bot2Info);
 
+        int victoireB1 = (int) victoireBot1;
+        int victoireB2 = (int) victoireBot2;
+        LOGGER.severe(bot1.getNom() + " a remporté " + victoireB1 + " partie(s) ce qui fait un pourcentage de " + (victoireBot1/nbParties)*100 + "%");
+        LOGGER.severe(bot2.getNom() + " a remporté " + victoireB2 + " partie(s) ce qui fait un pourcentage de " + (victoireBot2/nbParties)*100 + "%");
+
 
         if (parameters.twoThousands) {
+            LOGGER.severe("Lancement de " + nbParties + " partie(s) avec bot intermédiaire et un bot débutant");
+
             victoireBot1=0;
             victoireBot2=0;
             for(int i=0;i<nbParties;i++){
 
                 Board board = new Board();
 
-                bot1 = new PrimaryBot(board, "Simon");
+                bot1 = new IntermediateBot(board, "Simon");
                 bot2 = new PrimaryBot(board, "Damien");
 
 
@@ -136,6 +134,11 @@ public class Main {
             listBot.add(header2);
             listBot.add(bot12Info);
             listBot.add(bot22Info);
+
+            victoireB1 = (int) victoireBot1;
+            victoireB2 = (int) victoireBot2;
+            LOGGER.severe(bot1.getNom() + " a remporté " + victoireB1 + " partie(s) ce qui fait un pourcentage de " + (victoireBot1/nbParties)*100 + "%");
+            LOGGER.severe(bot2.getNom() + " a remporté " + victoireB2 + " partie(s) ce qui fait un pourcentage de " + (victoireBot2/nbParties)*100 + "%");
 
         }
 
