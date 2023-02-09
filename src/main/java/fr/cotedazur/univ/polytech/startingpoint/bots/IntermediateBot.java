@@ -16,11 +16,23 @@ public class IntermediateBot extends Bot {
         this.objectives.sort((o1, o2) -> o2.getNbPointsWin() - o1.getNbPointsWin());
         switch(this.board.getDice().getMeteo()){
                 case SUN -> this.upNbActions();
-                case RAIN -> Main.LOGGER.info("//ATT QUE QUENTIN PR POUR PRENDRE SA METHODE DANS BOARD");
-                case WIND -> Main.LOGGER.info("//WAIT");
                 case LIGHTNING -> playLigntningDice();
                 case CLOUD -> playCloudDice();
                 case QUESTIONMARK -> playLigntningDice(); //A revoir potentiellement
+
+                default -> Main.LOGGER.info("Météo non prise en compte");
+            }
+        }
+        this.objectives.get(0).play(this);
+        ArrayList<ObjectiveInterface> toSuppress = new ArrayList<>();
+        for(int i =0; i!=this.objectives.size(); i++){
+            if(this.objectives.get(i).isValid(this, this.board)){
+                setPoint(getPoint()+this.objectives.get(i).getNbPointsWin());
+                upNbObjectifsRealises();
+                toSuppress.add(this.objectives.get(i));
+                Main.LOGGER.severe("Objectif réalisé par "+getNom());
+            }
+
         }
         if(this.objectives.size()<3){
             if(!board.getStackGardener().getStack().isEmpty()){
@@ -316,7 +328,27 @@ public class IntermediateBot extends Bot {
         return null;
     }
 
-    private void playGardenerForSpecificTile(TypeOfTile type, Tile tileOfPanda){
+
+    public void checkPatternOnBoard() {
+        //take objective of type ObjectivePlot from the list objectives
+        ArrayList<ObjectivePlot> objectivePlotList = new ArrayList<>();
+        for(ObjectiveInterface objective : this.objectives){
+            if(objective instanceof ObjectivePlot){
+                objectivePlotList.add((ObjectivePlot) objective);
+            }
+        }
+        for(ObjectivePlot objectivePlot : objectivePlotList){
+            if(board.getPatternBoard().getPatternBoardList().contains(objectivePlot.getPattern())){
+                this.point += objectivePlot.getNbPointsWin();
+                String message = "Le joueur "+this.getNom()+" a gagne "+objectivePlot.getNbPointsWin()+" points pour avoir realise le pattern "+objectivePlot;
+                Main.LOGGER.info(message);
+                this.objectives.remove(objectivePlot);
+            }
+        }
+    }
+
+    public void playGardenerForSpecificTile(TypeOfTile type, Tile tileOfPanda){
+
         boolean action = false;
         List<Tile> tileList = board.getBoardTiles();
         List<Coordinate> coordinateToMoovePanda = tileOfPanda.scanAvailableCoordinatesToMove(tileList);
@@ -357,7 +389,7 @@ public class IntermediateBot extends Bot {
         }
     }
 
-    private void playForIrrigation(){
+    public void playForIrrigation(){
         ArrayList<Irrigation> listeIrrigations = board.getLegalIrrigationPlacement();
         for(Irrigation irrigation : listeIrrigations){
             boolean verif = board.addIrrigation(irrigation);
