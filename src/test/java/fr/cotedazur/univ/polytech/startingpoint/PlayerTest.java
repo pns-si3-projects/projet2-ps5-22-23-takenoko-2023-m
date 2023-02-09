@@ -113,7 +113,7 @@ class PlayerTest {
         Tile tile = bot1.chooseBetterOf3Tiles(dummyTiles);
 
         assertEquals(TypeOfTile.GREEN, tile.getTypeOfTile());
-        assertEquals(26, board.getTileStack().getStack().size());
+        assertEquals(29, board.getTileStack().getStack().size());
     }
 
     @Test
