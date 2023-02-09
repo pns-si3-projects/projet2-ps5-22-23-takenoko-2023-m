@@ -30,11 +30,11 @@ class ObjectiveGardenerTest {
         Board board = new Board();
         ObjectiveGardener objectiveGardener = new ObjectiveGardener("gardener",3, 11,TypeOfTile.GREEN, TypeOfArrangement.NONE);
         Bot bot1 = new PrimaryBot(board, "Robot 1");
-        board.addTile(new Tile(new Coordinate(0,0)));
-        board.addTile(new Tile(new Coordinate(1,0)));
-        board.addTile(new Tile(new Coordinate(0,1)));
-        board.addTile(new Tile(new Coordinate(1,1)));
-        board.addTile(new Tile(new Coordinate(1,2)));
+        board.addTile(new Tile(new Coordinate(0,0), TypeOfTile.GREEN, TypeOfArrangement.NONE));
+        board.addTile(new Tile(new Coordinate(1,0), TypeOfTile.GREEN, TypeOfArrangement.NONE));
+        board.addTile(new Tile(new Coordinate(0,1), TypeOfTile.GREEN, TypeOfArrangement.NONE));
+        board.addTile(new Tile(new Coordinate(1,1), TypeOfTile.GREEN, TypeOfArrangement.NONE));
+        board.addTile(new Tile(new Coordinate(1,2), TypeOfTile.GREEN, TypeOfArrangement.NONE));
         for (int i = 0; i < board.getBoardTiles().size(); i++) {
             board.getBoardTiles().get(i).irrigate();
         }

@@ -11,8 +11,8 @@ import java.util.List;
 
 class BoardTest {
     Board twoTiles = new Board();
-    Tile t0_0 = new Tile(new Coordinate(0,0));
-    Tile tx1y0 = new Tile(new Coordinate(1,0));
+    Tile t0_0 = new Tile(new Coordinate(0,0), TypeOfTile.GREEN, TypeOfArrangement.NONE);
+    Tile tx1y0 = new Tile(new Coordinate(1,0), TypeOfTile.GREEN, TypeOfArrangement.NONE);
 
     @BeforeEach
     void setup() {
@@ -43,7 +43,7 @@ class BoardTest {
     void testPutBackInTileStack(){
         Board board = new Board();
         assertEquals(27, board.getTileStack().sizeTileStack());
-        Tile t = new Tile(TypeOfTile.RED);
+        Tile t = new Tile(null, TypeOfTile.RED, TypeOfArrangement.NONE);
         board.putBackInTileStack(t);
         assertEquals(28,board.getTileStack().sizeTileStack());
     }
@@ -61,8 +61,8 @@ class BoardTest {
 
     @Test
     void testIrrigationPlacement() {
-        Tile tx0y1 = new Tile(new Coordinate(0,1));
-        Tile tx1y1 = new Tile(new Coordinate(1,1));
+        Tile tx0y1 = new Tile(new Coordinate(0,1), TypeOfTile.GREEN, TypeOfArrangement.NONE);
+        Tile tx1y1 = new Tile(new Coordinate(1,1), TypeOfTile.GREEN, TypeOfArrangement.NONE);
         Board board = new Board();
         board.addTile(tx1y0);
         board.addTile(tx0y1);
@@ -86,8 +86,8 @@ class BoardTest {
         Board board = new Board();
         ArrayList<Irrigation> legalIrrigationPlacement = board.getLegalIrrigationPlacement();
         assertTrue(legalIrrigationPlacement.size() == 6);
-        board.addTile(new Tile(new Coordinate(1,0)));
-        board.addTile(new Tile(new Coordinate(0,1)));
+        board.addTile(new Tile(new Coordinate(1,0), TypeOfTile.GREEN, TypeOfArrangement.NONE));
+        board.addTile(new Tile(new Coordinate(0,1), TypeOfTile.GREEN, TypeOfArrangement.NONE));
         board.addIrrigation(legalIrrigationPlacement.get(0));
         assertEquals(9, legalIrrigationPlacement.size());   //-1, +4
     }
@@ -95,7 +95,7 @@ class BoardTest {
     @Test
     void testIsIrigated(){
         Board board = new Board();
-        board.addTile(new Tile(new Coordinate(-1,0)));
+        board.addTile(new Tile(new Coordinate(-1,0), TypeOfTile.GREEN, TypeOfArrangement.NONE));
         assertTrue(board.getBoardTiles().get(1).isIrrigated());
 
     }
