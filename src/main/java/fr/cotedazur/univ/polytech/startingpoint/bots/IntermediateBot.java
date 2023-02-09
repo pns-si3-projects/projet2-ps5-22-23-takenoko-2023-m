@@ -6,48 +6,33 @@ import java.util.logging.Logger;
 
 public class IntermediateBot extends Bot {
 
-    private ObjectiveInterface focusCard = null;
-    int nbTour = 1;
 
     public IntermediateBot(Board board, String nom) {
         super(board, nom);
     }
 
     public void play(){
-        this.resetNbActions();
+        super.play();
         this.objectives.sort((o1, o2) -> o2.getNbPointsWin() - o1.getNbPointsWin());
-        if(nbTour > 1){
-            this.board.getDice().randomMeteo();
-            switch(this.board.getDice().getMeteo()){
+        switch(this.board.getDice().getMeteo()){
                 case SUN -> this.upNbActions();
                 case RAIN -> Main.LOGGER.info("//ATT QUE QUENTIN PR POUR PRENDRE SA METHODE DANS BOARD");
                 case WIND -> Main.LOGGER.info("//WAIT");
                 case LIGHTNING -> playLigntningDice();
                 case CLOUD -> playCloudDice();
                 case QUESTIONMARK -> playLigntningDice(); //A revoir potentiellement
-            }
         }
-        this.objectives.get(0).play(this);
-        ArrayList<ObjectiveInterface> toSuppress = new ArrayList<>();
-        for(int i =0; i!=this.objectives.size(); i++){
-            if(this.objectives.get(i).isValid(this, this.board)){
-                setPoint(getPoint()+this.objectives.get(i).getNbPointsWin());
-                upNbObjectifsRealises();
-                toSuppress.add(this.objectives.get(i));
-                Main.LOGGER.severe("Objectif réalisé par "+getNom());
-            }
-        }
-        //Suppress all objectives that are done
-        for(ObjectiveInterface ob : toSuppress){
-            this.objectives.remove(ob);
-            if(board.getStackGardener().getStack().size()!=0){
+        if(this.objectives.size()<3){
+            if(!board.getStackGardener().getStack().isEmpty()){
                 this.pickGardenerCard();
             }else{
                 pickPandaCard();
             }
         }
-        this.checkPatternOnBoard();
-        nbTour++;
+        else {
+            this.objectives.get(0).play(this);
+        }
+
     }
 
     public void playLigntningDice(){
@@ -329,24 +314,6 @@ public class IntermediateBot extends Bot {
             }
         }
         return null;
-    }
-
-    private void checkPatternOnBoard() {
-        //take objective of type ObjectivePlot from the list objectives
-        ArrayList<ObjectivePlot> objectivePlotList = new ArrayList<>();
-        for(ObjectiveInterface objective : this.objectives){
-            if(objective instanceof ObjectivePlot){
-                objectivePlotList.add((ObjectivePlot) objective);
-            }
-        }
-        for(ObjectivePlot objectivePlot : objectivePlotList){
-            if(board.getPatternBoard().getPatternBoardList().contains(objectivePlot.getPattern())){
-                this.point += objectivePlot.getNbPointsWin();
-                String message = "Le joueur "+this.getNom()+" a gagne "+objectivePlot.getNbPointsWin()+" points pour avoir realise le pattern "+objectivePlot;
-                Main.LOGGER.info(message);
-                this.objectives.remove(objectivePlot);
-            }
-        }
     }
 
     private void playGardenerForSpecificTile(TypeOfTile type, Tile tileOfPanda){

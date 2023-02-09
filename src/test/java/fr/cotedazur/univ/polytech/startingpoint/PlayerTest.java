@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
+import java.util.List;
 import java.util.logging.Level;
 
 import java.util.Arrays;
@@ -99,7 +100,8 @@ class PlayerTest {
     }
 
     @Test
-    void testChooseBetterOf3Tiles(){
+    void testChooseBetterOf3Tiles(){ //NEED TO DO A MALOCK RIGHT HERE IN THE FUTURE
+        //TODO : Simon doit faire le mockito
         Board board = new Board();
         PrimaryBot bot1 = new PrimaryBot(board,"bot1");
         bot1.setFocusCard(new ObjectivePanda("panda",1,80,TypeOfTile.GREEN));
@@ -111,6 +113,7 @@ class PlayerTest {
         Tile tile = bot1.chooseBetterOf3Tiles(dummyTiles);
 
         assertEquals(TypeOfTile.GREEN, tile.getTypeOfTile());
+        assertEquals(29, board.getTileStack().getStack().size());
     }
 
     @Test
