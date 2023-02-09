@@ -3,6 +3,7 @@ package fr.cotedazur.univ.polytech.startingpoint;
 import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.bots.IntermediateBot;
 import fr.cotedazur.univ.polytech.startingpoint.bots.PrimaryBot;
+import fr.cotedazur.univ.polytech.startingpoint.bots.SkynetBot;
 
 public interface ObjectiveInterface {
     public String getType();
@@ -15,9 +16,8 @@ public interface ObjectiveInterface {
 
     public boolean isValid(Bot player, Board b);
 
-    public void play(PrimaryBot player);
-
-    public void play(IntermediateBot player);
+    public void play(Bot player);
+    public int getComplexity();
 }
 
 

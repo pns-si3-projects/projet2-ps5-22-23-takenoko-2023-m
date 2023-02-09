@@ -12,11 +12,11 @@ class ObjectiveStackTest {
     @Test
     void putBelow() {
 
-        ObjectiveGardener objectiveGardener = new ObjectiveGardener("gardener",2,2,TypeOfTile.GREEN);
-        ObjectiveGardener objectiveGardener2 = new ObjectiveGardener("gardener",3,3,TypeOfTile.GREEN);
+        ObjectiveGardener objectiveGardener = new ObjectiveGardener("gardener",2,2,TypeOfTile.GREEN, TypeOfArrangement.NONE);
+        ObjectiveGardener objectiveGardener2 = new ObjectiveGardener("gardener",3,3,TypeOfTile.GREEN, TypeOfArrangement.NONE);
         List<ObjectiveGardener> list = new ArrayList<ObjectiveGardener>();
         ObjectiveStackGardener objectiveStack = new ObjectiveStackGardener(list);
-        ObjectiveGardener objectiveGardener3 = new ObjectiveGardener("gardener",4,4,TypeOfTile.GREEN);
+        ObjectiveGardener objectiveGardener3 = new ObjectiveGardener("gardener",4,4,TypeOfTile.GREEN, TypeOfArrangement.NONE);
         objectiveStack.putBelow(objectiveGardener3);
         assertTrue(objectiveStack.getStack().contains(objectiveGardener3));
 
@@ -24,12 +24,12 @@ class ObjectiveStackTest {
 
     @Test
     void pick() {
-        ObjectiveGardener objectiveGardener = new ObjectiveGardener("gardener",2,2,TypeOfTile.GREEN);
-        ObjectiveGardener objectiveGardener2 = new ObjectiveGardener("gardener",3,3,TypeOfTile.GREEN);
+        ObjectiveGardener objectiveGardener = new ObjectiveGardener("gardener",2,2,TypeOfTile.GREEN, TypeOfArrangement.NONE);
+        ObjectiveGardener objectiveGardener2 = new ObjectiveGardener("gardener",3,3,TypeOfTile.GREEN, TypeOfArrangement.NONE);
         List<ObjectiveGardener> list = new ArrayList<ObjectiveGardener>();
         list.add(objectiveGardener2);
         ObjectiveStackGardener objectiveStack = new ObjectiveStackGardener(list);
-        ObjectiveGardener objectiveGardener3 = new ObjectiveGardener("gardener",4, 4,TypeOfTile.GREEN);
+        ObjectiveGardener objectiveGardener3 = new ObjectiveGardener("gardener",4, 4,TypeOfTile.GREEN, TypeOfArrangement.NONE);
         objectiveStack.putBelow(objectiveGardener3);
         objectiveStack.pick(objectiveGardener2);
         assertFalse(objectiveStack.getStack().contains(objectiveGardener2));

@@ -12,7 +12,7 @@ class ObjectiveGardenerTest {
 
     @Test
     void getNb() {
-        ObjectiveGardener objectiveGardener = new ObjectiveGardener("gardener",2, 2,TypeOfTile.GREEN);
+        ObjectiveGardener objectiveGardener = new ObjectiveGardener("gardener",2, 2,TypeOfTile.GREEN, TypeOfArrangement.NONE);
         assertEquals(2, objectiveGardener.getNbPointsWin());
     }
 
@@ -20,7 +20,7 @@ class ObjectiveGardenerTest {
     void setNb() {
 
 
-        ObjectiveGardener objectiveGardener = new ObjectiveGardener("gardener",2, 11,TypeOfTile.GREEN);
+        ObjectiveGardener objectiveGardener = new ObjectiveGardener("gardener",2, 11,TypeOfTile.GREEN, TypeOfArrangement.NONE);
         objectiveGardener.setNbPointsWin(3);
         assertEquals(3, objectiveGardener.getNbPointsWin());
     }
@@ -28,7 +28,7 @@ class ObjectiveGardenerTest {
     @Test
     void isValid() {
         Board board = new Board();
-        ObjectiveGardener objectiveGardener = new ObjectiveGardener("gardener",3, 11,TypeOfTile.GREEN);
+        ObjectiveGardener objectiveGardener = new ObjectiveGardener("gardener",3, 11,TypeOfTile.GREEN, TypeOfArrangement.NONE);
         Bot bot1 = new PrimaryBot(board, "Robot 1");
         board.addTile(new Tile(new Coordinate(0,0)));
         board.addTile(new Tile(new Coordinate(1,0)));
@@ -46,13 +46,13 @@ class ObjectiveGardenerTest {
 
     @Test
     void getType() {
-        ObjectiveGardener objectiveGardener = new ObjectiveGardener("gardener",2, 11,TypeOfTile.GREEN);
+        ObjectiveGardener objectiveGardener = new ObjectiveGardener("gardener",2, 11,TypeOfTile.GREEN, TypeOfArrangement.NONE);
         assertEquals("gardener", objectiveGardener.getType());
     }
 
     @Test
     void setType() {
-        ObjectiveGardener objectiveGardener = new ObjectiveGardener("gardener",2, 11,TypeOfTile.GREEN);
+        ObjectiveGardener objectiveGardener = new ObjectiveGardener("gardener",2, 11,TypeOfTile.GREEN, TypeOfArrangement.NONE);
         objectiveGardener.setType("gardener");
         assertEquals("gardener", objectiveGardener.getType());
     }

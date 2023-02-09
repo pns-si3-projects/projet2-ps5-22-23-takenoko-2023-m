@@ -19,29 +19,6 @@ public class PrimaryBot extends Bot {
 
     @Override
     public void play(){
-        if(this.getObjective().size()==0){
-            if(this.board.getStackGardener().getStack().size()!=0){
-                this.getObjective().add(this.board.getStackGardener().randomPick());
-
-            }
-            else if(this.board.getStackPanda().getStack().size()!=0){
-                this.getObjective().add(this.board.getStackPanda().randomPick());
-            }
-            else if(this.board.getStackPlot().getStack().size()!=0){
-                this.getObjective().add(this.board.getStackPlot().randomPick());
-
-            }
-        }
-        if(this.nbTours >1){
-            this.board.getDice().randomMeteo();
-            while(this.board.getDice().getMeteo()==Meteo.NONE || this.board.getDice().getMeteo()==Meteo.QUESTIONMARK){
-                this.board.getDice().randomMeteo();
-            }
-        }
-        Main.LOGGER.info("La météo est  "  + this.board.getDice().getMeteo());
-
-
-        this.resetNbActions();
         if (this.focusCard == null){
             checkBetterCard();
         }
@@ -67,32 +44,19 @@ public class PrimaryBot extends Bot {
             for(Tile tile : tilesPicked){
                 if(tile.getTypeOfTile().equals(colors.get(0))&&!isPlaced){
                     isPlaced = true;
-                    String returnMessage;
-                    switch (objectivePlot.getPattern().getType()) {
-                        case BOOMRANG:
-                            returnMessage = board.addTile(new Tile(board.bestCoordinateForBoomrang(objectivePlot), tile.getTypeOfTile())) + " de type:" + tile.getTypeOfTile();
-                            break;
-                        case LINE:
-                            returnMessage = board.addTile(new Tile(board.bestCoordinateForLine(objectivePlot), tile.getTypeOfTile())) + " de type:" + tile.getTypeOfTile();
-                            break;
-                        case TRIANGLE:
-                            returnMessage = board.addTile(new Tile(board.bestCoordinateForTriangle(objectivePlot), tile.getTypeOfTile())) + " de type:" + tile.getTypeOfTile();
-                            break;
-                        default:
-                            returnMessage = "Aucun type de pattern n'a ete trouve";
-                            break;
-                    }
-                    String ret = board.addTile(new Tile(board.bestCoordinateForLine(objectivePlot),tile.getTypeOfTile()))+ " de type:"+tile.getTypeOfTile();
-                    Main.LOGGER.info(ret);
+                    String returnMessage = switch (objectivePlot.getPattern().getType()) {
+                        case BOOMRANG ->
+                                board.addTile(new Tile(board.bestCoordinateForBoomrang(objectivePlot), tile.getTypeOfTile())) + " de type:" + tile.getTypeOfTile();
+                        case LINE ->
+                                board.addTile(new Tile(board.bestCoordinateForLine(objectivePlot), tile.getTypeOfTile())) + " de type:" + tile.getTypeOfTile();
+                        case TRIANGLE ->
+                                board.addTile(new Tile(board.bestCoordinateForTriangle(objectivePlot), tile.getTypeOfTile())) + " de type:" + tile.getTypeOfTile();
+                        default -> "Aucun type de pattern n'a ete trouve";
+                    };
+                    Main.LOGGER.info(returnMessage);
                 }
                 else{
                     tilesToPutBackInStack.add(tile);
-                }
-                if(board.getDice().getMeteo()!=Meteo.RAIN){
-                    this.playAction();
-                }
-                else{
-                    board.getDice().setMeteo(Meteo.NONE);
                 }
             }
             if(!isPlaced){
@@ -110,24 +74,6 @@ public class PrimaryBot extends Bot {
 
         }
 
-    }
-
-    private void checkPatternOnBoard() {
-        //take objective of type ObjectivePlot from the list objectives
-        ArrayList<ObjectivePlot> objectivePlotList = new ArrayList<>();
-        for(ObjectiveInterface objective : this.objectives){
-            if(objective instanceof ObjectivePlot){
-                objectivePlotList.add((ObjectivePlot) objective);
-            }
-        }
-        for(ObjectivePlot objectivePlot : objectivePlotList){
-            if(board.getPatternBoard().getPatternBoardList().contains(objectivePlot.getPattern())){
-                this.point += objectivePlot.getNbPointsWin();
-                String message = "Le joueur "+this.getNom()+" a gagne "+objectivePlot.getNbPointsWin()+" points pour avoir realise le pattern "+objectivePlot;
-                Main.LOGGER.info(message);
-                this.objectives.remove(objectivePlot);
-            }
-        }
     }
 
     public void playForGardenerCard(){
@@ -296,10 +242,7 @@ public class PrimaryBot extends Bot {
         int max = -1;
         for(ObjectiveInterface cardObj : objectives){
             if(cardObj.getNbPointsWin() > max){
-                if(cardObj instanceof ObjectivePlot && this.board.getTileStack().sizeTileStack()==0){
-
-                }
-                else {
+                if(!(cardObj instanceof ObjectivePlot && this.board.getTileStack().sizeTileStack()==0)){
                     max = cardObj.getNbPointsWin();
                     card = cardObj;
                 }
