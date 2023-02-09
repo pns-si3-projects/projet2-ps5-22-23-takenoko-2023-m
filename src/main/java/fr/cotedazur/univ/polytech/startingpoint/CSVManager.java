@@ -12,6 +12,7 @@ import java.io.FileReader;
 import java.net.URL;
 import com.beust.jcommander.JCommander;
 import com.opencsv.exceptions.CsvException;
+import com.opencsv.exceptions.CsvValidationException;
 import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
 
 public class CSVManager {
@@ -39,7 +40,28 @@ public class CSVManager {
         writer.close();
     }
 
-    public void addCSV(String[] bot) throws IOException{
+    public List<List<String>> readerCSV() throws IOException, CsvValidationException {
+        List<List<String>> list = new ArrayList<List<String>>();
+        CSVReader reader = new CSVReader(new FileReader(file));
+
+        String[] line;
+        line = reader.readNext();
+        List<String> head = new ArrayList<String>();
+        String str = line[2];
+        str=str.replaceAll("Taux_de_victoire_sur_", "");
+        str=str.replaceAll("_parties", "");
+        head.add(str);
+        list.add(head);
+        while ((line = reader.readNext()) != null) {
+            List<String> bot = new ArrayList<String>();
+            bot.add((String) line[0]);
+            bot.add((String) line[1]);
+            bot.add((String) line[2].replaceAll("%", ""));
+            list.add(bot);
+        }
+        return list;
+
+
 
     }
 

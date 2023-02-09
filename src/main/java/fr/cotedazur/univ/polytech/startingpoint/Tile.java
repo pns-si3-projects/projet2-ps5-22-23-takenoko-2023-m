@@ -19,7 +19,7 @@ public class Tile {
         this.typeOfTile = type;
         this.typeOfArrangement = TypeOfArrangement.NONE;
 
-        ArrayList<Coordinate> list = getNeighbourCoordinates();
+        List<Coordinate> list = getNeighbourCoordinates();
         if(list.contains(new Coordinate(0,0))) isIrrigated = true;
     }
     public Tile(Coordinate coordinate, TypeOfTile type, TypeOfArrangement typeOfArrangement){
@@ -28,7 +28,7 @@ public class Tile {
         this.typeOfArrangement = typeOfArrangement;
         //Random key from 1 to 20000
         this.key = (int)(Math.random() * 200000000 + 1);
-        ArrayList<Coordinate> list = getNeighbourCoordinates();
+        List<Coordinate> list = getNeighbourCoordinates();
         if(list.contains(new Coordinate(0,0))) isIrrigated = true;
     }
 
@@ -39,7 +39,7 @@ public class Tile {
         this.typeOfArrangement = typeOfArrangement;
         //Random key from 1 to 20000
         this.key = (int)(Math.random() * 2000000000 + 1);
-        ArrayList<Coordinate> list = getNeighbourCoordinates();
+        List<Coordinate> list = getNeighbourCoordinates();
         if(list.contains(new Coordinate(0,0))) isIrrigated = true;
     }
 
@@ -67,7 +67,7 @@ public class Tile {
         this.typeOfArrangement = TypeOfArrangement.NONE;
         //Random key from 1 to 20000
         this.key = (int)(Math.random() * 20000000 + 1);
-        ArrayList<Coordinate> list = getNeighbourCoordinates();
+        List<Coordinate> list = getNeighbourCoordinates();
         if(list.contains(new Coordinate(0,0))) isIrrigated = true;
 
     }
