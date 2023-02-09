@@ -207,7 +207,7 @@ public class IntermediateBot extends Bot {
                     Tile tile = this.board.getTile(co);
                     if(tile != null){
                         if(tile.getBamboo()>0 && objectif.typeOfTile.equals(tile.getTypeOfTile())){
-                            Main.LOGGER.info(this.board.moveGardenerOn(co));
+                            Main.LOGGER.info(this.board.movePandaOn(co,this));
                             this.playAction();
                             moove = true;
                             break;

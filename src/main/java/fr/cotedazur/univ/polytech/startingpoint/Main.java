@@ -63,7 +63,7 @@ public class Main <T>{
 
 
 
-        LOGGER.severe("Lancement de " + nbParties + " partie(s) avec des bots intermédiaires");
+        LOGGER.severe("Lancement de " + nbParties + " partie(s) avec des bots intermédiaires vs debutants");
 
         for(int i=0;i<nbParties;i++){
             listBot.clear();
@@ -118,7 +118,7 @@ public class Main <T>{
 
 
         if (parameters.twoThousands) {
-            LOGGER.severe("Lancement de " + nbParties + " partie(s) avec bot intermédiaire et un bot débutant");
+            LOGGER.severe("Lancement de " + nbParties + " partie(s) avec 2 bots intermédiaire");
 
             victoireBot1=0;
             victoireBot2=0;
@@ -126,8 +126,8 @@ public class Main <T>{
 
                 Board board = new Board();
 
-                bot1 = new SkynetBot(board, "Simon");
-                bot2 = new LittleBot(board, "Damien");
+                bot1 = new IntermediateBot(board, "Simon");
+                bot2 = new IntermediateBot(board, "Damien");
 
 
                 List<Bot> listPlayer = new ArrayList<>();
