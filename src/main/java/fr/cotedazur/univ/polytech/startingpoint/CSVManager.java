@@ -50,7 +50,6 @@ public class CSVManager {
         String str = line[2];
         str=str.replaceAll("Taux_de_victoire_sur_", "");
         str=str.replaceAll("_parties", "");
-        System.out.println(str);
         head.add(str);
         list.add(head);
         while ((line = reader.readNext()) != null) {

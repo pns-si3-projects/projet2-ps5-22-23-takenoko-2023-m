@@ -22,7 +22,7 @@ public class IntermediateBot extends Bot {
 
                 default -> Main.LOGGER.info("Météo non prise en compte");
             }
-        }
+
         this.objectives.get(0).play(this);
         ArrayList<ObjectiveInterface> toSuppress = new ArrayList<>();
         for(int i =0; i!=this.objectives.size(); i++){
@@ -30,7 +30,7 @@ public class IntermediateBot extends Bot {
                 setPoint(getPoint()+this.objectives.get(i).getNbPointsWin());
                 upNbObjectifsRealises();
                 toSuppress.add(this.objectives.get(i));
-                Main.LOGGER.severe("Objectif réalisé par "+getNom());
+                Main.LOGGER.info("Objectif réalisé par "+getNom());
             }
 
         }

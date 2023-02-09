@@ -32,7 +32,7 @@ public class Main <T>{
         CSVManager csvManager = new CSVManager(1, "stats/gamestats.csv", new ArrayList<String[]>());
         List<List<String>> list = new ArrayList<List<String>>();
         list = csvManager.readerCSV();
-        System.out.println(list);
+
 
         int nbParties = 1;
         if (parameters.twoThousands) {
@@ -126,8 +126,8 @@ public class Main <T>{
 
                 Board board = new Board();
 
-                bot1 = new IntermediateBot(board, "Simon");
-                bot2 = new PrimaryBot(board, "Damien");
+                bot1 = new SkynetBot(board, "Simon");
+                bot2 = new LittleBot(board, "Damien");
 
 
                 List<Bot> listPlayer = new ArrayList<>();

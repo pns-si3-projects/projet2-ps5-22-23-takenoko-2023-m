@@ -35,7 +35,7 @@ public class LittleBot extends IntermediateBot{
                 setPoint(getPoint()+this.objectives.get(i).getNbPointsWin());
                 upNbObjectifsRealises();
                 toSuppress.add(this.objectives.get(i));
-                Main.LOGGER.severe("Objectif réalisé par "+getNom());
+                Main.LOGGER.info("Objectif réalisé par "+getNom());
             }
         }
         //Suppress all objectives that are done
