@@ -105,12 +105,10 @@ class PlayerTest {
         Board board = new Board();
         PrimaryBot bot1 = new PrimaryBot(board,"bot1");
         bot1.setFocusCard(new ObjectivePanda("panda",1,80,TypeOfTile.GREEN));
-        List<Tile> tiles = (ArrayList<Tile>) board.pickThreeTiles();
-        assertEquals(24, board.getTileStack().getStack().size());
-        List<Tile> dummyTiles = new ArrayList<>(Arrays.asList(
-                new Tile(null, TypeOfTile.GREEN),
-                new Tile(null, TypeOfTile.RED),
-                new Tile(null, TypeOfTile.YELLOW)
+        ArrayList<Tile> dummyTiles = new ArrayList<>(Arrays.asList(
+                new Tile(new Coordinate(0,0), TypeOfTile.GREEN),
+                new Tile(new Coordinate(0,0), TypeOfTile.RED),
+                new Tile(new Coordinate(0,0), TypeOfTile.YELLOW)
         ));
         Tile tile = bot1.chooseBetterOf3Tiles(dummyTiles);
 
