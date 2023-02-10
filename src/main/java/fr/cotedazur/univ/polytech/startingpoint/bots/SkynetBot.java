@@ -354,17 +354,15 @@ public class SkynetBot extends Bot {
     private void checkObjectiveToFocus() {
         if(this.getObjective().size()<5){
             if(board.getPatternBoard().getPatternBoardList().size()>6&&!board.isPlotCardEmpty()){
-                objectives.add(board.getPlotCard());
+                pickPlotCard();
             }
             else{
-                objectives.add(board.getPandaCard());
+                pickPandaCard();
             }
             nbIrrigation++;
             nbActions--;
-            nbActions--;
         }
         focusedObjective = chooseObjectiveToFocus();
-        Main.LOGGER.info("focusedobjective: "+focusedObjective);
 
 
     }
