@@ -4,7 +4,6 @@ import fr.cotedazur.univ.polytech.startingpoint.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.*;
 public abstract class Bot {
     /** The number of points of the Bot */
     protected int point = 0;
@@ -24,6 +23,7 @@ public abstract class Bot {
     protected int nbObjectifsRealises = 0;
     /**The number of irrigations*/
     protected int nbIrrigation = 0;
+
     /**The arrayList of all bot's objectives*/
     protected ArrayList<ObjectiveInterface> objectives = new ArrayList<ObjectiveInterface>();
     /**The arrayList of all bot's arrangement*/
@@ -36,7 +36,8 @@ public abstract class Bot {
      * @param board The board of the bot
      * @param nom The name of the bot
      */
-    public Bot(Board board, String nom){
+    protected Bot(Board board, String nom){
+
         this.nom = nom;
         this.board = board;
         this.pickGardenerCard();
@@ -67,7 +68,8 @@ public abstract class Bot {
             if(this.objectives.get(i).isValid(this, this.board)){
                 setPoint(getPoint()+this.objectives.get(i).getNbPointsWin());
                 this.upNbObjectifsRealises();
-                Main.LOGGER.info(objectives.get(i).toString()+" a été réalisé ! ");
+                String message = objectives.get(i).toString()+" a été réalisé ! ";
+                Main.LOGGER.info(message);
                 listObjectiveToRemove.add(this.objectives.get(i));
             }
         }
@@ -82,7 +84,8 @@ public abstract class Bot {
     public void pickPandaCard(){
         ObjectivePanda objectivePanda = this.board.getPandaCard();
         this.objectives.add(objectivePanda);
-        Main.LOGGER.info("Le joueur "+this.getNom()+" a pioche une carte Panda et qui vaut "+objectivePanda.getNbPointsWin()+" points");
+        String message ="Le joueur "+this.getNom()+" a pioche une carte Panda et qui vaut "+objectivePanda.getNbPointsWin()+" points";
+        Main.LOGGER.info(message);
         this.playAction();
     }
 
@@ -90,7 +93,6 @@ public abstract class Bot {
      * The method which pick a random Plot card and add it in the bot's hand
      */
     public void pickPlotCard(){
-        //TODO : make possible to pick other objective than LINE
         ObjectivePlot objectivePlot = this.board.getPlotCard();
         this.objectives.add(objectivePlot);
         Main.LOGGER.info("Le joueur "+this.getNom()+" a pioche une carte Pattern de type "+objectivePlot.getType()+" et de couleur "+objectivePlot.getColors().get(0)+" et qui vaut "+objectivePlot.getNbPointsWin()+" points");
@@ -182,11 +184,13 @@ public abstract class Bot {
         if(type == TypeOfTile.GREEN) this.nbBambooGreen = 0;
     }
 
+
     /**
      * A method which will change the number of a specific bamboo
      * @param value The new value of the specific bamboo
      * @param type The specific type of the bamboo
      */
+
     protected void resetNbBamboo(int value, TypeOfTile type) {
         if(type == TypeOfTile.RED) this.nbBambooRed = value;
         if(type == TypeOfTile.YELLOW) this.nbBambooYellow = value;
@@ -220,18 +224,18 @@ public abstract class Bot {
                 case NONE:
                     throw new IllegalArgumentException("il faut choisir un type valide");
                 case FERTILIZER:
-                    if(this.board.getFertilizerStack().getStack().size()>0){
+                    if(!this.board.getFertilizerStack().getStack().isEmpty()){
                         this.getListArrangement().add(this.board.getFertilizerStack().pick(t));
                     }
                     break;
                 case BASIN:
-                    if(this.board.getBasinStack().getStack().size()>0){
+                    if(!this.board.getBasinStack().getStack().isEmpty()){
                         this.getListArrangement().add(this.board.getBasinStack().pick(t));
 
                     }
                     break;
                 case ENCLOSURE:
-                    if(this.board.getEnclosureStack().getStack().size()>0){
+                    if(!this.board.getEnclosureStack().getStack().isEmpty()){
                         this.getListArrangement().add(this.board.getEnclosureStack().pick(t));
                     }
                     break;
@@ -325,8 +329,8 @@ public abstract class Bot {
         //take objective of type ObjectivePlot from the list objectives
         ArrayList<ObjectivePlot> objectivePlotList = new ArrayList<>();
         for(ObjectiveInterface objective : this.objectives){
-            if(objective instanceof ObjectivePlot){
-                objectivePlotList.add((ObjectivePlot) objective);
+            if(objective instanceof ObjectivePlot obj){
+                objectivePlotList.add(obj);
             }
         }
         for(ObjectivePlot objectivePlot : objectivePlotList){

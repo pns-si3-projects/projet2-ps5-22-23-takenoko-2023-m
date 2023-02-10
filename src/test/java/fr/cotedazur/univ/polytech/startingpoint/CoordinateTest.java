@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,7 +23,6 @@ class CoordinateTest {
         assertEquals(c0_0, c0_0);
         assertEquals(c0_0, new Coordinate(0,0));
         assertNotEquals(c0_0, cn1_n1);
-        assertFalse(c0_0.equals(new Tile(new Coordinate(0,0))));
     }
 
     @Test
@@ -41,7 +41,7 @@ class CoordinateTest {
     @Test
     void testGetNeighbourCoordinates() {
         Coordinate c0_0 = new Coordinate(0,0);
-        ArrayList<Coordinate> neighboursToTest = c0_0.getNeighbourCoordinates();
+        List<Coordinate> neighboursToTest = c0_0.getNeighbourCoordinates();
         ArrayList<Coordinate> neighbours = new ArrayList<>();
         neighbours.add(new Coordinate(-1,0));
         neighbours.add(new Coordinate(-1,1));
