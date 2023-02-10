@@ -4,14 +4,26 @@ import java.util.Random;
 
 public class Dice {
     private Random rand = new Random();
+
+    /**
+     * The constructor of the class
+     */
     public Dice() {
         this.meteo = Meteo.NONE;
     }
 
+    /**
+     * The getter of the meteo
+     * @return the meteo
+     */
     public Meteo getMeteo() {
         return meteo;
     }
 
+    /**
+     * A setter of the new meteo
+     * @param meteo The new meteo
+     */
     public void setMeteo(Meteo meteo) {
         this.meteo = meteo;
     }
@@ -19,7 +31,9 @@ public class Dice {
     private Meteo meteo = Meteo.NONE;
 
 
-
+    /**
+     * A method to generate a random meteo
+     */
     public void randomMeteo(){
         int random = -1;
         for(int i=0;i<10;i++){

@@ -4,13 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+/**
+ * This class is a specific bot which is the better one
+ */
 public class IntermediateBot extends Bot {
 
-
+    /**
+     * The constructor of the IntermediateBot
+     * @param board The board of the bot
+     * @param nom The name of the bot
+     */
     public IntermediateBot(Board board, String nom) {
         super(board, nom);
     }
 
+    /**
+     * The main method of the bot, it's call to make the bot play
+     */
     public void play(){
         super.play();
         this.objectives.sort((o1, o2) -> o2.getNbPointsWin() - o1.getNbPointsWin());
@@ -47,6 +57,9 @@ public class IntermediateBot extends Bot {
 
     }
 
+    /**
+     * This method will be called to play when the dice is Lightning
+     */
     public void playLigntningDice(){
         Tile tile = this.board.getPanda().getTile();
         ObjectivePanda cardToPlay = findObjectivePanda();
@@ -60,10 +73,16 @@ public class IntermediateBot extends Bot {
         }
     }
 
+    /**
+     * This method will be called to play when the dice is Cloud
+     */
     public void playCloudDice(){
         pickArrangement(TypeOfArrangement.BASIN);
     }
 
+    /**
+     * The method will be called to play when the best gard is a Gardener Card
+     */
     public void playForGardenerCard(){
         while(getNbActions()>0){
             ObjectiveGardener objectif = findObjectiveGardener();
@@ -183,6 +202,9 @@ public class IntermediateBot extends Bot {
         }
     }
 
+    /**
+     * The method will be called to play when the best gard is a Panda Card
+     */
     public void playForPandaCard(){
         while(getNbActions()>0){
             ObjectivePanda objectif = findObjectivePanda();
@@ -220,6 +242,9 @@ public class IntermediateBot extends Bot {
         }
     }
 
+    /**
+     * The method will be called to play when the best gard is a Pattern Card
+     */
     public void playForPatternCard(){
         ObjectivePlot objectif = findObjectivePlot();
         Main.LOGGER.info("la focus card = " +objectif);
@@ -268,6 +293,11 @@ public class IntermediateBot extends Bot {
     }
 
 
+    /**
+     * This method will choose the better card of 3 cards in function of the focus card
+     * @param threeCards A List of the 3 cards
+     * @return The better card
+     */
     public Tile chooseBetterOf3Tiles(List<Tile> threeCards){
         ObjectifWithOneColor objectif = findObjectiveGardener();
         if(objectif == null) objectif = findObjectivePanda();
@@ -300,6 +330,10 @@ public class IntermediateBot extends Bot {
 
     }
 
+    /**
+     * This method will find the first ObjectiveGardener card in the bot's hand
+     * @return The first ObjectiveGardener's card
+     */
     public ObjectiveGardener findObjectiveGardener(){
         for(int i = 0; i!= objectives.size(); i++){
             if(objectives.get(i) instanceof ObjectiveGardener){
@@ -309,6 +343,10 @@ public class IntermediateBot extends Bot {
         return null;
     }
 
+    /**
+     * This method will find the first ObjectivePanda card in the bot's hand
+     * @return The first ObjectivePanda's card
+     */
     public ObjectivePanda findObjectivePanda(){
         for(int i=0; i!= objectives.size(); i++){
             if(objectives.get(i) instanceof ObjectivePanda){
@@ -318,6 +356,10 @@ public class IntermediateBot extends Bot {
         return null;
     }
 
+    /**
+     * This method will find the first ObjectivePlot card in the bot's hand
+     * @return The first ObjectivePlot's card
+     */
     public ObjectivePlot findObjectivePlot(){
         for(int i=0; i!= objectives.size(); i++){
             if(objectives.get(i) instanceof ObjectivePlot){
@@ -327,7 +369,9 @@ public class IntermediateBot extends Bot {
         return null;
     }
 
-
+    /**
+     * This method will check if the bot success to build a specific pattern in function of his objectives
+     */
     public void checkPatternOnBoard() {
         //take objective of type ObjectivePlot from the list objectives
         ArrayList<ObjectivePlot> objectivePlotList = new ArrayList<>();
@@ -346,6 +390,11 @@ public class IntermediateBot extends Bot {
         }
     }
 
+    /**
+     * This method will play with the Gardener in function of a specific Type of tile
+     * @param type The specific type of tile
+     * @param tileOfPanda The tile where the Panda is
+     */
     public void playGardenerForSpecificTile(TypeOfTile type, Tile tileOfPanda){
 
         boolean action = false;
@@ -388,6 +437,9 @@ public class IntermediateBot extends Bot {
         }
     }
 
+    /**
+     * This method will play to put some irrigations on the first legal irrigation's placement
+     */
     public void playForIrrigation(){
         List<Irrigation> listeIrrigations = board.getLegalIrrigationPlacement();
         for(Irrigation irrigation : listeIrrigations){

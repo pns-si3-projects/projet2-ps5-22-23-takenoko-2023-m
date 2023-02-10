@@ -5,12 +5,18 @@ import java.util.List;
 
 public class ObjectiveStackPlot extends Stack<ObjectivePlot> {
 
+    /**
+     * A constructor of the class
+     */
     public ObjectiveStackPlot() {
         super();
         this.generate();
     }
 
-
+    /**
+     * toString method
+     * @return a String
+     */
     @Override
     public String toString() {
         String s = "Pile d'objectifs plot : ";
@@ -21,7 +27,9 @@ public class ObjectiveStackPlot extends Stack<ObjectivePlot> {
     }
 
 
-
+    /**
+     * A method to generate all the cards
+     */
     @Override
     public void generate() {;
         List<TypeOfPattern> types = Arrays.asList(TypeOfPattern.LINE,TypeOfPattern.TRIANGLE,TypeOfPattern.BOOMRANG);
