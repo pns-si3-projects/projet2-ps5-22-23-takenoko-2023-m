@@ -9,11 +9,19 @@ public class GameEngine {
     Board board;
     List<Bot> playerList = new ArrayList<>();
 
+    /**
+     * The constructor of the class
+     * @param board
+     * @param players
+     */
     public GameEngine(Board board, List<Bot> players){
         this.board = board;
         this.playerList = players;
     }
 
+    /**
+     * The method to launch the game and stop it when one of the player got 9 objectives realised
+     */
     public void launchGame(){
     //On boucle sur le jeu
         int indexPlayer = 0;
@@ -54,6 +62,12 @@ public class GameEngine {
         }
     }
 
+    /**
+     * This method will print the winner
+     * @param p The winner
+     * @param isEgality a boolean to verify if there is an egality
+     * @param pointsPerdant The number of points of the looser
+     */
     public void printWinner(Bot p, boolean isEgality, int pointsPerdant){
         String message = "Le joueur est gagnant est : "+p.getNom()+" avec un score de "+p.getPoint()+" points marques \nLe perdant possède "+pointsPerdant+" points";
         if(!isEgality) Main.LOGGER.info(message);
