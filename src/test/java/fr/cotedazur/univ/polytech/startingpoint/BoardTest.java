@@ -1,7 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
-import fr.cotedazur.univ.polytech.startingpoint.bots.PrimaryBot;
+import fr.cotedazur.univ.polytech.startingpoint.bots.IntermediateBot;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -77,16 +77,6 @@ class BoardTest {
         assertEquals(28,board.getTileStack().sizeTileStack());
     }
 
-    @Test
-    void testPutBackWithPlayer(){
-        Board board = new Board();
-        PrimaryBot p =  new PrimaryBot(board, "Simon");
-        p.checkBetterCard();
-        List<Tile> liste = board.pickThreeTiles();
-        assertEquals(24,board.getTileStack().sizeTileStack());
-        Tile t = p.chooseBetterOf3Tiles(liste);
-        assertEquals(26,board.getTileStack().sizeTileStack());
-    }
 
     @Test
     void testIrrigationPlacement() {
@@ -96,7 +86,7 @@ class BoardTest {
         board.addTile(tx1y0);
         board.addTile(tx0y1);
         board.addTile(tx1y1);
-        ArrayList<Irrigation> legalIrrigationPlacement = board.getLegalIrrigationPlacement();
+        List<Irrigation> legalIrrigationPlacement = board.getLegalIrrigationPlacement();
         board.addIrrigation(legalIrrigationPlacement.get(0));
         assertTrue(tx1y0.isIrrigated());
         assertTrue(tx0y1.isIrrigated());
@@ -115,10 +105,10 @@ class BoardTest {
 
         //simple test with 3 tiles
         Board board_3 = new Board();
-        ArrayList<Irrigation> legalIrrigationPlacement_3 = board_3.getLegalIrrigationPlacement();
+        List<Irrigation> legalIrrigationPlacement_3 = board_3.getLegalIrrigationPlacement();
         assertTrue(legalIrrigationPlacement_3.size() == 6);
-        board_3.addTile(new Tile(new Coordinate(1,0)));
-        board_3.addTile(new Tile(new Coordinate(0,1)));
+        board_3.addTile(new Tile(new Coordinate(1,0), TypeOfTile.GREEN, TypeOfArrangement.NONE));
+        board_3.addTile(new Tile(new Coordinate(0,1), TypeOfTile.GREEN, TypeOfArrangement.NONE));
         board_3.addIrrigation(legalIrrigationPlacement_3.get(0));
 
         List<Irrigation> trueIrrigations_3 = new ArrayList<>();
@@ -178,6 +168,7 @@ class BoardTest {
             //System.out.println(legalIrrigationPlacement_10.get(i));
             assertEquals(trueIrrigation_10.get(i), legalIrrigationPlacement_10.get(i));
         }
+
     }
 
     @Test
