@@ -40,7 +40,7 @@ public class GameEngine {
                 indexPlayer=0;
                 nbTour++;
             }
-            if(nbTour == 100000){
+            if(nbTour == 50){
                 Main.LOGGER.info("Nombre de tour max atteint");
                 break;
             }

@@ -17,6 +17,7 @@ public class ObjectivePlot implements ObjectiveInterface {
      * @param pattern The specific pattern
      */
     public ObjectivePlot(Pattern pattern){
+        //this.setType("pattern");
         this.pattern = pattern;
         this.nbPointsWin = generatePatternPoint();
     }
@@ -54,14 +55,7 @@ public class ObjectivePlot implements ObjectiveInterface {
      * @return True if it's valid, false else
      */
     public boolean isValid(Bot p, Board b){
-        for(Tile tile : b.getBoardTiles()){
-            for(Tile tile2 : b.getBoardTiles()){
-                if(tile.isNeighbour(tile2)){
-                    return true;
-                }
-            }
-        }
-        return false;
+        return false;   //detection elsewhere
     }
 
     /**

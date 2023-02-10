@@ -31,9 +31,12 @@ public class IntermediateBot extends Bot {
                 case QUESTIONMARK -> playLigntningDice(); //A revoir potentiellement
 
                 default -> Main.LOGGER.info("Météo non prise en compte");
-            }
+        }
 
+        if (objectives.isEmpty()) pickPandaCard();
+        if (objectives.isEmpty()) pickGardenerCard();
         this.objectives.get(0).play(this);
+
         ArrayList<ObjectiveInterface> toSuppress = new ArrayList<>();
         for(int i =0; i!=this.objectives.size(); i++){
             if(this.objectives.get(i).isValid(this, this.board)){
@@ -41,9 +44,13 @@ public class IntermediateBot extends Bot {
                 upNbObjectifsRealises();
                 toSuppress.add(this.objectives.get(i));
                 Main.LOGGER.info("Objectif réalisé par "+getNom());
+            } else if ((board.getTileStack().sizeTileStack() == 0) && ((objectives.get(i).getType() == "LINE") || (objectives.get(i).getType() == "SQUARE") || (objectives.get(i).getType() == "BOOMRANG") || (objectives.get(i).getType() == "TRIANGLE"))) {
+                Main.LOGGER.info("impossible de valider d'objectif pattern, suppressions de : " + objectives.get(i));
+                toSuppress.add(this.objectives.get(i));
             }
 
         }
+        this.objectives.removeAll(toSuppress);
         if(this.objectives.size()<3){
             if(!board.getStackGardener().getStack().isEmpty()){
                 this.pickGardenerCard();
