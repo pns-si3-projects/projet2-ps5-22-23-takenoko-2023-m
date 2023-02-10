@@ -17,8 +17,6 @@ import com.beust.jcommander.JCommander;
 public class Main <T>{
     public final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-    static File file = new File("stats/test.csv");
-
 
 
     public static void main(String... args) throws IOException, CsvException {
