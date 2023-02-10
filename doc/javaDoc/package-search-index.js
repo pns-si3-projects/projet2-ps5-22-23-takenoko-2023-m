@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"fr.cotedazur.univ.polytech.startingpoint"},{"l":"fr.cotedazur.univ.polytech.startingpoint.bots"}];updateSearchResults();
