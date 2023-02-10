@@ -48,9 +48,6 @@ public class IntermediateBot extends Bot {
                 pickPandaCard();
             }
         }
-        else {
-            this.objectives.get(0).play(this);
-        }
 
     }
 

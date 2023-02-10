@@ -2,6 +2,7 @@ package fr.cotedazur.univ.polytech.startingpoint;
 
 import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -264,6 +265,8 @@ public class Board {
         return tileStack;
 
     }
+
+    public ArrayList<Irrigation> getPlacedIrrigations() { return this.placedIrrigations; }
 
     public PatternDetector getPatternBoard() {
         return patternDetector;
