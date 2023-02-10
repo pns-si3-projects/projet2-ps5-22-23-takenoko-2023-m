@@ -124,7 +124,6 @@ public class IntermediateBot extends Bot {
                             if(isIrrigationPosed) break;
                         }
                         if(!isIrrigationPosed){
-                            //Main.LOGGER.info("Bite");
                             for(Irrigation irrigation : listOfIrrigation){
                                 Tile t1 = board.getTile(irrigation.getCoordinates().get(0));
                                 Tile t2 = board.getTile(irrigation.getCoordinates().get(1));
@@ -238,7 +237,7 @@ public class IntermediateBot extends Bot {
                 for(Tile tile : tilesPicked){
                     if(tile.getTypeOfTile().equals(colors.get(0))&&!isPlaced){
                         isPlaced = true;
-                        String ret = board.addTile(new Tile(board.bestCoordinateForLine(objectif),tile.getTypeOfTile()))+ " de type:"+tile.getTypeOfTile();
+                        String ret = board.addTile(new Tile(board.bestCoordinateForLine(objectif),tile.getTypeOfTile(), TypeOfArrangement.NONE))+ " de type:"+tile.getTypeOfTile();
                         Main.LOGGER.info(ret);
                     }
                     else{
@@ -246,7 +245,7 @@ public class IntermediateBot extends Bot {
                     }
                 }
                 if(!isPlaced){
-                    String message = board.addTile(new Tile(board.scanAvailableTilePosition().get(0),tilesPicked.get(0).getTypeOfTile()))+ " de type:"+tilesPicked.get(0).getTypeOfTile();
+                    String message = board.addTile(new Tile(board.scanAvailableTilePosition().get(0),tilesPicked.get(0).getTypeOfTile(), TypeOfArrangement.NONE))+ " de type:"+tilesPicked.get(0).getTypeOfTile();
                     Main.LOGGER.info(message);
                     board.putBackInTileStack(tilesPicked.get(1));
                     board.putBackInTileStack(tilesPicked.get(2));

@@ -12,6 +12,18 @@ public class Tile {
     private TypeOfArrangement typeOfArrangement=TypeOfArrangement.NONE;
     private int key;
 
+    public Tile(Coordinate coordinate, TypeOfTile type, TypeOfArrangement typeOfArrangement){
+        this.coordinate = coordinate;
+        this.typeOfTile = type;
+        this.typeOfArrangement = typeOfArrangement;
+        //Random key from 1 to 20000
+        this.key = (int)(Math.random() * 200000000 + 1);
+        if(this.coordinate != null) {
+            List<Coordinate> list = getNeighbourCoordinates();
+            if (list.contains(new Coordinate(0, 0))) isIrrigated = true;
+        }
+    }
+/*
     public Tile(Coordinate coordinate, TypeOfTile type){
         this.coordinate = coordinate;
         //Random key from 1 to 20000
@@ -21,18 +33,8 @@ public class Tile {
 
         List<Coordinate> list = getNeighbourCoordinates();
         if(list.contains(new Coordinate(0,0))) isIrrigated = true;
-    }
-    public Tile(Coordinate coordinate, TypeOfTile type, TypeOfArrangement typeOfArrangement){
-        this.coordinate = coordinate;
-        this.typeOfTile = type;
-        this.typeOfArrangement = typeOfArrangement;
-        //Random key from 1 to 20000
-        this.key = (int)(Math.random() * 200000000 + 1);
-        List<Coordinate> list = getNeighbourCoordinates();
-        if(list.contains(new Coordinate(0,0))) isIrrigated = true;
-    }
-
-
+    }*/
+/*
     public Tile(int x, int y, TypeOfTile type, TypeOfArrangement typeOfArrangement){
         coordinate = new Coordinate(x, y);
         this.typeOfTile = type;
@@ -41,25 +43,25 @@ public class Tile {
         this.key = (int)(Math.random() * 2000000000 + 1);
         List<Coordinate> list = getNeighbourCoordinates();
         if(list.contains(new Coordinate(0,0))) isIrrigated = true;
-    }
-
+    }*/
+/*-
     public Tile(TypeOfTile type){
         coordinate = null;
         this.typeOfTile = type;
         this.typeOfArrangement = TypeOfArrangement.NONE;
         //Random key from 1 to 20000
         this.key = (int)(Math.random() * 2000000 + 1);
-    }
-
+    }*/
+/*
     public Tile(TypeOfTile type, TypeOfArrangement typeOfArrangement){
         coordinate = null;
         this.typeOfTile = type;
         this.typeOfArrangement = typeOfArrangement;
         //Random key from 1 to 20000
         this.key = (int)(Math.random() * 20000000 + 1);
-    }
+    }*/
 
-
+/*
     public Tile(Coordinate coordinate) {
         this.typeOfTile = TypeOfTile.GREEN;
         this.coordinate = coordinate;
@@ -70,7 +72,7 @@ public class Tile {
         List<Coordinate> list = getNeighbourCoordinates();
         if(list.contains(new Coordinate(0,0))) isIrrigated = true;
 
-    }
+    }*/
 
 
     public int getCoordinnateX() {

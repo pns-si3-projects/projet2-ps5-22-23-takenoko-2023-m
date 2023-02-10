@@ -166,7 +166,7 @@ public class PatternDetector {
     private Coordinate bestCoordinateForTriangleNear(Tile tile, List<Coordinate> availableCoordinate) {
         if(!availableCoordinate.isEmpty()){
             for(Coordinate coordinate : availableCoordinate){
-                for(Coordinate coordinateTogether : tile.getNeighbourCoordinateTogetherWith(new Tile(coordinate))){
+                for(Coordinate coordinateTogether : tile.getNeighbourCoordinateTogetherWith(new Tile(coordinate, TypeOfTile.POND, TypeOfArrangement.NONE))){
                     if(!board.isInBoard(coordinateTogether.getX(),coordinateTogether.getY())){
                         return coordinateTogether;
                     }
@@ -186,7 +186,7 @@ public class PatternDetector {
                     if(board.isInBoard(coordinate.getX(),coordinate.getY())) {
                         List<Coordinate> possibleCoordinates = board.getAvailableCoordinateNear(coordinate);
                         //remove coordinate forming a triangle
-                        possibleCoordinates.removeAll(tile.getNeighbourCoordinateTogetherWith(new Tile(coordinate)));
+                        possibleCoordinates.removeAll(tile.getNeighbourCoordinateTogetherWith(new Tile(coordinate, TypeOfTile.POND, TypeOfArrangement.NONE)));
 
                         possibleCoordinates.remove(bestCoordinateForLineNear(firstTileCoordinate,List.of(coordinate)));
                         possibleCoordinates.remove(bestCoordinateForLineNear(firstTileCoordinate,List.of(coordinate)));
@@ -211,7 +211,7 @@ public class PatternDetector {
     private Coordinate bestCoordinateForBoomrangNear(Tile tile, List<Coordinate> availableCoordinate) {
         if(!availableCoordinate.isEmpty()){
             for(Coordinate coordinate : availableCoordinate){
-                    List<Coordinate> possibleCoordinates = new Tile(coordinate).getNeighbourCoordinates();
+                    List<Coordinate> possibleCoordinates = new Tile(coordinate, TypeOfTile.POND, TypeOfArrangement.NONE).getNeighbourCoordinates();
                     possibleCoordinates.remove(tile.getCoordinate());
                     possibleCoordinates.remove(bestCoordinateForLineNear(coordinate, possibleCoordinates));
                     possibleCoordinates.remove(bestCoordinateForLineNear(coordinate, possibleCoordinates));

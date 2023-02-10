@@ -41,7 +41,7 @@ class CoordinateTest {
     @Test
     void testGetNeighbourCoordinates() {
         Coordinate c0_0 = new Coordinate(0,0);
-        List<Coordinate> neighboursToTest = c0_0.getNeighbourCoordinates();
+        ArrayList<Coordinate> neighboursToTest = c0_0.getNeighbourCoordinates();
         ArrayList<Coordinate> neighbours = new ArrayList<>();
         neighbours.add(new Coordinate(-1,0));
         neighbours.add(new Coordinate(-1,1));
