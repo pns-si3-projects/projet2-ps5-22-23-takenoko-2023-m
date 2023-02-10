@@ -59,7 +59,7 @@ class PlayerTest {
         Board board = new Board();
         Bot bot1 = new IntermediateBot(board,"bot1");
         bot1.resetNbActions();
-        bot1.playAction();
+        bot1.playAction("random");
         assertEquals(1,bot1.getNbActions());
     }
 
@@ -67,7 +67,7 @@ class PlayerTest {
     void resetNbActions() {
         Board board = new Board();
         Bot bot1 = new IntermediateBot(board,"bot1");
-        bot1.playAction();
+        bot1.playAction("random");
         bot1.resetNbActions();
         assertEquals(2,bot1.getNbActions());
     }

@@ -159,7 +159,7 @@ public abstract class Bot {
     /**
      * A method which decrements the number of bot's actions
      */
-    public void playAction() {
+    public void playAction(String action) {
         this.nbActions -= 1;
         Main.LOGGER.info("Le joueur " +this.getNom() +" vient de jouer" + action);
         Main.LOGGER.info("Nombre d'action restante: " + this.getNbActions());
