@@ -8,7 +8,7 @@ public class ObjectivePanda extends ObjectifWithOneColor implements ObjectiveInt
 
         private int nbToEat;
         private int nbPointsWin;
-        private int complexity;
+        private int complexity=7;
 
         public ObjectivePanda(String type, int nbToEat, int nbPointsWin, TypeOfTile typeOfTile) {
             super(typeOfTile);

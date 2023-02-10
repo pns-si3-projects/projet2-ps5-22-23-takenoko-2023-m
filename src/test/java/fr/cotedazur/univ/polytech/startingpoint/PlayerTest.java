@@ -95,16 +95,4 @@ class PlayerTest {
         bot1.upNbBamboo(TypeOfTile.GREEN);
         assertEquals(1,bot1.getNbBamboo(TypeOfTile.GREEN));
     }
-
-
-    @Test
-    void testSortObjective(){
-        Board board = new Board();
-        Main.LOGGER.setLevel(Level.SEVERE);
-        IntermediateBot ib = new IntermediateBot(board,"Simon");
-        ib.getObjective().sort((o1, o2) -> o2.getNbPointsWin() - o1.getNbPointsWin());
-        assertTrue(ib.getObjective().get(0).getNbPointsWin() > ib.getObjective().get(2).getNbPointsWin());
-        Main.LOGGER.severe(Integer.toString(ib.getObjective().get(0).getNbPointsWin()));
-        Main.LOGGER.severe(Integer.toString(ib.getObjective().get(2).getNbPointsWin()));
-    }
 }

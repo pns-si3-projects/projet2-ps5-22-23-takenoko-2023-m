@@ -8,7 +8,7 @@ public class ObjectivePlot implements ObjectiveInterface {
 
     final Pattern pattern;
     final int nbPointsWin;
-    private int complexity;
+    private int complexity=7;
 
 
     public ObjectivePlot(Pattern pattern){
@@ -30,13 +30,6 @@ public class ObjectivePlot implements ObjectiveInterface {
     }
 
     public boolean isValid(Bot p, Board b){
-        for(Tile tile : b.getBoardTiles()){
-            for(Tile tile2 : b.getBoardTiles()){
-                if(tile.isNeighbour(tile2)){
-                    return true;
-                }
-            }
-        }
         return false;
     }
 

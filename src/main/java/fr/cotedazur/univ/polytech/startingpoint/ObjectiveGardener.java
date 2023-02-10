@@ -11,7 +11,7 @@ public class ObjectiveGardener extends ObjectifWithOneColor implements Objective
 
 
     private TypeOfArrangement typeOfArrangement;
-    private int complexity;
+    private int complexity=7;
 
     public ObjectiveGardener(String type,int nbBambooRequired, int nbPointsWin, TypeOfTile typeOfTile, TypeOfArrangement typeOfArrangement) {
         super(typeOfTile);
