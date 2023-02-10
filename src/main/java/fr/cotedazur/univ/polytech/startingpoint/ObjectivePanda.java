@@ -10,7 +10,7 @@ public class ObjectivePanda extends ObjectifWithOneColor implements ObjectiveInt
         /**The number of points of the objectives*/
         private int nbPointsWin;
         /**The complexity of the objective*/
-        private int complexity;
+        private int complexity=  7;
 
     /**
      * The constructor of the objective

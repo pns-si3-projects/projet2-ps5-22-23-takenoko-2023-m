@@ -13,6 +13,7 @@ public interface ObjectiveInterface {
 
     public boolean isValid(Bot player, Board b);
     public int getComplexity();
+    public void setComplexity(int complexity);
 
 
 

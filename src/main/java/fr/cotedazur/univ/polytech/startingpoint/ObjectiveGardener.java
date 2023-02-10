@@ -13,7 +13,7 @@ public class ObjectiveGardener extends ObjectifWithOneColor implements Objective
     /** The arrangement of the objective*/
     private TypeOfArrangement typeOfArrangement;
     /**The complexity of the objective*/
-    private int complexity;
+    private int complexity = 7;
 
     /**
      * The constructor of the objective

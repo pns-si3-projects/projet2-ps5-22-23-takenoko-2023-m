@@ -24,10 +24,11 @@ public class SkynetBot extends Bot {
     @Override
     public void play() {
         super.play();
+        nbActions=2;
         this.checkObjectiveToFocus();
 
         switch (this.board.getDice().getMeteo()){
-            case SUN, QUESTIONMARK -> this.nbActions++;
+            case SUN -> this.nbActions++;
             case LIGHTNING -> {
                 this.nbActions++;
                 movePandaToTheBestLocation();
@@ -37,8 +38,38 @@ public class SkynetBot extends Bot {
                     this.nbActions++;
                 }
             }
+            case QUESTIONMARK -> {
+                if(nbTours<4){
+                    this.nbIrrigation++;
+                }
+                else{
+                    this.nbActions++;
+                }
+            }
         }
         focusedObjective.play(this);
+        ArrayList<ObjectiveInterface> toSuppress = new ArrayList<>();
+        for(int i =0; i!=this.objectives.size(); i++){
+            if(this.objectives.get(i).isValid(this, this.board)){
+                setPoint(getPoint()+this.objectives.get(i).getNbPointsWin());
+                upNbObjectifsRealises();
+                toSuppress.add(this.objectives.get(i));
+                Main.LOGGER.info("Objectif "+this.objectives.get(i).toString()+" réalisé par "+getNom());
+            } else if ((board.getTileStack().sizeTileStack() == 0) && ((objectives.get(i).getType() == "LINE") || (objectives.get(i).getType() == "SQUARE") || (objectives.get(i).getType() == "BOOMRANG") || (objectives.get(i).getType() == "TRIANGLE"))) {
+                Main.LOGGER.info("impossible de valider d'objectif pattern, suppressions de : " + objectives.get(i));
+                toSuppress.add(this.objectives.get(i));
+            }
+
+        }
+        this.objectives.removeAll(toSuppress);
+        if(this.objectives.size()<3){
+            if(!board.getStackGardener().getStack().isEmpty()){
+                this.pickGardenerCard();
+            }else{
+                pickPandaCard();
+            }
+        }
+
         Main.LOGGER.info("\n");
     }
 
@@ -46,13 +77,14 @@ public class SkynetBot extends Bot {
      * This method will moove the panda on the best location
      */
     private void movePandaToTheBestLocation() {
+        Main.LOGGER.info("Move panda to the best location");
         Tile bestLocationForPanda = bestLocationForPanda();
         if(bestLocationForPanda!=null){
             Main.LOGGER.info(this.board.movePandaOn(bestLocationForPanda.getCoordinate(), this));
-            this.playAction();
+            this.playAction("le panda");
         }
         else{
-            this.nbActions--;
+            this.playAction("rien");
         }
     }
 
@@ -123,11 +155,7 @@ public class SkynetBot extends Bot {
     }
 
 
-    /**
-     * This method will return the list of all panda objectives in the bot's hand
-     * @return A list of panda's objectives
-     */
-    private List<ObjectivePanda> getListOfPandaObjective() {
+    public List<ObjectivePanda> getListOfPandaObjective() {
         List<ObjectivePanda> listOfObjectivePanda = new ArrayList<>();
         for(ObjectiveInterface objective : objectives){
             if(objective instanceof ObjectivePanda objectivePanda){
@@ -136,16 +164,10 @@ public class SkynetBot extends Bot {
         }
         return listOfObjectivePanda;
     }
-
-    /**
-     * This method will be called when the focus card is an ObjectivePanda card
-     */
+    @Override
     public void playForPandaCard(){
+        Main.LOGGER.info("Play for panda card"+nbActions);
         if(focusedObjective instanceof ObjectivePanda objectivePanda) {
-
-            if (nbActions > 1) {
-                this.playGardenerForSpecificTile(objectivePanda.getTypeOfTile(), board.getPanda().getTile());
-            }
             if(nbActions >0) {
                 if(board.getDice().getMeteo().equals(Meteo.WIND)){
                     this.movePandaToTheBestLocation();
@@ -157,9 +179,7 @@ public class SkynetBot extends Bot {
             }
         }
     }
-    /**
-     * This method will be called when the focus card is an ObjectivePlot card
-     */
+    @Override
     public void playForPatternCard(){
         if(focusedObjective instanceof ObjectivePlot objectivePlot) {
             if (nbActions > 1) {
@@ -215,13 +235,14 @@ public class SkynetBot extends Bot {
                 board.putBackInTileStack(tilesToPutBackInStack.get(0));
                 board.putBackInTileStack(tilesToPutBackInStack.get(1));
             }
-            this.playAction();
+            this.playAction("une tuile");
         }
     }
 
     /**
      * This method will be called when the focus card is an ObjectiveGardener card
      */
+    @Override
     public void playForGardenerCard(){
         if(focusedObjective instanceof ObjectiveGardener objectif) {
             while(getNbActions()>0){
@@ -235,7 +256,7 @@ public class SkynetBot extends Bot {
                         Tile toAdd = new Tile(availableCoordinatesToPutTile.get(0),bestCard.getTypeOfTile(),bestCard.getTypeOfArrangement());
                         String message = this.board.addTile(toAdd);
                         Main.LOGGER.info(message);
-                        this.playAction();
+                        this.playAction("une tuile");
                     }else{
                         playForIrrigation();
                     }
@@ -243,23 +264,20 @@ public class SkynetBot extends Bot {
                     ArrayList<Coordinate> availablePositionsForGarderner2 = new ArrayList<>();
                     for(Coordinate co : availablePositionsForGarderner){
                         Tile tile = board.getTile(co);
-                        if(tile != null){
-                            if(tile.getTypeOfTile().equals(objectif.getTypeOfTile())){
-                                availablePositionsForGarderner2.add(co);
-                            }
+                        if(tile != null && tile.getTypeOfTile().equals(objectif.getTypeOfTile())){
+                            availablePositionsForGarderner2.add(co);
                         }
                     }
                     if(!availablePositionsForGarderner2.isEmpty()){
                         boolean gardenerMooved = false;
                         for(Coordinate co : availablePositionsForGarderner2){
                             Tile tile = board.getTile(co);
-                            if(tile != null){
-                                if(tile.isIrrigated()){
-                                    Main.LOGGER.info(board.moveGardenerOn(co));
-                                    this.playAction();
-                                    gardenerMooved = true;
-                                    break;
-                                }
+                            if(tile != null && tile.isIrrigated()){
+                                String message = board.moveGardenerOn(co);
+                                Main.LOGGER.info(message);
+                                this.playAction("le jardinier");
+                                gardenerMooved = true;
+                                break;
                             }
                         }
                         if(!gardenerMooved){
@@ -273,7 +291,7 @@ public class SkynetBot extends Bot {
                                         if(t1 != null && t2 != null){
                                             isIrrigationPosed = board.addIrrigation(i);
                                             if(isIrrigationPosed){
-                                                this.playAction();
+                                                this.playAction("irrigation");
                                                 break;
                                             }
                                         }
@@ -282,17 +300,14 @@ public class SkynetBot extends Bot {
                                 if(isIrrigationPosed) break;
                             }
                             if(!isIrrigationPosed){
-                                //Main.LOGGER.info("Bite");
                                 for(Irrigation irrigation : listOfIrrigation){
                                     Tile t1 = board.getTile(irrigation.getCoordinates().get(0));
                                     Tile t2 = board.getTile(irrigation.getCoordinates().get(1));
-                                    if(t1 != null && t2 != null){
-                                        if(getNbActions() > 0){
-                                            boolean verif = board.addIrrigation(irrigation);
-                                            if(verif){
-                                                this.playAction();
-                                                break;
-                                            }
+                                    if(t1 != null && t2 != null && getNbActions() > 0){
+                                        boolean verif = board.addIrrigation(irrigation);
+                                        if(verif){
+                                            this.playAction("irrigation");
+                                            break;
                                         }
                                     }
                                 }
@@ -303,7 +318,7 @@ public class SkynetBot extends Bot {
                                     Tile toAdd = new Tile(availableCoordinatesToPutTile.get(0),bestCard.getTypeOfTile(),bestCard.getTypeOfArrangement());
                                     String message = this.board.addTile(toAdd);
                                     Main.LOGGER.info(message);
-                                    this.playAction();
+                                    this.playAction("une tuile");
                                 }else{
 
                                     playForIrrigation();
@@ -317,7 +332,7 @@ public class SkynetBot extends Bot {
                                 Tile toAdd = new Tile(availableCoordinatesToPutTile.get(0),bestCard.getTypeOfTile(),bestCard.getTypeOfArrangement());
                                 String message = this.board.addTile(toAdd);
                                 Main.LOGGER.info(message);
-                                this.playAction();
+                                this.playAction("une tuile");
                             }else{
 
                                 playForIrrigation();
@@ -331,14 +346,12 @@ public class SkynetBot extends Bot {
                             Tile toAdd = new Tile(availableCoordinatesToPutTile.get(0),bestCard.getTypeOfTile(),bestCard.getTypeOfArrangement());
                             String message = this.board.addTile(toAdd);
                             Main.LOGGER.info(message);
-                            this.playAction();
+                            this.playAction("une tuile");
                         }else{
                             playForIrrigation();
                         }
                     }
                 }
-
-                //if(this.nbActions > 0) objectives.get(objectives.size()-1).play(this);
             }
         }
     }
@@ -353,27 +366,31 @@ public class SkynetBot extends Bot {
         if(threeCards.get(0).getTypeOfTile().equals(objectif.getTypeOfTile())){
             board.getTileStack().addTile(threeCards.get(1));
             board.getTileStack().addTile(threeCards.get(2));
-            Main.LOGGER.info(Integer.toString(board.getTileStack().sizeTileStack()));
+            String message = Integer.toString(board.getTileStack().sizeTileStack());
+            Main.LOGGER.info(message);
             return threeCards.get(0);
         }
 
         if(threeCards.get(1).getTypeOfTile().equals(objectif.getTypeOfTile())){
             board.getTileStack().addTile(threeCards.get(0));
             board.getTileStack().addTile(threeCards.get(2));
-            Main.LOGGER.info(Integer.toString(board.getTileStack().sizeTileStack()));
+            String message = Integer.toString(board.getTileStack().sizeTileStack());
+            Main.LOGGER.info(message);
             return threeCards.get(1);
         }
 
         if(threeCards.get(2).getTypeOfTile().equals(objectif.getTypeOfTile())){
             board.getTileStack().addTile(threeCards.get(0));
             board.getTileStack().addTile(threeCards.get(1));
-            Main.LOGGER.info(Integer.toString(board.getTileStack().sizeTileStack()));
+            String message = Integer.toString(board.getTileStack().sizeTileStack());
+            Main.LOGGER.info(message);
             return threeCards.get(2);
         }
 
         board.getTileStack().addTile(threeCards.get(1));
         board.getTileStack().addTile(threeCards.get(2));
-        Main.LOGGER.info(Integer.toString(board.getTileStack().sizeTileStack()));
+        String message = Integer.toString(board.getTileStack().sizeTileStack());
+        Main.LOGGER.info(message);
         return threeCards.get(0);
 
     }
@@ -385,11 +402,11 @@ public class SkynetBot extends Bot {
         List<Irrigation> listeIrrigations = board.getLegalIrrigationPlacement();
         for(Irrigation irrigation : listeIrrigations){
             boolean verif = board.addIrrigation(irrigation);
-            this.playAction();
+            this.playAction("irrigation");
             if(verif){
                 break;
             }else{
-                this.playAction();
+                this.playAction("irrigation");
             }
         }
     }
@@ -400,31 +417,50 @@ public class SkynetBot extends Bot {
     private void checkObjectiveToFocus() {
         if(this.getObjective().size()<5){
             if(board.getPatternBoard().getPatternBoardList().size()>6&&!board.isPlotCardEmpty()){
-                objectives.add(board.getPlotCard());
+                pickPlotCard();
             }
             else{
-                objectives.add(board.getPandaCard());
+                pickPandaCard();
             }
             nbIrrigation++;
-            nbActions--;
-            nbActions--;
+            this.playAction("irrigation");
         }
         focusedObjective = chooseObjectiveToFocus();
+        ArrayList<ObjectiveInterface> toSuppress = new ArrayList<>();
+        for(int i =0; i!=this.objectives.size(); i++){
+            if(this.objectives.get(i).isValid(this, this.board)){
+                setPoint(getPoint()+this.objectives.get(i).getNbPointsWin());
+                upNbObjectifsRealises();
+                toSuppress.add(this.objectives.get(i));
+                Main.LOGGER.info("Objectif réalisé par "+getNom());
+            } else if ((board.getTileStack().sizeTileStack() == 0) && ((objectives.get(i).getType() == "LINE") || (objectives.get(i).getType() == "SQUARE") || (objectives.get(i).getType() == "BOOMRANG") || (objectives.get(i).getType() == "TRIANGLE"))) {
+                Main.LOGGER.info("impossible de valider d'objectif pattern, suppressions de : " + objectives.get(i));
+                toSuppress.add(this.objectives.get(i));
+            }
 
+        }
+        this.objectives.removeAll(toSuppress);
+        if(this.objectives.size()<3){
+            if(!board.getStackGardener().getStack().isEmpty()){
+                this.pickGardenerCard();
+            }else{
+                pickPandaCard();
+            }
+        }
     }
 
     private ObjectiveInterface chooseObjectiveToFocus() {
         ObjectiveInterface objectiveToFocus = null;
         int max = 0;
         for(ObjectiveInterface objective : objectives){
-            checkObjectiveComplexity(objective);
+            objective.setComplexity(checkObjectiveComplexity(objective));
             if(objective.getNbPointsWin()>max){
                 if(objectiveToFocus==null || (objectiveToFocus.getComplexity()-1>objective.getComplexity())){
                     max = objective.getNbPointsWin();
                     objectiveToFocus = objective;
                 }
             }
-            else if(objectiveToFocus.getComplexity()>objective.getComplexity()+1){
+            else if(objectiveToFocus != null&&objectiveToFocus.getComplexity()>objective.getComplexity()){
                 max = objective.getNbPointsWin();
                 objectiveToFocus = objective;
             }
@@ -432,93 +468,94 @@ public class SkynetBot extends Bot {
         return objectiveToFocus;
     }
 
-    private void checkObjectiveComplexity(ObjectiveInterface objective) {
+    private int checkObjectiveComplexity(ObjectiveInterface objective) {
         if(objective instanceof ObjectivePlot objectivePlot){
-            checkPlotObjectiveComplexity(objectivePlot);
+            return checkPlotObjectiveComplexity(objectivePlot);
         }
         else if(objective instanceof ObjectivePanda objectivePanda){
-            checkPandaObjectiveComplexity(objectivePanda);
+            return checkPandaObjectiveComplexity(objectivePanda);
         }
         else if(objective instanceof ObjectiveGardener objectiveGardener){
-            checkGardenerObjectiveComplexity(objectiveGardener);
+            return checkGardenerObjectiveComplexity(objectiveGardener);
         }
+        return 5;
     }
 
-    private void checkGardenerObjectiveComplexity(ObjectiveGardener objectiveGardener) {
+    private int checkGardenerObjectiveComplexity(ObjectiveGardener objectiveGardener) {
         List<Tile> listOfTileOfSameColorInBoard = this.getBoardTileOfType(objectiveGardener.getTypeOfTile());
         for(Tile tile : listOfTileOfSameColorInBoard){
             //case where only one bamboo is missing to complete the objective
             if(tile.getBamboo()-1 == objectiveGardener.getNbBambooRequired()){
                 //si il suffit juste d'ajouter un bambou
                 if(tile.getTypeOfTile() == objectiveGardener.getTypeOfTile()){
-                    objectiveGardener.setComplexity(1);
+                    return 1;
                 }
                 //si il faut ajouter un bambou et poser un arrangement
                 else if(this.getListArrangement().contains(objectiveGardener.getTypeOfArrangement())){
-                    objectiveGardener.setComplexity(3);
+                    return 3;
                 }
                 //si il faut attendre d'avoir un arrangement pour pouvoir compléter l'objectif
                 else{
-                    objectiveGardener.setComplexity(5);
+                    return 5;
                 }
             }
             //si il y a le bon nombre de bamboo mais qu'il n'y a pas le bon arrangement
             else if(tile.getBamboo() == objectiveGardener.getNbBambooRequired()){
                 if(this.getListArrangement().contains(objectiveGardener.getTypeOfArrangement())){
-                    objectiveGardener.setComplexity(1);
+                    return 1;
                 }
                 else{
-                    objectiveGardener.setComplexity(5);
+                    return 5;
                 }
             }
             else{
-                objectiveGardener.setComplexity(5);
+                return 5;
             }
         }
+        return 5;
     }
 
-    private void checkPandaObjectiveComplexity(ObjectivePanda objectivePanda) {
+    private int checkPandaObjectiveComplexity(ObjectivePanda objectivePanda) {
         TypeOfTile type = objectivePanda.getTypeOfTile();
         int numberOfBambou = objectivePanda.getNbToEat();
         int maxNumberOfBambouEatableOnBoardOnATile = checkMaxNumberOfBambouEatableOnBoardOnATile(type);
         switch (type){
             case GREEN:
                 if(numberOfBambou<nbBambooGreen+maxNumberOfBambouEatableOnBoardOnATile){
-                    objectivePanda.setComplexity(1);
+                    return 1;
                 }
                 else{
-                    objectivePanda.setComplexity(3);
+                    return 3;
                 }
-                break;
             case YELLOW:
                 if(numberOfBambou<nbBambooYellow+maxNumberOfBambouEatableOnBoardOnATile){
-                    objectivePanda.setComplexity(1);
+                    return 1;
                 }
                 else{
-                    objectivePanda.setComplexity(3);
+                    return 3;
                 }
-                break;
             case RED:
                 if(numberOfBambou<nbBambooRed+maxNumberOfBambouEatableOnBoardOnATile){
-                    objectivePanda.setComplexity(1);
+                    return 1;
                 }
                 else{
-                    objectivePanda.setComplexity(3);
+                    return 3;
                 }
-                break;
         }
+        return 4;
     }
 
-    private void checkPlotObjectiveComplexity(ObjectivePlot objectivePlot) {
+    private int checkPlotObjectiveComplexity(ObjectivePlot objectivePlot) {
         List<Tile> listOfTileOfSameColorInBoard = this.getBoardTileOfType(objectivePlot.getColors().get(0));
-        objectivePlot.setComplexity(4);
+
         int numberOfTileWhichHaveSameColorAsNeighbour = getNumberOfTileWhichHaveSameColorAsNeighbour(listOfTileOfSameColorInBoard);
         if ( numberOfTileWhichHaveSameColorAsNeighbour > 0 && numberOfTileWhichHaveSameColorAsNeighbour<=2) {
-            objectivePlot.setComplexity(2);
+            return 2;
         }
         else if(numberOfTileWhichHaveSameColorAsNeighbour > 2){
-            objectivePlot.setComplexity(1);
+            return 1;
         }
+        return 4;
     }
 
     private int checkMaxNumberOfBambouEatableOnBoardOnATile(TypeOfTile type) {
@@ -568,8 +605,9 @@ public class SkynetBot extends Bot {
         for (Coordinate co : coordinateToMooveGardener) {
             if (coordinateToMoovePanda.contains(co)) {
                 if (board.getTile(co).isIrrigated() && board.getTile(co).getTypeOfTile().equals(type)) {
-                    Main.LOGGER.info(board.moveGardenerOn(co));
-                    this.playAction();
+                    String message = board.moveGardenerOn(co);
+                    Main.LOGGER.info(message);
+                    this.playAction("jardinier");
                     break;
                 } else {
                     for (Irrigation irrigation : availablePositionsIrrigation) {
