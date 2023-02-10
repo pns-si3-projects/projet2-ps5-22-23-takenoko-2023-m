@@ -32,10 +32,12 @@ Ainsi par conséquent, si l'utilisateur ne souhaite voir apparaître que le mess
 
 
 Résumé pour les statistiques CSV : 
-(à faire)
+Les statistiques présentes dans le fichier csv permet notamment de comprendre quel bot est supérieur à quel autre bot. Nous pouvons trouver dans ce fichier des statistiques comme le nombre de parties jouées, le nombre de parties gagnés pour chaque bot ainsi que le pourcentage de victoire. 
+
+![Exemple de génération d'un fichier csv sur 5575 parties avec comme stats par ligne : 1)Le nom du joueur 2) Le nombre de parties gagnées 3) Le pourcentage de victoire](https://cdn.discordapp.com/attachments/701053516256509954/1073158223638568980/image.png)
 
 Résumé de ce que a été fait pour le bot : 
-Actuellement nous avons deux versions du bot, qui sont toutes les deux diffrentes
+Actuellement nous avons deux versions du bot, qui sont toutes les deux différentes :
 
  1. Le premier bot va fonctionner de cette manière : (1) Il va regarder l'objectif qui vaut le plus de points => (2) Il va lancer une méthode propre à cet objectif => (3) il répète l'étape (1)
  2. Pour ce qui est du deuxième bot, ce dernier est beaucoup plus évolué car il va  - comme pour le premier - regarder l'objectif, il va essayer de l'accomplir mais s'il voit qu'il ne peut pas accomplir cet objectif, il va essayer d'en accomplir un autre (le second qui rapporte le plus de points). Ce bot est assez complexe, c'est pour cela qu'avant de nous lancer dans la programmation, nous avons essayer de modéliser sur un schéma l'intelligence de ce bot : 
@@ -43,11 +45,16 @@ Actuellement nous avons deux versions du bot, qui sont toutes les deux diffrente
 
 ## Architecture et qualité
 Comment est faite l'architecture du projet : 
+Pour l'architecture du projet, nous avons créer un package Bot notamment pour pouvoir y mettre les différents types de bots que nous avons codé. 
+(à continuer)
 
 Où trouver les infos : (documentation) 
 Toute la documentation de notre projet se trouver dans le dossier doc dans lequel vous avez pu trouver ce fichier. Il est également possible de pouvoir trouver la javadoc du projet qui a été générée. Celle-ci va pouvoir vous permettre de mieux comprendre le fonctionnement des différentes méthodes et de comment ces dernières fonctionnent. 
 
 Etat de base du code :
+Actuellement, nous savons que le projet possède une bonne base du jeu Takenoko, les règles principales sont implémentées et notamment des fonctionnalités propres au jeu comme les irrigations, la détection de patterns pour les objectifs Parcelles fonctionne correctement. Nous sommes également en mesure d'affirmer que les différents bots que nous avons créer fonctionnent correctement et ont chacun une manière de réfléchir qui leur est propre. 
+Cependant, il reste des points négatifs dans ce code. Par exemple, nous savons que ce code est difficilement maintenable et que pour l'équipe qui reprendra ce code, il faudra une phase d'adaptation et de compréhension du code pour bien comprendre son fonctionnement. De plus, il est également possible de réaliser une grosse phase de refactorisation dans ce projet car nous savons notamment grâce à SonarCube qu'il est possible de refactoriser ce code, cependant, à cause d'un manque de temps, nous avons pas pu effectuer cette étape de manière complète.
+Nous conseillons donc à la future équipe qui reprendra ce projet, de prévoir une bonne semaine d'adaptation pour pouvoir bien relire le code/la javadoc, bien comprendre le fonctionnement du programme, et effectuer une refactorisation pour pouvoir repartir sur de bonnes bases.
 ## Processus 
 Responsabilités de l'équipe : 
 Voici un tableau qui répartit la responsabilité de chacun sur une partie du projet. Il est cependant important de noter que bien que nous nous sommes spécialisés chacun sur une partie du projet, tout le monde à "toucher à tout" au projet.

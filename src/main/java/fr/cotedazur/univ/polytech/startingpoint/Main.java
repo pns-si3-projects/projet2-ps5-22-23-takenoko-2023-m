@@ -1,12 +1,12 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 import com.opencsv.exceptions.CsvException;
-import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
-import fr.cotedazur.univ.polytech.startingpoint.bots.PrimaryBot;
+import fr.cotedazur.univ.polytech.startingpoint.bots.*;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.*;
 import java.util.List;
 import com.opencsv.*;
@@ -14,23 +14,14 @@ import java.io.FileReader;
 import java.net.URL;
 import com.beust.jcommander.JCommander;
 
-public class Main {
+public class Main <T>{
     public final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
     static File file = new File("stats/test.csv");
 
 
+
     public static void main(String... args) throws IOException, CsvException {
-
-        //String file = "stats/gamestats.csv";
-        //CSVWriter writer = new CSVWriter(new FileWriter(file));
-
-        //Créer un tableau de chaînes pour les en-têtes de colonne
-        //String[] headers = {"Nom", "Victoires", "NombreParties"};
-
-        //Écrire les en-têtes de colonne dans le fichier
-        //writer.writeNext(headers);
-
-
 
         Args parameters = new Args();
         JCommander.newBuilder()
@@ -39,21 +30,26 @@ public class Main {
                 .parse(args);
 
         CSVManager csvManager = new CSVManager(1, "stats/gamestats.csv", new ArrayList<String[]>());
+        List<List<String>> list = new ArrayList<List<String>>();
+        list = csvManager.readerCSV();
+
 
         int nbParties = 1;
         if (parameters.twoThousands) {
-            System.out.println("2000");
             nbParties = 1000;
             LOGGER.setLevel(Level.SEVERE);
+            LOGGER.severe("Run mode : two thousand games");
         }
         if (parameters.demo) {
-            System.out.println("demo");
             LOGGER.setLevel(Level.INFO);
+            LOGGER.severe("Run mode : demo");
         }
         if (parameters.csv) {
-            System.out.println("csv");
-            nbParties = 100;
+
+            nbParties = 1;
+
             LOGGER.setLevel(Level.SEVERE);
+            LOGGER.severe("Run mode : csv");
         }
 
         csvManager.setNbParties(nbParties);
@@ -61,17 +57,21 @@ public class Main {
         double victoireBot1=0;
         double victoireBot2=0;
         List<String[]> listBot = new ArrayList<>();
-        Bot bot1 = new PrimaryBot(new Board(), "Simon");
-        Bot bot2 = new PrimaryBot(new Board(), "Damien");
+
+        Bot bot1 = new IntermediateBot(new Board(), "Simon");
+        Bot bot2 = new LittleBot(new Board(), "Damien");
 
 
+
+        LOGGER.severe("Lancement de " + nbParties + " partie(s) avec des bots intermédiaires vs debutants");
 
         for(int i=0;i<nbParties;i++){
             listBot.clear();
             Board board = new Board();
 
-            bot1 = new PrimaryBot(board, "Simon");
-            bot2 = new PrimaryBot(board, "Damien");
+            bot1 = new IntermediateBot(board, "Simon");
+            bot2 = new LittleBot(board, "Damien");
+
 
 
             List<Bot> listPlayer = new ArrayList<>();
@@ -81,7 +81,7 @@ public class Main {
             game.launchGame();
             if (bot1.getPoint()>bot2.getPoint()) {
                 victoireBot1++;
-            } else {
+            } else if(bot1.getPoint()<bot2.getPoint()){
                 victoireBot2++;
             }
 
@@ -95,21 +95,39 @@ public class Main {
         }
 
         listBot.clear();
-        String[] bot1Info = {bot1.getNom(),""+victoireBot1,""+(victoireBot1/nbParties)*100+"%"};
-        String[] bot2Info = {bot2.getNom(),""+victoireBot2,""+(victoireBot2/nbParties)*100+"%"};
-        listBot.add(bot1Info);
-        listBot.add(bot2Info);
+        if(parameters.csv){
+            nbParties += Integer.parseInt(list.get(0).get(0));
+            victoireBot1 += Double.parseDouble(list.get(1).get(1));
+            victoireBot2 += Double.parseDouble(list.get(2).get(1));
+            String[] bot1Info = {bot1.getNom(),""+victoireBot1,""+(victoireBot1/nbParties)*100+"%"};
+            String[] bot2Info = {bot2.getNom(),""+victoireBot2,""+(victoireBot2/nbParties)*100+"%"};
+            listBot.add(bot1Info);
+            listBot.add(bot2Info);
+        }
+        else{
+            String[] bot1Info = {bot1.getNom(),""+victoireBot1,""+(victoireBot1/nbParties)*100+"%"};
+            String[] bot2Info = {bot2.getNom(),""+victoireBot2,""+(victoireBot2/nbParties)*100+"%"};
+            listBot.add(bot1Info);
+            listBot.add(bot2Info);
+        }
+
+        int victoireB1 = (int) victoireBot1;
+        int victoireB2 = (int) victoireBot2;
+        LOGGER.severe(bot1.getNom() + " a remporté " + victoireB1 + " partie(s) ce qui fait un pourcentage de " + (victoireBot1/nbParties)*100 + "%");
+        LOGGER.severe(bot2.getNom() + " a remporté " + victoireB2 + " partie(s) ce qui fait un pourcentage de " + (victoireBot2/nbParties)*100 + "%");
 
 
         if (parameters.twoThousands) {
+            LOGGER.severe("Lancement de " + nbParties + " partie(s) avec 2 bots intermédiaire");
+
             victoireBot1=0;
             victoireBot2=0;
             for(int i=0;i<nbParties;i++){
 
                 Board board = new Board();
 
-                bot1 = new PrimaryBot(board, "Simon");
-                bot2 = new PrimaryBot(board, "Damien");
+                bot1 = new IntermediateBot(board, "Simon");
+                bot2 = new IntermediateBot(board, "Damien");
 
 
                 List<Bot> listPlayer = new ArrayList<>();
@@ -135,6 +153,11 @@ public class Main {
             listBot.add(bot12Info);
             listBot.add(bot22Info);
 
+            victoireB1 = (int) victoireBot1;
+            victoireB2 = (int) victoireBot2;
+            LOGGER.severe(bot1.getNom() + " a remporté " + victoireB1 + " partie(s) ce qui fait un pourcentage de " + (victoireBot1/nbParties)*100 + "%");
+            LOGGER.severe(bot2.getNom() + " a remporté " + victoireB2 + " partie(s) ce qui fait un pourcentage de " + (victoireBot2/nbParties)*100 + "%");
+
         }
 
 
@@ -148,7 +171,6 @@ public class Main {
         //String[] bot2Info = {bot2.getNom(),""+bot2.getPoint(),"1"};
         //writer.writeNext(bot1Info);
         //writer.writeNext(bot2Info);
-
 
 
     }

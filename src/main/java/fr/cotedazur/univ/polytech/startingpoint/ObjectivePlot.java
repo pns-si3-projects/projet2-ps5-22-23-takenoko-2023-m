@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
+import fr.cotedazur.univ.polytech.startingpoint.bots.IntermediateBot;
 import fr.cotedazur.univ.polytech.startingpoint.bots.PrimaryBot;
 
 import java.util.List;
@@ -9,11 +10,21 @@ public class ObjectivePlot implements ObjectiveInterface {
 
     final Pattern pattern;
     final int nbPointsWin;
+    private int complexity;
 
 
     public ObjectivePlot(Pattern pattern){
         this.pattern = pattern;
         this.nbPointsWin = generatePatternPoint();
+    }
+    public void setComplexity(int complexity){
+        if(this.complexity>complexity){
+            this.complexity = complexity;
+        }
+    }
+
+    public int getComplexity(){
+        return this.complexity;
     }
 
     public int getNbPointsWin(){
@@ -35,6 +46,8 @@ public class ObjectivePlot implements ObjectiveInterface {
     public void play(Bot player) {
         player.playForPatternCard();
     }
+
+
 
     private int generatePatternPoint() {
         int sumOfPoint;
@@ -68,7 +81,6 @@ public class ObjectivePlot implements ObjectiveInterface {
     public List<TypeOfTile> getColors(){
         return this.pattern.getColors();
     }
-
 
 
 
