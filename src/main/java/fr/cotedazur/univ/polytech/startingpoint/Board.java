@@ -111,7 +111,6 @@ public class Board {
     public String moveGardenerOn(Coordinate coordinate){
 
         String bNumber = gardener.moveOn(coordinate);
-        int nbBamboo = this.getTile(coordinate).getBamboo();
         return "Le jardinier à été déplacé en "+coordinate.getX()+", "+coordinate.getY() + " voici les tuiles affectées : \n" + bNumber + "La case " + coordinate + " a poussé et est maintenant à " + this.getTile(coordinate).getBamboo() + " bambou(s)\n";
 
 
@@ -159,12 +158,10 @@ public class Board {
                 placedIrrigations.add(newIrrigation);
                 legalIrrigationPlacement.remove(legalIrrigationPlacement.indexOf(irrigation));
 
-                ArrayList<Irrigation> neighbourIrrigations = irrigation.getNeighbourIrrigations();
+                List<Irrigation> neighbourIrrigations = irrigation.getNeighbourIrrigations();
                 for (int i = 0; i < neighbourIrrigations.size(); i++) { //adds the new legal irrigation placements
-                    if (!legalIrrigationPlacement.contains(neighbourIrrigations.get(i))) {
-                        if (!placedIrrigations.contains(neighbourIrrigations.get(i))) {
-                            legalIrrigationPlacement.add(neighbourIrrigations.get(i));
-                        }
+                    if (!legalIrrigationPlacement.contains(neighbourIrrigations.get(i))&&!placedIrrigations.contains(neighbourIrrigations.get(i))) {
+                        legalIrrigationPlacement.add(neighbourIrrigations.get(i));
                     }
                 }
 
@@ -176,11 +173,13 @@ public class Board {
         return false;
     }
 
+
     /**
      * A getter to return the legal irrigation placement
      * @return A list of the legal irrigation placement
      */
-    public ArrayList<Irrigation> getLegalIrrigationPlacement() {
+    public List<Irrigation> getLegalIrrigationPlacement() {
+
         return legalIrrigationPlacement;
     }
 
@@ -225,30 +224,12 @@ public class Board {
             //we get all the neighbours of tile[i]
             List<Coordinate> closeNeighbours = boardTiles.get(i).getNeighbourCoordinates();
             for (int j = 0; j < closeNeighbours.size(); j++) {
-                boolean isDouble = false;
-                boolean isPlaced = false;
+                boolean isDouble = availableCoordinates.contains(closeNeighbours.get(j));
+                boolean isPlaced = occupiedCoordinates.contains(closeNeighbours.get(j));
                 boolean isIllegal = false;
-
-                //we check if the close neighbour is already in the ArrayList
-                if (availableCoordinates.contains(closeNeighbours.get(j))) {
-                    isDouble = true;
-                }
-
-                //we check if the close neighbour is already placed on the board
-                if (occupiedCoordinates.contains(closeNeighbours.get(j))) {
-                    isPlaced = true;
-                }
-
                 //checks if the close neighbour is legal == has two neighbours on the board
                 if (closeNeighbours.get(j).getNumberOfNeighbours(occupiedCoordinates) < 2) {
-                    isIllegal = true;   //the tile is illegal
-                    //except if it is near 0,0
-                    List<Coordinate> near0_0 = new Coordinate(0,0).getNeighbourCoordinates();
-                    if (near0_0.contains(closeNeighbours.get(j))) {
-                        //the tile is near 0,0 and thus is legal
-                        isIllegal = false;
-                    }
-
+                    isIllegal = !new Coordinate(0,0).getNeighbourCoordinates().contains(closeNeighbours.get(j));   //the tile is illegal
                 }
 
                 if (!isDouble && !isPlaced && !isIllegal) {
@@ -258,6 +239,7 @@ public class Board {
         }
         return availableCoordinates;
     }
+
 
     /**
      * A setter for the boardTiles
@@ -272,6 +254,7 @@ public class Board {
      * @param coordinate The coordinate of the specific tile
      * @return The tile or null if she is not in the board
      */
+
     public Tile getTile(Coordinate coordinate) {
         for(Tile i : boardTiles){
             if(i.getCoordinate().equals(coordinate)){

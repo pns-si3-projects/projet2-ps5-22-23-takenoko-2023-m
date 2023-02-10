@@ -33,12 +33,14 @@ public class Coordinate {
         return this.y;
     }
 
+
     /**
      * A method to find all the neighbour coordinates
      * @return A list of all the neighbour coordinates
      */
-    public ArrayList<Coordinate> getNeighbourCoordinates () {
-        ArrayList<Coordinate> neighbourCoordinates = new ArrayList<>();
+    public List<Coordinate> getNeighbourCoordinates () {
+        List<Coordinate> neighbourCoordinates = new ArrayList<>();
+
 
         for (int i = -1; i < 2; i++) {
             for (int j = -1; j < 2; j++) {
@@ -60,7 +62,7 @@ public class Coordinate {
      */
     public int getNumberOfNeighbours(List<Coordinate> boardCoordinates) {
         int nbNeighbours = 0;
-        ArrayList<Coordinate> closeNeighbours = this.getNeighbourCoordinates();
+        List<Coordinate> closeNeighbours = this.getNeighbourCoordinates();
 
         for (Coordinate coordinate : boardCoordinates) {
             if (closeNeighbours.contains(coordinate)) {
@@ -78,13 +80,11 @@ public class Coordinate {
      */
     @Override
     public boolean equals(Object newCoordinate) {
-        if (newCoordinate instanceof Coordinate) {
-            Coordinate toTest = (Coordinate) newCoordinate;
-            if ((this.x == toTest.getX()) && (this.y == toTest.getY())) {
-                return true;
-            }
-        }
-        return false;
+        return newCoordinate instanceof Coordinate toTest &&(this.x == toTest.getX()) && (this.y == toTest.getY());
+    }
+    @Override
+    public int hashCode() {
+        return (this.x * 1000) + this.y;
     }
 
     /**

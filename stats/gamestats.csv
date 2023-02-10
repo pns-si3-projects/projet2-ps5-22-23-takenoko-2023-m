@@ -1,7 +1,5 @@
-"Nom","Nombre_de_victoires","Taux_de_victoire_sur_1000_parties"
-"Simon","844.0","84.39999999999999%"
-"Damien","147.0","14.7%"
-"","",""
-"Nom","Nombre_de_victoires","Taux_de_victoire_sur_1000_parties"
-"Simon","597.0","59.699999999999996%"
-"Damien","403.0","40.300000000000004%"
+"Nom","Nombre_de_victoires","Taux_de_victoire_sur_250_parties"
+"Intermédiaire","209.0","83.6%"
+"PetitsObjectifs","36.0","14.399999999999999%"
+"BotFeature3","4.0","1.6%"
+
