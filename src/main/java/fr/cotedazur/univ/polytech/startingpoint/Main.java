@@ -31,8 +31,9 @@ public class Main <T>{
 
         CSVManager csvManager = new CSVManager(1, "stats/gamestats.csv", new ArrayList<String[]>());
         List<List<String>> list = new ArrayList<List<String>>();
-        list = csvManager.readerCSV();
-
+        if (parameters.csv) {
+            list = csvManager.readerCSV();
+        }
 
         int nbParties = 1;
         if (parameters.twoThousands) {
