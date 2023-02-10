@@ -13,7 +13,12 @@ public class CSVManager {
     private int nbParties;
     private String file;
 
-
+    /**
+     * Constructor of the class
+     * @param nbParties The number of parties
+     * @param file The file to write
+     * @param listBot The list of bots
+     */
     public CSVManager( int nbParties, String file,List<String[]> listBot) {
         this.nbParties = nbParties;
         this.file = file;
@@ -21,7 +26,10 @@ public class CSVManager {
     }
 
 
-
+    /**
+     * Method to write on the csv file
+     * @throws IOException
+     */
     public void writeCSV() throws IOException{
         CSVWriter writer = new CSVWriter(new FileWriter(file));
         String[] headers = {"Nom", "Nombre_de_victoires","Taux_de_victoire_sur_"+nbParties+"_parties"};
@@ -33,6 +41,12 @@ public class CSVManager {
         writer.close();
     }
 
+    /**
+     * Method to read the csv file
+     * @return Read the csv file
+     * @throws IOException
+     * @throws CsvValidationException
+     */
     public List<List<String>> readerCSV() throws IOException, CsvValidationException {
         List<List<String>> list = new ArrayList<>();
         CSVReader reader = null;
@@ -90,15 +104,26 @@ public class CSVManager {
     }
 
 
-
+    /**
+     * Setter of the list bot
+     * @param listBot The new list bot
+     */
     public void setListBot(List<String[]> listBot) {
         this.listBot = listBot;
     }
 
+    /**
+     * The getter of the number of parties
+     * @return The number of parties
+     */
     public int getNbParties() {
         return nbParties;
     }
 
+    /**
+     * The setter of the number of parties
+     * @param nbParties The new number of parties
+     */
     public void setNbParties(int nbParties) {
         this.nbParties = nbParties;
     }
