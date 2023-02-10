@@ -1,7 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.bots.IntermediateBot;
-import fr.cotedazur.univ.polytech.startingpoint.bots.PrimaryBot;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.*;

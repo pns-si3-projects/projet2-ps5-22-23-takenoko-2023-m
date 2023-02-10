@@ -3,6 +3,7 @@ package fr.cotedazur.univ.polytech.startingpoint;
 import java.util.Random;
 
 public class Dice {
+    private Random rand = new Random();
     public Dice() {
         this.meteo = Meteo.NONE;
     }
@@ -20,13 +21,9 @@ public class Dice {
 
 
     public void randomMeteo(){
-
-        Random rand = new Random();
         int random = -1;
         for(int i=0;i<10;i++){
-
             random = rand.nextInt(6);
-
         }
 
 
