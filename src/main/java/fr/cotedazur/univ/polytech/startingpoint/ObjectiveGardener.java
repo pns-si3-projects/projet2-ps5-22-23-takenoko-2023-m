@@ -2,8 +2,6 @@ package fr.cotedazur.univ.polytech.startingpoint;
 
 
 import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
-import fr.cotedazur.univ.polytech.startingpoint.bots.IntermediateBot;
-import fr.cotedazur.univ.polytech.startingpoint.bots.PrimaryBot;
 
 public class ObjectiveGardener extends ObjectifWithOneColor implements ObjectiveInterface {
     /** The number of points of the objective*/

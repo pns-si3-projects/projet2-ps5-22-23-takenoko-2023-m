@@ -31,6 +31,7 @@ public class ArrangementStack extends Stack<TypeOfArrangement>{
      * @param o The type of the arrangement
      */
     @Override
+
     public void putBelow(TypeOfArrangement o) {
         super.putBelow(o);
     }
@@ -59,6 +60,7 @@ public class ArrangementStack extends Stack<TypeOfArrangement>{
      * @return The string representation of the stack
      */
     @Override
+
     public String toString() {
         return super.toString();
     }
@@ -68,6 +70,7 @@ public class ArrangementStack extends Stack<TypeOfArrangement>{
      * @return A list of the stack
      */
     @Override
+
     public List<TypeOfArrangement> getStack() {
         return super.getStack();
     }
@@ -76,6 +79,7 @@ public class ArrangementStack extends Stack<TypeOfArrangement>{
      * A method to generate all of the arrangement
      */
     @Override
+
     public void generate() {
         for(int i = 0; i < 3; i++){
             this.putBelow(this.getType());

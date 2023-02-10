@@ -158,11 +158,11 @@ public class SkynetBot extends Bot {
                     isPlaced = true;
                     String returnMessage = switch (objectivePlot.getPattern().getType()) {
                         case BOOMRANG ->
-                                board.addTile(new Tile(board.bestCoordinateForBoomrang(objectivePlot), tile.getTypeOfTile())) + " de type:" + tile.getTypeOfTile();
+                                board.addTile(new Tile(board.bestCoordinateForBoomrang(objectivePlot), tile.getTypeOfTile(), TypeOfArrangement.NONE)) + " de type:" + tile.getTypeOfTile();
                         case LINE ->
-                                board.addTile(new Tile(board.bestCoordinateForLine(objectivePlot), tile.getTypeOfTile())) + " de type:" + tile.getTypeOfTile();
+                                board.addTile(new Tile(board.bestCoordinateForLine(objectivePlot), tile.getTypeOfTile(), TypeOfArrangement.NONE)) + " de type:" + tile.getTypeOfTile();
                         case TRIANGLE ->
-                                board.addTile(new Tile(board.bestCoordinateForTriangle(objectivePlot), tile.getTypeOfTile())) + " de type:" + tile.getTypeOfTile();
+                                board.addTile(new Tile(board.bestCoordinateForTriangle(objectivePlot), tile.getTypeOfTile(), TypeOfArrangement.NONE)) + " de type:" + tile.getTypeOfTile();
                         default -> "Aucun type de pattern n'a ete trouve";
                     };
                     Main.LOGGER.info(returnMessage);
@@ -171,7 +171,7 @@ public class SkynetBot extends Bot {
                 }
             }
             if (!isPlaced) {
-                String message = board.addTile(new Tile(board.scanAvailableTilePosition().get(0), tilesPicked.get(0).getTypeOfTile())) + " de type:" + tilesPicked.get(0).getTypeOfTile();
+                String message = board.addTile(new Tile(board.scanAvailableTilePosition().get(0), tilesPicked.get(0).getTypeOfTile(), TypeOfArrangement.NONE)) + " de type:" + tilesPicked.get(0).getTypeOfTile();
                 Main.LOGGER.info(message);
                 board.putBackInTileStack(tilesPicked.get(1));
                 board.putBackInTileStack(tilesPicked.get(2));
@@ -224,7 +224,7 @@ public class SkynetBot extends Bot {
                             }
                         }
                         if(!gardenerMooved){
-                            ArrayList<Irrigation> listOfIrrigation = board.getLegalIrrigationPlacement();
+                            List<Irrigation> listOfIrrigation = board.getLegalIrrigationPlacement();
                             boolean isIrrigationPosed = false;
                             for(Coordinate co : availablePositionsForGarderner){
                                 for(Irrigation i : listOfIrrigation){
@@ -513,7 +513,7 @@ public class SkynetBot extends Bot {
         List<Tile> tileList = board.getBoardTiles();
         List<Coordinate> coordinateToMoovePanda = tileOfPanda.scanAvailableCoordinatesToMove(tileList);
         List<Coordinate> coordinateToMooveGardener = board.getGardener().getTile().scanAvailableCoordinatesToMove(tileList);
-        ArrayList<Irrigation> availablePositionsIrrigation = board.getLegalIrrigationPlacement();
+        List<Irrigation> availablePositionsIrrigation = board.getLegalIrrigationPlacement();
         for (Coordinate co : coordinateToMooveGardener) {
             if (coordinateToMoovePanda.contains(co)) {
                 if (board.getTile(co).isIrrigated() && board.getTile(co).getTypeOfTile().equals(type)) {

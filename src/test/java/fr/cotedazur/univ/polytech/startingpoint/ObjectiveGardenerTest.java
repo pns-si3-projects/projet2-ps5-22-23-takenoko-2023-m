@@ -1,10 +1,8 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
-import fr.cotedazur.univ.polytech.startingpoint.bots.PrimaryBot;
+import fr.cotedazur.univ.polytech.startingpoint.bots.IntermediateBot;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,12 +27,12 @@ class ObjectiveGardenerTest {
     void isValid() {
         Board board = new Board();
         ObjectiveGardener objectiveGardener = new ObjectiveGardener("gardener",3, 11,TypeOfTile.GREEN, TypeOfArrangement.NONE);
-        Bot bot1 = new PrimaryBot(board, "Robot 1");
-        board.addTile(new Tile(new Coordinate(0,0)));
-        board.addTile(new Tile(new Coordinate(1,0)));
-        board.addTile(new Tile(new Coordinate(0,1)));
-        board.addTile(new Tile(new Coordinate(1,1)));
-        board.addTile(new Tile(new Coordinate(1,2)));
+        Bot bot1 = new IntermediateBot(board, "Robot 1");
+        board.addTile(new Tile(new Coordinate(0,0),TypeOfTile.GREEN,TypeOfArrangement.NONE));
+        board.addTile(new Tile(new Coordinate(1,0),TypeOfTile.GREEN,TypeOfArrangement.NONE));
+        board.addTile(new Tile(new Coordinate(0,1),TypeOfTile.GREEN,TypeOfArrangement.NONE));
+        board.addTile(new Tile(new Coordinate(1,1),TypeOfTile.GREEN,TypeOfArrangement.NONE));
+        board.addTile(new Tile(new Coordinate(1,2),TypeOfTile.GREEN,TypeOfArrangement.NONE));
         for (int i = 0; i < board.getBoardTiles().size(); i++) {
             board.getBoardTiles().get(i).irrigate();
         }
