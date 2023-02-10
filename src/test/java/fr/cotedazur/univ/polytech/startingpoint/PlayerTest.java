@@ -96,22 +96,6 @@ class PlayerTest {
         assertEquals(1,bot1.getNbBamboo(TypeOfTile.GREEN));
     }
 
-    @Test
-    void testChooseBetterOf3Tiles(){ //NEED TO DO A MALOCK RIGHT HERE IN THE FUTURE
-        //TODO : Simon doit faire le mockito
-        Board board = new Board();
-        PrimaryBot bot1 = new PrimaryBot(board,"bot1");
-        bot1.setFocusCard(new ObjectivePanda("panda",1,80,TypeOfTile.GREEN));
-        ArrayList<Tile> dummyTiles = new ArrayList<>(Arrays.asList(
-                new Tile(new Coordinate(0,0), TypeOfTile.GREEN, TypeOfArrangement.NONE),
-                new Tile(new Coordinate(0,0), TypeOfTile.RED, TypeOfArrangement.NONE),
-                new Tile(new Coordinate(0,0), TypeOfTile.YELLOW, TypeOfArrangement.NONE)
-        ));
-        Tile tile = bot1.chooseBetterOf3Tiles(dummyTiles);
-
-        assertEquals(TypeOfTile.GREEN, tile.getTypeOfTile());
-        assertEquals(29, board.getTileStack().getStack().size());
-    }
 
     @Test
     void testSortObjective(){

@@ -1,7 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
-import fr.cotedazur.univ.polytech.startingpoint.bots.PrimaryBot;
+import fr.cotedazur.univ.polytech.startingpoint.bots.IntermediateBot;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -15,13 +15,13 @@ class PandaTest {
     static void beforeAll(){
         board = new Board();
         player = new IntermediateBot(board,"Joueur1");
-        Tile start = new Tile(new Coordinate(0,0));
+        Tile start = new Tile(new Coordinate(0,0),TypeOfTile.GREEN,TypeOfArrangement.NONE);
         board.addTile(start);
-        Tile tile1 = new Tile(new Coordinate(1,0));
+        Tile tile1 = new Tile(new Coordinate(1,0),TypeOfTile.GREEN,TypeOfArrangement.NONE);
         tile1.irrigate();
         tile1.grow();
         board.addTile(tile1);
-        Tile tile2 = new Tile(new Coordinate(2,0));
+        Tile tile2 = new Tile(new Coordinate(2,0),TypeOfTile.GREEN,TypeOfArrangement.NONE);
         board.addTile(tile2);
     }
 
