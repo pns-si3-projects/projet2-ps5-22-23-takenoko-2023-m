@@ -33,7 +33,7 @@ public class IntermediateBot extends Bot {
                 setPoint(getPoint()+this.objectives.get(i).getNbPointsWin());
                 upNbObjectifsRealises();
                 toSuppress.add(this.objectives.get(i));
-                Main.LOGGER.info("Objectif réalisé par "+getNom());
+                Main.LOGGER.info("Objectif "+this.objectives.get(i).toString()+" réalisé par "+getNom());
             } else if ((board.getTileStack().sizeTileStack() == 0) && ((objectives.get(i).getType() == "LINE") || (objectives.get(i).getType() == "SQUARE") || (objectives.get(i).getType() == "BOOMRANG") || (objectives.get(i).getType() == "TRIANGLE"))) {
                 Main.LOGGER.info("impossible de valider d'objectif pattern, suppressions de : " + objectives.get(i));
                 toSuppress.add(this.objectives.get(i));
@@ -84,7 +84,7 @@ public class IntermediateBot extends Bot {
                     Tile toAdd = new Tile(availableCoordinatesToPutTile.get(0),bestCard.getTypeOfTile(),bestCard.getTypeOfArrangement());
                     String message = this.board.addTile(toAdd);
                     Main.LOGGER.info(message);
-                    this.playAction();
+                    this.playAction("une tuile");
                 }else{
                    playForIrrigation();
                 }
@@ -105,7 +105,7 @@ public class IntermediateBot extends Bot {
                         if(tile != null){
                             if(tile.isIrrigated()){
                                 Main.LOGGER.info(board.moveGardenerOn(co));
-                                this.playAction();
+                                this.playAction("le jardinier");
                                 gardenerMooved = true;
                                 break;
                             }
@@ -122,7 +122,7 @@ public class IntermediateBot extends Bot {
                                     if(t1 != null && t2 != null){
                                         isIrrigationPosed = board.addIrrigation(i);
                                         if(isIrrigationPosed){
-                                            this.playAction();
+                                            this.playAction("une tuile d'irrigation");
                                             break;
                                         }
                                     }
@@ -138,7 +138,7 @@ public class IntermediateBot extends Bot {
                                     if(getNbActions() > 0){
                                         boolean verif = board.addIrrigation(irrigation);
                                         if(verif){
-                                            this.playAction();
+                                            this.playAction("une tuile d'irrigation");
                                             break;
                                         }
                                     }
@@ -151,7 +151,7 @@ public class IntermediateBot extends Bot {
                                 Tile toAdd = new Tile(availableCoordinatesToPutTile.get(0),bestCard.getTypeOfTile(),bestCard.getTypeOfArrangement());
                                 String message = this.board.addTile(toAdd);
                                 Main.LOGGER.info(message);
-                                this.playAction();
+                                this.playAction("une tuile");
                             }else{
 
                                 playForIrrigation();
@@ -165,7 +165,7 @@ public class IntermediateBot extends Bot {
                             Tile toAdd = new Tile(availableCoordinatesToPutTile.get(0),bestCard.getTypeOfTile(),bestCard.getTypeOfArrangement());
                             String message = this.board.addTile(toAdd);
                             Main.LOGGER.info(message);
-                            this.playAction();
+                            this.playAction("une tuile");
                         }else{
 
                             playForIrrigation();
@@ -179,7 +179,7 @@ public class IntermediateBot extends Bot {
                         Tile toAdd = new Tile(availableCoordinatesToPutTile.get(0),bestCard.getTypeOfTile(),bestCard.getTypeOfArrangement());
                         String message = this.board.addTile(toAdd);
                         Main.LOGGER.info(message);
-                        this.playAction();
+                        this.playAction("une tuile");
                     }else{
                         playForIrrigation();
                     }
@@ -204,7 +204,7 @@ public class IntermediateBot extends Bot {
                     Tile toAdd = new Tile(availableCoordinatesToPutTile.get(0),bestCard.getTypeOfTile(),bestCard.getTypeOfArrangement());
                     String message = this.board.addTile(toAdd);
                     Main.LOGGER.info(message);
-                    this.playAction();
+                    this.playAction("une tuile");
                 }else{
                     playForIrrigation();
                 }
@@ -214,7 +214,7 @@ public class IntermediateBot extends Bot {
                     if(tile != null){
                         if(tile.getBamboo()>0 && objectif.typeOfTile.equals(tile.getTypeOfTile())){
                             Main.LOGGER.info(this.board.movePandaOn(co,this));
-                            this.playAction();
+                            this.playAction("le panda");
                             moove = true;
                             break;
                         }
@@ -262,7 +262,7 @@ public class IntermediateBot extends Bot {
                     board.putBackInTileStack(tilesToPutBackInStack.get(1));
                 }
                 if(board.getDice().getMeteo()!=Meteo.RAIN){
-                    this.playAction();
+                    this.playAction("pluie");
                 }
                 else{
                     board.getDice().setMeteo(Meteo.NONE);
@@ -364,7 +364,7 @@ public class IntermediateBot extends Bot {
             if(coordinateToMoovePanda.contains(co)){
                 if(board.getTile(co).isIrrigated() && board.getTile(co).getTypeOfTile().equals(type)){
                     Main.LOGGER.info(board.moveGardenerOn(co));
-                    this.playAction();
+                    this.playAction("le jardinier");
                     action=true;
                     break;
                 }else{
@@ -372,7 +372,7 @@ public class IntermediateBot extends Bot {
                         if((irrigation.getCoordinates().get(0).equals(co) || irrigation.getCoordinates().get(1).equals(co)) && !action && board.getTile(co).getTypeOfTile().equals(co)){
                             boolean verif = board.addIrrigation(irrigation);
                             if(verif){
-                                this.playAction();
+                                this.playAction("irrigation");
                                 break;
                             }
                         }
@@ -388,7 +388,7 @@ public class IntermediateBot extends Bot {
                 Tile toAdd = new Tile(availableCoordinatesToPutTile.get(0),bestCard.getTypeOfTile(),bestCard.getTypeOfArrangement());
                 String message = this.board.addTile(toAdd);
                 Main.LOGGER.info(message);
-                this.playAction();
+                this.playAction("une tuile");
             }else{
                 playForIrrigation();
             }
@@ -400,11 +400,11 @@ public class IntermediateBot extends Bot {
         for(Irrigation irrigation : listeIrrigations){
             boolean verif = board.addIrrigation(irrigation);
             if(verif){
-                this.playAction();
+                this.playAction("irrigation");
                 break;
             }else{
-                this.playAction();
-                this.playAction();
+                this.playAction("irrigation");
+                this.playAction("irrigation");
             }
         }
     }

@@ -57,21 +57,21 @@ public abstract class Bot {
         this.objectives.add(objectivePanda);
         String message ="Le joueur "+this.getNom()+" a pioche une carte Panda et qui vaut "+objectivePanda.getNbPointsWin()+" points";
         Main.LOGGER.info(message);
-        this.playAction();
+        this.playAction("pioche une carte Panda");
     }
 
     public void pickPlotCard(){
         ObjectivePlot objectivePlot = this.board.getPlotCard();
         this.objectives.add(objectivePlot);
         Main.LOGGER.info("Le joueur "+this.getNom()+" a pioche une carte Pattern de type "+objectivePlot.getType()+" et de couleur "+objectivePlot.getColors().get(0)+" et qui vaut "+objectivePlot.getNbPointsWin()+" points");
-        this.playAction();
+        this.playAction("pioche une carte Pattern");
     }
 
     public void pickGardenerCard(){
         ObjectiveGardener objectiveGardener = this.board.getGardenerCard();
         this.objectives.add(objectiveGardener);
         Main.LOGGER.info("Le joueur "+this.getNom()+" a pioche une carte Jardinier et qui vaut "+objectiveGardener.getNbPointsWin());
-        this.playAction();
+        this.playAction("pioche une carte Jardinier");
     }
 
 
@@ -98,9 +98,10 @@ public abstract class Bot {
     public int getNbActions() { return this.nbActions;}
 
 
-    public void playAction() {
+    public void playAction(String action) {
         this.nbActions -= 1;
-        Main.LOGGER.info("Le joueur " +this.getNom() +" vient de jouer");
+        Main.LOGGER.info("Le joueur " +this.getNom() +" vient de jouer" + action);
+        Main.LOGGER.info("Nombre d'action restante: " + this.getNbActions());
     }
 
     public void resetNbActions() {

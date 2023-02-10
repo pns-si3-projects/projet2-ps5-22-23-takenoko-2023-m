@@ -14,8 +14,8 @@ public class SkynetBot extends Bot {
     @Override
     public void play() {
         super.play();
-        this.checkObjectiveToFocus();
         nbActions=2;
+        this.checkObjectiveToFocus();
 
         switch (this.board.getDice().getMeteo()){
             case SUN -> this.nbActions++;
@@ -38,6 +38,27 @@ public class SkynetBot extends Bot {
             }
         }
         focusedObjective.play(this);
+        ArrayList<ObjectiveInterface> toSuppress = new ArrayList<>();
+        for(int i =0; i!=this.objectives.size(); i++){
+            if(this.objectives.get(i).isValid(this, this.board)){
+                setPoint(getPoint()+this.objectives.get(i).getNbPointsWin());
+                upNbObjectifsRealises();
+                toSuppress.add(this.objectives.get(i));
+                Main.LOGGER.info("Objectif "+this.objectives.get(i).toString()+" réalisé par "+getNom());
+            } else if ((board.getTileStack().sizeTileStack() == 0) && ((objectives.get(i).getType() == "LINE") || (objectives.get(i).getType() == "SQUARE") || (objectives.get(i).getType() == "BOOMRANG") || (objectives.get(i).getType() == "TRIANGLE"))) {
+                Main.LOGGER.info("impossible de valider d'objectif pattern, suppressions de : " + objectives.get(i));
+                toSuppress.add(this.objectives.get(i));
+            }
+
+        }
+        this.objectives.removeAll(toSuppress);
+        if(this.objectives.size()<3){
+            if(!board.getStackGardener().getStack().isEmpty()){
+                this.pickGardenerCard();
+            }else{
+                pickPandaCard();
+            }
+        }
 
         Main.LOGGER.info("\n");
     }
@@ -47,10 +68,10 @@ public class SkynetBot extends Bot {
         Tile bestLocationForPanda = bestLocationForPanda();
         if(bestLocationForPanda!=null){
             Main.LOGGER.info(this.board.movePandaOn(bestLocationForPanda.getCoordinate(), this));
-            this.playAction();
+            this.playAction("le panda");
         }
         else{
-            this.nbActions--;
+            this.playAction("rien");
         }
     }
 
@@ -188,7 +209,7 @@ public class SkynetBot extends Bot {
                 board.putBackInTileStack(tilesToPutBackInStack.get(0));
                 board.putBackInTileStack(tilesToPutBackInStack.get(1));
             }
-            this.playAction();
+            this.playAction("une tuile");
         }
     }
     @Override
@@ -205,7 +226,7 @@ public class SkynetBot extends Bot {
                         Tile toAdd = new Tile(availableCoordinatesToPutTile.get(0),bestCard.getTypeOfTile(),bestCard.getTypeOfArrangement());
                         String message = this.board.addTile(toAdd);
                         Main.LOGGER.info(message);
-                        this.playAction();
+                        this.playAction("une tuile");
                     }else{
                         playForIrrigation();
                     }
@@ -224,7 +245,7 @@ public class SkynetBot extends Bot {
                             if(tile != null && tile.isIrrigated()){
                                 String message = board.moveGardenerOn(co);
                                 Main.LOGGER.info(message);
-                                this.playAction();
+                                this.playAction("le jardinier");
                                 gardenerMooved = true;
                                 break;
                             }
@@ -240,7 +261,7 @@ public class SkynetBot extends Bot {
                                         if(t1 != null && t2 != null){
                                             isIrrigationPosed = board.addIrrigation(i);
                                             if(isIrrigationPosed){
-                                                this.playAction();
+                                                this.playAction("irrigation");
                                                 break;
                                             }
                                         }
@@ -255,7 +276,7 @@ public class SkynetBot extends Bot {
                                     if(t1 != null && t2 != null && getNbActions() > 0){
                                         boolean verif = board.addIrrigation(irrigation);
                                         if(verif){
-                                            this.playAction();
+                                            this.playAction("irrigation");
                                             break;
                                         }
                                     }
@@ -267,7 +288,7 @@ public class SkynetBot extends Bot {
                                     Tile toAdd = new Tile(availableCoordinatesToPutTile.get(0),bestCard.getTypeOfTile(),bestCard.getTypeOfArrangement());
                                     String message = this.board.addTile(toAdd);
                                     Main.LOGGER.info(message);
-                                    this.playAction();
+                                    this.playAction("une tuile");
                                 }else{
 
                                     playForIrrigation();
@@ -281,7 +302,7 @@ public class SkynetBot extends Bot {
                                 Tile toAdd = new Tile(availableCoordinatesToPutTile.get(0),bestCard.getTypeOfTile(),bestCard.getTypeOfArrangement());
                                 String message = this.board.addTile(toAdd);
                                 Main.LOGGER.info(message);
-                                this.playAction();
+                                this.playAction("une tuile");
                             }else{
 
                                 playForIrrigation();
@@ -295,7 +316,7 @@ public class SkynetBot extends Bot {
                             Tile toAdd = new Tile(availableCoordinatesToPutTile.get(0),bestCard.getTypeOfTile(),bestCard.getTypeOfArrangement());
                             String message = this.board.addTile(toAdd);
                             Main.LOGGER.info(message);
-                            this.playAction();
+                            this.playAction("une tuile");
                         }else{
                             playForIrrigation();
                         }
@@ -342,11 +363,11 @@ public class SkynetBot extends Bot {
         List<Irrigation> listeIrrigations = board.getLegalIrrigationPlacement();
         for(Irrigation irrigation : listeIrrigations){
             boolean verif = board.addIrrigation(irrigation);
-            this.playAction();
+            this.playAction("irrigation");
             if(verif){
                 break;
             }else{
-                this.playAction();
+                this.playAction("irrigation");
             }
         }
     }
@@ -360,20 +381,37 @@ public class SkynetBot extends Bot {
                 pickPandaCard();
             }
             nbIrrigation++;
-            nbActions--;
+            this.playAction("irrigation");
         }
         focusedObjective = chooseObjectiveToFocus();
+        ArrayList<ObjectiveInterface> toSuppress = new ArrayList<>();
+        for(int i =0; i!=this.objectives.size(); i++){
+            if(this.objectives.get(i).isValid(this, this.board)){
+                setPoint(getPoint()+this.objectives.get(i).getNbPointsWin());
+                upNbObjectifsRealises();
+                toSuppress.add(this.objectives.get(i));
+                Main.LOGGER.info("Objectif réalisé par "+getNom());
+            } else if ((board.getTileStack().sizeTileStack() == 0) && ((objectives.get(i).getType() == "LINE") || (objectives.get(i).getType() == "SQUARE") || (objectives.get(i).getType() == "BOOMRANG") || (objectives.get(i).getType() == "TRIANGLE"))) {
+                Main.LOGGER.info("impossible de valider d'objectif pattern, suppressions de : " + objectives.get(i));
+                toSuppress.add(this.objectives.get(i));
+            }
 
-
+        }
+        this.objectives.removeAll(toSuppress);
+        if(this.objectives.size()<3){
+            if(!board.getStackGardener().getStack().isEmpty()){
+                this.pickGardenerCard();
+            }else{
+                pickPandaCard();
+            }
+        }
     }
 
     private ObjectiveInterface chooseObjectiveToFocus() {
         ObjectiveInterface objectiveToFocus = null;
         int max = 0;
         for(ObjectiveInterface objective : objectives){
-            Main.LOGGER.info("objective: "+objective.getType());
             objective.setComplexity(checkObjectiveComplexity(objective));
-            Main.LOGGER.info("objective: "+objective+" complexity: "+objective.getComplexity());
             if(objective.getNbPointsWin()>max){
                 if(objectiveToFocus==null || (objectiveToFocus.getComplexity()-1>objective.getComplexity())){
                     max = objective.getNbPointsWin();
@@ -527,7 +565,7 @@ public class SkynetBot extends Bot {
                 if (board.getTile(co).isIrrigated() && board.getTile(co).getTypeOfTile().equals(type)) {
                     String message = board.moveGardenerOn(co);
                     Main.LOGGER.info(message);
-                    this.playAction();
+                    this.playAction("jardinier");
                     break;
                 } else {
                     for (Irrigation irrigation : availablePositionsIrrigation) {
