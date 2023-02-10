@@ -6,12 +6,22 @@ public class Gardener {
     private Coordinate coordinate;
     private final Board board;
     private Tile tile;
+
+    /**
+     * The constructor of the class
+     * @param board The board of the gardener
+     */
     public Gardener(Board board){
         coordinate = new Coordinate(0,0);
         this.board = board;
         this.tile = board.getTile(new Coordinate(0,0));
     }
-    //move the entity gardener on a designed tile, growing 1 bamboo of this tile
+
+    /**
+     * The method to move the gardener of a specific coordinate
+     * @param coordinate The specific coordinate
+     * @return The string of the movement
+     */
     public String moveOn(Coordinate coordinate){
         this.coordinate = coordinate;
         this.tile = board.getTile(coordinate);
@@ -19,6 +29,11 @@ public class Gardener {
         return spreadGrowing(coordinate);
     }
 
+    /**
+     * The method will grow bamboo on the tile
+     * @param coordinate The coordinate of the tile
+     * @return The string of the movement
+     */
     private String spreadGrowing(Coordinate coordinate) {;
         ArrayList<Tile> tilesGrown = new ArrayList<>();
         tilesGrown.add(board.getTile(coordinate));
@@ -38,10 +53,18 @@ public class Gardener {
         return res;
     }
 
+    /**
+     * A getter of the coordinate of the gardener
+     * @return The coordinate of the gardener
+     */
     public Coordinate getCoordinate() {
         return coordinate;
     }
 
+    /**
+     * A getter of the tile of the gardener
+     * @return the tile of the gardener
+     */
     public Tile getTile(){
         return this.board.getTile(this.getCoordinate());
     }

@@ -5,17 +5,34 @@ import java.util.List;
 public abstract class Stack<T> {
     protected List<T> list;
 
+    /**
+     * A constructor of the class with one parameter
+     * @param list The list of the card
+     */
     protected Stack(List<T> list){
         this.list = list;
     }
+
+    /**
+     * A constructor of the class with no parameter
+     */
     protected Stack(){
         this.list = new ArrayList<>();
     }
 
+    /**
+     * A method to put below a card
+     * @param o The card to put below
+     */
     public void putBelow(T o){
         this.list.add(o);
     }
 
+    /**
+     * A method to pick a specific card
+     * @param o The specific card you want to pick
+     * @return The good card
+     */
     public T pick(T o){
         if(this.list.isEmpty()){
             throw new ArrayIndexOutOfBoundsException("pile vide");
@@ -35,6 +52,10 @@ public abstract class Stack<T> {
         return null;
     }
 
+    /**
+     * A specific method to random pick a card
+     * @return A random card
+     */
     public T randomPick(){
         if(list.isEmpty()){
             throw new IllegalArgumentException("La pile est vide");
@@ -46,7 +67,10 @@ public abstract class Stack<T> {
     }
 
 
-
+    /**
+     * toString method
+     * @return a String
+     */
     public String toString(){
         StringBuilder s = new StringBuilder("Pile d'objectifs : ");
         for (T objective: list){
@@ -56,10 +80,17 @@ public abstract class Stack<T> {
 
     }
 
+    /**
+     * A getter of the stack
+     * @return the List of the stack
+     */
     public List<T> getStack(){
         return list;
     }
 
+    /**
+     * A method to generate the stack
+     */
     public void generate(){
 
     }

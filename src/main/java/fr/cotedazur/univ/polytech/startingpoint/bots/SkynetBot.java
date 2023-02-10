@@ -6,11 +6,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SkynetBot extends Bot {
+    /**The objective the bot should focus*/
     ObjectiveInterface focusedObjective;
+
+    /**
+     * The constructor of the SkynetBot
+     * @param board The board of the bot
+     * @param nom The name of the bot
+     */
     public SkynetBot(Board board, String nom) {
         super(board, nom);
     }
 
+    /**
+     * The main function of the bot, it will be called on every tour
+     */
     @Override
     public void play() {
         super.play();
@@ -63,6 +73,9 @@ public class SkynetBot extends Bot {
         Main.LOGGER.info("\n");
     }
 
+    /**
+     * This method will moove the panda on the best location
+     */
     private void movePandaToTheBestLocation() {
         Main.LOGGER.info("Move panda to the best location");
         Tile bestLocationForPanda = bestLocationForPanda();
@@ -75,6 +88,10 @@ public class SkynetBot extends Bot {
         }
     }
 
+    /**
+     * This method will find the best location for the panda
+     * @return The tile of the best position for the panda
+     */
     private Tile bestLocationForPanda() {
         List<ObjectivePanda> listOfObjectivePanda = getListOfPandaObjective();
         List<Tile> listOfBambooMax = new ArrayList<>();
@@ -114,6 +131,11 @@ public class SkynetBot extends Bot {
 
     }
 
+    /**
+     * This method will return the Tile where the panda can moove and the tile got the max of bamboos
+     * @param type The type of the tile
+     * @return The best tile
+     */
     private Tile getNbBambooMaxOfType(TypeOfTile type) {
         Tile tileOfPanda = this.board.getPanda().getTile();
         List<Coordinate> listOfCoordinateAvailable = tileOfPanda.scanAvailableCoordinatesToMove(board.getBoardTiles());
@@ -172,6 +194,10 @@ public class SkynetBot extends Bot {
         }
     }
 
+    /**
+     * This method will place a Tile on the best position to complete the objectivePlot
+     * @param objectivePlot The objectivePlot to focus
+     */
     private void placeTileForPattern(ObjectivePlot objectivePlot) {
         List<TypeOfTile> colors = objectivePlot.getColors();
         if (this.board.getTileStack().sizeTileStack() > 2) {
@@ -212,6 +238,10 @@ public class SkynetBot extends Bot {
             this.playAction("une tuile");
         }
     }
+
+    /**
+     * This method will be called when the focus card is an ObjectiveGardener card
+     */
     @Override
     public void playForGardenerCard(){
         if(focusedObjective instanceof ObjectiveGardener objectif) {
@@ -326,6 +356,12 @@ public class SkynetBot extends Bot {
         }
     }
 
+    /**
+     * This method will choose the best tile in function of the objective to focus
+     * @param threeCards The List of the 3 tiles
+     * @param objectif The objective to focus
+     * @return The best Tile
+     */
     public Tile chooseBetterOf3Tiles(List<Tile> threeCards, ObjectiveGardener objectif){
         if(threeCards.get(0).getTypeOfTile().equals(objectif.getTypeOfTile())){
             board.getTileStack().addTile(threeCards.get(1));
@@ -359,6 +395,9 @@ public class SkynetBot extends Bot {
 
     }
 
+    /**
+     * This method will be called to put irrigations in the first legal irrigation's placement
+     */
     private void playForIrrigation(){
         List<Irrigation> listeIrrigations = board.getLegalIrrigationPlacement();
         for(Irrigation irrigation : listeIrrigations){
@@ -372,6 +411,9 @@ public class SkynetBot extends Bot {
         }
     }
 
+    /**
+     * This method will check which objectives the bot should focus
+     */
     private void checkObjectiveToFocus() {
         if(this.getObjective().size()<5){
             if(board.getPatternBoard().getPatternBoardList().size()>6&&!board.isPlotCardEmpty()){
