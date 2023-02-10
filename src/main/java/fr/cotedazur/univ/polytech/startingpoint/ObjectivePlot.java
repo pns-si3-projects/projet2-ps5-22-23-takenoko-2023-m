@@ -8,7 +8,7 @@ public class ObjectivePlot implements ObjectiveInterface {
 
     final Pattern pattern;
     final int nbPointsWin;
-    private int complexity=7;
+    private int complexity;
 
 
     public ObjectivePlot(Pattern pattern){
