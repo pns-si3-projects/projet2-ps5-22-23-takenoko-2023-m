@@ -28,11 +28,11 @@ class IrrigationTest {
 
     @BeforeEach
     void setup() {
-        x0y0 = new Tile(new Coordinate(0,0));
-        x1y0 = new Tile(new Coordinate(1,0));
-        xn1y1 = new Tile(new Coordinate(-1,1));
-        x0y1 = new Tile(new Coordinate(0,1));
-        x1y1 = new Tile(new Coordinate(1,1));
+        x0y0 = new Tile(new Coordinate(0,0), TypeOfTile.GREEN, TypeOfArrangement.NONE);
+        x1y0 = new Tile(new Coordinate(1,0), TypeOfTile.GREEN, TypeOfArrangement.NONE);
+        xn1y1 = new Tile(new Coordinate(-1,1), TypeOfTile.GREEN, TypeOfArrangement.NONE);
+        x0y1 = new Tile(new Coordinate(0,1), TypeOfTile.GREEN, TypeOfArrangement.NONE);
+        x1y1 = new Tile(new Coordinate(1,1), TypeOfTile.GREEN, TypeOfArrangement.NONE);
         boardTiles = new ArrayList<>( Arrays.asList(x0y0,x1y0,xn1y1,x0y1,x1y1) );
         verticalIrrigation = new Irrigation(x0y0,x1y0);
         fSlashIrrigation = new Irrigation(x1y0,x1y1);
@@ -102,7 +102,7 @@ class IrrigationTest {
     @Test
     void testTilesAreIrrigated() {
         assertTrue(boardTiles.get(boardTiles.indexOf(x0y0)).isIrrigated());
-        Tile x2y0 = new Tile(new Coordinate(2,0));
+        Tile x2y0 = new Tile(new Coordinate(2,0), TypeOfTile.GREEN, TypeOfArrangement.NONE);
         boardTiles.add(x2y0);
         assertFalse(boardTiles.get(boardTiles.indexOf(x2y0)).isIrrigated());
         new Irrigation(boardTiles.get(boardTiles.indexOf(x2y0)), boardTiles.get(boardTiles.indexOf(x1y0)));

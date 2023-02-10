@@ -43,23 +43,23 @@ public class TileStack extends Stack<Tile>{
     @Override
     public void generate() {
         for(int i = 0; i < 6; i++){
-            this.putBelow(new Tile(TypeOfTile.YELLOW));
+            this.putBelow(new Tile(null, TypeOfTile.YELLOW, TypeOfArrangement.NONE));
         }
-        this.putBelow(new Tile(TypeOfTile.YELLOW,TypeOfArrangement.FERTILIZER));
-        this.putBelow(new Tile(TypeOfTile.YELLOW,TypeOfArrangement.BASIN));
-        this.putBelow(new Tile(TypeOfTile.YELLOW,TypeOfArrangement.ENCLOSURE));
+        this.putBelow(new Tile(null, TypeOfTile.YELLOW,TypeOfArrangement.FERTILIZER));
+        this.putBelow(new Tile(null, TypeOfTile.YELLOW,TypeOfArrangement.BASIN));
+        this.putBelow(new Tile(null, TypeOfTile.YELLOW,TypeOfArrangement.ENCLOSURE));
         for(int i = 0; i < 8; i++){
-            this.putBelow(new Tile(TypeOfTile.GREEN));
+            this.putBelow(new Tile(null, TypeOfTile.GREEN, TypeOfArrangement.NONE));
         }
-        this.putBelow(new Tile(TypeOfTile.GREEN,TypeOfArrangement.FERTILIZER));
-        this.putBelow(new Tile(TypeOfTile.GREEN,TypeOfArrangement.BASIN));
-        this.putBelow(new Tile(TypeOfTile.GREEN,TypeOfArrangement.ENCLOSURE));
+        this.putBelow(new Tile(null, TypeOfTile.GREEN,TypeOfArrangement.FERTILIZER));
+        this.putBelow(new Tile(null, TypeOfTile.GREEN,TypeOfArrangement.BASIN));
+        this.putBelow(new Tile(null, TypeOfTile.GREEN,TypeOfArrangement.ENCLOSURE));
         for(int i = 0; i < 4; i++){
-            this.putBelow(new Tile(TypeOfTile.RED));
+            this.putBelow(new Tile(null, TypeOfTile.RED, TypeOfArrangement.NONE));
         }
-        this.putBelow(new Tile(TypeOfTile.RED,TypeOfArrangement.FERTILIZER));
-        this.putBelow(new Tile(TypeOfTile.RED,TypeOfArrangement.BASIN));
-        this.putBelow(new Tile(TypeOfTile.RED,TypeOfArrangement.ENCLOSURE));
+        this.putBelow(new Tile(null, TypeOfTile.RED,TypeOfArrangement.FERTILIZER));
+        this.putBelow(new Tile(null, TypeOfTile.RED,TypeOfArrangement.BASIN));
+        this.putBelow(new Tile(null, TypeOfTile.RED,TypeOfArrangement.ENCLOSURE));
     }
 
     public int sizeTileStack(){

@@ -106,9 +106,9 @@ class PlayerTest {
         PrimaryBot bot1 = new PrimaryBot(board,"bot1");
         bot1.setFocusCard(new ObjectivePanda("panda",1,80,TypeOfTile.GREEN));
         ArrayList<Tile> dummyTiles = new ArrayList<>(Arrays.asList(
-                new Tile(new Coordinate(0,0), TypeOfTile.GREEN),
-                new Tile(new Coordinate(0,0), TypeOfTile.RED),
-                new Tile(new Coordinate(0,0), TypeOfTile.YELLOW)
+                new Tile(new Coordinate(0,0), TypeOfTile.GREEN, TypeOfArrangement.NONE),
+                new Tile(new Coordinate(0,0), TypeOfTile.RED, TypeOfArrangement.NONE),
+                new Tile(new Coordinate(0,0), TypeOfTile.YELLOW, TypeOfArrangement.NONE)
         ));
         Tile tile = bot1.chooseBetterOf3Tiles(dummyTiles);
 

@@ -65,7 +65,7 @@ public class Board {
         this.basinStack.generate();
         this.enclosureStack.generate();
         this.fertilizerStack.generate();
-        this.addTile(new Tile(new Coordinate(0,0),TypeOfTile.POND));
+        this.addTile(new Tile(new Coordinate(0,0),TypeOfTile.POND, TypeOfArrangement.NONE));
         boardTiles.get(0).irrigate();
         this.legalIrrigationPlacement = new ArrayList<>(Arrays.asList(
                 new Irrigation(new Coordinate(1,0),new Coordinate(0,1)),
