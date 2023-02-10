@@ -12,10 +12,10 @@ class GardenerTest {
     @BeforeAll
     static void beforeAll() {
         board = new Board();
-        board.addTile(new Tile(new Coordinate(1,0), TypeOfTile.GREEN));
-        board.addTile(new Tile(new Coordinate(0,1),TypeOfTile.RED));
-        board.addTile(new Tile(new Coordinate(1,1),TypeOfTile.GREEN));
-        board.addTile(new Tile(new Coordinate(1,2),TypeOfTile.YELLOW));
+        board.addTile(new Tile(new Coordinate(1,0), TypeOfTile.GREEN, TypeOfArrangement.NONE));
+        board.addTile(new Tile(new Coordinate(0,1),TypeOfTile.RED, TypeOfArrangement.NONE));
+        board.addTile(new Tile(new Coordinate(1,1),TypeOfTile.GREEN, TypeOfArrangement.NONE));
+        board.addTile(new Tile(new Coordinate(1,2),TypeOfTile.YELLOW, TypeOfArrangement.NONE));
         //irrigation is now required for bamboo to grow
         for (Tile t : board.getBoardTiles()) {
             t.irrigate();
@@ -35,7 +35,7 @@ class GardenerTest {
     @Test
     @DisplayName("Gardener is moving to a tile grown to the max")
     void moveOnFullgrown() {
-        Tile tileTest4 = new Tile(new Coordinate(2,2));
+        Tile tileTest4 = new Tile(new Coordinate(2,2), TypeOfTile.GREEN, TypeOfArrangement.NONE);
         tileTest4.setBamboo(4);
         board.addTile(tileTest4);
         System.out.println(board.moveGardenerOn(new Coordinate(2,2)));
@@ -44,7 +44,7 @@ class GardenerTest {
 
     @Test
     void testMoveOnNotIrrigate() {
-        board.addTile(new Tile(new Coordinate(0,2)));
+        board.addTile(new Tile(new Coordinate(0,2), TypeOfTile.GREEN, TypeOfArrangement.NONE));
         System.out.println(board.moveGardenerOn(new Coordinate(0,2)));
         assertTrue(board.getTile(new Coordinate(0,2)).getBamboo() == 0);
     }

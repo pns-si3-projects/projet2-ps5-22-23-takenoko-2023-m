@@ -2,13 +2,10 @@ package fr.cotedazur.univ.polytech.startingpoint;
 
 import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.bots.IntermediateBot;
-import fr.cotedazur.univ.polytech.startingpoint.bots.PrimaryBot;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import java.util.List;
 import java.util.logging.Level;
 
 import java.util.Arrays;
@@ -22,14 +19,14 @@ class PlayerTest {
     @Test
     void getPoint() {
         Board board = new Board();
-        Bot bot1 = new PrimaryBot(board,"bot1");
+        Bot bot1 = new IntermediateBot(board,"bot1");
         assertEquals(0,bot1.getPoint());
     }
 
     @Test
     void setPoint() {
         Board board = new Board();
-        Bot bot1 = new PrimaryBot(board,"bot1");
+        Bot bot1 = new IntermediateBot(board,"bot1");
         bot1.setPoint(15);
         assertEquals(15,bot1.getPoint());
     }
@@ -37,14 +34,14 @@ class PlayerTest {
     @Test
     void getNom() {
         Board board = new Board();
-        Bot bot1 = new PrimaryBot(board,"bot1");
+        Bot bot1 = new IntermediateBot(board,"bot1");
         assertEquals("bot1",bot1.getNom());
     }
 
     @Test
     void setNom() {
         Board board = new Board();
-        Bot bot1 = new PrimaryBot(board,"bot1");
+        Bot bot1 = new IntermediateBot(board,"bot1");
         bot1.setNom("botte1");
         assertEquals("botte1",bot1.getNom());
     }
@@ -52,7 +49,7 @@ class PlayerTest {
     @Test
     void getNbActions() {
         Board board = new Board();
-        Bot bot1 = new PrimaryBot(board,"bot1");
+        Bot bot1 = new IntermediateBot(board,"bot1");
         bot1.resetNbActions();
         assertEquals(2,bot1.getNbActions());
     }
@@ -60,17 +57,17 @@ class PlayerTest {
     @Test
     void playAction() {
         Board board = new Board();
-        Bot bot1 = new PrimaryBot(board,"bot1");
+        Bot bot1 = new IntermediateBot(board,"bot1");
         bot1.resetNbActions();
-        bot1.playAction();
+        bot1.playAction("random");
         assertEquals(1,bot1.getNbActions());
     }
 
     @Test
     void resetNbActions() {
         Board board = new Board();
-        Bot bot1 = new PrimaryBot(board,"bot1");
-        bot1.playAction();
+        Bot bot1 = new IntermediateBot(board,"bot1");
+        bot1.playAction("random");
         bot1.resetNbActions();
         assertEquals(2,bot1.getNbActions());
     }
@@ -78,7 +75,7 @@ class PlayerTest {
     @Test
     void resetNbBamboo() {
         Board board = new Board();
-        Bot bot1 = new PrimaryBot(board,"bot1");
+        Bot bot1 = new IntermediateBot(board,"bot1");
         bot1.upNbBamboo(TypeOfTile.GREEN); bot1.upNbBamboo(TypeOfTile.GREEN);
         bot1.resetNbBamboo(TypeOfTile.GREEN);
         assertEquals(0,bot1.getNbBamboo(TypeOfTile.GREEN));
@@ -87,43 +84,15 @@ class PlayerTest {
     @Test
     void getNbBamboo() {
         Board board = new Board();
-        Bot bot1 = new PrimaryBot(board,"bot1");
+        Bot bot1 = new IntermediateBot(board,"bot1");
         assertEquals(0,bot1.getNbBamboo(TypeOfTile.GREEN));
     }
 
     @Test
     void upNbBamboo() {
         Board board = new Board();
-        Bot bot1 = new PrimaryBot(board,"bot1");
+        Bot bot1 = new IntermediateBot(board,"bot1");
         bot1.upNbBamboo(TypeOfTile.GREEN);
         assertEquals(1,bot1.getNbBamboo(TypeOfTile.GREEN));
-    }
-
-    @Test
-    void testChooseBetterOf3Tiles(){ //NEED TO DO A MALOCK RIGHT HERE IN THE FUTURE
-        //TODO : Simon doit faire le mockito
-        Board board = new Board();
-        PrimaryBot bot1 = new PrimaryBot(board,"bot1");
-        bot1.setFocusCard(new ObjectivePanda("panda",1,80,TypeOfTile.GREEN));
-        ArrayList<Tile> dummyTiles = new ArrayList<>(Arrays.asList(
-                new Tile(new Coordinate(0,0), TypeOfTile.GREEN),
-                new Tile(new Coordinate(0,0), TypeOfTile.RED),
-                new Tile(new Coordinate(0,0), TypeOfTile.YELLOW)
-        ));
-        Tile tile = bot1.chooseBetterOf3Tiles(dummyTiles);
-
-        assertEquals(TypeOfTile.GREEN, tile.getTypeOfTile());
-        assertEquals(29, board.getTileStack().getStack().size());
-    }
-
-    @Test
-    void testSortObjective(){
-        Board board = new Board();
-        Main.LOGGER.setLevel(Level.SEVERE);
-        IntermediateBot ib = new IntermediateBot(board,"Simon");
-        ib.getObjective().sort((o1, o2) -> o2.getNbPointsWin() - o1.getNbPointsWin());
-        assertTrue(ib.getObjective().get(0).getNbPointsWin() > ib.getObjective().get(2).getNbPointsWin());
-        Main.LOGGER.severe(Integer.toString(ib.getObjective().get(0).getNbPointsWin()));
-        Main.LOGGER.severe(Integer.toString(ib.getObjective().get(2).getNbPointsWin()));
     }
 }
