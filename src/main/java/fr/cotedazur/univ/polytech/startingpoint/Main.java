@@ -46,52 +46,74 @@ public class Main <T>{
         }
         if (parameters.csv) {
 
-            nbParties = 1;
+            nbParties = 100;
 
             LOGGER.setLevel(Level.SEVERE);
             LOGGER.severe("Run mode : csv");
+        }
+        if (parameters.allBots) {
+
+            nbParties = 250;
+
+            LOGGER.setLevel(Level.SEVERE);
+            LOGGER.severe("Run mode : allBots");
         }
 
         csvManager.setNbParties(nbParties);
 
         double victoireBot1=0;
         double victoireBot2=0;
+        double victoireBot3=0;
         List<String[]> listBot = new ArrayList<>();
 
-        Bot bot1 = new IntermediateBot(new Board(), "Simon");
-        Bot bot2 = new LittleBot(new Board(), "Damien");
+        Bot bot1 = new IntermediateBot(new Board(), "Intermédiaire");
+        Bot bot2 = new LittleBot(new Board(), "PetitsObjectifs");
+        Bot bot3 = new SkynetBot(new Board(), "BotFeature3");
 
 
-
-        LOGGER.severe("Lancement de " + nbParties + " partie(s) avec des bots intermédiaires vs debutants");
+        if(parameters.allBots){
+            LOGGER.setLevel(Level.SEVERE);
+        }
+        else{
+            LOGGER.severe("Lancement de " + nbParties + " partie(s) avec des bots intermédiaires vs debutants");
+        }
 
         for(int i=0;i<nbParties;i++){
             listBot.clear();
             Board board = new Board();
 
-            bot1 = new IntermediateBot(board, "Simon");
-            bot2 = new LittleBot(board, "Damien");
-
-
+            bot1 = new IntermediateBot(board, "Intermédiaire");
+            bot2 = new LittleBot(board, "PetitsObjectifs");
+            bot3 = new SkynetBot(new Board(), "BotFeature3");
 
             List<Bot> listPlayer = new ArrayList<>();
             listPlayer.add(bot1);
             listPlayer.add(bot2);
+            if(parameters.allBots){
+                listPlayer.add(bot3);
+            }
             GameEngine game = new GameEngine(board, listPlayer);
             game.launchGame();
-            if (bot1.getPoint()>bot2.getPoint()) {
-                victoireBot1++;
-            } else if(bot1.getPoint()<bot2.getPoint()){
-                victoireBot2++;
+            if(!(parameters.allBots)){
+                if (bot1.getPoint()>bot2.getPoint()) {
+                    victoireBot1++;
+                } else if(bot1.getPoint()<bot2.getPoint()){
+                    victoireBot2++;
+                }
+            }
+            else{
+                if (bot1.getPoint()>bot2.getPoint() && bot1.getPoint()>bot3.getPoint()) {
+                    victoireBot1++;
+                } else if(bot1.getPoint()<bot2.getPoint() && bot2.getPoint()>bot3.getPoint()){
+                    victoireBot2++;
+                }
+                else if(bot1.getPoint()<bot3.getPoint() && bot2.getPoint()<bot3.getPoint()){
+                    victoireBot3++;
+                }
             }
 
-            String[] bot1Info = {bot1.getNom(),""+victoireBot1,""+(victoireBot1/(i+1))*100+"%"};
-            String[] bot2Info = {bot2.getNom(),""+victoireBot2,""+(victoireBot2/(i+1))*100+"%"};
-            listBot.add(bot1Info);
-            listBot.add(bot2Info);
-            csvManager.setListBot(listBot);
-            csvManager.setNbParties(i+1);
-            csvManager.writeCSV();
+
+
         }
 
         listBot.clear();
@@ -107,14 +129,22 @@ public class Main <T>{
         else{
             String[] bot1Info = {bot1.getNom(),""+victoireBot1,""+(victoireBot1/nbParties)*100+"%"};
             String[] bot2Info = {bot2.getNom(),""+victoireBot2,""+(victoireBot2/nbParties)*100+"%"};
+            String[] bot3Info = {bot3.getNom(),""+victoireBot3,""+(victoireBot3/nbParties)*100+"%"};
             listBot.add(bot1Info);
             listBot.add(bot2Info);
+            if(parameters.allBots){
+                listBot.add(bot3Info);
+            }
         }
 
         int victoireB1 = (int) victoireBot1;
         int victoireB2 = (int) victoireBot2;
+        int victoireB3 = (int) victoireBot3;
         LOGGER.severe(bot1.getNom() + " a remporté " + victoireB1 + " partie(s) ce qui fait un pourcentage de " + (victoireBot1/nbParties)*100 + "%");
         LOGGER.severe(bot2.getNom() + " a remporté " + victoireB2 + " partie(s) ce qui fait un pourcentage de " + (victoireBot2/nbParties)*100 + "%");
+        if(parameters.allBots){
+            LOGGER.severe(bot3.getNom() + " a remporté " + victoireB3 + " partie(s) ce qui fait un pourcentage de " + (victoireBot3/nbParties)*100 + "%");
+        }
 
 
         if (parameters.twoThousands) {
@@ -126,8 +156,8 @@ public class Main <T>{
 
                 Board board = new Board();
 
-                bot1 = new IntermediateBot(board, "Simon");
-                bot2 = new IntermediateBot(board, "Damien");
+                bot1 = new IntermediateBot(board, "Intermediaire1");
+                bot2 = new IntermediateBot(board, "Intermediaire2");
 
 
                 List<Bot> listPlayer = new ArrayList<>();
@@ -167,10 +197,7 @@ public class Main <T>{
         csvManager.writeCSV();
 
 
-        //String[] bot1Info = {bot1.getNom(),""+bot1.getPoint(),"0"};
-        //String[] bot2Info = {bot2.getNom(),""+bot2.getPoint(),"1"};
-        //writer.writeNext(bot1Info);
-        //writer.writeNext(bot2Info);
+
 
 
     }
