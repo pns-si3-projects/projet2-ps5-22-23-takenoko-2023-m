@@ -12,6 +12,12 @@ public class Tile {
     private TypeOfArrangement typeOfArrangement=TypeOfArrangement.NONE;
     private int key;
 
+    /**
+     * A construtor of the class
+     * @param coordinate The coordinate of the tile
+     * @param type The type of the tile
+     * @param typeOfArrangement The typeOfArrangement
+     */
     public Tile(Coordinate coordinate, TypeOfTile type, TypeOfArrangement typeOfArrangement){
         this.coordinate = coordinate;
         this.typeOfTile = type;
@@ -74,26 +80,49 @@ public class Tile {
 
     }*/
 
-
+    /**
+     * Getter of the coordinate x
+     * @return the coordinate x
+     */
     public int getCoordinnateX() {
         return coordinate.getX();
     }
 
+    /**
+     * Getter of the coordinate y
+     * @return the coordinate y
+     */
     public int getCoordinnateY(){
         return coordinate.getY();
     }
 
+    /**
+     * getter of the coordinate
+     * @return the coordinate of the class
+     */
     public Coordinate getCoordinate() {
         return coordinate;
     }
+
+    /**
+     * A method to irrigate the tile
+     */
     public void irrigate() {
         this.isIrrigated = true;
     }
+
+    /**
+     * A method to find if the tile is irrigated
+     * @return true if it's irrigated, false if it's not
+     */
     public boolean isIrrigated() {
         return isIrrigated;
     }
 
-
+    /**
+     * A setter of the coordinate
+     * @param coordinate the new coordinate
+     */
     public void setCoordinate(Coordinate coordinate) {
         if(this.coordinate == null){
             this.coordinate = coordinate;
@@ -101,9 +130,11 @@ public class Tile {
     }
 
 
-    //tests to see if the tile to test is neighbour to this tile
-    //check coordinate system at : https://www.redblobgames.com/grids/hexagons/#neighbors-axial
-    //maybe consider to refactor it to only return Coordinate item
+    /**
+     * A method to find if 2 tiles are neighbours
+     * @param tileToTest The tile to test
+     * @return true if the tiles are neighbours, false if it's not
+     */
     public boolean isNeighbour (Tile tileToTest) {
         List<Coordinate> neighboursToTest = this.getNeighbourCoordinates();
         for (int i = 0; i < 6; i++) {
@@ -116,7 +147,11 @@ public class Tile {
         return false;
     }
 
-    //scans the available Tiles to move panda and gardener considering boardTiles
+    /**
+     * A method to find all available coordinates to move from the current tile
+     * @param boardTiles A list of the board Tiles
+     * @return A list of all legal coordinates
+     */
     public List<Coordinate> scanAvailableCoordinatesToMove (List<Tile> boardTiles) {
         List<Coordinate> availableCoordinates = new ArrayList<>();
 
@@ -134,8 +169,10 @@ public class Tile {
         return availableCoordinates;
     }
 
-    //returns an array of all the neighbour tiles, whether there is one tile at this place or not
-    //the name may not be well-chosen, please feel free to propose a new one
+    /**
+     * A method which return the neighbour coordinates of the current tile
+     * @return A list of the neighbour coordinates
+     */
     public List<Coordinate> getNeighbourCoordinates () {
         List<Coordinate> neighbourCoordinates = new ArrayList<>();
 
@@ -152,12 +189,18 @@ public class Tile {
         return neighbourCoordinates;
     }
 
-    // scans the available tiles to move panda and gardener from this Tile considering the available Tiles in boardTiles
+    /**
+     * toString method
+     * @return a String
+     */
     @Override
     public String toString() {
         return "Tile at x = " + coordinate.getX() + ", y = " + coordinate.getY();
     }
 
+    /**
+     * A method which decrements the number of bamboo of the tile
+     */
     public void eatBamboo(){
         if(this.getTypeOfArrangement()!= TypeOfArrangement.ENCLOSURE){
             this.bamboo--;
@@ -168,11 +211,18 @@ public class Tile {
 
     }
 
+    /**
+     * A getter of the type of tile
+     * @return the type of tile
+     */
     public TypeOfTile getTypeOfTile(){
         return this.typeOfTile;
     }
 
-
+    /**
+     * A method to grow the bamboo on the tile
+     * @return the number of bamboo on the tile
+     */
     public int grow() {
         if (this.isIrrigated) {
             if (this.getTypeOfArrangement() == TypeOfArrangement.FERTILIZER) {
@@ -188,20 +238,41 @@ public class Tile {
         return -1;
     }
 
+    /**
+     * A getter of the number of bamboo
+     * @return the number of bamboo
+     */
     public int getBamboo() {
         return bamboo;
     }
 
+    /**
+     * a setter of the number of bamboo
+     * @param bamboo the new number of bamboo
+     */
     public void setBamboo(int bamboo) {
         this.bamboo = bamboo;
     }
 
+    /**
+     * A setter of the typeOfTile
+     * @param typeOfTile the new TypeOfTile
+     */
     public void setTypeOfTile(TypeOfTile typeOfTile) {
         this.typeOfTile = typeOfTile;
     }
 
+    /**
+     * A getter of the key
+     * @return the key
+     */
     public int getKey(){ return this.key;}
 
+    /**
+     * Equals method
+     * @param o The object to test
+     * @return true if it's equals, false if it's not
+     */
     @Override
     public boolean equals (Object o) {
         if (o != null) {
@@ -216,19 +287,36 @@ public class Tile {
         return false;
     }
 
+    /**
+     * hashCode method
+     * @return the hashcode
+     */
     @Override
     public int hashCode() {
         return Objects.hash(coordinate, bamboo, typeOfTile, isIrrigated, typeOfArrangement);
     }
 
+    /**
+     * a getter of the type of arrangement
+     * @return the type of arrangement
+     */
     public TypeOfArrangement getTypeOfArrangement() {
         return typeOfArrangement;
     }
 
+    /**
+     * a setter of the type of arrangement
+     * @param typeOfArrangement the new type of arrangement
+     */
     public void setTypeOfArrangement(TypeOfArrangement typeOfArrangement) {
         this.typeOfArrangement = typeOfArrangement;
     }
 
+    /**
+     * a method to get the neighbour coordinate with another
+     * @param tile The tile to test
+     * @return A list of coordinates
+     */
     public List<Coordinate> getNeighbourCoordinateTogetherWith(Tile tile) {
         List<Coordinate> neighbourCoordinates = this.getNeighbourCoordinates();
         neighbourCoordinates.retainAll(tile.getNeighbourCoordinates());
