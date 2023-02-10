@@ -21,7 +21,7 @@ Voici un tableau résumant les différentes fonctionnalités réalisées sur le 
 Résumé pour le choix des logs : 
 Au début de la réalisation de ce projet nous avons utilisé naivement de vulgaires System.out.println() comme beaucoup d'étudiants dans notre cas. Cependant, suite à la demande de Mr Collet, tout ces println() ont été remplacés grâce à la librairie Java java.util.loggin. Pour ce faire, nous avons du trier les messages qu'il faut afficher  en fonction de leur ordre d'importance, nous avons donc décidé de mettre tous les messages liés à l'information et au déroulement d'une partie comme par exemple : 
 
-> Le joueur Simon se déplace sur la case -1,0
+> Le joueur Simon déplace le panda sur la case -1,0
 
 en message de type Level.info, car nous avons considéré que ce message était de bas niveau concernant l'importance.  Cependant, pour le message de fin annonçant le vainqueur de la partie (ou l'égalité)
 
