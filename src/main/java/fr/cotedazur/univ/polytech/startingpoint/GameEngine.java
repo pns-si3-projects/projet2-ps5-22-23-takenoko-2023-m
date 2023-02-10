@@ -4,8 +4,6 @@ import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Supplier;
-import java.util.logging.*;
 
 public class GameEngine {
     Board board;
@@ -22,7 +20,8 @@ public class GameEngine {
         int nbTour = 1;
         boolean isGameFinished = false;
         while(true){
-            Main.LOGGER.info("<       > Tour numero : "+nbTour+" <       >");
+            String message = "<       > Tour numero : "+nbTour+" <       >";
+            Main.LOGGER.info(message);
             this.playerList.get(indexPlayer).play();
             if (this.playerList.get(indexPlayer).getNbObjectifsRealises() >=9){
                 isGameFinished = true;
@@ -45,9 +44,8 @@ public class GameEngine {
                     if(b.getPoint()>points){
                         ret = b;
                         points = b.getPoint();
-                    }else if(b.getPoint()==points){
-                        verif = true;
                     }
+                    verif = b.getPoint()==points;
                 }
                 playerList.remove(ret);
                 printWinner(ret,verif,playerList.get(0).getPoint());
@@ -57,7 +55,8 @@ public class GameEngine {
     }
 
     public void printWinner(Bot p, boolean isEgality, int pointsPerdant){
-        if(!isEgality) Main.LOGGER.info("Le joueur est gagnant est : "+p.getNom()+" avec un score de "+p.getPoint()+" points marques \nLe perdant possède "+pointsPerdant+" points");
+        String message = "Le joueur est gagnant est : "+p.getNom()+" avec un score de "+p.getPoint()+" points marques \nLe perdant possède "+pointsPerdant+" points";
+        if(!isEgality) Main.LOGGER.info(message);
         else Main.LOGGER.info("Egalite entre les deux joueurs ! ");
     }
 }

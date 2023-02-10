@@ -1,7 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
-import fr.cotedazur.univ.polytech.startingpoint.bots.PrimaryBot;
+import fr.cotedazur.univ.polytech.startingpoint.bots.IntermediateBot;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -48,16 +48,6 @@ class BoardTest {
         assertEquals(28,board.getTileStack().sizeTileStack());
     }
 
-    @Test
-    void testPutBackWithPlayer(){
-        Board board = new Board();
-        PrimaryBot p =  new PrimaryBot(board, "Simon");
-        p.checkBetterCard();
-        List<Tile> liste = board.pickThreeTiles();
-        assertEquals(24,board.getTileStack().sizeTileStack());
-        Tile t = p.chooseBetterOf3Tiles(liste);
-        assertEquals(26,board.getTileStack().sizeTileStack());
-    }
 
     @Test
     void testIrrigationPlacement() {
@@ -67,7 +57,7 @@ class BoardTest {
         board.addTile(tx1y0);
         board.addTile(tx0y1);
         board.addTile(tx1y1);
-        ArrayList<Irrigation> legalIrrigationPlacement = board.getLegalIrrigationPlacement();
+        List<Irrigation> legalIrrigationPlacement = board.getLegalIrrigationPlacement();
         board.addIrrigation(legalIrrigationPlacement.get(0));
         assertTrue(tx1y0.isIrrigated());
         assertTrue(tx0y1.isIrrigated());
@@ -84,7 +74,7 @@ class BoardTest {
     @Test
     void testLegalIrrigationPlacement() {
         Board board = new Board();
-        ArrayList<Irrigation> legalIrrigationPlacement = board.getLegalIrrigationPlacement();
+        List<Irrigation> legalIrrigationPlacement = board.getLegalIrrigationPlacement();
         assertTrue(legalIrrigationPlacement.size() == 6);
         board.addTile(new Tile(new Coordinate(1,0), TypeOfTile.GREEN, TypeOfArrangement.NONE));
         board.addTile(new Tile(new Coordinate(0,1), TypeOfTile.GREEN, TypeOfArrangement.NONE));

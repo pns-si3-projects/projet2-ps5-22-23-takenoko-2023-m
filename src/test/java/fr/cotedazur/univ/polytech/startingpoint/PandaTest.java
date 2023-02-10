@@ -14,14 +14,14 @@ class PandaTest {
     @BeforeAll
     static void beforeAll(){
         board = new Board();
-        player = new PrimaryBot(board,"Joueur1");
-        Tile start = new Tile(new Coordinate(0,0), TypeOfTile.GREEN, TypeOfArrangement.NONE);
+        player = new IntermediateBot(board,"Joueur1");
+        Tile start = new Tile(new Coordinate(0,0));
         board.addTile(start);
-        Tile tile1 = new Tile(new Coordinate(1,0), TypeOfTile.GREEN, TypeOfArrangement.NONE);
+        Tile tile1 = new Tile(new Coordinate(1,0));
         tile1.irrigate();
         tile1.grow();
         board.addTile(tile1);
-        Tile tile2 = new Tile(new Coordinate(2,0), TypeOfTile.GREEN, TypeOfArrangement.NONE);
+        Tile tile2 = new Tile(new Coordinate(2,0));
         board.addTile(tile2);
     }
 
