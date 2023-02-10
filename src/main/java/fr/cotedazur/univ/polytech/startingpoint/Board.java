@@ -125,7 +125,7 @@ public class Board {
                 placedIrrigations.add(newIrrigation);
                 legalIrrigationPlacement.remove(legalIrrigationPlacement.indexOf(irrigation));
 
-                ArrayList<Irrigation> neighbourIrrigations = irrigation.getNeighbourIrrigations();
+                List<Irrigation> neighbourIrrigations = irrigation.getNeighbourIrrigations();
                 for (int i = 0; i < neighbourIrrigations.size(); i++) { //adds the new legal irrigation placements
                     if (!legalIrrigationPlacement.contains(neighbourIrrigations.get(i))&&!placedIrrigations.contains(neighbourIrrigations.get(i))) {
                         legalIrrigationPlacement.add(neighbourIrrigations.get(i));

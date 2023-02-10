@@ -202,14 +202,9 @@ public class Tile {
 
     @Override
     public boolean equals (Object o) {
-        if (o != null) {
-            if (o instanceof Tile) {
-                Tile t = (Tile) o;
-                if (t.getKey() == this.getKey()) {
-                    return true;
-                }
+        if (o instanceof Tile t && t.getKey() == this.getKey()) {
+            return true;
 
-            }
         }
         return false;
     }
