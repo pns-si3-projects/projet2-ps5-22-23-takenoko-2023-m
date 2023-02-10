@@ -133,11 +133,13 @@ public class Main <T>{
         int victoireB1 = (int) victoireBot1;
         int victoireB2 = (int) victoireBot2;
         int victoireB3 = (int) victoireBot3;
+        Double egalites = (double) (nbParties - victoireB1 - victoireB2 - victoireB3);
         LOGGER.severe(bot1.getNom() + " a remporté " + victoireB1 + " partie(s) ce qui fait un pourcentage de " + (victoireBot1/nbParties)*100 + "%");
         LOGGER.severe(bot2.getNom() + " a remporté " + victoireB2 + " partie(s) ce qui fait un pourcentage de " + (victoireBot2/nbParties)*100 + "%");
         if(parameters.allBots){
             LOGGER.severe(bot3.getNom() + " a remporté " + victoireB3 + " partie(s) ce qui fait un pourcentage de " + (victoireBot3/nbParties)*100 + "%");
         }
+        LOGGER.severe("Il y a eu " + egalites + " égalité(s), ce qui représente " + (egalites/nbParties)*100 + "% des parties");
 
 
         if (parameters.twoThousands) {
@@ -178,9 +180,10 @@ public class Main <T>{
 
             victoireB1 = (int) victoireBot1;
             victoireB2 = (int) victoireBot2;
+            egalites = (double) (nbParties - victoireB1 - victoireB2);
             LOGGER.severe(bot1.getNom() + " a remporté " + victoireB1 + " partie(s) ce qui fait un pourcentage de " + (victoireBot1/nbParties)*100 + "%");
             LOGGER.severe(bot2.getNom() + " a remporté " + victoireB2 + " partie(s) ce qui fait un pourcentage de " + (victoireBot2/nbParties)*100 + "%");
-
+            LOGGER.severe("Il y a eu " + egalites + " égalité(s), ce qui représente " + (egalites/nbParties)*100 + "% des parties");
         }
 
 
