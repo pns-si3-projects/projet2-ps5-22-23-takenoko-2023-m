@@ -13,7 +13,7 @@ class TileStackTest {
     void pickThreeTiles() {
         TileStack tileStack = new TileStack();
         assertEquals(tileStack.getStack().size(),27);
-        tileStack.addTile(new Tile(TypeOfTile.RED));
+        tileStack.addTile(new Tile(null, TypeOfTile.RED, TypeOfArrangement.NONE));
         assertEquals(tileStack.getStack().size(),28);
         List<Tile> liste = tileStack.pickThreeTiles();
         assertEquals(tileStack.getStack().size(),25);
