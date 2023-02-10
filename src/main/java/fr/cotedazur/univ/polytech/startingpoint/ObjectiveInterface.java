@@ -1,10 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
-import fr.cotedazur.univ.polytech.startingpoint.bots.IntermediateBot;
-import fr.cotedazur.univ.polytech.startingpoint.bots.LittleBot;
-import fr.cotedazur.univ.polytech.startingpoint.bots.PrimaryBot;
-import fr.cotedazur.univ.polytech.startingpoint.bots.SkynetBot;
 
 public interface ObjectiveInterface {
     public String getType();

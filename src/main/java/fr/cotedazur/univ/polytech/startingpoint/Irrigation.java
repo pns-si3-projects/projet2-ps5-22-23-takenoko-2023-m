@@ -3,6 +3,7 @@ package fr.cotedazur.univ.polytech.startingpoint;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class Irrigation {
 
@@ -35,7 +36,7 @@ public class Irrigation {
     }
 
     public Irrigation (Coordinate coordinate1, Coordinate coordinate2) throws RuntimeException {
-        ArrayList<Coordinate> coordinate1Neighbours = coordinate1.getNeighbourCoordinates();
+        List<Coordinate> coordinate1Neighbours = coordinate1.getNeighbourCoordinates();
         if (!coordinate1Neighbours.contains(coordinate2)) {
             throw new RuntimeException("Tiles are not neighbours ( " + coordinate1 + "\t\t" + coordinate2 + " )");
         }
@@ -102,8 +103,8 @@ public class Irrigation {
     }
 
 
-    public ArrayList<Irrigation> getNeighbourIrrigations() {
-        ArrayList<Irrigation> neighbours = new ArrayList<>();
+    public List<Irrigation> getNeighbourIrrigations() {
+        List<Irrigation> neighbours = new ArrayList<>();
         switch (irrigationType) {
             case vertical -> {
                 Irrigation topLeftNeighbour = new Irrigation(coordinate1, new Coordinate(coordinate2.getX(), coordinate2.getY()-1));
@@ -140,11 +141,8 @@ public class Irrigation {
     }
 
     public boolean isNeighbour (Irrigation potentialNeighbour) {
-        ArrayList<Irrigation> thisNeighbours = this.getNeighbourIrrigations();
-        if (thisNeighbours.contains(potentialNeighbour)) {
-            return true;
-        }
-        return false;
+        List<Irrigation> thisNeighbours = this.getNeighbourIrrigations();
+        return thisNeighbours.contains(potentialNeighbour);
     }
 
     @Override
@@ -153,17 +151,19 @@ public class Irrigation {
     }
     @Override
     public boolean equals(Object o) {
-        if (o != null) {
-            if (o instanceof Irrigation) {
-                Irrigation i = (Irrigation) o;
-                if ((this.coordinate1.equals(i.getCoordinates().get(0))) && (this.coordinate2.equals(i.getCoordinates().get(1)))) {
-                    return true;
-                }
-                if ((this.coordinate2.equals(i.getCoordinates().get(0))) && (this.coordinate1.equals(i.getCoordinates().get(1)))) {
-                    return true;
-                }
+        if (o instanceof Irrigation i) {
+            if ((this.coordinate1.equals(i.getCoordinates().get(0))) && (this.coordinate2.equals(i.getCoordinates().get(1)))) {
+                return true;
+            }
+            if ((this.coordinate2.equals(i.getCoordinates().get(0))) && (this.coordinate1.equals(i.getCoordinates().get(1)))) {
+                return true;
             }
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(coordinate1, coordinate2);
     }
 }

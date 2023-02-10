@@ -3,21 +3,14 @@ import com.opencsv.exceptions.CsvException;
 import fr.cotedazur.univ.polytech.startingpoint.bots.*;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.logging.*;
 import java.util.List;
-import com.opencsv.*;
-import java.io.FileReader;
-import java.net.URL;
 import com.beust.jcommander.JCommander;
 
 public class Main <T>{
     public final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-
-
 
     public static void main(String... args) throws IOException, CsvException {
 
@@ -45,7 +38,8 @@ public class Main <T>{
         }
         if (parameters.csv) {
 
-            nbParties = 100;
+
+            nbParties = 10;
 
             LOGGER.setLevel(Level.SEVERE);
             LOGGER.severe("Run mode : csv");

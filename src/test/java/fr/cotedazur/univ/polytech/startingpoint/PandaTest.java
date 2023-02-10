@@ -14,7 +14,7 @@ class PandaTest {
     @BeforeAll
     static void beforeAll(){
         board = new Board();
-        player = new PrimaryBot(board,"Joueur1");
+        player = new IntermediateBot(board,"Joueur1");
         Tile start = new Tile(new Coordinate(0,0));
         board.addTile(start);
         Tile tile1 = new Tile(new Coordinate(1,0));

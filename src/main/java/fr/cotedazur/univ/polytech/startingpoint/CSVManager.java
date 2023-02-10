@@ -1,23 +1,20 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+<<<<<<< HEAD
 import java.util.Arrays;
 import java.util.logging.*;
+=======
+>>>>>>> fb644ba2adf8df2541e8dd81111663b68923b890
 import java.util.List;
 import com.opencsv.*;
 import java.io.FileReader;
-import java.net.URL;
-import com.beust.jcommander.JCommander;
-import com.opencsv.exceptions.CsvException;
 import com.opencsv.exceptions.CsvValidationException;
-import fr.cotedazur.univ.polytech.startingpoint.bots.Bot;
 
 public class CSVManager {
-    private List<String[]> listBot = new ArrayList<String[]>();
+    private List<String[]> listBot = new ArrayList<>();
     private int nbParties;
     private String file;
 
@@ -42,9 +39,12 @@ public class CSVManager {
     }
 
     public List<List<String>> readerCSV() throws IOException, CsvValidationException {
-        List<List<String>> list = new ArrayList<List<String>>();
-        CSVReader reader = new CSVReader(new FileReader(file));
+        List<List<String>> list = new ArrayList<>();
+        CSVReader reader = null;
+        try{
+            reader = new CSVReader(new FileReader(file));
 
+<<<<<<< HEAD
         String[] line;
         line = reader.readNext();
         List<String> head = new ArrayList<String>();
@@ -87,6 +87,33 @@ public class CSVManager {
 
         }
         reader.close();
+=======
+            String[] line;
+            line = reader.readNext();
+            List<String> head = new ArrayList<>();
+            String str = line[2];
+            str=str.replace("Taux_de_victoire_sur_", "");
+            str=str.replace("_parties", "");
+            head.add(str);
+            list.add(head);
+            while ((line = reader.readNext()) != null) {
+                List<String> bot = new ArrayList<>();
+                bot.add(line[0]);
+                bot.add(line[1]);
+                bot.add(line[2].replace("%", ""));
+                list.add(bot);
+            }
+        }
+        catch(Exception e){
+            Main.LOGGER.severe("Erreur lors de la lecture du fichier CSV");
+        }
+        finally {
+            if(reader!=null){
+                reader.close();
+            }
+        }
+
+>>>>>>> fb644ba2adf8df2541e8dd81111663b68923b890
         return list;
 
 

@@ -3,7 +3,7 @@ Membres de l'équipe :
 
  - Maurois Quentin
  - Dagues de La Hellerie Krysto
- - Stenguel Damien
+ - Stengel Damien
  - Beurel Simon  
 
 Ce document à pour but de servir de documentation vis-à-vis du projet Takenoko réalisé par l'équipe M de Polytech Nice-Sophia. 
@@ -46,10 +46,17 @@ Actuellement nous avons deux versions du bot, qui sont toutes les deux différen
 ## Architecture et qualité
 Comment est faite l'architecture du projet : 
 Pour l'architecture du projet, nous avons créer un package Bot notamment pour pouvoir y mettre les différents types de bots que nous avons codé. 
-(à continuer)
+De plus, chacune des classes correspond à une fonctionnalité propre au jeu (Dé, Météo, Irrigations, Objectifs etc...)
+De plus, il est également possible de pouvoir lancer le programme principale avec différents arguments pour simuler plusieurs scénarios : 
 
-Où trouver les infos : (documentation) 
+ - --csv : Lit le fichier CSV et l'actualise grâce à un certain nombre de parties
+ - --2thousands : Lance deux salves de jeu de 1000 parties (Intermédiaire vs Little & Intermédiaire vs Intermédiaire)
+ - --demo : Lance une seule partie Intermédiaire vs Little et affiche toutes les logs dans le terminal
+ - --allbots : Lance 10 parties où dans chacune les trois bots s'affrontent
+
+Où trouver les infos :
 Toute la documentation de notre projet se trouver dans le dossier doc dans lequel vous avez pu trouver ce fichier. Il est également possible de pouvoir trouver la javadoc du projet qui a été générée. Celle-ci va pouvoir vous permettre de mieux comprendre le fonctionnement des différentes méthodes et de comment ces dernières fonctionnent. 
+Si vous voulez nous envoyer un mail pour obtenir plus d'informations sur le projet, vous pouvez l'envoyer à simon.beurel@etu.univ-cotedazur.fr et je me chargerais de transmettre vos questions aux membres du groupe. 
 
 Etat de base du code :
 Actuellement, nous savons que le projet possède une bonne base du jeu Takenoko, les règles principales sont implémentées et notamment des fonctionnalités propres au jeu comme les irrigations, la détection de patterns pour les objectifs Parcelles fonctionne correctement. Nous sommes également en mesure d'affirmer que les différents bots que nous avons créer fonctionnent correctement et ont chacun une manière de réfléchir qui leur est propre. 
@@ -61,7 +68,7 @@ Voici un tableau qui répartit la responsabilité de chacun sur une partie du pr
 |Nom Prénom|Responsabilité  |
 |--|--|
 |  Maurois Quentin|Irrigations, SonarCube, Coordonnées |
-|Stenguel Damien| Détection des patterns, Refactorisation
+|Stengel Damien| Détection des patterns, Refactorisation
 |Dagues de La Hellerie Krysto| Dé, Météo, Bâtiments, Piles d'objectifs, Objectifs|
 |Beurel Simon| Comportement du bot, Différentes méthodes de réflexion du bot
 
