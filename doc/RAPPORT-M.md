@@ -32,7 +32,7 @@ Ainsi par conséquent, si l'utilisateur ne souhaite voir apparaître que le mess
 
 
 Résumé pour les statistiques CSV : 
-Les statistiques présentes dans le fichier csv permet notamment de comprendre quel bot est supérieur à quel autre bot. Nous pouvons trouver dans ce fichier des statistiques comme le nombre de parties jouées, le nombre de parties gagnés pour chaque bot ainsi que le pourcentage de victoire. 
+Les statistiques présentes dans le fichier csv permet notamment de comprendre quel bot est supérieur à quel autre bot. Nous pouvons trouver dans ce fichier des statistiques comme le nombre de parties jouées, le nombre de parties gagnés pour chaque bot ainsi que le pourcentage de victoire. Le nombre d'égalités n'est présent dans le fichier csv, mais il peut être facilement determiné en soustrayant au nombre de parties le nombre de victoires total des bots.
 
 ![Exemple de génération d'un fichier csv sur 5575 parties avec comme stats par ligne : 1)Le nom du joueur 2) Le nombre de parties gagnées 3) Le pourcentage de victoire](https://cdn.discordapp.com/attachments/701053516256509954/1073158223638568980/image.png)
 
