@@ -16,28 +16,8 @@ public class ArrangementStack extends Stack<TypeOfArrangement>{
     }
 
     @Override
-    public void putBelow(TypeOfArrangement o) {
-        super.putBelow(o);
-    }
-
-    @Override
-    public TypeOfArrangement pick(TypeOfArrangement o) {
-        return super.pick(o);
-    }
-
-    @Override
-    public TypeOfArrangement randomPick() {
-        return super.randomPick();
-    }
-
-    @Override
     public String toString() {
         return super.toString();
-    }
-
-    @Override
-    public List<TypeOfArrangement> getStack() {
-        return super.getStack();
     }
 
     @Override

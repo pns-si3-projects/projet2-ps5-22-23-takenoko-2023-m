@@ -105,7 +105,7 @@ public class IntermediateBot extends Bot {
                         }
                     }
                     if(!gardenerMooved){
-                        ArrayList<Irrigation> listOfIrrigation = board.getLegalIrrigationPlacement();
+                        List<Irrigation> listOfIrrigation = board.getLegalIrrigationPlacement();
                         boolean isIrrigationPosed = false;
                         for(Coordinate co : availablePositionsForGarderner){
                             for(Irrigation i : listOfIrrigation){
@@ -353,7 +353,7 @@ public class IntermediateBot extends Bot {
         List<Tile> tileList = board.getBoardTiles();
         List<Coordinate> coordinateToMoovePanda = tileOfPanda.scanAvailableCoordinatesToMove(tileList);
         List<Coordinate> coordinateToMooveGardener = board.getGardener().getTile().scanAvailableCoordinatesToMove(tileList);
-        ArrayList<Irrigation> availablePositionsIrrigation = board.getLegalIrrigationPlacement();
+        List<Irrigation> availablePositionsIrrigation = board.getLegalIrrigationPlacement();
         for(Coordinate co : coordinateToMooveGardener){
             if(coordinateToMoovePanda.contains(co)){
                 if(board.getTile(co).isIrrigated() && board.getTile(co).getTypeOfTile().equals(type)){
@@ -390,7 +390,7 @@ public class IntermediateBot extends Bot {
     }
 
     public void playForIrrigation(){
-        ArrayList<Irrigation> listeIrrigations = board.getLegalIrrigationPlacement();
+        List<Irrigation> listeIrrigations = board.getLegalIrrigationPlacement();
         for(Irrigation irrigation : listeIrrigations){
             boolean verif = board.addIrrigation(irrigation);
             if(verif){

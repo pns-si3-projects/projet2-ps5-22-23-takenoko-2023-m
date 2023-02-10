@@ -35,7 +35,7 @@ public class Irrigation {
     }
 
     public Irrigation (Coordinate coordinate1, Coordinate coordinate2) throws RuntimeException {
-        ArrayList<Coordinate> coordinate1Neighbours = coordinate1.getNeighbourCoordinates();
+        List<Coordinate> coordinate1Neighbours = coordinate1.getNeighbourCoordinates();
         if (!coordinate1Neighbours.contains(coordinate2)) {
             throw new RuntimeException("Tiles are not neighbours ( " + coordinate1 + "\t\t" + coordinate2 + " )");
         }

@@ -46,7 +46,7 @@ public class Main <T>{
         }
         if (parameters.csv) {
 
-            nbParties = 1;
+            nbParties = 10;
 
             LOGGER.setLevel(Level.SEVERE);
             LOGGER.severe("Run mode : csv");
